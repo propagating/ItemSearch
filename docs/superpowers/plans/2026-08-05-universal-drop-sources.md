@@ -12,7 +12,7 @@
 
 - Two repos: generator work in `E:\Projects\Python\ItemSearchDataGenerator` (commit prefix `datagen:`, 4-space indent, Java 11, JUnit 4, Gson only), plugin work in `E:\Projects\JAVA\ItemSearch` (commit prefix `sources:`, **tabs**, braces on own line, Lombok `@Value`, JUnit 4 + Mockito). Run each task's commands from its repo root (`./gradlew.bat test`). Never commit to the local runelite fork.
 - Every new `.java` file — **including test files** — gets the BSD license header copied verbatim from a sibling (copyright line: `Copyright (c) 2026, propagating <propagating@protonmail.com>`).
-- Semantics fixed by the spec: `SourceType` ∈ {KILL, REWARD, PICKPOCKET, GATHER}; `DropsLineReward` rows → REWARD; `DropsLine` on an `Infobox Monster`/`Infobox NPC` page → KILL unless the table's nearest preceding `==section==` heading contains "pickpocket" (case-insensitive) → PICKPOCKET; other infoboxes (or none) → GATHER; `source-type-overlay.json` (page title → type string) overrides inference. Rarity: fraction "a/b" (b may be fractional) → a/b; "Always" → 1.0; anything else → rarityKnown=false. Effective rarity uses the existing `MonsterTransform.effectiveRarity(Double, int rolls)`; quantity uses existing `MonsterTransform.parseQuantityMax(String)`; "(noted)" in the quantity string → noted=true. Synthetic ids for non-NPC sources are negative and assigned sequentially by sorted source name starting at -1000 (documented as non-stable across regens; nothing tracks them).
+- Semantics fixed by the spec: `SourceType` ∈ {KILL, REWARD, PICKPOCKET, GATHER}; `DropsLineReward` rows → REWARD; `DropsLine` on an `Infobox Monster`/`Infobox NPC` page → KILL unless the table's `sectionHeading` OR `topHeading` contains "pickpocket" (case-insensitive) → PICKPOCKET; other infoboxes (or none) → GATHER; `source-type-overlay.json` (page title → type string) overrides inference. Rarity: fraction "a/b" (b may be fractional) → a/b; "Always" → 1.0; anything else → rarityKnown=false. Effective rarity uses the existing `MonsterTransform.effectiveRarity(Double, int rolls)`; quantity uses existing `MonsterTransform.parseQuantityMax(String)`; "(noted)" in the quantity string → noted=true. Synthetic ids for non-NPC sources are negative and assigned sequentially by sorted source name starting at -1000 (documented as non-stable across regens; nothing tracks them).
 - The wikitext parser MUST handle nested templates (`{{Refn|...}}` inside `rarity`/`raritynotes` values) via brace-balanced scanning, and MUST strip HTML comments (`<!--...-->`) before param parsing — real pages (Zulrah) contain both.
 - `wikiImageUrl` is null in the new data; the client's `WikiRefreshService` already fetches live images by name.
 - Existing helpers to reuse, not duplicate: `WikiHttp` (request/sleep/snippet), `WikiShopFetch.fetchTitlesEmbedding` (make it accessible), `WikiFetch`-style numbered fields for `id`/`id1..idN`, `MonsterTransform.parseQuantityMax`/`.effectiveRarity`/`.parseSpawns`/`.parseOverlay`/`.parseCombatOverlay`/`.applyCombatOverlay`/`.relabelMetallicDragonfire`, `WikiItemFetch.fetch`, map-coord patterns from `WikiShopFetch` (`MAP_COORDS`/`MAP_PLANE` — extract to a shared helper rather than copying).
@@ -107,9 +107,9 @@ Plus one test each asserting `stripLinks`, `field`, `numberedFields`, and `mapCo
 **Interfaces:**
 - DTOs (public fields, raw strings):
   - `DropPageJson { String pageTitle; String infobox; /* "Monster","NPC","Scenery",... or null */ List<String> npcIds; /* raw values of id + id1..idN from the infobox */ String combatLevel; Integer mapX, mapY, mapPlane; List<DropTableJson> tables; }`
-  - `DropTableJson { String sectionHeading; /* nearest preceding ==...== heading, stripped, or null */ List<DropLineJson> lines; }`
+  - `DropTableJson { String sectionHeading; /* nearest preceding heading at ANY level (===Rare drop table===), stripped, or null */ String topHeading; /* nearest preceding top-level ==heading== (==Drops==), stripped, or null */ List<DropLineJson> lines; }`
   - `DropLineJson { boolean reward; /* true for DropsLineReward */ String name, quantity, rarity, rolls; }`
-- `WikiDropsFetch.extract(String pageTitle, String wikitext) → DropPageJson` — null when the page has no drop lines. Consumes `WikiText` throughout. Infobox name captured from the first `{{Infobox <word>` occurrence; ids via `field`/`numberedFields` on its body; map coords via `WikiText.mapCoords`. Comments stripped from the whole page first. Lines with no `name` are dropped; tables with no surviving lines are dropped. Section headings: the last `==...==` match before the table's first line's offset.
+- `WikiDropsFetch.extract(String pageTitle, String wikitext) → DropPageJson` — null when the page has no drop lines. Consumes `WikiText` throughout. Infobox name captured from the first `{{Infobox <word>` occurrence; ids via `field`/`numberedFields` on its body; map coords via `WikiText.mapCoords`. Comments stripped from the whole page first. Lines with no `name` are dropped; tables with no surviving lines are dropped. Section headings: `sectionHeading` = the last heading at ANY level (equal-count `=` fences, 2-6) before the table's first line offset; `topHeading` = the last exactly-double-`==` heading before that offset. A `===Rare drop table===` under `==Drops==` yields sectionHeading "Rare drop table", topHeading "Drops".
 
 - [ ] **Step 1: Write failing tests** — fixtures as inline strings:
 
@@ -132,6 +132,7 @@ public void parsesMonsterPageWithNumberedIdsAndNestedTemplates()
     assertEquals("725", page.combatLevel);
     assertEquals(1, page.tables.size());
     assertEquals("Drops", page.tables.get(0).sectionHeading);
+    assertEquals("Drops", page.tables.get(0).topHeading);
     List<DropLineJson> lines = page.tables.get(0).lines;
     assertEquals(3, lines.size());
     assertEquals("2", lines.get(0).rolls);
@@ -164,6 +165,35 @@ public void pickpocketSectionHeadingIsCaptured()
     assertEquals("NPC", page.infobox);
     assertEquals(Collections.singletonList("3257"), page.npcIds);
     assertEquals("Pickpocketing loot", page.tables.get(0).sectionHeading);
+}
+
+@Test
+public void subsectionHeadingsBecomeCategoriesWithTopLevelSectionKept()
+{
+    String kalphite = "{{Infobox Monster
+|name = Kalphite Queen
+|id = 963
+}}
+"
+        + "==Drops==
+===100%===
+{{DropsTableHead}}
+"
+        + "{{DropsLine|name=Bones|quantity=1|rarity=Always}}
+{{DropsTableBottom}}
+"
+        + "===Rare drop table===
+{{DropsTableHead}}
+"
+        + "{{DropsLine|name=Loop half of key|quantity=1|rarity=1/128}}
+{{DropsTableBottom}}
+";
+    DropPageJson page = WikiDropsFetch.extract("Kalphite Queen", kalphite);
+    assertEquals(2, page.tables.size());
+    assertEquals("100%", page.tables.get(0).sectionHeading);
+    assertEquals("Drops", page.tables.get(0).topHeading);
+    assertEquals("Rare drop table", page.tables.get(1).sectionHeading);
+    assertEquals("Drops", page.tables.get(1).topHeading);
 }
 
 @Test
@@ -235,6 +265,7 @@ Steps: RED → implement → GREEN → commit — `datagen: rarity string parser
 ### Task 5: Source transform (`SourceTransform` + `OutputSource`)
 
 **Files:**
+- Modify: `output/OutputDrop.java` gains `public String category;` (nullable; assign after construction where MonsterTransform builds drops — null there)
 - Rename: `output/OutputNpc.java` → `output/OutputSource.java` (git mv; class rename; add `public String type; public Integer x, y, plane;`; keep the existing constructor signature plus the new fields assigned after construction, or extend the constructor — extend it: append `String type, Integer x, Integer y, Integer plane` parameters and update `MonsterTransform`'s construction sites to pass `"KILL", null, null, null`)
 - Create: `src/main/java/com/itemsearch/datagen/SourceTransform.java`
 - Create: `source-type-overlay.json` (committed; initially `{}`)
@@ -244,7 +275,7 @@ Steps: RED → implement → GREEN → commit — `datagen: rarity string parser
 - `SourceTransform.transform(Map<String, DropPageJson> pages, Map<String, ItemInfoJson> itemInfo, Map<Integer, List<OutputSpawn>> spawns, Map<String, WikiCombatJson> wiki, Map<Integer, CombatOverlayJson> combatOverlay, Map<String, String> typeOverlay) → List<OutputSource>`
 - Per page: one `OutputSource` per **type bucket** (a Master-Farmer-like page with both kill drops and pickpocket tables yields two sources, name suffixed ` (pickpocket)` for the PICKPOCKET one). Type per table via the Global Constraints inference + `typeOverlay` (title → type wins over inference, applied per page: an overlaid page forces ALL its tables to that type).
 - npcIds: parsed ints of the page's raw id list (bad values skipped); canonical `id` = first npcId, else the next synthetic negative id (sequence starting at -1000, assigned in sorted-name order after all NPC-backed sources are numbered).
-- Drops: `itemId` via `itemInfo` id else -1; `rarityKnown` = `Rarity.parse(...) != null`; `rarity` = `MonsterTransform.effectiveRarity(parsed, rolls)` (rolls int, default 1); `quantity` = `MonsterTransform.parseQuantityMax(raw)`; `noted` = raw quantity contains "(noted)".
+- Drops: `category` = the table's `sectionHeading`, null when it equals (case-insensitive) "Drops", "Rewards", or "Loot" or is null — generic section names are not categories; `itemId` via `itemInfo` id else -1; `rarityKnown` = `Rarity.parse(...) != null`; `rarity` = `MonsterTransform.effectiveRarity(parsed, rolls)` (rolls int, default 1); `quantity` = `MonsterTransform.parseQuantityMax(raw)`; `noted` = raw quantity contains "(noted)".
 - combatLevel parsed int else 0; KILL sources join `wiki`/`combatOverlay` combat exactly as `DropDataGenerator.generate` does today (including `relabelMetallicDragonfire`); non-KILL sources get null combat. Spawns joined by npcId for NPC sources; chest/node pages with map coords get a single synthetic spawn point at (x, y, plane) so the existing spawn-marker flow works, plus x/y/plane set on the source itself.
 - Output sorted by name (case-insensitive), then type.
 
@@ -271,6 +302,7 @@ Steps: wire (structure mirrors `ShopDataGenerator.main` — no new logic beyond 
 ### Task 7: Plugin model + data layer rename
 
 **Files (plugin repo):**
+- Modify: `model/DropSource.java` gains `String category;` as the last @Value field (nullable; fixtures may omit it)
 - Rename: `model/NpcData.java` → `model/SourceData.java` (add `SourceType type; Integer x, y, plane;` after `combat`); Create: `model/SourceType.java` (`public enum SourceType { KILL, REWARD, PICKPOCKET, GATHER }`)
 - Modify: `data/DropDataService.java` (`npcById`→`sourceById`, `npcByNameAndLevel`→`sourceByNameAndLevel`, `searchNpcs`→`searchSources`, types `NpcData`→`SourceData`), `data/BundledDataSource.java` (resource `sources.json`; normalize null `type` in older data to `KILL`), `ItemSearchPlugin.java` (`DATA_RESOURCE = "/com/itemsearch/sources.json"`), and every `NpcData` reference (`ItemSearchPanel`, `ui/*`, `map/SpawnMapMarker`, `tracker/KillTracker`, `respawn/*`) — mechanical rename via `sed` (`NpcData`→`SourceData`, `npcById`→`sourceById`, `npcByNameAndLevel`→`sourceByNameAndLevel`, `searchNpcs`→`searchSources`) then hand-fix compile fallout.
 - Test fixture: create `sources-test.json` = `drops-test.json` entries (each gains `"type": "KILL"`) + `drops-multiid-test.json` entries + two new entries: `{"id": -1000, "name": "Lunar Chest", "type": "REWARD", "combatLevel": 0, "x": 1512, "y": 9581, "plane": 0, "spawnPoints": [{"x": 1512, "y": 9581, "plane": 0}], "npcIds": [], "drops": [{"itemId": 29028, "itemName": "Eclipse atlatl", "rarity": 0.004464285714285714, "quantity": 1, "noted": false, "rarityKnown": true}]}` and `{"id": 3257, "name": "Master Farmer (pickpocket)", "type": "PICKPOCKET", "combatLevel": 0, "npcIds": [3257], "spawnPoints": [], "drops": [{"itemId": 5318, "itemName": "Potato seed", "rarity": 0.45, "quantity": 4, "noted": false, "rarityKnown": true}]}`. Update every test that loads `drops-test.json`/`drops-multiid-test.json` to the new fixture path; keep the old json files deleted.
@@ -295,7 +327,7 @@ Steps: failing tests → implement → full suite → commit — `sources: typed
 
 **Files:**
 - Rename: `ui/NpcResultView.java` → `ui/SourceResultView.java` (+ test rename)
-- Modify: combat/attack sections render only when `type == KILL && combat != null`; kill-count/respawn sections only when `npcIds` non-empty; a "Show on map" button (same pattern as `ShopResultView`) when x/y set; header sub-label shows the type for non-KILL sources.
+- Modify: the drop list renders grouped by `DropSource.getCategory()` in first-appearance order — a `section(category)` header precedes each group; null categories render first without a header (test: a fixture source with "100%" and "Rare drop table" categories shows both headers, uncategorized rows on top). Combat/attack sections render only when `type == KILL && combat != null`; kill-count/respawn sections only when `npcIds` non-empty; a "Show on map" button (same pattern as `ShopResultView`) when x/y set; header sub-label shows the type for non-KILL sources.
 
 Steps: failing tests (REWARD source: no combat section, map button present and firing `SpawnMapMarker`-bound callback; KILL source unchanged assertions keep passing) → implement → full suite → commit — `sources: per-type source view (chests get map, kills keep combat)`.
 

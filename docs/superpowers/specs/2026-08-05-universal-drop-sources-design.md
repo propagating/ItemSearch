@@ -43,8 +43,12 @@ public class SourceData
 }
 ```
 
-- `DropSource` unchanged (itemId, itemName, rarity, quantity, noted,
-  rarityKnown).
+- `DropSource` gains `String category` (added 2026-08-05 by user request): the
+  wiki drop-table subsection the line came from — "100%", "Weapons and
+  armour", "Rare drop table", "Gem drop table", "Tertiary", etc. Null when
+  the page has one unheaded table or the heading is generic
+  ("Drops"/"Rewards"/"Loot"). The source view groups its drop list under
+  these category headers in wiki order; other fields unchanged.
 - `drops.json` becomes `sources.json` (schema version break is fine — the
   plugin is unreleased). Search indexes and kill tracking key off `npcIds`
   exactly as today; non-NPC sources simply never match a kill event.
@@ -58,7 +62,11 @@ public class SourceData
    `wiki-drops.json` (raw parsed tables, strings preserved).
 3. **Parse per page**:
    - Drop tables: `{{DropsTableHead}}` … `{{DropsLine|…}}` /
-     `{{DropsLineReward|…}}` rows (name, quantity, rarity, rolls).
+     `{{DropsLineReward|…}}` rows (name, quantity, rarity, rolls). Each table
+     records its nearest preceding heading at any level (the category
+     subsection, e.g. `===Rare drop table===`) AND its nearest top-level
+     `==heading==` (the section, e.g. `==Drops==`) — the former feeds
+     per-drop categories, both feed pickpocket detection.
    - **Source type inference**: `DropsLineReward` rows → REWARD. `DropsLine`
      under an `Infobox Monster` page → KILL, unless the table's nearest
      preceding section heading contains "pickpocket" → PICKPOCKET. Non-NPC
