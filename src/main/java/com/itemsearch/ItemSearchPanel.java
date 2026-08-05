@@ -45,11 +45,13 @@ import com.itemsearch.data.WikiRefreshService;
 import com.itemsearch.map.SpawnMapMarker;
 import com.itemsearch.model.ItemMatch;
 import com.itemsearch.model.NpcData;
+import com.itemsearch.model.ShopData;
 import com.itemsearch.respawn.RespawnTracker;
 import com.itemsearch.tracker.TrackerStore;
 import com.itemsearch.ui.ItemResultView;
 import com.itemsearch.ui.NpcResultView;
 import com.itemsearch.ui.ResultRow;
+import com.itemsearch.ui.ShopResultView;
 import net.runelite.client.ui.PluginPanel;
 
 class ItemSearchPanel extends PluginPanel
@@ -158,6 +160,10 @@ class ItemSearchPanel extends PluginPanel
 				results.add(new ResultRow("NPC", npc.getName() + " (lvl " + npc.getCombatLevel() + ")",
 					() -> showNpc(npc)));
 			}
+			for (ShopData shop : dataService.searchShops(q))
+			{
+				results.add(new ResultRow("SHOP", shop.getName(), () -> showShop(shop)));
+			}
 			for (ItemMatch item : dataService.searchItems(q))
 			{
 				results.add(new ResultRow("ITEM", item.getItemName(), () -> showItem(item)));
@@ -197,6 +203,22 @@ class ItemSearchPanel extends PluginPanel
 		wikiRefreshService.refreshNpcImage(npc.getId(), npc.getName(), view::updateImage);
 	}
 
+	private void showShop(ShopData shop)
+	{
+		showShop(shop, this::showResults);
+	}
+
+	// onBack lets a shop opened from an item's buy-from list return to that item
+	private void showShop(ShopData shop, Runnable onBack)
+	{
+		currentItemView = null;
+		currentNpcView = null;
+		ShopResultView view = new ShopResultView(shop, itemManager, onBack, line ->
+			showItem(new ItemMatch(line.getItemId(), line.getItemName()),
+				() -> showShop(shop, onBack)));
+		showDetail(view);
+	}
+
 	private void showItem(ItemMatch item)
 	{
 		showItem(item, this::showResults);
@@ -207,7 +229,7 @@ class ItemSearchPanel extends PluginPanel
 	{
 		currentNpcView = null;
 		currentItemView = new ItemResultView(item, dataService, trackerStore, itemManager, onBack,
-			this::showNpc, shop -> { });
+			this::showNpc, shop -> showShop(shop, () -> showItem(item, onBack)));
 		showDetail(currentItemView);
 	}
 

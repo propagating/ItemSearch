@@ -29,6 +29,7 @@ import java.awt.Component;
 import java.awt.Container;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
@@ -65,7 +66,7 @@ public class ItemSearchPanelTest
 	private BundledDataSource loadedTestData()
 	{
 		BundledDataSource ds = new BundledDataSource(new Gson(),
-			"/com/itemsearch/drops-test.json");
+			"/com/itemsearch/drops-test.json", "/com/itemsearch/shops-test.json");
 		ds.load();
 		return ds;
 	}
@@ -119,6 +120,30 @@ public class ItemSearchPanelTest
 		assertNotNull("results must be inside a JScrollPane", scroll);
 		assertEquals(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, scroll.getVerticalScrollBarPolicy());
 		assertEquals(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER, scroll.getHorizontalScrollBarPolicy());
+	}
+
+	@Test
+	public void searchRendersShopRowsWithShopBadge() throws Exception
+	{
+		ItemSearchPanel panel = newPanel(loadedTestData());
+		JTextField search = field(panel, "search", JTextField.class);
+		JPanel results = field(panel, "results", JPanel.class);
+
+		search.setText("zaff");
+		invokeRebuild(panel);
+
+		boolean foundBadge = false;
+		for (Component row : results.getComponents())
+		{
+			for (Component c : ((Container) row).getComponents())
+			{
+				if (c instanceof JLabel && "SHOP".equals(((JLabel) c).getText()))
+				{
+					foundBadge = true;
+				}
+			}
+		}
+		assertTrue("expected a SHOP-badged result row for 'zaff'", foundBadge);
 	}
 
 	private JScrollPane enclosingScrollPane(Component c)
