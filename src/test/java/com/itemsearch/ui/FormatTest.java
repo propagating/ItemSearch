@@ -87,4 +87,30 @@ public class FormatTest
 		assertEquals("---", Format.dryPercent(1.0, 0));
 		assertEquals("---", Format.dryPercent(1.0, 3));
 	}
+
+	@Test
+	public void priceTextFormatsCoinsAndOtherCurrenciesAndUnknown()
+	{
+		assertEquals("1,500 gp", Format.priceText(1500, "Coins"));
+		assertEquals("120 Tokkul", Format.priceText(120, "Tokkul"));
+		assertEquals("3 gp", Format.priceText(3, null));
+		assertEquals("?", Format.priceText(null, "Coins"));
+	}
+
+	@Test
+	public void stockTextFormatsCounts()
+	{
+		assertEquals("5", Format.stockText(5));
+		assertEquals("1,000", Format.stockText(1000));
+		assertEquals("∞", Format.stockText(-1));
+		assertEquals("?", Format.stockText(null));
+	}
+
+	@Test
+	public void restockTextFormatsSeconds()
+	{
+		assertEquals("30s", Format.restockText(30));
+		assertEquals("1m 40s", Format.restockText(100));
+		assertEquals("?", Format.restockText(null));
+	}
 }

@@ -81,4 +81,46 @@ final class Format
 		}
 		return String.format(Locale.ROOT, "%.1f", DropStats.dryStreakProbability(p, dry) * 100) + "%";
 	}
+
+	/** Formats a shop price with its currency ("1,500 gp", "120 Tokkul"); null price -> "?". */
+	static String priceText(Integer price, String currency)
+	{
+		if (price == null)
+		{
+			return "?";
+		}
+		if (currency == null || "Coins".equalsIgnoreCase(currency))
+		{
+			return tally(price) + " gp";
+		}
+		return tally(price) + " " + currency;
+	}
+
+	/** Formats shop stock: negative = infinite ("∞"), null = unknown ("?"). */
+	static String stockText(Integer stock)
+	{
+		if (stock == null)
+		{
+			return "?";
+		}
+		if (stock < 0)
+		{
+			return "∞";
+		}
+		return tally(stock);
+	}
+
+	/** Formats a restock duration in seconds ("30s", "1m 40s"); null -> "?". */
+	static String restockText(Integer seconds)
+	{
+		if (seconds == null)
+		{
+			return "?";
+		}
+		if (seconds < 60)
+		{
+			return seconds + "s";
+		}
+		return (seconds / 60) + "m " + (seconds % 60) + "s";
+	}
 }
