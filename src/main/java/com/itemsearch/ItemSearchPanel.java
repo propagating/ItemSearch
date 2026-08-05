@@ -207,7 +207,7 @@ class ItemSearchPanel extends PluginPanel
 	{
 		currentNpcView = null;
 		currentItemView = new ItemResultView(item, dataService, trackerStore, itemManager, onBack,
-			this::showNpc);
+			this::showNpc, shop -> { });
 		showDetail(currentItemView);
 	}
 

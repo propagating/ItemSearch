@@ -50,6 +50,9 @@ import com.itemsearch.data.DropDataService;
 import com.itemsearch.model.DropSource;
 import com.itemsearch.model.ItemMatch;
 import com.itemsearch.model.NpcData;
+import com.itemsearch.model.ShopData;
+import com.itemsearch.model.ShopEntry;
+import com.itemsearch.model.ShopItem;
 import com.itemsearch.stats.DropStats;
 import com.itemsearch.tracker.TrackerStore;
 import net.runelite.client.ui.ColorScheme;
@@ -63,7 +66,8 @@ public class ItemResultView extends JPanel
 	private final List<GotRow> gotRows = new ArrayList<>();
 
 	public ItemResultView(ItemMatch item, DropDataService data, TrackerStore store,
-		ItemManager itemManager, Runnable onBack, Consumer<NpcData> onNpcSelected)
+		ItemManager itemManager, Runnable onBack, Consumer<NpcData> onNpcSelected,
+		Consumer<ShopData> onShopSelected)
 	{
 		setLayout(new BorderLayout(0, 6));
 
@@ -100,7 +104,54 @@ public class ItemResultView extends JPanel
 			body.add(buildSourceBox(entry.source, data, store, item.getItemId(), entry.npcId, onNpcSelected));
 		}
 
+		List<ShopEntry> shopEntries = data.shopsForItem(item.getItemId());
+		if (!shopEntries.isEmpty())
+		{
+			body.add(Box.createVerticalStrut(6));
+			body.add(section("Buy from"));
+			for (ShopEntry entry : shopEntries)
+			{
+				body.add(buildShopBox(entry, onShopSelected));
+			}
+		}
+
 		add(body, BorderLayout.CENTER);
+	}
+
+	private JPanel buildShopBox(ShopEntry entry, Consumer<ShopData> onShopSelected)
+	{
+		ShopData shop = entry.getShop();
+		ShopItem line = entry.getItem();
+
+		JPanel box = new JPanel();
+		box.setLayout(new BoxLayout(box, BoxLayout.Y_AXIS));
+		box.setBorder(BorderFactory.createCompoundBorder(
+			BorderFactory.createLineBorder(ColorScheme.MEDIUM_GRAY_COLOR),
+			BorderFactory.createEmptyBorder(6, 8, 6, 8)));
+		box.setBackground(ColorScheme.DARKER_GRAY_COLOR);
+
+		JTextArea name = wrapLabel(shop.getName());
+		name.setFont(name.getFont().deriveFont(Font.BOLD));
+		name.setForeground(ColorScheme.BRAND_ORANGE);
+		name.setCursor(new Cursor(Cursor.HAND_CURSOR));
+		name.addMouseListener(new MouseAdapter()
+		{
+			@Override
+			public void mouseClicked(MouseEvent e)
+			{
+				onShopSelected.accept(shop);
+			}
+		});
+		box.add(name);
+
+		if (shop.getLocation() != null)
+		{
+			box.add(subLabel(shop.getLocation()));
+		}
+		box.add(statRow("Price", Format.priceText(line.getSellPrice(), shop.getCurrency())));
+		box.add(statRow("Stock", Format.stockText(line.getStock())));
+		box.add(statRow("Restock", Format.restockText(line.getRestockSeconds())));
+		return box;
 	}
 
 	private JPanel buildSourceBox(DropSource src, DropDataService data, TrackerStore store, int itemId, int npcId,

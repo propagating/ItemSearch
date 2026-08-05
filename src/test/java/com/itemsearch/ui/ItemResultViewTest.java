@@ -43,6 +43,7 @@ import com.itemsearch.model.ItemMatch;
 import com.itemsearch.model.NpcData;
 import com.itemsearch.tracker.TrackerStore;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 import org.junit.Test;
@@ -61,6 +62,15 @@ public class ItemResultViewTest
 		return ds;
 	}
 
+	private BundledDataSource loadedTestDataWithShops()
+	{
+		BundledDataSource ds = new BundledDataSource(new Gson(),
+			"/com/itemsearch/drops-test.json",
+			"/com/itemsearch/shops-test.json");
+		ds.load();
+		return ds;
+	}
+
 	private ItemResultView build(BundledDataSource ds, TrackerStore store, AtomicReference<NpcData> clicked)
 	{
 		return new ItemResultView(
@@ -69,7 +79,10 @@ public class ItemResultViewTest
 			() ->
 			{
 			},
-			clicked::set);
+			clicked::set,
+			s ->
+			{
+			});
 	}
 
 	private static <T> List<T> collect(Container root, Class<T> type)
@@ -147,5 +160,88 @@ public class ItemResultViewTest
 		boolean hasCountTwo = labels.stream().anyMatch(l -> "2".equals(l.getText()));
 		assertTrue("a 'Got' row must render", hasGotRow);
 		assertTrue("obtained count of 2 must render", hasCountTwo);
+	}
+
+	@Test
+	public void buyFromSectionListsShopsCheapestFirstAfterMonsters()
+	{
+		ItemResultView view = new ItemResultView(
+			new ItemMatch(BRONZE_DAGGER, "Bronze dagger"),
+			loadedTestDataWithShops(), new TrackerStore(mock(ConfigManager.class), new Gson()),
+			mock(ItemManager.class),
+			() ->
+			{
+			},
+			npc ->
+			{
+			},
+			shop ->
+			{
+			});
+		// wrapLabel text areas render monsters first, then shops sorted by price (30 < 50)
+		List<String> names = new ArrayList<>();
+		for (JTextArea a : collect(view, JTextArea.class))
+		{
+			names.add(a.getText());
+		}
+		assertEquals(Arrays.asList("Goblin", "Zulrah",
+			"Zaff's Superior Staffs", "Aaron's Archery Appendages"), names);
+	}
+
+	@Test
+	public void clickingShopNameFiresCallback()
+	{
+		AtomicReference<com.itemsearch.model.ShopData> clicked =
+			new AtomicReference<>();
+		ItemResultView view = new ItemResultView(
+			new ItemMatch(BRONZE_DAGGER, "Bronze dagger"),
+			loadedTestDataWithShops(), new TrackerStore(mock(ConfigManager.class), new Gson()),
+			mock(ItemManager.class),
+			() ->
+			{
+			},
+			npc ->
+			{
+			},
+			clicked::set);
+		// JTextArea has Swing-installed default MouseListeners (caret, handler) ahead of ours,
+		// so (as with clickingNpcNameFiresCallbackWithThatNpc above) fire all of them rather
+		// than assuming index 0 is ours.
+		for (JTextArea a : collect(view, JTextArea.class))
+		{
+			if ("Zaff's Superior Staffs".equals(a.getText()))
+			{
+				MouseEvent click = new MouseEvent(a, MouseEvent.MOUSE_CLICKED, 0, 0, 0, 0, 1, false);
+				for (MouseListener l : a.getMouseListeners())
+				{
+					l.mouseClicked(click);
+				}
+			}
+		}
+		assertEquals("Zaff's Superior Staffs", clicked.get().getName());
+	}
+
+	@Test
+	public void itemSoldOnlyWithZeroStockGetsNoBuyFromSection()
+	{
+		// Bronze arrow: only shop entry has stock 0 -> not purchasable -> no section at all
+		ItemResultView view = new ItemResultView(
+			new ItemMatch(882, "Bronze arrow"),
+			loadedTestDataWithShops(), new TrackerStore(mock(ConfigManager.class), new Gson()),
+			mock(ItemManager.class),
+			() ->
+			{
+			},
+			npc ->
+			{
+			},
+			shop ->
+			{
+			});
+		for (JLabel l : collect(view, JLabel.class))
+		{
+			assertFalse("no BUY FROM header expected",
+				"BUY FROM".equals(l.getText()));
+		}
 	}
 }
