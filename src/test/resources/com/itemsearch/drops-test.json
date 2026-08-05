@@ -1,0 +1,32 @@
+[
+  {
+    "id": 3031,
+    "name": "Goblin",
+    "combatLevel": 2,
+    "wikiImageUrl": "https://oldschool.runescape.wiki/images/Goblin.png",
+    "spawnPoints": [ { "x": 3246, "y": 3235, "plane": 0 }, null, { "x": 3251, "y": 3231, "plane": 0 } ],
+    "combat": {
+      "attackLevel": 1,
+      "strengthLevel": 1,
+      "defenceLevel": 1,
+      "magicLevel": 1,
+      "rangedLevel": 1,
+      "hitpoints": 5,
+      "attacks": [ { "style": "crush", "maxHit": 60, "speed": 6 } ]
+    },
+    "drops": [
+      { "itemId": 995, "itemName": "Coins", "rarity": 0.5, "quantity": 5, "noted": false, "rarityKnown": true },
+      { "itemId": 1205, "itemName": "Bronze dagger", "rarity": 0.0078125, "quantity": 1, "noted": false, "rarityKnown": true }
+    ]
+  },
+  {
+    "id": 2042,
+    "name": "Zulrah",
+    "combatLevel": 725,
+    "wikiImageUrl": "https://oldschool.runescape.wiki/images/Zulrah.png",
+    "drops": [
+      { "itemId": 12922, "itemName": "Toxic blowpipe", "rarity": 0.0, "quantity": 1, "noted": false, "rarityKnown": false },
+      { "itemId": 1205, "itemName": "Bronze dagger", "rarity": 0.01, "quantity": 1, "noted": false, "rarityKnown": true }
+    ]
+  }
+]

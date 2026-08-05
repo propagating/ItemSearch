@@ -1,0 +1,12 @@
+[
+  {
+    "id": 7001,
+    "npcIds": [ 7001, 7002 ],
+    "name": "Test Beast",
+    "combatLevel": 100,
+    "spawnPoints": [],
+    "drops": [
+      { "itemId": 995, "itemName": "Coins", "rarity": 0.5, "quantity": 10, "noted": false, "rarityKnown": true }
+    ]
+  }
+]

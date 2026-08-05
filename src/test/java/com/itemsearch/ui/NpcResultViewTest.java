@@ -1,0 +1,405 @@
+/*
+ * Copyright (c) 2026, propagating <propagating@protonmail.com>
+ * All rights reserved.
+ *
+ * Redistribution and use in source and binary forms, with or without
+ * modification, are permitted provided that the following conditions are met:
+ *
+ * 1. Redistributions of source code must retain the above copyright notice, this
+ *    list of conditions and the following disclaimer.
+ * 2. Redistributions in binary form must reproduce the above copyright notice,
+ *    this list of conditions and the following disclaimer in the documentation
+ *    and/or other materials provided with the distribution.
+ *
+ * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
+ * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
+ * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+ * DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE FOR
+ * ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
+ * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
+ * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND
+ * ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+ * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
+ * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ */
+package com.itemsearch.ui;
+
+import com.google.gson.Gson;
+import java.awt.Color;
+import java.awt.Component;
+import java.awt.Container;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
+import javax.swing.JButton;
+import javax.swing.JComponent;
+import javax.swing.JLabel;
+import javax.swing.border.CompoundBorder;
+import javax.swing.border.LineBorder;
+import net.runelite.client.callback.ClientThread;
+import net.runelite.client.config.ConfigManager;
+import net.runelite.client.game.ItemManager;
+import net.runelite.client.game.SpriteManager;
+import com.itemsearch.data.BundledDataSource;
+import com.itemsearch.map.SpawnMapMarker;
+import com.itemsearch.model.Attack;
+import com.itemsearch.model.CombatStats;
+import com.itemsearch.model.NpcData;
+import com.itemsearch.respawn.RespawnTracker;
+import com.itemsearch.tracker.TrackerStore;
+import net.runelite.client.ui.ColorScheme;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
+import org.junit.Test;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
+
+public class NpcResultViewTest
+{
+	private static final int GOBLIN = 3031;
+	private static final int ZULRAH = 2042;
+	private static final int COINS = 995;
+	private static final int BRONZE_DAGGER = 1205;
+
+	private BundledDataSource loadedTestData()
+	{
+		BundledDataSource ds = new BundledDataSource(new Gson(),
+			"/com/itemsearch/drops-test.json");
+		ds.load();
+		return ds;
+	}
+
+	private NpcResultView build(NpcData npc, TrackerStore store)
+	{
+		return new NpcResultView(npc, store, mock(SpriteManager.class), mock(ItemManager.class),
+			mock(SpawnMapMarker.class), mock(RespawnTracker.class), mock(ClientThread.class),
+			() ->
+			{
+			},
+			item ->
+			{
+			});
+	}
+
+	private static NpcData npc(int id, String name, int level, CombatStats combat)
+	{
+		return new NpcData(id, name, level, null, Collections.emptyList(), Collections.emptyList(),
+			Collections.singletonList(id), combat);
+	}
+
+	private static CombatStats combat(List<String> attackTypes)
+	{
+		List<Attack> attacks = new ArrayList<>();
+		for (String t : attackTypes)
+		{
+			attacks.add(new Attack(t, 5, 5, 4, 4));
+		}
+		return new CombatStats(1, 1, 1, 1, 1, 5, attacks);
+	}
+
+	private static List<JLabel> labels(Container root)
+	{
+		List<JLabel> out = new ArrayList<>();
+		for (Component c : root.getComponents())
+		{
+			if (c instanceof JLabel)
+			{
+				out.add((JLabel) c);
+			}
+			if (c instanceof Container)
+			{
+				out.addAll(labels((Container) c));
+			}
+		}
+		return out;
+	}
+
+	private static List<String> labelTexts(Container root)
+	{
+		List<String> out = new ArrayList<>();
+		for (JLabel l : labels(root))
+		{
+			out.add(l.getText());
+		}
+		return out;
+	}
+
+	// lay out the whole component tree headless so child widths are computed
+	private static void deepLayout(Container c)
+	{
+		c.doLayout();
+		for (Component ch : c.getComponents())
+		{
+			if (ch instanceof Container)
+			{
+				deepLayout((Container) ch);
+			}
+		}
+	}
+
+	// the bordered card (its border is the CompoundBorder built by NpcResultView.card())
+	// that transitively contains a label with the given text
+	private static JComponent cardContaining(Container root, String labelText)
+	{
+		for (Component c : root.getComponents())
+		{
+			if (c instanceof JComponent && ((JComponent) c).getBorder() instanceof CompoundBorder
+				&& labelTexts((Container) c).contains(labelText))
+			{
+				return (JComponent) c;
+			}
+			if (c instanceof Container)
+			{
+				JComponent found = cardContaining((Container) c, labelText);
+				if (found != null)
+				{
+					return found;
+				}
+			}
+		}
+		return null;
+	}
+
+	@Test
+	public void statBoxesFillTheFullSidebarWidth()
+	{
+		NpcResultView view = build(loadedTestData().npcById(GOBLIN),
+			new TrackerStore(mock(ConfigManager.class), new Gson()));
+		int width = 250;
+		view.setSize(width, 3000);
+		deepLayout(view);
+
+		// the Stats card carries an "Attack" row; it must span the sidebar, not float inward
+		JComponent statsCard = cardContaining(view, "Attack");
+		assertNotNull("stats card should exist", statsCard);
+		assertEquals("stat card must span the full sidebar width", width, statsCard.getWidth());
+	}
+
+	private static JButton button(Container root, String text)
+	{
+		for (Component c : root.getComponents())
+		{
+			if (c instanceof JButton && text.equals(((JButton) c).getText()))
+			{
+				return (JButton) c;
+			}
+			if (c instanceof Container)
+			{
+				JButton found = button((Container) c, text);
+				if (found != null)
+				{
+					return found;
+				}
+			}
+		}
+		return null;
+	}
+
+	private static int countTooltips(Container root, String tip)
+	{
+		int n = 0;
+		for (Component c : root.getComponents())
+		{
+			if (c instanceof JComponent && tip.equals(((JComponent) c).getToolTipText()))
+			{
+				n++;
+			}
+			if (c instanceof Container)
+			{
+				n += countTooltips((Container) c, tip);
+			}
+		}
+		return n;
+	}
+
+	@Test
+	public void knownRarityDropShowsGotAndDryPercent()
+	{
+		TrackerStore store = new TrackerStore(mock(ConfigManager.class), new Gson());
+		store.recordKill(GOBLIN, Collections.singleton(BRONZE_DAGGER), Arrays.asList(COINS, BRONZE_DAGGER));
+		NpcResultView view = build(loadedTestData().npcById(GOBLIN), store);
+		assertTrue(labels(view).stream().anyMatch(l ->
+			l.getText() != null && l.getText().startsWith("Got: 1 · Dry: ") && l.getText().endsWith("%")));
+	}
+
+	@Test
+	public void unknownRarityDropShowsDashForDry()
+	{
+		TrackerStore store = new TrackerStore(mock(ConfigManager.class), new Gson());
+		NpcResultView view = build(loadedTestData().npcById(ZULRAH), store);
+		assertTrue(labels(view).stream().anyMatch(l -> "Got: 0 · Dry: —".equals(l.getText())));
+	}
+
+	@Test
+	public void combatNpcShowsTwoColumnStatGrid()
+	{
+		NpcResultView view = build(loadedTestData().npcById(GOBLIN),
+			new TrackerStore(mock(ConfigManager.class), new Gson()));
+		List<String> text = labelTexts(view);
+		for (String stat : Arrays.asList("Attack", "Strength", "Defence", "Magic", "Ranged", "Hitpoints"))
+		{
+			assertTrue("stat grid must list " + stat, text.contains(stat));
+		}
+	}
+
+	@Test
+	public void attacksBoxShowsPerStyleValuesAndPrayerIcon()
+	{
+		NpcResultView view = build(loadedTestData().npcById(GOBLIN), // fixture attack: crush, maxHit 60, speed 6
+			new TrackerStore(mock(ConfigManager.class), new Gson()));
+		List<String> text = labelTexts(view);
+		assertTrue("attacks box has a Speed row", text.contains("Speed"));
+		assertTrue("attacks box has a Max hit row", text.contains("Max hit"));
+		assertTrue("shows the crush style's own max hit", text.contains("60"));
+		assertTrue("shows the crush style's own speed", text.contains("6"));
+		assertEquals("one melee column for crush", 1, countTooltips(view, "Protect from Melee"));
+	}
+
+	@Test
+	public void repeatedPrayerStylesGetRepeatedColumns()
+	{
+		NpcResultView view = build(npc(9001, "Multi", 100, combat(Arrays.asList("stab", "crush", "magic"))),
+			new TrackerStore(mock(ConfigManager.class), new Gson()));
+		assertEquals("two melee columns for stab + crush", 2, countTooltips(view, "Protect from Melee"));
+		assertEquals("one magic column", 1, countTooltips(view, "Protect from Magic"));
+	}
+
+	@Test
+	public void unprotectableStyleShowsNoPrayerWarning()
+	{
+		NpcResultView view = build(npc(9002, "Ghost", 200, combat(Collections.singletonList("typeless"))),
+			new TrackerStore(mock(ConfigManager.class), new Gson()));
+		assertEquals(1, countTooltips(view, "No prayer protects against this attack"));
+	}
+
+	@Test
+	public void dragonfireShowsPartialMagicPrayerAndDragonfireShield()
+	{
+		NpcResultView view = build(npc(9003, "Dragon", 200, combat(Collections.singletonList("dragonfire"))),
+			new TrackerStore(mock(ConfigManager.class), new Gson()));
+		assertEquals(1, countTooltips(view, "Protect from Magic (partial)"));
+		assertEquals(1, countTooltips(view, "Protect with Dragonfire shield (or antifire potion)"));
+		assertEquals(0, countTooltips(view, "No prayer protects against this attack"));
+	}
+
+	@Test
+	public void icyBreathShowsPartialMagicPrayerAndElementalShield()
+	{
+		NpcResultView view = build(npc(9004, "Wyvern", 200, combat(Collections.singletonList("icy breath"))),
+			new TrackerStore(mock(ConfigManager.class), new Gson()));
+		assertEquals(1, countTooltips(view, "Protect from Magic (partial)"));
+		assertEquals(1, countTooltips(view, "Protect with Elemental shield"));
+	}
+
+	@Test
+	public void metallicDragonfireShowsShieldWithoutMagicPrayer()
+	{
+		NpcResultView view = build(
+			npc(9005, "Steel dragon", 246, combat(Collections.singletonList("metallic dragonfire"))),
+			new TrackerStore(mock(ConfigManager.class), new Gson()));
+		assertEquals(1, countTooltips(view, "Protect with Dragonfire shield (or antifire potion)"));
+		assertEquals(0, countTooltips(view, "Protect from Magic (partial)"));
+	}
+
+	@Test
+	public void attackRangesRenderAsMinDashMax()
+	{
+		CombatStats c = new CombatStats(1, 1, 1, 1, 1, 5,
+			Collections.singletonList(new Attack("stab", 1, 3, 4, 6)));
+		NpcResultView view = build(npc(9010, "Dwarf", 10, c),
+			new TrackerStore(mock(ConfigManager.class), new Gson()));
+		List<String> text = labelTexts(view);
+		assertTrue("max hit range shown", text.contains("1-3"));
+		assertTrue("speed range shown", text.contains("4-6"));
+	}
+
+	@Test
+	public void nonCombatNpcShowsKillsButNoStatGrid()
+	{
+		NpcResultView view = build(loadedTestData().npcById(ZULRAH), // no combat in fixture
+			new TrackerStore(mock(ConfigManager.class), new Gson()));
+		List<String> text = labelTexts(view);
+		assertTrue("kills line still shown", text.contains("Kills:"));
+		assertFalse("no stat grid without combat data", text.contains("Attack"));
+	}
+
+	@Test
+	public void killCountRendersRefreshesAndGroups()
+	{
+		ConfigManager cm = mock(ConfigManager.class);
+		when(cm.getConfiguration("itemsearch", "data")).thenReturn("{\"npcKills\":{\"3031\":1234}}");
+		TrackerStore store = new TrackerStore(cm, new Gson());
+		store.load();
+		NpcResultView view = build(loadedTestData().npcById(GOBLIN), store);
+		assertTrue("kills render with a thousands separator",
+			labels(view).stream().anyMatch(l -> "1,234".equals(l.getText())));
+
+		for (int i = 0; i < 2; i++)
+		{
+			store.recordKill(9999, Collections.emptySet(), Collections.emptyList()); // unrelated npc
+		}
+		store.recordKill(GOBLIN, Collections.emptySet(), Collections.emptyList());
+		view.refresh(store);
+		assertTrue("kills refresh in place",
+			labels(view).stream().anyMatch(l -> "1,235".equals(l.getText())));
+	}
+
+	@Test
+	public void actionsBoxHasAllButtons()
+	{
+		NpcResultView view = build(loadedTestData().npcById(GOBLIN), // fixture has spawn points
+			new TrackerStore(mock(ConfigManager.class), new Gson()));
+		assertNotNull(button(view, "Respawns"));
+		assertNotNull(button(view, "Map"));
+		assertNotNull(button(view, "↺ Kills"));
+		assertNotNull(button(view, "↺ Drops"));
+	}
+
+	@Test
+	public void toggleButtonsBorderReflectsOnOffState()
+	{
+		NpcResultView view = build(loadedTestData().npcById(GOBLIN), // fixture has spawn points
+			new TrackerStore(mock(ConfigManager.class), new Gson()));
+
+		JButton respawns = button(view, "Respawns");
+		assertEquals("untracked -> orange", ColorScheme.BRAND_ORANGE, borderColor(respawns));
+		respawns.doClick();
+		assertEquals("tracking -> green", ColorScheme.PROGRESS_COMPLETE_COLOR, borderColor(respawns));
+
+		JButton map = button(view, "Map");
+		assertEquals("markers hidden -> orange", ColorScheme.BRAND_ORANGE, borderColor(map));
+		map.doClick();
+		assertEquals("markers shown -> green", ColorScheme.PROGRESS_COMPLETE_COLOR, borderColor(map));
+	}
+
+	// the color of a button's outer LineBorder (set by NpcResultView.setStateBorder)
+	private static Color borderColor(JButton button)
+	{
+		CompoundBorder cb = (CompoundBorder) button.getBorder();
+		return ((LineBorder) cb.getOutsideBorder()).getLineColor();
+	}
+
+	@Test
+	public void resetKillsButtonZeroesKillCount()
+	{
+		TrackerStore store = new TrackerStore(mock(ConfigManager.class), new Gson());
+		store.recordKill(GOBLIN, Collections.emptySet(), Collections.emptyList());
+		NpcResultView view = build(loadedTestData().npcById(GOBLIN), store);
+		button(view, "↺ Kills").doClick();
+		assertEquals(0, store.getNpcKills(GOBLIN));
+	}
+
+	@Test
+	public void resetDropsButtonZeroesDropCounters()
+	{
+		TrackerStore store = new TrackerStore(mock(ConfigManager.class), new Gson());
+		store.recordKill(GOBLIN, Collections.singleton(BRONZE_DAGGER), Arrays.asList(COINS, BRONZE_DAGGER));
+		NpcResultView view = build(loadedTestData().npcById(GOBLIN), store);
+		button(view, "↺ Drops").doClick();
+		assertEquals(0, store.getObtained(GOBLIN, BRONZE_DAGGER));
+		assertEquals(0, store.getDry(GOBLIN, COINS));
+	}
+}

@@ -3,7 +3,13 @@ plugins {
 }
 
 repositories {
-	mavenLocal()
+	// only consult the local maven repo for runelite artifacts — a partial ~/.m2
+	// (e.g. lwjgl poms without their native jars) must not shadow mavenCentral
+	mavenLocal {
+		content {
+			includeGroupByRegex("net\\.runelite.*")
+		}
+	}
 	maven {
 		url = 'https://repo.runelite.net'
 		content {
@@ -14,7 +20,7 @@ repositories {
 }
 
 def runeLiteVersion = 'latest.release'
-def pluginMainClass = 'com.example.ExamplePluginTest'
+def pluginMainClass = 'com.itemsearch.ItemSearchPluginTest'
 
 dependencies {
 	compileOnly group: 'net.runelite', name:'client', version: runeLiteVersion
@@ -23,11 +29,12 @@ dependencies {
 	annotationProcessor 'org.projectlombok:lombok:1.18.30'
 
 	testImplementation 'junit:junit:4.12'
+	testImplementation 'org.mockito:mockito-core:3.12.4'
 	testImplementation group: 'net.runelite', name:'client', version: runeLiteVersion
 	testImplementation group: 'net.runelite', name:'jshell', version: runeLiteVersion
 }
 
-group = 'com.example'
+group = 'com.itemsearch'
 
 tasks.withType(JavaCompile).configureEach {
 	options.encoding = 'UTF-8'

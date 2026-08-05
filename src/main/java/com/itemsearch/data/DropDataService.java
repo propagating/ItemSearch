@@ -1,0 +1,48 @@
+/*
+ * Copyright (c) 2026, propagating <propagating@protonmail.com>
+ * All rights reserved.
+ *
+ * Redistribution and use in source and binary forms, with or without
+ * modification, are permitted provided that the following conditions are met:
+ *
+ * 1. Redistributions of source code must retain the above copyright notice, this
+ *    list of conditions and the following disclaimer.
+ * 2. Redistributions in binary form must reproduce the above copyright notice,
+ *    this list of conditions and the following disclaimer in the documentation
+ *    and/or other materials provided with the distribution.
+ *
+ * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
+ * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
+ * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+ * DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE FOR
+ * ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
+ * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
+ * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND
+ * ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+ * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
+ * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ */
+package com.itemsearch.data;
+
+import java.util.List;
+import com.itemsearch.model.DropSource;
+import com.itemsearch.model.ItemMatch;
+import com.itemsearch.model.NpcData;
+
+public interface DropDataService
+{
+	NpcData npcById(int npcId);
+
+	/**
+	 * Resolve a monster by name and combat level. The bundled data does not enumerate every
+	 * in-game NPC id, so a live kill's id often isn't found; matching on the name + level the
+	 * game reports recovers the canonical monster. Returns null if no monster matches.
+	 */
+	NpcData npcByNameAndLevel(String name, int combatLevel);
+
+	List<DropSource> sourcesForItem(int itemId);
+
+	List<NpcData> searchNpcs(String query);
+
+	List<ItemMatch> searchItems(String query);
+}
