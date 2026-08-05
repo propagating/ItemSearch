@@ -61,6 +61,7 @@ import com.itemsearch.model.Attack;
 import com.itemsearch.model.CombatStats;
 import com.itemsearch.model.DropSource;
 import com.itemsearch.model.ItemMatch;
+import com.itemsearch.model.MaxHitVariant;
 import com.itemsearch.model.NpcData;
 import com.itemsearch.respawn.RespawnTracker;
 import com.itemsearch.tracker.TrackerStore;
@@ -292,14 +293,65 @@ public class NpcResultView extends JPanel
 			gc.gridx = col++;
 			gc.anchor = GridBagConstraints.CENTER;
 			gc.gridy = 0;
-			table.add(protectionCell(attack.getStyle(), spriteManager, itemManager), gc);
+			// hybrids ("magic ranged") roll accuracy with style but are countered by
+			// prayStyle — the icon must show what to PRAY, with the roll explained on hover
+			String prayToken = attack.getPrayStyle() != null ? attack.getPrayStyle() : attack.getStyle();
+			JComponent icon = protectionCell(prayToken, spriteManager, itemManager);
+			if (attack.getPrayStyle() != null)
+			{
+				icon.setToolTipText(capitalize(attack.getStyle())
+					+ " accuracy roll — prayed against as " + capitalize(attack.getPrayStyle()));
+			}
+			table.add(icon, gc);
 			gc.gridy = 1;
 			table.add(new JLabel(range(attack.getSpeed(), attack.getSpeedMax())), gc);
 			gc.gridy = 2;
-			table.add(new JLabel(range(attack.getMaxHit(), attack.getMaxHitMax())), gc);
+			table.add(new JLabel(maxHitText(attack)), gc);
 		}
 		box.add(table);
+
+		// one legend line per attack with conditional max hits: base first, then each
+		// mitigation descending, e.g. "Magic: 15 unprotected · 8 with Insulated boots"
+		for (Attack attack : attacks)
+		{
+			if (attack == null || attack.getVariants() == null || attack.getVariants().isEmpty())
+			{
+				continue;
+			}
+			StringBuilder legend = new StringBuilder(capitalize(attack.getStyle()))
+				.append(": ").append(range(attack.getMaxHit(), attack.getMaxHitMax()))
+				.append(" unprotected");
+			attack.getVariants().stream()
+				.sorted((a, b) -> Integer.compare(
+					Math.max(b.getMaxHit(), b.getMaxHitMax()), Math.max(a.getMaxHit(), a.getMaxHitMax())))
+				.forEach(v -> legend.append("  ·  ")
+					.append(range(v.getMaxHit(), v.getMaxHitMax()))
+					.append(" with ").append(v.getLabel()));
+			JLabel row = dim(legend.toString());
+			row.setAlignmentX(Component.LEFT_ALIGNMENT);
+			box.add(row);
+		}
 		return box;
+	}
+
+	// headline max hit: best mitigated case first, unmitigated base in parentheses
+	private static String maxHitText(Attack attack)
+	{
+		String base = range(attack.getMaxHit(), attack.getMaxHitMax());
+		if (attack.getVariants() == null || attack.getVariants().isEmpty())
+		{
+			return base;
+		}
+		MaxHitVariant best = attack.getVariants().stream()
+			.min((a, b) -> Integer.compare(
+				Math.max(a.getMaxHit(), a.getMaxHitMax()), Math.max(b.getMaxHit(), b.getMaxHitMax())))
+			.get();
+		return range(best.getMaxHit(), best.getMaxHitMax()) + " (" + base + ")";
+	}
+
+	private static String capitalize(String s)
+	{
+		return s == null || s.isEmpty() ? "" : Character.toUpperCase(s.charAt(0)) + s.substring(1);
 	}
 
 	// The icons telling the player how to counter this attack style: each protection prayer or

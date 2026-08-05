@@ -46,6 +46,7 @@ import com.itemsearch.data.BundledDataSource;
 import com.itemsearch.map.SpawnMapMarker;
 import com.itemsearch.model.Attack;
 import com.itemsearch.model.CombatStats;
+import com.itemsearch.model.MaxHitVariant;
 import com.itemsearch.model.NpcData;
 import com.itemsearch.respawn.RespawnTracker;
 import com.itemsearch.tracker.TrackerStore;
@@ -96,7 +97,7 @@ public class NpcResultViewTest
 		List<Attack> attacks = new ArrayList<>();
 		for (String t : attackTypes)
 		{
-			attacks.add(new Attack(t, 5, 5, 4, 4));
+			attacks.add(new Attack(t, 5, 5, 4, 4, null, null));
 		}
 		return new CombatStats(1, 1, 1, 1, 1, 5, attacks);
 	}
@@ -309,7 +310,7 @@ public class NpcResultViewTest
 	public void attackRangesRenderAsMinDashMax()
 	{
 		CombatStats c = new CombatStats(1, 1, 1, 1, 1, 5,
-			Collections.singletonList(new Attack("stab", 1, 3, 4, 6)));
+			Collections.singletonList(new Attack("stab", 1, 3, 4, 6, null, null)));
 		NpcResultView view = build(npc(9010, "Dwarf", 10, c),
 			new TrackerStore(mock(ConfigManager.class), new Gson()));
 		List<String> text = labelTexts(view);
@@ -403,4 +404,33 @@ public class NpcResultViewTest
 		assertEquals(0, store.getObtained(GOBLIN, BRONZE_DAGGER));
 		assertEquals(0, store.getDry(GOBLIN, COINS));
 	}
+	@Test
+	public void hybridAttackPraysWithPrayStyleAndExplainsInTooltip()
+	{
+		CombatStats c = new CombatStats(1, 1, 1, 1, 1, 5, Collections.singletonList(
+			new Attack("magic", 15, 15, 4, 4, "ranged", null)));
+		NpcResultView view = build(npc(9020, "Hybrid", 90, c),
+			new TrackerStore(mock(ConfigManager.class), new Gson()));
+		// the protection icon reflects the PRAY style (ranged), not the accuracy style
+		assertEquals(1, countTooltips(view, "Protect from Missiles"));
+		assertEquals(0, countTooltips(view, "Protect from Magic"));
+		assertEquals(1, countTooltips(view, "Magic accuracy roll — prayed against as Ranged"));
+	}
+
+	@Test
+	public void conditionalMaxHitsRenderBestFirstWithLegend()
+	{
+		Attack a = new Attack("magic", 15, 15, 4, 4, null, Collections.singletonList(
+			new MaxHitVariant("Insulated boots", "GEAR", 8, 8)));
+		CombatStats c = new CombatStats(1, 1, 1, 1, 1, 5, Collections.singletonList(a));
+		NpcResultView view = build(npc(9021, "Killerwatt", 55, c),
+			new TrackerStore(mock(ConfigManager.class), new Gson()));
+		List<String> text = labelTexts(view);
+		assertTrue("headline shows best-case with base in parens", text.contains("8 (15)"));
+		assertTrue("variant legend row shown", text.stream()
+			.anyMatch(t -> t != null && t.contains("8 with Insulated boots")));
+		assertTrue("unprotected base in legend", text.stream()
+			.anyMatch(t -> t != null && t.contains("15 unprotected")));
+	}
+
 }

@@ -37,4 +37,9 @@ public class Attack
 	int maxHitMax;
 	int speed;
 	int speedMax;
+	// what the attack counts as defensively when that differs from style ("magic ranged" rolls
+	// magic accuracy but is prayed against with ranged prayers); null = same as style
+	String prayStyle;
+	// conditional max hits (gear/prayer/consumable mitigations); null/empty = unconditional
+	java.util.List<MaxHitVariant> variants;
 }
