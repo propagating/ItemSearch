@@ -28,6 +28,8 @@ import java.util.List;
 import com.itemsearch.model.DropSource;
 import com.itemsearch.model.ItemMatch;
 import com.itemsearch.model.NpcData;
+import com.itemsearch.model.ShopData;
+import com.itemsearch.model.ShopEntry;
 
 public interface DropDataService
 {
@@ -45,4 +47,13 @@ public interface DropDataService
 	List<NpcData> searchNpcs(String query);
 
 	List<ItemMatch> searchItems(String query);
+
+	/**
+	 * Shops that currently sell the item: entries whose base stock is 0 are excluded
+	 * ("not a way to purchase", for now); infinite (-1) and unknown (null) stock are
+	 * included. Sorted by sell price ascending, unknown prices last, then shop name.
+	 */
+	List<ShopEntry> shopsForItem(int itemId);
+
+	List<ShopData> searchShops(String query);
 }

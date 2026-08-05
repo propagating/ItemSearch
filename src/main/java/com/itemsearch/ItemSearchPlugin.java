@@ -70,6 +70,7 @@ import okhttp3.OkHttpClient;
 public class ItemSearchPlugin extends Plugin
 {
 	private static final String DATA_RESOURCE = "/com/itemsearch/drops.json";
+	private static final String SHOPS_RESOURCE = "/com/itemsearch/shops.json";
 
 	@Inject
 	private ClientToolbar clientToolbar;
@@ -116,7 +117,7 @@ public class ItemSearchPlugin extends Plugin
 	@Override
 	protected void startUp()
 	{
-		dataService = new BundledDataSource(gson, DATA_RESOURCE);
+		dataService = new BundledDataSource(gson, DATA_RESOURCE, SHOPS_RESOURCE);
 
 		wikiRefreshService = new WikiRefreshService(okHttpClient, gson, dataService, executor);
 

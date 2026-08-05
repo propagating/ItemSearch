@@ -45,6 +45,9 @@ import lombok.extern.slf4j.Slf4j;
 import com.itemsearch.model.DropSource;
 import com.itemsearch.model.ItemMatch;
 import com.itemsearch.model.NpcData;
+import com.itemsearch.model.ShopData;
+import com.itemsearch.model.ShopEntry;
+import com.itemsearch.model.ShopItem;
 import com.itemsearch.model.SpawnPoint;
 
 @Slf4j
@@ -52,6 +55,7 @@ public class BundledDataSource implements DropDataService
 {
 	private final Gson gson;
 	private final String resourcePath;
+	private final String shopsResourcePath;
 
 	private volatile boolean loaded;
 
@@ -70,11 +74,19 @@ public class BundledDataSource implements DropDataService
 	private final Map<Integer, String> itemNames = new ConcurrentHashMap<>();
 	// itemId -> owning npc ids, index-aligned with byItemId's list for the same itemId
 	private final Map<Integer, List<Integer>> itemOwners = new ConcurrentHashMap<>();
+	private final Map<Integer, List<ShopEntry>> shopsByItemId = new ConcurrentHashMap<>();
+	private final List<ShopData> allShops = new CopyOnWriteArrayList<>();
 
 	public BundledDataSource(Gson gson, String resourcePath)
 	{
+		this(gson, resourcePath, null);
+	}
+
+	public BundledDataSource(Gson gson, String resourcePath, String shopsResourcePath)
+	{
 		this.gson = gson;
 		this.resourcePath = resourcePath;
+		this.shopsResourcePath = shopsResourcePath;
 	}
 
 	public void load()
@@ -100,6 +112,66 @@ public class BundledDataSource implements DropDataService
 		finally
 		{
 			loaded = true;
+		}
+		loadShops();
+	}
+
+	private void loadShops()
+	{
+		shopsByItemId.clear();
+		allShops.clear();
+		if (shopsResourcePath == null)
+		{
+			return;
+		}
+		try (InputStream in = getClass().getResourceAsStream(shopsResourcePath))
+		{
+			if (in == null)
+			{
+				log.warn("itemsearch: bundled shop data not found at {}", shopsResourcePath);
+				return;
+			}
+			Type listType = new TypeToken<List<ShopData>>()
+			{
+			}.getType();
+			List<ShopData> shops = gson.fromJson(
+				new InputStreamReader(in, StandardCharsets.UTF_8), listType);
+			indexShops(shops == null ? Collections.emptyList() : shops);
+		}
+		catch (Exception e)
+		{
+			log.warn("itemsearch: failed to load bundled shop data", e);
+		}
+	}
+
+	private void indexShops(List<ShopData> shops)
+	{
+		for (ShopData shop : shops)
+		{
+			if (shop == null || shop.getName() == null)
+			{
+				log.warn("itemsearch: skipping malformed shop entry in bundled data");
+				continue;
+			}
+			List<ShopItem> items = shop.getItems() == null
+				? Collections.emptyList()
+				: shop.getItems().stream()
+					.filter(i -> i != null && i.getItemName() != null)
+					.collect(Collectors.toList());
+			ShopData normalized = new ShopData(shop.getName(), shop.getLocation(),
+				shop.getCurrency(), items);
+			allShops.add(normalized);
+			for (ShopItem item : items)
+			{
+				if (item.getItemId() < 0)
+				{
+					continue; // unresolvable name: shown in the catalog, never joined to items
+				}
+				shopsByItemId.computeIfAbsent(item.getItemId(), k -> new ArrayList<>())
+					.add(new ShopEntry(normalized, item));
+				// shop-only items should still be findable by item search
+				itemNames.putIfAbsent(item.getItemId(), item.getItemName());
+			}
 		}
 	}
 
@@ -242,6 +314,49 @@ public class BundledDataSource implements DropDataService
 		List<ItemMatch> list = new ArrayList<>(out.values());
 		list.sort((a, b) -> a.getItemName().compareToIgnoreCase(b.getItemName()));
 		return list;
+	}
+
+	@Override
+	public List<ShopEntry> shopsForItem(int itemId)
+	{
+		List<ShopEntry> purchasable = new ArrayList<>();
+		for (ShopEntry e : shopsByItemId.getOrDefault(itemId, Collections.emptyList()))
+		{
+			Integer stock = e.getItem().getStock();
+			if (stock != null && stock == 0)
+			{
+				continue; // 0 base stock is not a way to purchase the item (for now)
+			}
+			purchasable.add(e);
+		}
+		purchasable.sort(Comparator
+			.comparing((ShopEntry e) -> e.getItem().getSellPrice() == null)
+			.thenComparingInt(e -> e.getItem().getSellPrice() == null
+				? 0 : e.getItem().getSellPrice())
+			.thenComparing(e -> e.getShop().getName(), String.CASE_INSENSITIVE_ORDER));
+		return purchasable;
+	}
+
+	@Override
+	public List<ShopData> searchShops(String query)
+	{
+		String q = query.toLowerCase(Locale.ROOT).trim();
+		List<ShopData> out = new ArrayList<>();
+		if (q.isEmpty())
+		{
+			return out;
+		}
+		for (ShopData shop : allShops)
+		{
+			if (shop.getName().toLowerCase(Locale.ROOT).contains(q)
+				|| (shop.getLocation() != null
+					&& shop.getLocation().toLowerCase(Locale.ROOT).contains(q)))
+			{
+				out.add(shop);
+			}
+		}
+		out.sort(Comparator.comparing(ShopData::getName, String.CASE_INSENSITIVE_ORDER));
+		return out;
 	}
 
 	public void overlayImage(int npcId, String wikiImageUrl)
