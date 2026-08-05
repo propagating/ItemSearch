@@ -62,8 +62,6 @@ public class ItemResultView extends JPanel
 {
 	// live dry-streak values, updated in place when a kill is recorded (no rebuild/scroll reset)
 	private final List<DryRow> dryRows = new ArrayList<>();
-	// live "times received" value labels, refreshed in place when a kill records a drop
-	private final List<GotRow> gotRows = new ArrayList<>();
 
 	public ItemResultView(ItemMatch item, DropDataService data, TrackerStore store,
 		ItemManager itemManager, Runnable onBack, Consumer<NpcData> onNpcSelected,
@@ -194,53 +192,22 @@ public class ItemResultView extends JPanel
 		String rate = known ? Format.oneIn(src.getRarity()) : "rate unknown";
 		box.add(subLabel((owner != null ? "Lvl " + owner.getCombatLevel() + "  ·  " : "") + rate));
 
-		int got = npcId >= 0 ? store.getObtained(npcId, itemId) : 0;
-		JLabel gotValue = new JLabel(count(got));
-		box.add(statRow("Got", gotValue));
-		if (npcId >= 0)
-		{
-			gotRows.add(new GotRow(npcId, itemId, gotValue));
-		}
-
 		if (!known)
 		{
 			return box;
 		}
 
+		// compact on purpose: an item like uncut sapphire has dozens of sources, so each
+		// card carries just the two scanning stats; the full breakdown (confidence bands,
+		// obtained count, reset) lives in the NPC view behind the click-through
 		double p = src.getRarity();
 		int dry = npcId >= 0 ? store.getDry(npcId, itemId) : 0;
-
-		box.add(Box.createVerticalStrut(6));
-		box.add(section("Kills to obtain"));
 		box.add(statRow("Expected", expected(DropStats.expectedKills(p))));
-		box.add(statRow("10% chance", count(DropStats.killsForConfidence(p, 0.10))));
-		box.add(statRow("50% chance", count(DropStats.killsForConfidence(p, 0.50))));
-		box.add(statRow("90% chance", count(DropStats.killsForConfidence(p, 0.90))));
-
-		box.add(Box.createVerticalStrut(6));
-		box.add(section("Your dry streak"));
 		JLabel sinceValue = new JLabel(count(dry));
-		JLabel stillValue = new JLabel(Format.dryPercent(p, dry));
 		box.add(statRow("Kills since drop", sinceValue));
-		box.add(statRow("Still this dry", stillValue));
 		if (npcId >= 0)
 		{
-			dryRows.add(new DryRow(npcId, itemId, p, sinceValue, stillValue));
-		}
-
-		if (npcId >= 0)
-		{
-			box.add(Box.createVerticalStrut(6));
-			JButton reset = new JButton("Reset dry counter");
-			reset.setAlignmentX(Component.LEFT_ALIGNMENT);
-			reset.addActionListener(e ->
-			{
-				store.resetPair(npcId, itemId);
-				store.save();
-				reset.setText("Reset ✓");
-				reset.setEnabled(false);
-			});
-			box.add(reset);
+			dryRows.add(new DryRow(npcId, itemId, sinceValue));
 		}
 		return box;
 	}
@@ -253,13 +220,7 @@ public class ItemResultView extends JPanel
 	{
 		for (DryRow row : dryRows)
 		{
-			int dry = store.getDry(row.npcId, row.itemId);
-			row.sinceValue.setText(count(dry));
-			row.stillValue.setText(Format.dryPercent(row.rarity, dry));
-		}
-		for (GotRow row : gotRows)
-		{
-			row.value.setText(count(store.getObtained(row.npcId, row.itemId)));
+			row.sinceValue.setText(count(store.getDry(row.npcId, row.itemId)));
 		}
 	}
 
@@ -319,37 +280,18 @@ public class ItemResultView extends JPanel
 		return row;
 	}
 
-	// captures the dry-streak value labels for one source so they can be refreshed in place
+	// captures the kills-since-drop value label for one source so it can be refreshed in place
 	private static final class DryRow
 	{
 		private final int npcId;
 		private final int itemId;
-		private final double rarity;
 		private final JLabel sinceValue;
-		private final JLabel stillValue;
 
-		private DryRow(int npcId, int itemId, double rarity, JLabel sinceValue, JLabel stillValue)
+		private DryRow(int npcId, int itemId, JLabel sinceValue)
 		{
 			this.npcId = npcId;
 			this.itemId = itemId;
-			this.rarity = rarity;
 			this.sinceValue = sinceValue;
-			this.stillValue = stillValue;
-		}
-	}
-
-	// captures the "times received" value label for one source so it can be refreshed in place
-	private static final class GotRow
-	{
-		private final int npcId;
-		private final int itemId;
-		private final JLabel value;
-
-		private GotRow(int npcId, int itemId, JLabel value)
-		{
-			this.npcId = npcId;
-			this.itemId = itemId;
-			this.value = value;
 		}
 	}
 

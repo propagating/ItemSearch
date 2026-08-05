@@ -35,6 +35,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicReference;
 import javax.swing.JLabel;
+import javax.swing.JPanel;
 import javax.swing.JTextArea;
 import net.runelite.client.config.ConfigManager;
 import net.runelite.client.game.ItemManager;
@@ -143,23 +144,57 @@ public class ItemResultViewTest
 		assertEquals(GOBLIN, clicked.get().getId());
 	}
 
+	// The item view is a scannable list (an item like uncut sapphire has dozens of
+	// sources); each card shows only Expected and Kills since drop — the full stats
+	// live in the NPC view behind the click-through.
 	@Test
-	public void obtainedCountRendersAndRefreshes()
+	public void sourceCardsShowOnlyExpectedAndKillsSinceDrop()
 	{
-		TrackerStore store = new TrackerStore(mock(ConfigManager.class), new Gson());
-		store.recordKill(GOBLIN, Collections.singleton(BRONZE_DAGGER),
-			Collections.singletonList(BRONZE_DAGGER));
-		store.recordKill(GOBLIN, Collections.singleton(BRONZE_DAGGER),
-			Collections.singletonList(BRONZE_DAGGER));
-
-		ItemResultView view = build(loadedTestData(), store, new AtomicReference<>());
-		view.refresh(store);
+		ItemResultView view = build(loadedTestData(),
+			new TrackerStore(mock(ConfigManager.class), new Gson()), new AtomicReference<>());
 
 		List<JLabel> labels = collect(view, JLabel.class);
-		boolean hasGotRow = labels.stream().anyMatch(l -> "Got".equals(l.getText()));
-		boolean hasCountTwo = labels.stream().anyMatch(l -> "2".equals(l.getText()));
-		assertTrue("a 'Got' row must render", hasGotRow);
-		assertTrue("obtained count of 2 must render", hasCountTwo);
+		assertTrue("an 'Expected' row must render",
+			labels.stream().anyMatch(l -> "Expected".equals(l.getText())));
+		assertTrue("a 'Kills since drop' row must render",
+			labels.stream().anyMatch(l -> "Kills since drop".equals(l.getText())));
+		for (String removed : Arrays.asList("Got", "10% chance", "50% chance", "90% chance",
+			"Still this dry", "KILLS TO OBTAIN", "YOUR DRY STREAK"))
+		{
+			assertFalse("compact card must not render '" + removed + "'",
+				labels.stream().anyMatch(l -> removed.equals(l.getText())));
+		}
+		assertTrue("compact card must not render the reset button",
+			collect(view, javax.swing.JButton.class).stream()
+				.noneMatch(b -> "Reset dry counter".equals(b.getText())));
+	}
+
+	@Test
+	public void killsSinceDropRefreshesInPlace()
+	{
+		TrackerStore store = new TrackerStore(mock(ConfigManager.class), new Gson());
+		ItemResultView view = build(loadedTestData(), store, new AtomicReference<>());
+
+		store.recordKill(GOBLIN, Collections.emptySet(), Collections.singletonList(BRONZE_DAGGER));
+		store.recordKill(GOBLIN, Collections.emptySet(), Collections.singletonList(BRONZE_DAGGER));
+		store.recordKill(GOBLIN, Collections.emptySet(), Collections.singletonList(BRONZE_DAGGER));
+		view.refresh(store);
+
+		assertEquals("3", killsSinceDropValue(view));
+	}
+
+	// the value JLabel sharing a statRow panel with the "Kills since drop" name label
+	private static String killsSinceDropValue(ItemResultView view)
+	{
+		for (Container panel : collect(view, JPanel.class))
+		{
+			List<JLabel> inRow = collect(panel, JLabel.class);
+			if (inRow.size() == 2 && "Kills since drop".equals(inRow.get(0).getText()))
+			{
+				return inRow.get(1).getText();
+			}
+		}
+		return null;
 	}
 
 	@Test
