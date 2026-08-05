@@ -159,7 +159,7 @@ public class BundledDataSource implements DropDataService
 					.filter(i -> i != null && i.getItemName() != null)
 					.collect(Collectors.toList());
 			ShopData normalized = new ShopData(shop.getName(), shop.getLocation(),
-				shop.getCurrency(), items);
+				shop.getCurrency(), shop.getX(), shop.getY(), shop.getPlane(), items);
 			allShops.add(normalized);
 			for (ShopItem item : items)
 			{

@@ -33,6 +33,7 @@ import net.runelite.api.coords.WorldPoint;
 import net.runelite.api.worldmap.WorldMap;
 import net.runelite.client.callback.ClientThread;
 import com.itemsearch.model.NpcData;
+import com.itemsearch.model.ShopData;
 import com.itemsearch.model.SpawnPoint;
 import net.runelite.client.ui.overlay.worldmap.WorldMapPoint;
 import net.runelite.client.ui.overlay.worldmap.WorldMapPointManager;
@@ -90,6 +91,41 @@ public class SpawnMapMarker
 		}
 		SpawnPoint first = spawns.get(0);
 		WorldPoint target = new WorldPoint(first.getX(), first.getY(), first.getPlane());
+		clientThread.invokeLater(() ->
+		{
+			WorldMap worldMap = client.getWorldMap();
+			if (worldMap != null)
+			{
+				worldMap.setWorldMapPositionTarget(target);
+			}
+		});
+	}
+
+	/** Marks a single shop's location and pans the world map to it. */
+	public void showShop(ShopData shop)
+	{
+		clear();
+		if (markerIcon == null)
+		{
+			log.warn("itemsearch: marker icon missing, not marking map");
+			return;
+		}
+		if (shop.getX() == null || shop.getY() == null)
+		{
+			return;
+		}
+		WorldPoint target = new WorldPoint(shop.getX(), shop.getY(),
+			shop.getPlane() == null ? 0 : shop.getPlane());
+		WorldMapPoint point = WorldMapPoint.builder()
+			.worldPoint(target)
+			.image(markerIcon)
+			.snapToEdge(true)
+			.jumpOnClick(true)
+			.name(shop.getName())
+			.tooltip(shop.getName())
+			.build();
+		worldMapPointManager.add(point);
+		shown.add(point);
 		clientThread.invokeLater(() ->
 		{
 			WorldMap worldMap = client.getWorldMap();

@@ -32,6 +32,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicReference;
+import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import net.runelite.client.game.ItemManager;
@@ -49,10 +50,46 @@ public class ShopResultViewTest
 {
 	private static ShopData shop()
 	{
-		return new ShopData("Zaff's Superior Staffs", "Varrock", "Coins", Arrays.asList(
+		return new ShopData("Zaff's Superior Staffs", "Varrock", "Coins", 3203, 3434, 0, Arrays.asList(
 			new ShopItem(1381, "Staff of air", 5, 1500, 60),
 			new ShopItem(1383, "Staff of water", 0, 1500, 60),
 			new ShopItem(-1, "Mystery box", 5, null, null)));
+	}
+
+	private static ShopData shopWithoutCoords()
+	{
+		return new ShopData("Wandering Merchant", null, "Coins", null, null, null,
+			Arrays.asList(new ShopItem(1381, "Staff of air", 5, 1500, 60)));
+	}
+
+	private static ShopResultView view(ShopData shop, AtomicReference<ShopData> marked)
+	{
+		return new ShopResultView(shop, mock(ItemManager.class), () ->
+		{
+		}, i ->
+		{
+		}, marked::set);
+	}
+
+	@Test
+	public void showOnMapButtonFiresCallbackWhenCoordsPresent()
+	{
+		AtomicReference<ShopData> marked = new AtomicReference<>();
+		ShopResultView v = view(shop(), marked);
+		JButton button = collect(v, JButton.class).stream()
+			.filter(b -> "Show on map".equals(b.getText()))
+			.findFirst().orElse(null);
+		assertNotNull("a Show on map button must render when the shop has coordinates", button);
+		button.doClick();
+		assertEquals("Zaff's Superior Staffs", marked.get().getName());
+	}
+
+	@Test
+	public void noMapButtonWithoutCoordinates()
+	{
+		ShopResultView v = view(shopWithoutCoords(), new AtomicReference<>());
+		assertTrue("no Show on map button expected without coordinates",
+			collect(v, JButton.class).stream().noneMatch(b -> "Show on map".equals(b.getText())));
 	}
 
 	private static <T> List<T> collect(Container root, Class<T> type)
@@ -91,6 +128,8 @@ public class ShopResultViewTest
 		{
 		}, i ->
 		{
+		}, m ->
+		{
 		});
 		assertNotNull(labelWithText(view, "Staff of air"));
 		assertNotNull(labelWithText(view, "Mystery box"));
@@ -103,6 +142,8 @@ public class ShopResultViewTest
 		ShopResultView view = new ShopResultView(shop(), mock(ItemManager.class), () ->
 		{
 		}, i ->
+		{
+		}, m ->
 		{
 		});
 		JLabel name = labelWithText(view, "Staff of water");
@@ -118,7 +159,9 @@ public class ShopResultViewTest
 		AtomicReference<ShopItem> clicked = new AtomicReference<>();
 		ShopResultView view = new ShopResultView(shop(), mock(ItemManager.class), () ->
 		{
-		}, clicked::set);
+		}, clicked::set, m ->
+		{
+		});
 
 		JLabel air = labelWithText(view, "Staff of air");
 		assertTrue(air.getMouseListeners().length > 0);
@@ -135,7 +178,9 @@ public class ShopResultViewTest
 		AtomicReference<ShopItem> clicked = new AtomicReference<>();
 		ShopResultView view = new ShopResultView(shop(), mock(ItemManager.class), () ->
 		{
-		}, clicked::set);
+		}, clicked::set, m ->
+		{
+		});
 
 		JPanel row = rowWithLabel(view, "Staff of air");
 		assertNotNull(row);

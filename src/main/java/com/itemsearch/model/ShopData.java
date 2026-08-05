@@ -33,5 +33,10 @@ public class ShopData
 	String name;
 	String location;
 	String currency;
+	// world-map coordinates of the shop, from the wiki infobox's {{Map}} template;
+	// all null when the page has none. plane is 0 (ground) when coords are present.
+	Integer x;
+	Integer y;
+	Integer plane;
 	List<ShopItem> items;
 }

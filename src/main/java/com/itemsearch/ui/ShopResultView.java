@@ -49,7 +49,7 @@ import net.runelite.client.util.AsyncBufferedImage;
 public class ShopResultView extends JPanel
 {
 	public ShopResultView(ShopData shop, ItemManager itemManager, Runnable onBack,
-		Consumer<ShopItem> onItemSelected)
+		Consumer<ShopItem> onItemSelected, Consumer<ShopData> onMarkMap)
 	{
 		setLayout(new BorderLayout(0, 6));
 
@@ -70,6 +70,15 @@ public class ShopResultView extends JPanel
 		sub.setForeground(ColorScheme.LIGHT_GRAY_COLOR);
 		sub.setAlignmentX(Component.LEFT_ALIGNMENT);
 		body.add(sub);
+
+		if (shop.getX() != null && shop.getY() != null)
+		{
+			JButton mark = new JButton("Show on map");
+			mark.setAlignmentX(Component.LEFT_ALIGNMENT);
+			mark.addActionListener(e -> onMarkMap.accept(shop));
+			body.add(Box.createVerticalStrut(4));
+			body.add(mark);
+		}
 		body.add(Box.createVerticalStrut(6));
 
 		for (ShopItem item : shop.getItems())

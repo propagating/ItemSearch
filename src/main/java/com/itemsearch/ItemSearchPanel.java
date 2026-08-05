@@ -219,7 +219,8 @@ class ItemSearchPanel extends PluginPanel
 		currentNpcView = null;
 		ShopResultView view = new ShopResultView(shop, itemManager, onBack, line ->
 			showItem(new ItemMatch(line.getItemId(), line.getItemName()),
-				() -> showShop(shop, onBack)));
+				() -> showShop(shop, onBack)),
+			spawnMapMarker::showShop);
 		showDetail(view);
 	}
 

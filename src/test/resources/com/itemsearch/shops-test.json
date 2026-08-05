@@ -4,8 +4,20 @@
     "location": "Ranging Guild",
     "currency": "Coins",
     "items": [
-      { "itemId": 1205, "itemName": "Bronze dagger", "stock": 10, "sellPrice": 50, "restockSeconds": 30 },
-      { "itemId": 882, "itemName": "Bronze arrow", "stock": 0, "sellPrice": 2, "restockSeconds": 6 }
+      {
+        "itemId": 1205,
+        "itemName": "Bronze dagger",
+        "stock": 10,
+        "sellPrice": 50,
+        "restockSeconds": 30
+      },
+      {
+        "itemId": 882,
+        "itemName": "Bronze arrow",
+        "stock": 0,
+        "sellPrice": 2,
+        "restockSeconds": 6
+      }
     ]
   },
   {
@@ -13,9 +25,25 @@
     "location": "Varrock",
     "currency": "Coins",
     "items": [
-      { "itemId": 1205, "itemName": "Bronze dagger", "stock": -1, "sellPrice": 30 },
-      { "itemId": 1381, "itemName": "Staff of air", "stock": 5 },
-      { "itemId": -1, "itemName": "Mystery box", "stock": 5 }
-    ]
+      {
+        "itemId": 1205,
+        "itemName": "Bronze dagger",
+        "stock": -1,
+        "sellPrice": 30
+      },
+      {
+        "itemId": 1381,
+        "itemName": "Staff of air",
+        "stock": 5
+      },
+      {
+        "itemId": -1,
+        "itemName": "Mystery box",
+        "stock": 5
+      }
+    ],
+    "x": 3203,
+    "y": 3434,
+    "plane": 0
   }
 ]
