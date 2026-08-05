@@ -40,6 +40,7 @@ import javax.swing.event.DocumentListener;
 import net.runelite.client.callback.ClientThread;
 import net.runelite.client.game.ItemManager;
 import net.runelite.client.game.SpriteManager;
+import okhttp3.OkHttpClient;
 import com.itemsearch.data.DropDataService;
 import com.itemsearch.data.WikiRefreshService;
 import com.itemsearch.map.SpawnMapMarker;
@@ -65,6 +66,7 @@ class ItemSearchPanel extends PluginPanel
 	private final ClientThread clientThread;
 	private final ItemSearchConfig config;
 	private final SpriteManager spriteManager;
+	private final OkHttpClient okHttpClient;
 
 	private final JTextField search = new JTextField();
 	private final JPanel results = new JPanel();
@@ -78,11 +80,12 @@ class ItemSearchPanel extends PluginPanel
 	private NpcResultView currentNpcView;
 
 	ItemSearchPanel(DropDataService dataService, TrackerStore trackerStore, ItemManager itemManager,
-		WikiRefreshService wikiRefreshService, SpawnMapMarker spawnMapMarker,
+		OkHttpClient okHttpClient, WikiRefreshService wikiRefreshService, SpawnMapMarker spawnMapMarker,
 		RespawnTracker respawnTracker, ClientThread clientThread, ItemSearchConfig config,
 		SpriteManager spriteManager)
 	{
 		super(false);
+		this.okHttpClient = okHttpClient;
 		this.dataService = dataService;
 		this.trackerStore = trackerStore;
 		this.itemManager = itemManager;
@@ -191,8 +194,9 @@ class ItemSearchPanel extends PluginPanel
 	private void showNpc(NpcData npc)
 	{
 		currentItemView = null;
-		NpcResultView view = new NpcResultView(npc, trackerStore, spriteManager, itemManager, spawnMapMarker,
-			respawnTracker, clientThread, this::showResults, item -> showItem(item, () -> showNpc(npc)));
+		NpcResultView view = new NpcResultView(npc, trackerStore, spriteManager, itemManager, okHttpClient,
+			spawnMapMarker, respawnTracker, clientThread, this::showResults,
+			item -> showItem(item, () -> showNpc(npc)));
 		currentNpcView = view;
 		showDetail(view);
 		if (config.autoMarkSpawns())

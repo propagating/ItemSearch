@@ -36,6 +36,7 @@ import javax.swing.JTextField;
 import net.runelite.client.callback.ClientThread;
 import net.runelite.client.game.ItemManager;
 import net.runelite.client.game.SpriteManager;
+import okhttp3.OkHttpClient;
 import com.itemsearch.data.BundledDataSource;
 import com.itemsearch.data.WikiRefreshService;
 import com.itemsearch.map.SpawnMapMarker;
@@ -55,6 +56,7 @@ public class ItemSearchPanelTest
 			ds,
 			mock(TrackerStore.class),
 			mock(ItemManager.class),
+			new OkHttpClient(),
 			mock(WikiRefreshService.class),
 			mock(SpawnMapMarker.class),
 			mock(RespawnTracker.class),

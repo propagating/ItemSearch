@@ -51,6 +51,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 import net.runelite.client.callback.ClientThread;
+import okhttp3.OkHttpClient;
 import net.runelite.client.game.ItemManager;
 import net.runelite.client.game.SpriteManager;
 import com.itemsearch.combat.AttackStyles;
@@ -69,6 +70,7 @@ import net.runelite.client.util.AsyncBufferedImage;
 public class NpcResultView extends JPanel
 {
 	private final JLabel image = new JLabel();
+	private final OkHttpClient okHttpClient;
 	// per-drop stat lines ("Got: N · Dry: X%"), captured so kills can refresh them in place
 	private final List<DropRow> dropRows = new ArrayList<>();
 	private final int npcId;
@@ -76,9 +78,10 @@ public class NpcResultView extends JPanel
 	private JLabel killsValue;
 
 	public NpcResultView(NpcData npc, TrackerStore store, SpriteManager spriteManager, ItemManager itemManager,
-		SpawnMapMarker mapMarker, RespawnTracker respawnTracker, ClientThread clientThread, Runnable onBack,
-		Consumer<ItemMatch> onItemSelected)
+		OkHttpClient okHttpClient, SpawnMapMarker mapMarker, RespawnTracker respawnTracker,
+		ClientThread clientThread, Runnable onBack, Consumer<ItemMatch> onItemSelected)
 	{
+		this.okHttpClient = okHttpClient;
 		this.npcId = npc.getId();
 		setLayout(new BorderLayout(0, 6));
 
@@ -191,7 +194,7 @@ public class NpcResultView extends JPanel
 	private JPanel buildImageBox(NpcData npc)
 	{
 		JPanel box = card();
-		WikiImageLoader.loadInto(image, npc.getWikiImageUrl());
+		WikiImageLoader.loadInto(okHttpClient, image, npc.getWikiImageUrl());
 		JPanel center = new JPanel(new FlowLayout(FlowLayout.CENTER, 0, 0));
 		center.setOpaque(false);
 		center.setAlignmentX(Component.LEFT_ALIGNMENT);
@@ -476,7 +479,7 @@ public class NpcResultView extends JPanel
 	 */
 	public void updateImage(String url)
 	{
-		WikiImageLoader.loadInto(image, url);
+		WikiImageLoader.loadInto(okHttpClient, image, url);
 	}
 
 	static String formatRarity(DropSource d)

@@ -143,8 +143,8 @@ public class ItemSearchPlugin extends Plugin
 		respawnOverlay = new RespawnOverlay(client, respawnTracker, config);
 		overlayManager.add(respawnOverlay);
 
-		panel = new ItemSearchPanel(dataService, trackerStore, itemManager, wikiRefreshService,
-			spawnMapMarker, respawnTracker, clientThread, config, spriteManager);
+		panel = new ItemSearchPanel(dataService, trackerStore, itemManager, okHttpClient,
+			wikiRefreshService, spawnMapMarker, respawnTracker, clientThread, config, spriteManager);
 
 		final BufferedImage icon = ImageUtil.loadImageResource(getClass(), "panel_icon.png");
 		navButton = NavigationButton.builder()

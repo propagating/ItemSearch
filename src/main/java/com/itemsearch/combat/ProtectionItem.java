@@ -24,7 +24,7 @@
  */
 package com.itemsearch.combat;
 
-import net.runelite.api.ItemID;
+import net.runelite.api.gameval.ItemID;
 
 /** An item that counters an otherwise-unprayable attack, shown in the UI as the item's icon. */
 public enum ProtectionItem

@@ -41,6 +41,7 @@ import net.runelite.client.callback.ClientThread;
 import net.runelite.client.config.ConfigManager;
 import net.runelite.client.game.ItemManager;
 import net.runelite.client.game.SpriteManager;
+import okhttp3.OkHttpClient;
 import com.itemsearch.data.BundledDataSource;
 import com.itemsearch.map.SpawnMapMarker;
 import com.itemsearch.model.Attack;
@@ -75,7 +76,7 @@ public class NpcResultViewTest
 	private NpcResultView build(NpcData npc, TrackerStore store)
 	{
 		return new NpcResultView(npc, store, mock(SpriteManager.class), mock(ItemManager.class),
-			mock(SpawnMapMarker.class), mock(RespawnTracker.class), mock(ClientThread.class),
+			new OkHttpClient(), mock(SpawnMapMarker.class), mock(RespawnTracker.class), mock(ClientThread.class),
 			() ->
 			{
 			},

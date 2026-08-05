@@ -27,17 +27,20 @@ package com.itemsearch.ui;
 import java.awt.Graphics2D;
 import java.awt.RenderingHints;
 import java.awt.image.BufferedImage;
-import java.io.InputStream;
-import java.net.URL;
-import java.net.URLConnection;
+import java.io.IOException;
 import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.Executors;
-import java.util.concurrent.ExecutorService;
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.SwingUtilities;
 import lombok.extern.slf4j.Slf4j;
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.HttpUrl;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.Response;
+import okhttp3.ResponseBody;
 
 @Slf4j
 public final class WikiImageLoader
@@ -46,14 +49,13 @@ public final class WikiImageLoader
 	// would force the fixed-width sidebar header wider than the panel itself.
 	private static final int MAX_DIMENSION = 96;
 
-	private static final ExecutorService POOL = Executors.newFixedThreadPool(2);
 	private static final ConcurrentHashMap<String, BufferedImage> CACHE = new ConcurrentHashMap<>();
 
 	private WikiImageLoader()
 	{
 	}
 
-	public static void loadInto(JLabel target, String url)
+	public static void loadInto(OkHttpClient httpClient, JLabel target, String url)
 	{
 		if (url == null || url.trim().isEmpty())
 		{
@@ -66,29 +68,44 @@ public final class WikiImageLoader
 			SwingUtilities.invokeLater(() -> target.setIcon(new ImageIcon(cached)));
 			return;
 		}
-		POOL.submit(() ->
+		HttpUrl parsed = HttpUrl.parse(url);
+		if (parsed == null)
 		{
-			try
-			{
-				// finite timeouts so a hung fetch can't pin one of the two pool threads forever
-				URLConnection connection = new URL(url).openConnection();
-				connection.setConnectTimeout(5000);
-				connection.setReadTimeout(5000);
-				BufferedImage img;
-				try (InputStream in = connection.getInputStream())
-				{
-					img = ImageIO.read(in);
-				}
-				if (img != null)
-				{
-					BufferedImage scaled = scaleToFit(img);
-					CACHE.put(url, scaled);
-					SwingUtilities.invokeLater(() -> target.setIcon(new ImageIcon(scaled)));
-				}
-			}
-			catch (Exception e)
+			log.debug("itemsearch: unparseable image url {}", url);
+			return;
+		}
+		Request request = new Request.Builder().url(parsed).build();
+		httpClient.newCall(request).enqueue(new Callback()
+		{
+			@Override
+			public void onFailure(Call call, IOException e)
 			{
 				log.debug("itemsearch: image load failed {}", url, e);
+			}
+
+			@Override
+			public void onResponse(Call call, Response response)
+			{
+				// decode + scale on the okhttp thread; only the icon swap touches the EDT
+				try (ResponseBody body = response.body())
+				{
+					if (!response.isSuccessful() || body == null)
+					{
+						log.debug("itemsearch: image load failed {} (http {})", url, response.code());
+						return;
+					}
+					BufferedImage img = ImageIO.read(body.byteStream());
+					if (img != null)
+					{
+						BufferedImage scaled = scaleToFit(img);
+						CACHE.put(url, scaled);
+						SwingUtilities.invokeLater(() -> target.setIcon(new ImageIcon(scaled)));
+					}
+				}
+				catch (Exception e)
+				{
+					log.debug("itemsearch: image load failed {}", url, e);
+				}
 			}
 		});
 	}
