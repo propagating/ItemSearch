@@ -135,11 +135,7 @@ public class ItemResultViewTest
 		}
 		assertNotNull("Goblin name label must be present", goblin);
 
-		MouseEvent click = new MouseEvent(goblin, MouseEvent.MOUSE_CLICKED, 0L, 0, 0, 0, 1, false);
-		for (MouseListener l : goblin.getMouseListeners())
-		{
-			l.mouseClicked(click);
-		}
+		press(goblin);
 		assertNotNull("clicking an NPC must fire onNpcSelected", clicked.get());
 		assertEquals(GOBLIN, clicked.get().getId());
 	}
@@ -195,6 +191,70 @@ public class ItemResultViewTest
 			}
 		}
 		return null;
+	}
+
+	@Test
+	public void pressingAnywhereOnASourceCardFiresNpcCallback()
+	{
+		AtomicReference<NpcData> clicked = new AtomicReference<>();
+		ItemResultView view = build(loadedTestData(),
+			new TrackerStore(mock(ConfigManager.class), new Gson()), clicked);
+
+		JPanel card = cardWithTextArea(view, "Goblin");
+		assertNotNull(card);
+		assertTrue("the whole source card must carry a mouse listener",
+			card.getMouseListeners().length > 0);
+		press(card);
+		assertEquals(GOBLIN, clicked.get().getId());
+	}
+
+	@Test
+	public void pressingAnywhereOnAShopCardFiresShopCallback()
+	{
+		AtomicReference<com.itemsearch.model.ShopData> clicked = new AtomicReference<>();
+		ItemResultView view = new ItemResultView(
+			new ItemMatch(BRONZE_DAGGER, "Bronze dagger"),
+			loadedTestDataWithShops(), new TrackerStore(mock(ConfigManager.class), new Gson()),
+			mock(ItemManager.class),
+			() ->
+			{
+			},
+			npc ->
+			{
+			},
+			clicked::set);
+
+		JPanel card = cardWithTextArea(view, "Zaff's Superior Staffs");
+		assertNotNull(card);
+		assertTrue("the whole shop card must carry a mouse listener",
+			card.getMouseListeners().length > 0);
+		press(card);
+		assertEquals("Zaff's Superior Staffs", clicked.get().getName());
+	}
+
+	// the card panel whose DIRECT children include a wrapLabel text area with the given text
+	private static JPanel cardWithTextArea(Container root, String text)
+	{
+		for (JPanel p : collect(root, JPanel.class))
+		{
+			for (Component c : p.getComponents())
+			{
+				if (c instanceof JTextArea && text.equals(((JTextArea) c).getText()))
+				{
+					return p;
+				}
+			}
+		}
+		return null;
+	}
+
+	private static void press(Component c)
+	{
+		MouseEvent e = new MouseEvent(c, MouseEvent.MOUSE_PRESSED, 0, 0, 0, 0, 1, false);
+		for (MouseListener l : c.getMouseListeners())
+		{
+			l.mousePressed(e);
+		}
 	}
 
 	@Test
@@ -284,11 +344,7 @@ public class ItemResultViewTest
 		{
 			if ("Zaff's Superior Staffs".equals(a.getText()))
 			{
-				MouseEvent click = new MouseEvent(a, MouseEvent.MOUSE_CLICKED, 0, 0, 0, 0, 1, false);
-				for (MouseListener l : a.getMouseListeners())
-				{
-					l.mouseClicked(click);
-				}
+				press(a);
 			}
 		}
 		assertEquals("Zaff's Superior Staffs", clicked.get().getName());

@@ -33,6 +33,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicReference;
 import javax.swing.JLabel;
+import javax.swing.JPanel;
 import net.runelite.client.game.ItemManager;
 import com.itemsearch.model.ShopData;
 import com.itemsearch.model.ShopItem;
@@ -109,8 +110,10 @@ public class ShopResultViewTest
 		assertNotNull(labelWithText(view, "not stocked"));
 	}
 
+	// navigation fires on PRESS, not click: mouseClicked silently swallows any click
+	// where the mouse drifts a pixel between press and release, which reads as "lag"
 	@Test
-	public void clickingAResolvedItemFiresCallbackButUnresolvedDoesNot()
+	public void pressingAResolvedItemNameFiresCallbackButUnresolvedDoesNot()
 	{
 		AtomicReference<ShopItem> clicked = new AtomicReference<>();
 		ShopResultView view = new ShopResultView(shop(), mock(ItemManager.class), () ->
@@ -118,13 +121,54 @@ public class ShopResultViewTest
 		}, clicked::set);
 
 		JLabel air = labelWithText(view, "Staff of air");
-		MouseListener[] listeners = air.getMouseListeners();
-		assertTrue(listeners.length > 0);
-		listeners[0].mouseClicked(new MouseEvent(air, MouseEvent.MOUSE_CLICKED,
-			0, 0, 0, 0, 1, false));
+		assertTrue(air.getMouseListeners().length > 0);
+		press(air);
 		assertEquals(1381, clicked.get().getItemId());
 
 		JLabel mystery = labelWithText(view, "Mystery box");
 		assertEquals(0, mystery.getMouseListeners().length);
+	}
+
+	@Test
+	public void pressingAnywhereOnAResolvedRowFiresCallback()
+	{
+		AtomicReference<ShopItem> clicked = new AtomicReference<>();
+		ShopResultView view = new ShopResultView(shop(), mock(ItemManager.class), () ->
+		{
+		}, clicked::set);
+
+		JPanel row = rowWithLabel(view, "Staff of air");
+		assertNotNull(row);
+		assertTrue("the whole row must carry a mouse listener", row.getMouseListeners().length > 0);
+		press(row);
+		assertEquals(1381, clicked.get().getItemId());
+
+		JPanel mysteryRow = rowWithLabel(view, "Mystery box");
+		assertEquals("unresolved rows must not be clickable", 0, mysteryRow.getMouseListeners().length);
+	}
+
+	// the innermost JPanel whose DIRECT children include a label with the given text
+	private static JPanel rowWithLabel(Container root, String text)
+	{
+		for (JPanel p : collect(root, JPanel.class))
+		{
+			for (Component c : p.getComponents())
+			{
+				if (c instanceof JLabel && text.equals(((JLabel) c).getText()))
+				{
+					return p;
+				}
+			}
+		}
+		return null;
+	}
+
+	private static void press(Component c)
+	{
+		MouseEvent e = new MouseEvent(c, MouseEvent.MOUSE_PRESSED, 0, 0, 0, 0, 1, false);
+		for (MouseListener l : c.getMouseListeners())
+		{
+			l.mousePressed(e);
+		}
 	}
 }

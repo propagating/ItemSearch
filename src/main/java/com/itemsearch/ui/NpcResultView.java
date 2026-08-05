@@ -141,7 +141,7 @@ public class NpcResultView extends JPanel
 			row.addMouseListener(new MouseAdapter()
 			{
 				@Override
-				public void mouseClicked(MouseEvent e)
+				public void mousePressed(MouseEvent e)
 				{
 					onItemSelected.accept(new ItemMatch(d.getItemId(), d.getItemName()));
 				}

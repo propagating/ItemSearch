@@ -142,7 +142,7 @@ public class ItemResultView extends JPanel
 		name.addMouseListener(new MouseAdapter()
 		{
 			@Override
-			public void mouseClicked(MouseEvent e)
+			public void mousePressed(MouseEvent e)
 			{
 				onShopSelected.accept(shop);
 			}
@@ -156,7 +156,23 @@ public class ItemResultView extends JPanel
 		box.add(statRow("Price", Format.priceText(line.getSellPrice(), shop.getCurrency())));
 		box.add(statRow("Stock", Format.stockText(line.getStock())));
 		box.add(statRow("Restock", Format.restockText(line.getRestockSeconds())));
+		clickable(box, () -> onShopSelected.accept(shop));
 		return box;
+	}
+
+	// whole-card click target: Swing mouse events do not bubble, so the card needs its own
+	// listener for presses that land outside the name label
+	private static void clickable(JPanel box, Runnable action)
+	{
+		box.setCursor(new Cursor(Cursor.HAND_CURSOR));
+		box.addMouseListener(new MouseAdapter()
+		{
+			@Override
+			public void mousePressed(MouseEvent e)
+			{
+				action.run();
+			}
+		});
 	}
 
 	private JPanel buildSourceBox(DropSource src, DropDataService data, TrackerStore store, int itemId, int npcId,
@@ -180,11 +196,12 @@ public class ItemResultView extends JPanel
 			name.addMouseListener(new MouseAdapter()
 			{
 				@Override
-				public void mouseClicked(MouseEvent e)
+				public void mousePressed(MouseEvent e)
 				{
 					onNpcSelected.accept(owner);
 				}
 			});
+			clickable(box, () -> onNpcSelected.accept(owner));
 		}
 		box.add(name);
 

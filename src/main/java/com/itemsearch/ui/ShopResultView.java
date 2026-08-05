@@ -91,6 +91,32 @@ public class ShopResultView extends JPanel
 		row.setBackground(ColorScheme.DARKER_GRAY_COLOR);
 		row.setAlignmentX(Component.LEFT_ALIGNMENT);
 		row.setBorder(BorderFactory.createEmptyBorder(3, 4, 3, 4));
+		if (item.getItemId() >= 0)
+		{
+			// the whole row is a click target (Swing events don't bubble from unlistened
+			// children like the icon), with hover feedback to advertise it
+			row.setCursor(new Cursor(Cursor.HAND_CURSOR));
+			row.addMouseListener(new MouseAdapter()
+			{
+				@Override
+				public void mousePressed(MouseEvent e)
+				{
+					onItemSelected.accept(item);
+				}
+
+				@Override
+				public void mouseEntered(MouseEvent e)
+				{
+					row.setBackground(ColorScheme.DARK_GRAY_HOVER_COLOR);
+				}
+
+				@Override
+				public void mouseExited(MouseEvent e)
+				{
+					row.setBackground(ColorScheme.DARKER_GRAY_COLOR);
+				}
+			});
+		}
 
 		if (item.getItemId() >= 0)
 		{
@@ -114,7 +140,7 @@ public class ShopResultView extends JPanel
 			name.addMouseListener(new MouseAdapter()
 			{
 				@Override
-				public void mouseClicked(MouseEvent e)
+				public void mousePressed(MouseEvent e)
 				{
 					onItemSelected.accept(item);
 				}
