@@ -94,16 +94,8 @@ public class ItemResultView extends JPanel
 			? ((BundledDataSource) data).ownersOfItem(item.getItemId())
 			: Collections.emptyList();
 
-		for (SourceOrder.Entry entry : SourceOrder.order(rawSources, owners,
-			id ->
-			{
-				NpcData n = data.npcById(id);
-				return n != null ? n.getName() : null;
-			}))
-		{
-			body.add(buildSourceBox(entry.source, data, store, item.getItemId(), entry.npcId, onNpcSelected));
-		}
-
+		// purchase options first: buying is usually the faster way to obtain the item,
+		// and the drop list below can run to dozens of monsters
 		List<ShopEntry> shopEntries = data.shopsForItem(item.getItemId());
 		if (!shopEntries.isEmpty())
 		{
@@ -113,6 +105,21 @@ public class ItemResultView extends JPanel
 			{
 				body.add(buildShopBox(entry, onShopSelected));
 			}
+			if (!rawSources.isEmpty())
+			{
+				body.add(Box.createVerticalStrut(6));
+				body.add(section("Dropped by"));
+			}
+		}
+
+		for (SourceOrder.Entry entry : SourceOrder.order(rawSources, owners,
+			id ->
+			{
+				NpcData n = data.npcById(id);
+				return n != null ? n.getName() : null;
+			}))
+		{
+			body.add(buildSourceBox(entry.source, data, store, item.getItemId(), entry.npcId, onNpcSelected));
 		}
 
 		add(body, BorderLayout.CENTER);

@@ -163,7 +163,7 @@ public class ItemResultViewTest
 	}
 
 	@Test
-	public void buyFromSectionListsShopsCheapestFirstAfterMonsters()
+	public void buyFromSectionListsShopsCheapestFirstBeforeMonsters()
 	{
 		ItemResultView view = new ItemResultView(
 			new ItemMatch(BRONZE_DAGGER, "Bronze dagger"),
@@ -178,14 +178,52 @@ public class ItemResultViewTest
 			shop ->
 			{
 			});
-		// wrapLabel text areas render monsters first, then shops sorted by price (30 < 50)
+		// wrapLabel text areas render shops first (sorted by price, 30 < 50), then monsters
 		List<String> names = new ArrayList<>();
 		for (JTextArea a : collect(view, JTextArea.class))
 		{
 			names.add(a.getText());
 		}
-		assertEquals(Arrays.asList("Goblin", "Zulrah",
-			"Zaff's Superior Staffs", "Aaron's Archery Appendages"), names);
+		assertEquals(Arrays.asList("Zaff's Superior Staffs", "Aaron's Archery Appendages",
+			"Goblin", "Zulrah"), names);
+	}
+
+	@Test
+	public void droppedByHeaderSeparatesMonstersOnlyWhenShopsPresent()
+	{
+		ItemResultView withShops = new ItemResultView(
+			new ItemMatch(BRONZE_DAGGER, "Bronze dagger"),
+			loadedTestDataWithShops(), new TrackerStore(mock(ConfigManager.class), new Gson()),
+			mock(ItemManager.class),
+			() ->
+			{
+			},
+			npc ->
+			{
+			},
+			shop ->
+			{
+			});
+		assertTrue("expected DROPPED BY header when shops precede monster sources",
+			hasLabel(withShops, "DROPPED BY"));
+
+		// without shop data the view keeps its original headerless monster list
+		ItemResultView withoutShops = build(loadedTestData(),
+			new TrackerStore(mock(ConfigManager.class), new Gson()), new AtomicReference<>());
+		assertFalse("no DROPPED BY header expected without a buy-from section",
+			hasLabel(withoutShops, "DROPPED BY"));
+	}
+
+	private static boolean hasLabel(ItemResultView view, String text)
+	{
+		for (JLabel l : collect(view, JLabel.class))
+		{
+			if (text.equals(l.getText()))
+			{
+				return true;
+			}
+		}
+		return false;
 	}
 
 	@Test
