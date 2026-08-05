@@ -27,6 +27,7 @@ package com.itemsearch.map;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Consumer;
 import lombok.extern.slf4j.Slf4j;
 import net.runelite.api.Client;
 import net.runelite.api.coords.WorldPoint;
@@ -50,30 +51,48 @@ public class SpawnMapMarker
 	private final ClientThread clientThread;
 	private final WorldMapPointManager worldMapPointManager;
 	private final BufferedImage markerIcon;
+	// opens layered locations in the external map explorer (LinkBrowser::browse in the
+	// live client; injected so tests never launch a real browser)
+	private final Consumer<String> browser;
 
 	// points we added; clear() removes exactly these, never other plugins' pins
 	private final List<WorldMapPoint> shown = new ArrayList<>();
 
 	public SpawnMapMarker(Client client, ClientThread clientThread,
-		WorldMapPointManager worldMapPointManager, BufferedImage markerIcon)
+		WorldMapPointManager worldMapPointManager, BufferedImage markerIcon,
+		Consumer<String> browser)
 	{
 		this.client = client;
 		this.clientThread = clientThread;
 		this.worldMapPointManager = worldMapPointManager;
 		this.markerIcon = markerIcon;
+		this.browser = browser;
 	}
 
 	public void showSpawns(NpcData npc)
 	{
 		clear();
-		if (markerIcon == null)
-		{
-			log.warn("itemsearch: marker icon missing, not marking map");
-			return;
-		}
 		List<SpawnPoint> spawns = npc.getSpawnPoints();
 		if (spawns.isEmpty())
 		{
+			return;
+		}
+		// every spawn above ground level: the in-game map can't show any of them, so
+		// open the explorer on the right floor instead
+		if (spawns.stream().noneMatch(sp -> sp.getPlane() == 0))
+		{
+			SpawnPoint first = spawns.get(0);
+			String layered = MapLinks.layeredMapUrl(first.getX(), first.getY(),
+				first.getPlane(), null);
+			if (layered != null)
+			{
+				browser.accept(layered);
+				return;
+			}
+		}
+		if (markerIcon == null)
+		{
+			log.warn("itemsearch: marker icon missing, not marking map");
 			return;
 		}
 		for (SpawnPoint sp : spawns)
@@ -101,17 +120,28 @@ public class SpawnMapMarker
 		});
 	}
 
-	/** Marks a single shop's location and pans the world map to it. */
+	/**
+	 * Marks a single shop's location and pans the world map to it — unless the shop is
+	 * on an upper floor or a special map layer the in-game map cannot display, in which
+	 * case the external map explorer opens on the right layer instead.
+	 */
 	public void showShop(ShopData shop)
 	{
 		clear();
+		if (shop.getX() == null || shop.getY() == null)
+		{
+			return;
+		}
+		String layered = MapLinks.layeredMapUrl(shop.getX(), shop.getY(),
+			shop.getPlane(), shop.getMapId());
+		if (layered != null)
+		{
+			browser.accept(layered);
+			return;
+		}
 		if (markerIcon == null)
 		{
 			log.warn("itemsearch: marker icon missing, not marking map");
-			return;
-		}
-		if (shop.getX() == null || shop.getY() == null)
-		{
 			return;
 		}
 		WorldPoint target = new WorldPoint(shop.getX(), shop.getY(),

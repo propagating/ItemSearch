@@ -38,5 +38,6 @@ public class ShopData
 	Integer x;
 	Integer y;
 	Integer plane;
+	Integer mapId; // wiki map layer id; null/<=0 = ordinary surface map
 	List<ShopItem> items;
 }

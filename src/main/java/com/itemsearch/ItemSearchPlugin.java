@@ -135,7 +135,8 @@ public class ItemSearchPlugin extends Plugin
 			log.warn("itemsearch: failed to load map marker icon", e);
 			markerIcon = null;
 		}
-		spawnMapMarker = new SpawnMapMarker(client, clientThread, worldMapPointManager, markerIcon);
+		spawnMapMarker = new SpawnMapMarker(client, clientThread, worldMapPointManager, markerIcon,
+			net.runelite.client.util.LinkBrowser::browse);
 
 		respawnTimeStore = new RespawnTimeStore(configManager, gson);
 		respawnTimeStore.load();

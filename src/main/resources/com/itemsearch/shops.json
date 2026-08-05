@@ -90,7 +90,7 @@
     ]
   },
   {
-    "name": "Aaron's Archery Appendages.",
+    "name": "Aaron's Archery Appendages",
     "location": "Ranging Guild",
     "currency": "Coins",
     "x": 2666,
@@ -156,7 +156,7 @@
     ]
   },
   {
-    "name": "Aaron's Archery Appendages. (2)",
+    "name": "Aaron's Archery Appendages (2)",
     "location": "Ranging Guild",
     "currency": "Coins",
     "x": 2666,
@@ -172,7 +172,7 @@
     ]
   },
   {
-    "name": "Aaron's Archery Appendages. (3)",
+    "name": "Aaron's Archery Appendages (3)",
     "location": "Ranging Guild",
     "currency": "Coins",
     "x": 2666,
@@ -189,7 +189,7 @@
     ]
   },
   {
-    "name": "Aemad's Adventuring Supplies.",
+    "name": "Aemad's Adventuring Supplies",
     "location": "East Ardougne",
     "currency": "Coins",
     "x": 2614,
@@ -276,7 +276,7 @@
     ]
   },
   {
-    "name": "Aemad's Adventuring Supplies. (2)",
+    "name": "Aemad's Adventuring Supplies (2)",
     "location": "East Ardougne",
     "currency": "Coins",
     "x": 2614,
@@ -533,6 +533,7 @@
     "x": 2868,
     "y": 10209,
     "plane": 0,
+    "mapId": 10,
     "items": [
       {
         "itemId": 5050,
@@ -625,7 +626,7 @@
     ]
   },
   {
-    "name": "Ak-Haranu's Exotic Shop.",
+    "name": "Ak-Haranu's Exotic Shop",
     "location": "Port Phasmatys docks",
     "currency": "Coins",
     "items": [
@@ -836,7 +837,7 @@
     ]
   },
   {
-    "name": "Aleck's Hunter Emporium.",
+    "name": "Aleck's Hunter Emporium",
     "location": "Yanille",
     "currency": "Coins",
     "x": 2567,
@@ -992,6 +993,9 @@
   {
     "name": "Ali the Kebab seller",
     "currency": "Coins",
+    "x": 3354,
+    "y": 2975,
+    "plane": 0,
     "items": [
       {
         "itemId": 1971,
@@ -1014,7 +1018,7 @@
     ]
   },
   {
-    "name": "Ali's Discount Wares.",
+    "name": "Ali's Discount Wares",
     "location": "Al Kharid",
     "currency": "Coins",
     "items": [
@@ -1125,7 +1129,7 @@
     ]
   },
   {
-    "name": "Ali's Discount Wares. (2)",
+    "name": "Ali's Discount Wares (2)",
     "location": "Al Kharid",
     "currency": "Coins",
     "items": [
@@ -1167,7 +1171,7 @@
     ]
   },
   {
-    "name": "Ali's Discount Wares. (3)",
+    "name": "Ali's Discount Wares (3)",
     "location": "Al Kharid",
     "currency": "Coins",
     "items": [
@@ -1209,7 +1213,7 @@
     ]
   },
   {
-    "name": "Ali's Discount Wares. (4)",
+    "name": "Ali's Discount Wares (4)",
     "location": "Al Kharid",
     "currency": "Coins",
     "items": [
@@ -1272,7 +1276,7 @@
     ]
   },
   {
-    "name": "Ali's Discount Wares. (5)",
+    "name": "Ali's Discount Wares (5)",
     "location": "Al Kharid",
     "currency": "Coins",
     "items": [
@@ -1356,7 +1360,7 @@
     ]
   },
   {
-    "name": "Ali's Discount Wares. (6)",
+    "name": "Ali's Discount Wares (6)",
     "location": "Al Kharid",
     "currency": "Coins",
     "items": [
@@ -1398,7 +1402,7 @@
     ]
   },
   {
-    "name": "Ali's Discount Wares. (7)",
+    "name": "Ali's Discount Wares (7)",
     "location": "Al Kharid",
     "currency": "Coins",
     "items": [
@@ -1461,7 +1465,7 @@
     ]
   },
   {
-    "name": "Alice's Farming shop.",
+    "name": "Alice's Farming shop",
     "location": "Alice's farm",
     "currency": "Coins",
     "x": 3628,
@@ -2163,6 +2167,7 @@
     "x": 3250,
     "y": 6062,
     "plane": 0,
+    "mapId": 29,
     "items": [
       {
         "itemId": 1121,
@@ -2453,7 +2458,7 @@
     ]
   },
   {
-    "name": "Ardougne Baker's Stall.",
+    "name": "Ardougne Baker's Stall",
     "location": "East Ardougne",
     "currency": "Coins",
     "x": 2656,
@@ -2489,7 +2494,7 @@
     ]
   },
   {
-    "name": "Ardougne Baker's Stall. (2)",
+    "name": "Ardougne Baker's Stall (2)",
     "location": "East Ardougne",
     "currency": "Coins",
     "x": 2656,
@@ -2525,7 +2530,7 @@
     ]
   },
   {
-    "name": "Ardougne Fur Stall.",
+    "name": "Ardougne Fur Stall",
     "location": "East Ardougne",
     "currency": "Coins",
     "items": [
@@ -2616,7 +2621,7 @@
     ]
   },
   {
-    "name": "Ardougne Gem Stall.",
+    "name": "Ardougne Gem Stall",
     "location": "East Ardougne",
     "currency": "Coins",
     "items": [
@@ -2651,7 +2656,7 @@
     ]
   },
   {
-    "name": "Ardougne Silver Stall.",
+    "name": "Ardougne Silver Stall",
     "location": "East Ardougne",
     "currency": "Coins",
     "items": [
@@ -2679,7 +2684,7 @@
     ]
   },
   {
-    "name": "Ardougne Spice Stall.",
+    "name": "Ardougne Spice Stall",
     "location": "East Ardougne",
     "currency": "Coins",
     "items": [
@@ -2905,12 +2910,13 @@
     ]
   },
   {
-    "name": "Armour store.",
+    "name": "Armour store",
     "location": "Blast Furnace in Keldagrim",
     "currency": "Coins",
     "x": 1939,
     "y": 4968,
     "plane": 0,
+    "mapId": 10022,
     "items": [
       {
         "itemId": 1147,
@@ -3233,7 +3239,7 @@
     ]
   },
   {
-    "name": "Arnold's Eclectic Supplies.",
+    "name": "Arnold's Eclectic Supplies",
     "location": "Piscatoris Fishing Colony",
     "currency": "Coins",
     "items": [
@@ -3716,7 +3722,7 @@
     ]
   },
   {
-    "name": "Aubury's Rune Shop.",
+    "name": "Aubury's Rune Shop",
     "location": "Varrock",
     "currency": "Coins",
     "x": 3250,
@@ -3824,7 +3830,7 @@
     ]
   },
   {
-    "name": "Aubury's Rune Shop. (2)",
+    "name": "Aubury's Rune Shop (2)",
     "location": "Varrock",
     "currency": "Coins",
     "x": 3250,
@@ -3840,7 +3846,7 @@
     ]
   },
   {
-    "name": "Aubury's Rune Shop. (3)",
+    "name": "Aubury's Rune Shop (3)",
     "location": "Varrock",
     "currency": "Coins",
     "x": 3250,
@@ -3859,6 +3865,9 @@
   {
     "name": "Aurel",
     "currency": "Coins",
+    "x": 3515,
+    "y": 3241,
+    "plane": 0,
     "items": [
       {
         "itemId": 7668,
@@ -3907,7 +3916,7 @@
     ]
   },
   {
-    "name": "Authentic Throwing Weapons.",
+    "name": "Authentic Throwing Weapons",
     "location": "Ranging Guild",
     "currency": "Coins",
     "items": [
@@ -4119,7 +4128,7 @@
     ]
   },
   {
-    "name": "Baba Yaga's Magic Shop.",
+    "name": "Baba Yaga's Magic Shop",
     "location": "Lunar Isle",
     "currency": "Coins",
     "items": [
@@ -4308,7 +4317,7 @@
     ]
   },
   {
-    "name": "Baba Yaga's Magic Shop. (2)",
+    "name": "Baba Yaga's Magic Shop (2)",
     "location": "Lunar Isle",
     "currency": "Coins",
     "items": [
@@ -4654,6 +4663,9 @@
   {
     "name": "Baraek",
     "currency": "Coins",
+    "x": 3217,
+    "y": 3435,
+    "plane": 0,
     "items": [
       {
         "itemId": 6814,
@@ -4673,6 +4685,9 @@
   {
     "name": "Baraek (2)",
     "currency": "Coins",
+    "x": 3217,
+    "y": 3435,
+    "plane": 0,
     "items": [
       {
         "itemId": 6814,
@@ -4692,6 +4707,10 @@
   {
     "name": "Bardur",
     "currency": "Coins",
+    "x": 1850,
+    "y": 4392,
+    "plane": 1,
+    "mapId": -1,
     "items": [
       {
         "itemId": 3758,
@@ -4704,6 +4723,10 @@
   {
     "name": "Bardur (2)",
     "currency": "Coins",
+    "x": 1850,
+    "y": 4392,
+    "plane": 1,
+    "mapId": -1,
     "items": [
       {
         "itemId": 3758,
@@ -5266,6 +5289,9 @@
   {
     "name": "Betty",
     "currency": "Coins",
+    "x": 3013,
+    "y": 3259,
+    "plane": 0,
     "items": [
       {
         "itemId": 6955,
@@ -5424,7 +5450,7 @@
     ]
   },
   {
-    "name": "Blades by Urbi.",
+    "name": "Blades by Urbi",
     "location": "Sophanem",
     "currency": "Coins",
     "items": [
@@ -5687,7 +5713,7 @@
     ]
   },
   {
-    "name": "Bob's Brilliant Axes.",
+    "name": "Bob's Brilliant Axes",
     "location": "Lumbridge",
     "currency": "Coins",
     "x": 3228,
@@ -6090,6 +6116,7 @@
     "x": 3294,
     "y": 6091,
     "plane": 0,
+    "mapId": 29,
     "items": [
       {
         "itemId": 5341,
@@ -6212,7 +6239,7 @@
     ]
   },
   {
-    "name": "Brian's Archery Supplies.",
+    "name": "Brian's Archery Supplies",
     "location": "Rimmington",
     "currency": "Coins",
     "x": 2957,
@@ -6285,7 +6312,7 @@
     ]
   },
   {
-    "name": "Brian's Battleaxe Bazaar.",
+    "name": "Brian's Battleaxe Bazaar",
     "location": "Port Sarim",
     "currency": "Coins",
     "x": 3027,
@@ -6608,6 +6635,9 @@
   {
     "name": "Brimhaven Agility Arena",
     "currency": "Brimhaven voucher",
+    "x": 2809,
+    "y": 3194,
+    "plane": 0,
     "items": [
       {
         "itemId": 2998,
@@ -6750,6 +6780,7 @@
     "x": 1449,
     "y": 9584,
     "plane": 0,
+    "mapId": 44,
     "items": [
       {
         "itemId": 1205,
@@ -6900,6 +6931,7 @@
     "x": 1426,
     "y": 9556,
     "plane": 1,
+    "mapId": -1,
     "items": [
       {
         "itemId": 1755,
@@ -7032,6 +7064,9 @@
   {
     "name": "Candle seller",
     "currency": "Coins",
+    "x": 3170,
+    "y": 3176,
+    "plane": 0,
     "items": [
       {
         "itemId": 36,
@@ -7083,6 +7118,7 @@
     "x": 2887,
     "y": 10207,
     "plane": 0,
+    "mapId": 10,
     "items": [
       {
         "itemId": 1755,
@@ -7131,6 +7167,10 @@
   {
     "name": "Cart conductor",
     "currency": "Coins",
+    "x": 2919,
+    "y": 10180,
+    "plane": 0,
+    "mapId": 10,
     "items": [
       {
         "itemId": -1,
@@ -7149,6 +7189,10 @@
   {
     "name": "Cart conductor (2)",
     "currency": "Coins",
+    "x": 2919,
+    "y": 10180,
+    "plane": 0,
+    "mapId": 10,
     "items": [
       {
         "itemId": -1,
@@ -7167,6 +7211,10 @@
   {
     "name": "Cart conductor (Dwarven Mine)",
     "currency": "Coins",
+    "x": 2996,
+    "y": 9837,
+    "plane": 0,
+    "mapId": 6,
     "items": [
       {
         "itemId": 5020,
@@ -7179,6 +7227,10 @@
   {
     "name": "Cart conductor (Dwarven Mine) (2)",
     "currency": "Coins",
+    "x": 2996,
+    "y": 9837,
+    "plane": 0,
+    "mapId": 6,
     "items": [
       {
         "itemId": 5020,
@@ -7191,6 +7243,10 @@
   {
     "name": "Cart conductor (White Wolf Mountain)",
     "currency": "Coins",
+    "x": 2875,
+    "y": 9873,
+    "plane": 0,
+    "mapId": 20,
     "items": [
       {
         "itemId": 5020,
@@ -7203,6 +7259,10 @@
   {
     "name": "Cart conductor (White Wolf Mountain) (2)",
     "currency": "Coins",
+    "x": 2875,
+    "y": 9873,
+    "plane": 0,
+    "mapId": 20,
     "items": [
       {
         "itemId": 5020,
@@ -7213,7 +7273,7 @@
     ]
   },
   {
-    "name": "Cassie's Shield Shop.",
+    "name": "Cassie's Shield Shop",
     "location": "Falador",
     "currency": "Coins",
     "x": 2972,
@@ -7397,6 +7457,10 @@
   {
     "name": "Civilian",
     "currency": "death runes",
+    "x": 2468,
+    "y": 3304,
+    "plane": 0,
+    "mapId": -1,
     "items": [
       {
         "itemId": 1561,
@@ -7419,6 +7483,10 @@
   {
     "name": "Civilian (2)",
     "currency": "death runes",
+    "x": 2468,
+    "y": 3304,
+    "plane": 0,
+    "mapId": -1,
     "items": [
       {
         "itemId": 1561,
@@ -7794,6 +7862,7 @@
     "x": 3314,
     "y": 6120,
     "plane": 0,
+    "mapId": 29,
     "items": [
       {
         "itemId": 8794,
@@ -7833,7 +7902,7 @@
     ]
   },
   {
-    "name": "Contraband yak produce.",
+    "name": "Contraband yak produce",
     "location": "Jatizso",
     "currency": "Coins",
     "x": 2404,
@@ -7889,6 +7958,7 @@
     "x": 3004,
     "y": 9799,
     "plane": 0,
+    "mapId": 6,
     "items": [
       {
         "itemId": 9440,
@@ -8032,6 +8102,7 @@
     "x": 2887,
     "y": 10203,
     "plane": 0,
+    "mapId": 10,
     "items": [
       {
         "itemId": 9440,
@@ -8175,6 +8246,7 @@
     "x": 2865,
     "y": 9871,
     "plane": 0,
+    "mapId": 20,
     "items": [
       {
         "itemId": 9440,
@@ -8318,6 +8390,7 @@
     "x": 3219,
     "y": 9623,
     "plane": 0,
+    "mapId": -1,
     "items": [
       {
         "itemId": 1973,
@@ -8475,6 +8548,7 @@
     "x": 3219,
     "y": 9623,
     "plane": 0,
+    "mapId": -1,
     "items": [
       {
         "itemId": 1973,
@@ -8632,6 +8706,7 @@
     "x": 3219,
     "y": 9623,
     "plane": 0,
+    "mapId": -1,
     "items": [
       {
         "itemId": 1973,
@@ -8789,6 +8864,7 @@
     "x": 3219,
     "y": 9623,
     "plane": 0,
+    "mapId": -1,
     "items": [
       {
         "itemId": 7453,
@@ -8939,6 +9015,7 @@
     "x": 3219,
     "y": 9623,
     "plane": 0,
+    "mapId": -1,
     "items": [
       {
         "itemId": 7453,
@@ -9089,6 +9166,7 @@
     "x": 3219,
     "y": 9623,
     "plane": 0,
+    "mapId": -1,
     "items": [
       {
         "itemId": 7453,
@@ -9113,6 +9191,7 @@
     "x": 3219,
     "y": 9623,
     "plane": 0,
+    "mapId": -1,
     "items": [
       {
         "itemId": 7453,
@@ -9151,6 +9230,7 @@
     "x": 3219,
     "y": 9623,
     "plane": 0,
+    "mapId": -1,
     "items": [
       {
         "itemId": 7453,
@@ -9203,6 +9283,7 @@
     "x": 3219,
     "y": 9623,
     "plane": 0,
+    "mapId": -1,
     "items": [
       {
         "itemId": 7453,
@@ -9269,6 +9350,7 @@
     "x": 3219,
     "y": 9623,
     "plane": 0,
+    "mapId": -1,
     "items": [
       {
         "itemId": 7453,
@@ -9349,6 +9431,7 @@
     "x": 3219,
     "y": 9623,
     "plane": 0,
+    "mapId": -1,
     "items": [
       {
         "itemId": 7453,
@@ -9443,6 +9526,7 @@
     "x": 3219,
     "y": 9623,
     "plane": 0,
+    "mapId": -1,
     "items": [
       {
         "itemId": 1973,
@@ -9600,6 +9684,7 @@
     "x": 3219,
     "y": 9623,
     "plane": 0,
+    "mapId": -1,
     "items": [
       {
         "itemId": 7453,
@@ -9708,6 +9793,7 @@
     "x": 3219,
     "y": 9623,
     "plane": 0,
+    "mapId": -1,
     "items": [
       {
         "itemId": 7453,
@@ -9830,6 +9916,7 @@
     "x": 3219,
     "y": 9623,
     "plane": 0,
+    "mapId": -1,
     "items": [
       {
         "itemId": 7453,
@@ -9966,6 +10053,7 @@
     "x": 3219,
     "y": 9623,
     "plane": 0,
+    "mapId": -1,
     "items": [
       {
         "itemId": 1973,
@@ -10123,6 +10211,7 @@
     "x": 3219,
     "y": 9623,
     "plane": 0,
+    "mapId": -1,
     "items": [
       {
         "itemId": 1973,
@@ -10280,6 +10369,7 @@
     "x": 3219,
     "y": 9623,
     "plane": 0,
+    "mapId": -1,
     "items": [
       {
         "itemId": 1973,
@@ -10437,6 +10527,7 @@
     "x": 3219,
     "y": 9623,
     "plane": 0,
+    "mapId": -1,
     "items": [
       {
         "itemId": 1973,
@@ -10594,6 +10685,7 @@
     "x": 3219,
     "y": 9623,
     "plane": 0,
+    "mapId": -1,
     "items": [
       {
         "itemId": 1973,
@@ -10751,6 +10843,7 @@
     "x": 3219,
     "y": 9623,
     "plane": 0,
+    "mapId": -1,
     "items": [
       {
         "itemId": 1973,
@@ -10908,6 +11001,7 @@
     "x": 3219,
     "y": 9623,
     "plane": 0,
+    "mapId": -1,
     "items": [
       {
         "itemId": 1973,
@@ -11277,7 +11371,7 @@
     ]
   },
   {
-    "name": "Dargaud's Bow and Arrows.",
+    "name": "Dargaud's Bow and Arrows",
     "location": "Ranging Guild",
     "currency": "Coins",
     "x": 2672,
@@ -11905,7 +11999,7 @@
     ]
   },
   {
-    "name": "Darren's Wilderness Cape Shop.",
+    "name": "Darren's Wilderness Cape Shop",
     "location": "East of Wilderness Agility Course",
     "currency": "Coins",
     "items": [
@@ -12076,7 +12170,7 @@
     ]
   },
   {
-    "name": "Davon's Amulet Store.",
+    "name": "Davon's Amulet Store",
     "location": "Brimhaven",
     "currency": "Coins",
     "items": [
@@ -12118,7 +12212,7 @@
     ]
   },
   {
-    "name": "Davon's Amulet Store. (2)",
+    "name": "Davon's Amulet Store (2)",
     "location": "Brimhaven",
     "currency": "Coins",
     "items": [
@@ -13979,7 +14073,7 @@
     ]
   },
   {
-    "name": "Dodgy Mike's Second Hand Clothing.",
+    "name": "Dodgy Mike's Second Hand Clothing",
     "location": "Mos Le'Harmless",
     "currency": "Coins",
     "x": 3687,
@@ -14196,7 +14290,7 @@
     ]
   },
   {
-    "name": "Dommik's Crafting Store.",
+    "name": "Dommik's Crafting Store",
     "location": "Al Kharid",
     "currency": "Coins",
     "x": 3321,
@@ -14551,7 +14645,7 @@
     ]
   },
   {
-    "name": "Drogo's Mining Emporium.",
+    "name": "Drogo's Mining Emporium",
     "location": "Dwarven Mines",
     "currency": "Coins",
     "items": [
@@ -14669,6 +14763,7 @@
     "x": 1956,
     "y": 9172,
     "plane": 0,
+    "mapId": 48,
     "items": [
       {
         "itemId": 952,
@@ -15093,7 +15188,7 @@
     ]
   },
   {
-    "name": "Edmond's Wilderness Cape Shop.",
+    "name": "Edmond's Wilderness Cape Shop",
     "location": "South of lava maze",
     "currency": "Coins",
     "items": [
@@ -15135,7 +15230,7 @@
     ]
   },
   {
-    "name": "Edward's Wilderness Cape Shop.",
+    "name": "Edward's Wilderness Cape Shop",
     "location": "Around the Rogues' Castle",
     "currency": "Coins",
     "items": [
@@ -17042,7 +17137,7 @@
     ]
   },
   {
-    "name": "Fernahei's Fishing Hut.",
+    "name": "Fernahei's Fishing Hut",
     "location": "Shilo Village",
     "currency": "Coins",
     "x": 2869,
@@ -17115,7 +17210,7 @@
     ]
   },
   {
-    "name": "Fernahei's Fishing Hut. (2)",
+    "name": "Fernahei's Fishing Hut (2)",
     "location": "Shilo Village",
     "currency": "Coins",
     "x": 2869,
@@ -17412,7 +17507,7 @@
     ]
   },
   {
-    "name": "Fishing Guild Shop.",
+    "name": "Fishing Guild Shop",
     "location": "Fishing Guild",
     "currency": "Coins",
     "x": 2590,
@@ -17736,7 +17831,7 @@
     ]
   },
   {
-    "name": "Flynn's Mace Market.",
+    "name": "Flynn's Mace Market",
     "location": "Falador",
     "currency": "Coins",
     "x": 2948,
@@ -19184,7 +19279,7 @@
     ]
   },
   {
-    "name": "Frenita's Cookery Shop.",
+    "name": "Frenita's Cookery Shop",
     "location": "Yanille",
     "currency": "Coins",
     "x": 2565,
@@ -19278,7 +19373,7 @@
     ]
   },
   {
-    "name": "Frincos' Fabulous Herb Store.",
+    "name": "Frincos' Fabulous Herb Store",
     "location": "Entrana",
     "currency": "Coins",
     "x": 2807,
@@ -19339,6 +19434,9 @@
   {
     "name": "Fritz the Glassblower",
     "currency": "Coins",
+    "x": 2829,
+    "y": 3354,
+    "plane": 0,
     "items": [
       {
         "itemId": 1775,
@@ -19349,6 +19447,9 @@
   {
     "name": "Fritz the Glassblower (2)",
     "currency": "Coins",
+    "x": 2829,
+    "y": 3354,
+    "plane": 0,
     "items": [
       {
         "itemId": 1775,
@@ -19534,7 +19635,7 @@
     ]
   },
   {
-    "name": "Gabooty's Tai Bwo Wannai Cooperative.",
+    "name": "Gabooty's Tai Bwo Wannai Cooperative",
     "location": "Tai Bwo Wannai",
     "currency": "Trading sticks",
     "items": [
@@ -19751,7 +19852,7 @@
     ]
   },
   {
-    "name": "Gabooty's Tai Bwo Wannai Cooperative. (2)",
+    "name": "Gabooty's Tai Bwo Wannai Cooperative (2)",
     "location": "Tai Bwo Wannai",
     "currency": "Trading sticks",
     "items": [
@@ -19968,7 +20069,7 @@
     ]
   },
   {
-    "name": "Gabooty's Tai Bwo Wannai Drinky Store.",
+    "name": "Gabooty's Tai Bwo Wannai Drinky Store",
     "location": "Tai Bwo Wannai",
     "currency": "Trading sticks",
     "items": [
@@ -20024,7 +20125,7 @@
     ]
   },
   {
-    "name": "Gabooty's Tai Bwo Wannai Drinky Store. (2)",
+    "name": "Gabooty's Tai Bwo Wannai Drinky Store (2)",
     "location": "Tai Bwo Wannai",
     "currency": "Trading sticks",
     "items": [
@@ -20098,7 +20199,7 @@
     ]
   },
   {
-    "name": "Gaius' Two Handed Shop.",
+    "name": "Gaius' Two Handed Shop",
     "location": "Taverley",
     "currency": "Coins",
     "items": [
@@ -20394,7 +20495,7 @@
     ]
   },
   {
-    "name": "Gem Trader.",
+    "name": "Gem Trader",
     "location": "Al Kharid",
     "currency": "Coins",
     "items": [
@@ -20568,7 +20669,7 @@
     ]
   },
   {
-    "name": "Gerrant's Fishy Business.",
+    "name": "Gerrant's Fishy Business",
     "location": "Port Sarim",
     "currency": "Coins",
     "x": 3011,
@@ -20818,6 +20919,7 @@
     "x": 3371,
     "y": 11486,
     "plane": 0,
+    "mapId": -1,
     "items": [
       {
         "itemId": 27012,
@@ -20926,6 +21028,9 @@
   {
     "name": "Gnome Waiter",
     "currency": "Coins",
+    "x": 2448,
+    "y": 3503,
+    "plane": 1,
     "items": [
       {
         "itemId": 2227,
@@ -21027,6 +21132,7 @@
     "x": 3050,
     "y": 4961,
     "plane": 0,
+    "mapId": 10137,
     "items": [
       {
         "itemId": 11850,
@@ -21361,7 +21467,7 @@
     ]
   },
   {
-    "name": "Grud's Herblore Stall.",
+    "name": "Grud's Herblore Stall",
     "location": "Gu'Tanoth",
     "currency": "Coins",
     "items": [
@@ -21417,7 +21523,7 @@
     ]
   },
   {
-    "name": "Grum's Gold Exchange.",
+    "name": "Grum's Gold Exchange",
     "location": "Port Sarim",
     "currency": "Coins",
     "x": 3013,
@@ -21538,6 +21644,7 @@
     "x": 3227,
     "y": 6059,
     "plane": 0,
+    "mapId": 29,
     "items": [
       {
         "itemId": 1763,
@@ -21759,6 +21866,7 @@
     "x": 2871,
     "y": 10189,
     "plane": 0,
+    "mapId": 10,
     "items": [
       {
         "itemId": 1935,
@@ -21874,6 +21982,7 @@
     "x": 3290,
     "y": 6044,
     "plane": 0,
+    "mapId": 29,
     "items": [
       {
         "itemId": 1267,
@@ -22008,7 +22117,7 @@
     ]
   },
   {
-    "name": "Happy Heroes' H'emporium.",
+    "name": "Happy Heroes' H'emporium",
     "location": "{{FloorNumber",
     "currency": "Coins",
     "x": 2895,
@@ -22080,7 +22189,7 @@
     ]
   },
   {
-    "name": "Harpoon Joe's House of 'Rum'.",
+    "name": "Harpoon Joe's House of 'Rum'",
     "location": "Mos Le'Harmless",
     "currency": "Coins",
     "x": 3666,
@@ -22118,7 +22227,7 @@
     ]
   },
   {
-    "name": "Harry's Fishing Shop.",
+    "name": "Harry's Fishing Shop",
     "location": "Catherby",
     "currency": "Coins",
     "x": 2830,
@@ -22278,6 +22387,7 @@
     "x": 3236,
     "y": 6128,
     "plane": 0,
+    "mapId": 29,
     "items": [
       {
         "itemId": 1917,
@@ -22302,7 +22412,7 @@
     ]
   },
   {
-    "name": "Helmet Shop.",
+    "name": "Helmet Shop",
     "location": "Barbarian Village",
     "currency": "Coins",
     "items": [
@@ -22561,7 +22671,7 @@
     ]
   },
   {
-    "name": "Herquin's Gems.",
+    "name": "Herquin's Gems",
     "location": "Falador",
     "currency": "Coins",
     "x": 2945,
@@ -22675,7 +22785,7 @@
     ]
   },
   {
-    "name": "Hickton's Archery Emporium.",
+    "name": "Hickton's Archery Emporium",
     "location": "Catherby",
     "currency": "Coins",
     "x": 2823,
@@ -22881,7 +22991,7 @@
     ]
   },
   {
-    "name": "Hickton's Archery Emporium. (2)",
+    "name": "Hickton's Archery Emporium (2)",
     "location": "Catherby",
     "currency": "Coins",
     "x": 2823,
@@ -22897,7 +23007,7 @@
     ]
   },
   {
-    "name": "Hickton's Archery Emporium. (3)",
+    "name": "Hickton's Archery Emporium (3)",
     "location": "Catherby",
     "currency": "Coins",
     "x": 2823,
@@ -23155,7 +23265,7 @@
     ]
   },
   {
-    "name": "Horvik's Armour Shop.",
+    "name": "Horvik's Armour Shop",
     "location": "Varrock",
     "currency": "Coins",
     "x": 3230,
@@ -23265,6 +23375,7 @@
     "x": 1437,
     "y": 9553,
     "plane": 1,
+    "mapId": -1,
     "items": [
       {
         "itemId": 233,
@@ -23336,7 +23447,7 @@
     ]
   },
   {
-    "name": "Ian's Wilderness Cape Shop.",
+    "name": "Ian's Wilderness Cape Shop",
     "location": "Forgotten Cemetery",
     "currency": "Coins",
     "items": [
@@ -23638,6 +23749,7 @@
     "x": 3258,
     "y": 6061,
     "plane": 0,
+    "mapId": 29,
     "items": [
       {
         "itemId": 1211,
@@ -23713,6 +23825,9 @@
   {
     "name": "Iron Bill",
     "currency": "Coins",
+    "x": 1867,
+    "y": 3298,
+    "plane": 0,
     "items": [
       {
         "itemId": 31906,
@@ -24124,6 +24239,10 @@
   {
     "name": "Islwyn",
     "currency": "Coins",
+    "x": 2206,
+    "y": 3158,
+    "plane": 0,
+    "mapId": 0,
     "items": [
       {
         "itemId": 23983,
@@ -24198,6 +24317,7 @@
     "x": 3255,
     "y": 6128,
     "plane": 0,
+    "mapId": 29,
     "items": [
       {
         "itemId": 1428,
@@ -24223,7 +24343,7 @@
     ]
   },
   {
-    "name": "Jamila's Craft Stall.",
+    "name": "Jamila's Craft Stall",
     "location": "Sophanem",
     "currency": "Coins",
     "x": 3311,
@@ -24303,7 +24423,7 @@
     ]
   },
   {
-    "name": "Jatix's Herblore Shop.",
+    "name": "Jatix's Herblore Shop",
     "location": "Taverley",
     "currency": "Coins",
     "x": 2897,
@@ -24463,7 +24583,7 @@
     ]
   },
   {
-    "name": "Jiminua's Jungle Store.",
+    "name": "Jiminua's Jungle Store",
     "location": "Karamja",
     "currency": "Coins",
     "items": [
@@ -24665,7 +24785,7 @@
     ]
   },
   {
-    "name": "Jiminua's Jungle Store. (2)",
+    "name": "Jiminua's Jungle Store (2)",
     "location": "Karamja",
     "currency": "Coins",
     "items": [
@@ -25504,7 +25624,7 @@
     ]
   },
   {
-    "name": "Karamja Wines, Spirits, and Beers.",
+    "name": "Karamja Wines, Spirits, and Beers",
     "location": "Karamja",
     "currency": "Coins",
     "x": 2918,
@@ -25862,6 +25982,7 @@
     "x": 2849,
     "y": 10184,
     "plane": 0,
+    "mapId": 10,
     "items": [
       {
         "itemId": 3420,
@@ -25907,6 +26028,7 @@
     "x": 2892,
     "y": 10211,
     "plane": 0,
+    "mapId": 10,
     "items": [
       {
         "itemId": 2309,
@@ -26152,6 +26274,7 @@
     "x": 2839,
     "y": 10195,
     "plane": 0,
+    "mapId": 10,
     "items": [
       {
         "itemId": 1917,
@@ -26180,6 +26303,7 @@
     "x": 2905,
     "y": 10216,
     "plane": 0,
+    "mapId": 10,
     "items": [
       {
         "itemId": 1971,
@@ -26202,7 +26326,7 @@
     ]
   },
   {
-    "name": "Kourend Castle Baker's Stall.",
+    "name": "Kourend Castle Baker's Stall",
     "location": "Kourend Castle",
     "currency": "Coins",
     "x": 1639,
@@ -26238,7 +26362,7 @@
     ]
   },
   {
-    "name": "Kourend Castle Gem Stall.",
+    "name": "Kourend Castle Gem Stall",
     "location": "Kourend Castle",
     "currency": "Coins",
     "items": [
@@ -26411,7 +26535,7 @@
     ]
   },
   {
-    "name": "Larry's Wilderness Cape Shop.",
+    "name": "Larry's Wilderness Cape Shop",
     "location": "Graveyard of Shadows/Bone Yard",
     "currency": "Coins",
     "x": 3205,
@@ -27028,7 +27152,7 @@
     ]
   },
   {
-    "name": "Legends Guild General Store.",
+    "name": "Legends Guild General Store",
     "location": "{{FloorNumber",
     "currency": "Coins",
     "items": [
@@ -27061,7 +27185,7 @@
     ]
   },
   {
-    "name": "Legends Guild Shop of Useful Items.",
+    "name": "Legends Guild Shop of Useful Items",
     "location": "{{FloorNumber",
     "currency": "Coins",
     "items": [
@@ -27103,7 +27227,7 @@
     ]
   },
   {
-    "name": "Leon's Prototype Crossbow.",
+    "name": "Leon's Prototype Crossbow",
     "location": "Yanille",
     "currency": "Coins",
     "items": [
@@ -27117,7 +27241,7 @@
     ]
   },
   {
-    "name": "Leprechaun Larry's Farming Supplies.",
+    "name": "Leprechaun Larry's Farming Supplies",
     "location": "Troll Stronghold",
     "currency": "Coins",
     "x": 2825,
@@ -27765,6 +27889,7 @@
     "x": 3229,
     "y": 6070,
     "plane": 0,
+    "mapId": 29,
     "items": [
       {
         "itemId": 23911,
@@ -28363,7 +28488,7 @@
     ]
   },
   {
-    "name": "Louie's Armoured Legs Bazaar.",
+    "name": "Louie's Armoured Legs Bazaar",
     "location": "Al Kharid",
     "currency": "Coins",
     "items": [
@@ -28672,6 +28797,9 @@
   {
     "name": "Lucrezia",
     "currency": "Coins",
+    "x": 1356,
+    "y": 2926,
+    "plane": 0,
     "items": [
       {
         "itemId": 5767,
@@ -28877,7 +29005,7 @@
     ]
   },
   {
-    "name": "Lundail's Arena-side Rune Shop.",
+    "name": "Lundail's Arena-side Rune Shop",
     "location": "Mage Arena",
     "currency": "Coins",
     "items": [
@@ -29063,6 +29191,9 @@
   {
     "name": "Mac",
     "currency": "Coins",
+    "x": 2787,
+    "y": 3543,
+    "plane": 0,
     "items": [
       {
         "itemId": 13280,
@@ -29073,7 +29204,7 @@
     ]
   },
   {
-    "name": "Mage Arena Staffs.",
+    "name": "Mage Arena Staffs",
     "location": "Mage Arena",
     "currency": "Coins",
     "items": [
@@ -29402,6 +29533,7 @@
     "x": 3765,
     "y": 10290,
     "plane": 0,
+    "mapId": 30,
     "items": [
       {
         "itemId": 21562,
@@ -29665,12 +29797,13 @@
     ]
   },
   {
-    "name": "Martin Thwait's Lost and Found.",
+    "name": "Martin Thwait's Lost and Found",
     "location": "Rogues' Den",
     "currency": "Coins",
     "x": 3051,
     "y": 4974,
     "plane": 0,
+    "mapId": 10137,
     "items": [
       {
         "itemId": 954,
@@ -29751,12 +29884,13 @@
     ]
   },
   {
-    "name": "Martin Thwait's Lost and Found. (2)",
+    "name": "Martin Thwait's Lost and Found (2)",
     "location": "Rogues' Den",
     "currency": "Coins",
     "x": 3051,
     "y": 4974,
     "plane": 0,
+    "mapId": 10137,
     "items": [
       {
         "itemId": -1,
@@ -29767,12 +29901,13 @@
     ]
   },
   {
-    "name": "Martin Thwait's Lost and Found. (3)",
+    "name": "Martin Thwait's Lost and Found (3)",
     "location": "Rogues' Den",
     "currency": "Coins",
     "x": 3051,
     "y": 4974,
     "plane": 0,
+    "mapId": 10137,
     "items": [
       {
         "itemId": 9777,
@@ -29916,6 +30051,7 @@
     "x": 2721,
     "y": 5322,
     "plane": 0,
+    "mapId": 5,
     "items": [
       {
         "itemId": 596,
@@ -30030,6 +30166,7 @@
     "x": 2506,
     "y": 10253,
     "plane": 0,
+    "mapId": -1,
     "items": [
       {
         "itemId": 3767,
@@ -30159,6 +30296,7 @@
     "x": 2517,
     "y": 10253,
     "plane": 0,
+    "mapId": -1,
     "items": [
       {
         "itemId": 2309,
@@ -30225,6 +30363,7 @@
     "x": 2506,
     "y": 10260,
     "plane": 0,
+    "mapId": -1,
     "items": [
       {
         "itemId": 1931,
@@ -30420,6 +30559,7 @@
     "x": 1395,
     "y": 9312,
     "plane": 0,
+    "mapId": -1,
     "items": [
       {
         "itemId": 29971,
@@ -30484,7 +30624,7 @@
     ]
   },
   {
-    "name": "Moon Clan Fine Clothes.",
+    "name": "Moon Clan Fine Clothes",
     "location": "Lunar Isle",
     "currency": "Coins",
     "x": 2102,
@@ -30557,7 +30697,7 @@
     ]
   },
   {
-    "name": "Moon Clan General Store.",
+    "name": "Moon Clan General Store",
     "location": "Lunar Isle",
     "currency": "Coins",
     "x": 2096,
@@ -30840,6 +30980,10 @@
     "name": "Myreque's Rest",
     "location": "Burgh de Rott",
     "currency": "Coins",
+    "x": 3495,
+    "y": 9628,
+    "plane": 0,
+    "mapId": -1,
     "items": [
       {
         "itemId": 1917,
@@ -31077,7 +31221,7 @@
     ]
   },
   {
-    "name": "Nardah General Store.",
+    "name": "Nardah General Store",
     "location": "Nardah",
     "currency": "Coins",
     "x": 3413,
@@ -31171,7 +31315,7 @@
     ]
   },
   {
-    "name": "Nardah Hunter Shop.",
+    "name": "Nardah Hunter Shop",
     "location": "Nardah",
     "currency": "Coins",
     "x": 3438,
@@ -31314,7 +31458,7 @@
     ]
   },
   {
-    "name": "Nathifa's Bake Stall.",
+    "name": "Nathifa's Bake Stall",
     "location": "Sophanem",
     "currency": "Coins",
     "x": 3304,
@@ -31377,7 +31521,7 @@
     ]
   },
   {
-    "name": "Neil's Wilderness Cape Shop.",
+    "name": "Neil's Wilderness Cape Shop",
     "location": "Bandit Camp",
     "currency": "Coins",
     "x": 3026,
@@ -31422,7 +31566,7 @@
     ]
   },
   {
-    "name": "Neitiznot supplies.",
+    "name": "Neitiznot supplies",
     "location": "Neitiznot",
     "currency": "Coins",
     "x": 2337,
@@ -31618,7 +31762,7 @@
     ]
   },
   {
-    "name": "Nurmof's Pickaxe Shop.",
+    "name": "Nurmof's Pickaxe Shop",
     "location": "Dwarven Mines",
     "currency": "Coins",
     "items": [
@@ -31667,7 +31811,7 @@
     ]
   },
   {
-    "name": "Obli's General Store.",
+    "name": "Obli's General Store",
     "location": "Shilo Village",
     "currency": "Coins",
     "x": 2822,
@@ -31852,7 +31996,7 @@
     ]
   },
   {
-    "name": "Obli's General Store. (2)",
+    "name": "Obli's General Store (2)",
     "location": "Shilo Village",
     "currency": "Coins",
     "x": 2822,
@@ -32216,7 +32360,7 @@
     ]
   },
   {
-    "name": "Ore seller.",
+    "name": "Ore seller",
     "location": "Blast Furnace in Keldagrim",
     "currency": "Coins",
     "items": [
@@ -33085,6 +33229,7 @@
     "x": 2922,
     "y": 10215,
     "plane": 0,
+    "mapId": 10,
     "items": [
       {
         "itemId": 1265,
@@ -33196,7 +33341,7 @@
     ]
   },
   {
-    "name": "Pollnivneach general store.",
+    "name": "Pollnivneach general store",
     "location": "Pollnivneach",
     "currency": "Coins",
     "x": 3358,
@@ -34126,6 +34271,7 @@
     "x": 3276,
     "y": 6108,
     "plane": 0,
+    "mapId": 29,
     "items": [
       {
         "itemId": 1933,
@@ -34261,6 +34407,7 @@
     "x": 3276,
     "y": 6099,
     "plane": 0,
+    "mapId": 29,
     "items": [
       {
         "itemId": 1607,
@@ -34299,6 +34446,7 @@
     "x": 3301,
     "y": 6055,
     "plane": 0,
+    "mapId": 29,
     "items": [
       {
         "itemId": 1931,
@@ -34414,6 +34562,7 @@
     "x": 3284,
     "y": 6121,
     "plane": 0,
+    "mapId": 29,
     "items": [
       {
         "itemId": 233,
@@ -34473,6 +34622,7 @@
     "x": 3282,
     "y": 6098,
     "plane": 0,
+    "mapId": 29,
     "items": [
       {
         "itemId": 1714,
@@ -34532,6 +34682,7 @@
     "x": 3219,
     "y": 6077,
     "plane": 0,
+    "mapId": 29,
     "items": [
       {
         "itemId": 1734,
@@ -34852,6 +35003,7 @@
     "x": 2825,
     "y": 10202,
     "plane": 0,
+    "mapId": 10,
     "items": [
       {
         "itemId": 1105,
@@ -34925,6 +35077,7 @@
     "x": 2824,
     "y": 10234,
     "plane": 0,
+    "mapId": 10,
     "items": [
       {
         "itemId": 1365,
@@ -35226,7 +35379,7 @@
     ]
   },
   {
-    "name": "Raetul and Co's Cloth Store.",
+    "name": "Raetul and Co's Cloth Store",
     "location": "Sophanem",
     "currency": "Coins",
     "x": 3313,
@@ -35278,7 +35431,7 @@
     ]
   },
   {
-    "name": "Raetul and Co's Cloth Store. (2)",
+    "name": "Raetul and Co's Cloth Store (2)",
     "location": "Sophanem",
     "currency": "Coins",
     "x": 3313,
@@ -35337,7 +35490,7 @@
     ]
   },
   {
-    "name": "Ranael's Super Skirt Store.",
+    "name": "Ranael's Super Skirt Store",
     "location": "Al Kharid",
     "currency": "Coins",
     "items": [
@@ -35654,6 +35807,7 @@
     "x": 1932,
     "y": 4692,
     "plane": 0,
+    "mapId": -1,
     "items": [
       {
         "itemId": 1917,
@@ -35676,6 +35830,7 @@
     "x": 2979,
     "y": 9658,
     "plane": 0,
+    "mapId": -1,
     "items": [
       {
         "itemId": 1917,
@@ -35698,6 +35853,7 @@
     "x": 2905,
     "y": 5080,
     "plane": 0,
+    "mapId": -1,
     "items": [
       {
         "itemId": 1917,
@@ -35714,7 +35870,7 @@
     ]
   },
   {
-    "name": "Razmire Builders Merchants.",
+    "name": "Razmire Builders Merchants",
     "location": "Mort'ton",
     "currency": "Coins",
     "items": [
@@ -35756,7 +35912,7 @@
     ]
   },
   {
-    "name": "Razmire General Store.",
+    "name": "Razmire General Store",
     "location": "Mort'ton",
     "currency": "Coins",
     "items": [
@@ -36172,7 +36328,7 @@
     ]
   },
   {
-    "name": "Richard's Farming shop.",
+    "name": "Richard's Farming shop",
     "location": "North of East Ardougne",
     "currency": "Coins",
     "x": 2645,
@@ -36398,7 +36554,7 @@
     ]
   },
   {
-    "name": "Richard's Wilderness Cape Shop.",
+    "name": "Richard's Wilderness Cape Shop",
     "location": "Edgeville",
     "currency": "Coins",
     "items": [
@@ -36442,6 +36598,9 @@
   {
     "name": "Rick (Wizards' Tower)",
     "currency": "Coins",
+    "x": 3108,
+    "y": 3163,
+    "plane": 1,
     "items": [
       {
         "itemId": 22517,
@@ -36590,7 +36749,7 @@
     ]
   },
   {
-    "name": "Rok's Chocs Box.",
+    "name": "Rok's Chocs Box",
     "location": "Nardah",
     "currency": "Coins",
     "items": [
@@ -36611,7 +36770,7 @@
     ]
   },
   {
-    "name": "Rommik's Crafty Supplies.",
+    "name": "Rommik's Crafty Supplies",
     "location": "Rimmington",
     "currency": "Coins",
     "x": 2946,
@@ -37012,7 +37171,7 @@
     ]
   },
   {
-    "name": "Sam's Wilderness Cape Shop.",
+    "name": "Sam's Wilderness Cape Shop",
     "location": "East of Dark Warriors' Fortress",
     "currency": "Coins",
     "items": [
@@ -37054,7 +37213,7 @@
     ]
   },
   {
-    "name": "Sarah's Farming shop.",
+    "name": "Sarah's Farming shop",
     "location": "South Falador Farm",
     "currency": "Coins",
     "x": 3038,
@@ -37280,7 +37439,7 @@
     ]
   },
   {
-    "name": "Scavvo's Rune Store.",
+    "name": "Scavvo's Rune Store",
     "location": "Champions' Guild",
     "currency": "Coins",
     "x": 3191,
@@ -37447,7 +37606,7 @@
     ]
   },
   {
-    "name": "Seddu's Adventurer's Store.",
+    "name": "Seddu's Adventurer's Store",
     "location": "Nardah",
     "currency": "Coins",
     "x": 3402,
@@ -37574,6 +37733,9 @@
   {
     "name": "Seravel",
     "currency": "Coins",
+    "x": 2870,
+    "y": 2973,
+    "plane": 1,
     "items": [
       {
         "itemId": 621,
@@ -37978,6 +38140,7 @@
     "x": 3306,
     "y": 6074,
     "plane": 0,
+    "mapId": 29,
     "items": [
       {
         "itemId": 888,
@@ -38234,7 +38397,7 @@
     ]
   },
   {
-    "name": "Simon's Wilderness Cape Shop.",
+    "name": "Simon's Wilderness Cape Shop",
     "location": "Chaos Temple",
     "currency": "Coins",
     "items": [
@@ -38440,6 +38603,9 @@
   {
     "name": "Slayer Equipment (shop)",
     "currency": "Coins",
+    "x": 2931,
+    "y": 3537,
+    "plane": 0,
     "items": [
       {
         "itemId": 4155,
@@ -38627,6 +38793,9 @@
   {
     "name": "Slayer Equipment (shop) (2)",
     "currency": "Coins",
+    "x": 2931,
+    "y": 3537,
+    "plane": 0,
     "items": [
       {
         "itemId": 24942,
@@ -38682,6 +38851,9 @@
   {
     "name": "Sloane",
     "currency": "Coins",
+    "x": 2855,
+    "y": 3553,
+    "plane": 1,
     "items": [
       {
         "itemId": -1,
@@ -38719,7 +38891,7 @@
     ]
   },
   {
-    "name": "Smithing Smith's Shop.",
+    "name": "Smithing Smith's Shop",
     "location": "Mos Le'Harmless",
     "currency": "Coins",
     "items": [
@@ -39423,6 +39595,10 @@
   {
     "name": "Supervisor Lalo",
     "currency": "Coins",
+    "x": 1394,
+    "y": 9313,
+    "plane": 0,
+    "mapId": 43,
     "items": [
       {
         "itemId": 29971,
@@ -40190,7 +40366,7 @@
     ]
   },
   {
-    "name": "The Asp & Snake Bar.",
+    "name": "The Asp & Snake Bar",
     "location": "Pollnivneach",
     "currency": "Coins",
     "x": 3359,
@@ -40390,6 +40566,7 @@
     "x": 2526,
     "y": 10259,
     "plane": 0,
+    "mapId": -1,
     "items": [
       {
         "itemId": 1917,
@@ -40855,6 +41032,7 @@
     "x": 1431,
     "y": 9584,
     "plane": 1,
+    "mapId": -1,
     "items": [
       {
         "itemId": 1917,
@@ -40925,7 +41103,7 @@
     ]
   },
   {
-    "name": "The Other Inn.",
+    "name": "The Other Inn",
     "location": "Mos Le'Harmless",
     "currency": "Coins",
     "x": 3662,
@@ -41124,6 +41302,7 @@
     "x": 1426,
     "y": 9568,
     "plane": 1,
+    "mapId": -1,
     "items": [
       {
         "itemId": 556,
@@ -41308,7 +41487,7 @@
     ]
   },
   {
-    "name": "The Spice Is Right.",
+    "name": "The Spice Is Right",
     "location": "Sophanem",
     "currency": "Coins",
     "items": [
@@ -41392,6 +41571,7 @@
     "x": 1496,
     "y": 3223,
     "plane": 0,
+    "mapId": -1,
     "items": [
       {
         "itemId": 1917,
@@ -41462,6 +41642,9 @@
   {
     "name": "Thessalia",
     "currency": "Frog token",
+    "x": 3206,
+    "y": 3416,
+    "plane": 0,
     "items": [
       {
         "itemId": 6188,
@@ -41490,7 +41673,7 @@
     ]
   },
   {
-    "name": "Thessalia's Fine Clothes.",
+    "name": "Thessalia's Fine Clothes",
     "location": "Varrock",
     "currency": "Coins",
     "x": 3201,
@@ -41901,6 +42084,7 @@
     "x": 1443,
     "y": 9553,
     "plane": 1,
+    "mapId": -1,
     "items": [
       {
         "itemId": 2347,
@@ -42367,7 +42551,7 @@
     ]
   },
   {
-    "name": "Trader Sven's Black-market Goods.",
+    "name": "Trader Sven's Black-market Goods",
     "location": "Meiyerditch",
     "currency": "Coins",
     "items": [
@@ -42476,6 +42660,9 @@
   {
     "name": "Trufitus",
     "currency": "Coins",
+    "x": 2809,
+    "y": 3086,
+    "plane": 0,
     "items": [
       {
         "itemId": 1526,
@@ -42621,7 +42808,7 @@
     ]
   },
   {
-    "name": "Two Feet Charley's Fish Shop.",
+    "name": "Two Feet Charley's Fish Shop",
     "location": "Mos Le'Harmless",
     "currency": "Coins",
     "x": 3671,
@@ -43727,7 +43914,7 @@
     ]
   },
   {
-    "name": "Valaine's Shop of Champions.",
+    "name": "Valaine's Shop of Champions",
     "location": "{{FloorNumber",
     "currency": "Coins",
     "items": [
@@ -43796,7 +43983,7 @@
     ]
   },
   {
-    "name": "Vanessa's Farming shop.",
+    "name": "Vanessa's Farming shop",
     "location": "Catherby",
     "currency": "Coins",
     "x": 2820,
@@ -44465,6 +44652,7 @@
     "x": 2888,
     "y": 10189,
     "plane": 0,
+    "mapId": 10,
     "items": [
       {
         "itemId": 5048,
@@ -44517,6 +44705,7 @@
     "x": 2873,
     "y": 10209,
     "plane": 0,
+    "mapId": 10,
     "items": [
       {
         "itemId": 1337,
@@ -44939,6 +45128,7 @@
     "x": 1825,
     "y": 10145,
     "plane": 0,
+    "mapId": 32,
     "items": [
       {
         "itemId": 303,
@@ -45117,6 +45307,7 @@
     "x": 1838,
     "y": 10149,
     "plane": 0,
+    "mapId": 32,
     "items": [
       {
         "itemId": 1931,
@@ -45555,7 +45746,7 @@
     ]
   },
   {
-    "name": "Wayne's Chains! - Chainmail specialist.",
+    "name": "Wayne's Chains! - Chainmail specialist",
     "location": "Falador",
     "currency": "Coins",
     "x": 2972,
@@ -47124,7 +47315,7 @@
     ]
   },
   {
-    "name": "William's Wilderness Cape Shop.",
+    "name": "William's Wilderness Cape Shop",
     "location": "Lava Dragon Isle",
     "currency": "Coins",
     "items": [
@@ -47166,7 +47357,7 @@
     ]
   },
   {
-    "name": "Wine Shop.",
+    "name": "Wine Shop",
     "location": "Draynor Village",
     "currency": "Coins",
     "items": [
@@ -47295,6 +47486,9 @@
   {
     "name": "Yadech Strongarm",
     "currency": "Coins",
+    "x": 2855,
+    "y": 3553,
+    "plane": 1,
     "items": [
       {
         "itemId": -1,
@@ -47365,6 +47559,7 @@
     "x": 1443,
     "y": 9559,
     "plane": 1,
+    "mapId": -1,
     "items": [
       {
         "itemId": 2309,
@@ -47461,7 +47656,7 @@
     ]
   },
   {
-    "name": "Ye olde Tea Shoppe.",
+    "name": "Ye olde Tea Shoppe",
     "location": "Varrock",
     "currency": "Coins",
     "items": [
@@ -47847,7 +48042,7 @@
     ]
   },
   {
-    "name": "Zeke's Superior Scimitars.",
+    "name": "Zeke's Superior Scimitars",
     "location": "Al Kharid",
     "currency": "Coins",
     "items": [
@@ -47882,7 +48077,7 @@
     ]
   },
   {
-    "name": "Zenesha's Plate Mail Body Shop.",
+    "name": "Zenesha's Plate Mail Body Shop",
     "location": "East Ardougne",
     "currency": "Coins",
     "x": 2649,

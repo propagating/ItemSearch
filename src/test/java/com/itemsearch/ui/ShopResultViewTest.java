@@ -50,7 +50,7 @@ public class ShopResultViewTest
 {
 	private static ShopData shop()
 	{
-		return new ShopData("Zaff's Superior Staffs", "Varrock", "Coins", 3203, 3434, 0, Arrays.asList(
+		return new ShopData("Zaff's Superior Staffs", "Varrock", "Coins", 3203, 3434, 0, null, Arrays.asList(
 			new ShopItem(1381, "Staff of air", 5, 1500, 60),
 			new ShopItem(1383, "Staff of water", 0, 1500, 60),
 			new ShopItem(-1, "Mystery box", 5, null, null)));
@@ -58,7 +58,7 @@ public class ShopResultViewTest
 
 	private static ShopData shopWithoutCoords()
 	{
-		return new ShopData("Wandering Merchant", null, "Coins", null, null, null,
+		return new ShopData("Wandering Merchant", null, "Coins", null, null, null, null,
 			Arrays.asList(new ShopItem(1381, "Staff of air", 5, 1500, 60)));
 	}
 

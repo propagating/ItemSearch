@@ -33,6 +33,7 @@ import net.runelite.api.coords.WorldPoint;
 import net.runelite.api.worldmap.WorldMap;
 import net.runelite.client.callback.ClientThread;
 import com.itemsearch.model.NpcData;
+import com.itemsearch.model.ShopData;
 import com.itemsearch.model.SpawnPoint;
 import net.runelite.client.ui.overlay.worldmap.WorldMapPoint;
 import net.runelite.client.ui.overlay.worldmap.WorldMapPointManager;
@@ -86,7 +87,51 @@ public class SpawnMapMarkerTest
 		lenient().when(client.getWorldMap()).thenReturn(worldMap);
 
 		marker = new SpawnMapMarker(client, clientThread, worldMapPointManager,
-			new BufferedImage(1, 1, BufferedImage.TYPE_INT_ARGB));
+			new BufferedImage(1, 1, BufferedImage.TYPE_INT_ARGB), openedUrls::add);
+	}
+
+	private final java.util.List<String> openedUrls = new java.util.ArrayList<>();
+
+	private static ShopData shopAt(Integer x, Integer y, Integer plane, Integer mapId)
+	{
+		return new ShopData("Test Shop", "Somewhere", "Coins", x, y, plane, mapId,
+			Collections.emptyList());
+	}
+
+	@Test
+	public void surfaceShopPinsTheInGameMap()
+	{
+		marker.showShop(shopAt(3203, 3434, 0, null));
+		verify(worldMapPointManager).add(any(WorldMapPoint.class));
+		assertEquals(0, openedUrls.size());
+	}
+
+	@Test
+	public void layeredShopOpensTheExplorerInsteadOfPinning()
+	{
+		marker.showShop(shopAt(2857, 10189, 0, 10));
+		verify(worldMapPointManager, never()).add(any(WorldMapPoint.class));
+		assertEquals(1, openedUrls.size());
+		assertEquals("https://mejrs.github.io/osrs?m=10&z=4&p=0&x=2857&y=10189", openedUrls.get(0));
+	}
+
+	@Test
+	public void allUpstairsSpawnsOpenTheExplorerOnThatFloor()
+	{
+		marker.showSpawns(npc(1, "Upstairs guy", Arrays.asList(
+			new SpawnPoint(2662, 3657, 1), new SpawnPoint(2660, 3655, 2))));
+		verify(worldMapPointManager, never()).add(any(WorldMapPoint.class));
+		assertEquals(1, openedUrls.size());
+		assertEquals("https://mejrs.github.io/osrs?m=-1&z=4&p=1&x=2662&y=3657", openedUrls.get(0));
+	}
+
+	@Test
+	public void mixedPlaneSpawnsStillPinInGame()
+	{
+		marker.showSpawns(npc(1, "Mixed", Arrays.asList(
+			new SpawnPoint(2662, 3657, 1), new SpawnPoint(2660, 3655, 0))));
+		verify(worldMapPointManager, times(2)).add(any(WorldMapPoint.class));
+		assertEquals(0, openedUrls.size());
 	}
 
 	@Test
