@@ -433,4 +433,27 @@ public class NpcResultViewTest
 			.anyMatch(t -> t != null && t.contains("15 unprotected")));
 	}
 
+	@Test
+	public void conditionalMaxHitNumberExplainsDifferenceInTooltip()
+	{
+		Attack a = new Attack("magic", 15, 15, 4, 4, null, Arrays.asList(
+			new MaxHitVariant("Insulated boots", "GEAR", 8, 8),
+			new MaxHitVariant("Antifire", "CONSUMABLE", 12, 12)));
+		CombatStats c = new CombatStats(1, 1, 1, 1, 1, 5, Collections.singletonList(a));
+		NpcResultView view = build(npc(9022, "Killerwatt", 55, c),
+			new TrackerStore(mock(ConfigManager.class), new Gson()));
+		assertEquals("max hit number carries a variant breakdown tooltip", 1, countTooltips(view,
+			"<html>15 unprotected<br>12 with Antifire<br>8 with Insulated boots</html>"));
+	}
+
+	@Test
+	public void unconditionalMaxHitNumberHasNoTooltip()
+	{
+		CombatStats c = new CombatStats(1, 1, 1, 1, 1, 5, Collections.singletonList(
+			new Attack("stab", 7, 7, 4, 4, null, null)));
+		NpcResultView view = build(npc(9023, "Plain", 20, c),
+			new TrackerStore(mock(ConfigManager.class), new Gson()));
+		assertEquals(0, countTooltips(view, "<html>7 unprotected</html>"));
+	}
+
 }

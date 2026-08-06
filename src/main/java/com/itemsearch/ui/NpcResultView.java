@@ -306,7 +306,9 @@ public class NpcResultView extends JPanel
 			gc.gridy = 1;
 			table.add(new JLabel(range(attack.getSpeed(), attack.getSpeedMax())), gc);
 			gc.gridy = 2;
-			table.add(new JLabel(maxHitText(attack)), gc);
+			JLabel maxHit = new JLabel(maxHitText(attack));
+			maxHit.setToolTipText(maxHitTooltip(attack));
+			table.add(maxHit, gc);
 		}
 		box.add(table);
 
@@ -347,6 +349,26 @@ public class NpcResultView extends JPanel
 				Math.max(a.getMaxHit(), a.getMaxHitMax()), Math.max(b.getMaxHit(), b.getMaxHitMax())))
 			.get();
 		return range(best.getMaxHit(), best.getMaxHitMax()) + " (" + base + ")";
+	}
+
+	// hover breakdown for a conditional max hit: the unmitigated base, then each
+	// mitigation descending — the same story as the legend row, at the number itself
+	private static String maxHitTooltip(Attack attack)
+	{
+		if (attack.getVariants() == null || attack.getVariants().isEmpty())
+		{
+			return null;
+		}
+		StringBuilder tip = new StringBuilder("<html>")
+			.append(range(attack.getMaxHit(), attack.getMaxHitMax()))
+			.append(" unprotected");
+		attack.getVariants().stream()
+			.sorted((a, b) -> Integer.compare(
+				Math.max(b.getMaxHit(), b.getMaxHitMax()), Math.max(a.getMaxHit(), a.getMaxHitMax())))
+			.forEach(v -> tip.append("<br>")
+				.append(range(v.getMaxHit(), v.getMaxHitMax()))
+				.append(" with ").append(v.getLabel()));
+		return tip.append("</html>").toString();
 	}
 
 	private static String capitalize(String s)
