@@ -39,7 +39,9 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import java.util.Comparator;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Locale;
 import java.util.function.Consumer;
 import javax.swing.BorderFactory;
@@ -63,27 +65,33 @@ import com.itemsearch.model.DropSource;
 import com.itemsearch.model.ItemMatch;
 import com.itemsearch.model.MaxHitVariant;
 import com.itemsearch.model.SourceData;
+import com.itemsearch.model.SourceType;
 import com.itemsearch.respawn.RespawnTracker;
 import com.itemsearch.tracker.TrackerStore;
 import net.runelite.client.ui.ColorScheme;
 import net.runelite.client.util.AsyncBufferedImage;
 
-public class NpcResultView extends JPanel
+public class SourceResultView extends JPanel
 {
 	private final JLabel image = new JLabel();
 	private final OkHttpClient okHttpClient;
 	// per-drop stat lines ("Got: N · Dry: X%"), captured so kills can refresh them in place
 	private final List<DropRow> dropRows = new ArrayList<>();
 	private final int npcId;
-	// the kill-count value label, captured so it updates live on kills without a rebuild
+	// whether anything can be killed here: chests and gathering nodes carry no npc ids, so
+	// kill counts, dry streaks, and respawn timers are all meaningless for them
+	private final boolean killable;
+	// the kill-count value label, captured so it updates live on kills without a rebuild.
+	// null for sources that are not killable, where no such row is rendered.
 	private JLabel killsValue;
 
-	public NpcResultView(SourceData npc, TrackerStore store, SpriteManager spriteManager, ItemManager itemManager,
+	public SourceResultView(SourceData npc, TrackerStore store, SpriteManager spriteManager, ItemManager itemManager,
 		OkHttpClient okHttpClient, SpawnMapMarker mapMarker, RespawnTracker respawnTracker,
 		ClientThread clientThread, Runnable onBack, Consumer<ItemMatch> onItemSelected)
 	{
 		this.okHttpClient = okHttpClient;
 		this.npcId = npc.getId();
+		this.killable = !npc.getNpcIds().isEmpty();
 		setLayout(new BorderLayout(0, 6));
 
 		JButton back = new JButton("< Back");
@@ -96,8 +104,10 @@ public class NpcResultView extends JPanel
 		body.add(buildImageBox(npc));
 		body.add(buildNameBox(npc, store));
 
+		// only something you fight has stats to fight against; a chest that happens to carry
+		// stale combat data must not render a prayer table
 		CombatStats c = npc.getCombat();
-		if (c != null)
+		if (c != null && npc.getType() == SourceType.KILL)
 		{
 			body.add(buildStatsBox(c));
 			body.add(buildAttacksBox(c, spriteManager, itemManager));
@@ -105,64 +115,95 @@ public class NpcResultView extends JPanel
 
 		body.add(buildActionsBox(npc, store, mapMarker, respawnTracker, clientThread));
 
-		List<DropSource> drops = new ArrayList<>(npc.getDrops());
-		drops.sort(Comparator
-			.comparing(DropSource::isRarityKnown).reversed()
-			.thenComparing(Comparator.comparingDouble(DropSource::getRarity).reversed()));
-
-		for (DropSource d : drops)
+		// wiki drop tables are split into meaningful subsections ("Rare drop table", "100%");
+		// keep those groupings, with anything uncategorised leading as before
+		for (Map.Entry<String, List<DropSource>> group : groupByCategory(npc.getDrops()).entrySet())
 		{
-			JPanel row = new JPanel(new BorderLayout(6, 0));
-			row.setBorder(BorderFactory.createEmptyBorder(2, 4, 2, 4));
-			row.setBackground(ColorScheme.DARKER_GRAY_COLOR);
-			row.setCursor(new Cursor(Cursor.HAND_CURSOR));
-
-			JLabel icon = new JLabel();
-			AsyncBufferedImage img = itemManager.getImage(d.getItemId());
-			if (img != null)
+			if (group.getKey() != null)
 			{
-				img.addTo(icon);
+				body.add(section(group.getKey()));
 			}
-			row.add(icon, BorderLayout.WEST);
-
-			JPanel textCol = new JPanel();
-			textCol.setLayout(new BoxLayout(textCol, BoxLayout.Y_AXIS));
-			textCol.setOpaque(false);
-			textCol.add(new JLabel(d.getItemName()));
-
-			JLabel stat = new JLabel(statLine(npc.getId(), d, store));
-			stat.setForeground(ColorScheme.LIGHT_GRAY_COLOR);
-			stat.setFont(stat.getFont().deriveFont(stat.getFont().getSize2D() - 1f));
-			textCol.add(stat);
-			row.add(textCol, BorderLayout.CENTER);
-
-			row.add(new JLabel(formatRarity(d)), BorderLayout.EAST);
-			dropRows.add(new DropRow(npc.getId(), d, stat));
-
-			row.addMouseListener(new MouseAdapter()
+			for (DropSource d : group.getValue())
 			{
-				@Override
-				public void mousePressed(MouseEvent e)
-				{
-					onItemSelected.accept(new ItemMatch(d.getItemId(), d.getItemName()));
-				}
-
-				@Override
-				public void mouseEntered(MouseEvent e)
-				{
-					row.setBackground(ColorScheme.DARK_GRAY_HOVER_COLOR);
-				}
-
-				@Override
-				public void mouseExited(MouseEvent e)
-				{
-					row.setBackground(ColorScheme.DARKER_GRAY_COLOR);
-				}
-			});
-			body.add(row);
+				body.add(buildDropRow(npc.getId(), d, store, itemManager, onItemSelected));
+			}
 		}
 
 		add(body, BorderLayout.CENTER);
+	}
+
+	/**
+	 * Drops by wiki subsection, uncategorised first, then each category in the order it first
+	 * appears. Each group keeps the display sort: known rarities first, commonest first.
+	 */
+	private static Map<String, List<DropSource>> groupByCategory(List<DropSource> drops)
+	{
+		List<DropSource> sorted = new ArrayList<>(drops);
+		sorted.sort(Comparator
+			.comparing(DropSource::isRarityKnown).reversed()
+			.thenComparing(Comparator.comparingDouble(DropSource::getRarity).reversed()));
+
+		Map<String, List<DropSource>> grouped = new LinkedHashMap<>();
+		grouped.put(null, new ArrayList<>()); // reserve first position for the uncategorised group
+		for (DropSource d : sorted)
+		{
+			grouped.computeIfAbsent(d.getCategory(), k -> new ArrayList<>()).add(d);
+		}
+		grouped.values().removeIf(List::isEmpty);
+		return grouped;
+	}
+
+	private JPanel buildDropRow(int ownerId, DropSource d, TrackerStore store, ItemManager itemManager,
+		Consumer<ItemMatch> onItemSelected)
+	{
+		JPanel row = new JPanel(new BorderLayout(6, 0));
+		row.setBorder(BorderFactory.createEmptyBorder(2, 4, 2, 4));
+		row.setBackground(ColorScheme.DARKER_GRAY_COLOR);
+		row.setCursor(new Cursor(Cursor.HAND_CURSOR));
+
+		JLabel icon = new JLabel();
+		AsyncBufferedImage img = itemManager.getImage(d.getItemId());
+		if (img != null)
+		{
+			img.addTo(icon);
+		}
+		row.add(icon, BorderLayout.WEST);
+
+		JPanel textCol = new JPanel();
+		textCol.setLayout(new BoxLayout(textCol, BoxLayout.Y_AXIS));
+		textCol.setOpaque(false);
+		textCol.add(new JLabel(d.getItemName()));
+
+		JLabel stat = new JLabel(statLine(ownerId, d, store));
+		stat.setForeground(ColorScheme.LIGHT_GRAY_COLOR);
+		stat.setFont(stat.getFont().deriveFont(stat.getFont().getSize2D() - 1f));
+		textCol.add(stat);
+		row.add(textCol, BorderLayout.CENTER);
+
+		row.add(new JLabel(formatRarity(d)), BorderLayout.EAST);
+		dropRows.add(new DropRow(ownerId, d, stat));
+
+		row.addMouseListener(new MouseAdapter()
+		{
+			@Override
+			public void mousePressed(MouseEvent e)
+			{
+				onItemSelected.accept(new ItemMatch(d.getItemId(), d.getItemName()));
+			}
+
+			@Override
+			public void mouseEntered(MouseEvent e)
+			{
+				row.setBackground(ColorScheme.DARK_GRAY_HOVER_COLOR);
+			}
+
+			@Override
+			public void mouseExited(MouseEvent e)
+			{
+				row.setBackground(ColorScheme.DARKER_GRAY_COLOR);
+			}
+		});
+		return row;
 	}
 
 	// A full-width bordered card (matching the rest of the plugin's card styling). The getMaximumSize
@@ -213,22 +254,42 @@ public class NpcResultView extends JPanel
 		name.setAlignmentX(Component.LEFT_ALIGNMENT);
 		box.add(name);
 
-		JLabel level = new JLabel("Level " + npc.getCombatLevel());
+		// a chest or node has no combat level; name what it is instead
+		JLabel level = new JLabel(npc.getType() == SourceType.KILL
+			? "Level " + npc.getCombatLevel() : typeLabel(npc.getType()));
 		level.setForeground(ColorScheme.LIGHT_GRAY_COLOR);
 		level.setAlignmentX(Component.LEFT_ALIGNMENT);
 		box.add(level);
 
-		JPanel killsRow = new JPanel(new FlowLayout(FlowLayout.LEFT, 0, 0));
-		killsRow.setOpaque(false);
-		killsRow.setAlignmentX(Component.LEFT_ALIGNMENT);
-		JLabel killsLabel = new JLabel("Kills:");
-		killsLabel.setForeground(ColorScheme.LIGHT_GRAY_COLOR);
-		killsValue = new JLabel(Format.tally(store.getNpcKills(npcId)));
-		killsRow.add(killsLabel);
-		killsRow.add(new JLabel(" "));
-		killsRow.add(killsValue);
-		box.add(killsRow);
+		if (killable)
+		{
+			JPanel killsRow = new JPanel(new FlowLayout(FlowLayout.LEFT, 0, 0));
+			killsRow.setOpaque(false);
+			killsRow.setAlignmentX(Component.LEFT_ALIGNMENT);
+			JLabel killsLabel = new JLabel("Kills:");
+			killsLabel.setForeground(ColorScheme.LIGHT_GRAY_COLOR);
+			killsValue = new JLabel(Format.tally(store.getNpcKills(npcId)));
+			killsRow.add(killsLabel);
+			killsRow.add(new JLabel(" "));
+			killsRow.add(killsValue);
+			box.add(killsRow);
+		}
 		return box;
+	}
+
+	private static String typeLabel(SourceType type)
+	{
+		switch (type)
+		{
+			case REWARD:
+				return "Reward chest";
+			case PICKPOCKET:
+				return "Pickpocketing";
+			case GATHER:
+				return "Gathering node";
+			default:
+				return "";
+		}
 	}
 
 	private JPanel buildStatsBox(CombatStats c)
@@ -425,20 +486,23 @@ public class NpcResultView extends JPanel
 		grid.setOpaque(false);
 		grid.setAlignmentX(Component.LEFT_ALIGNMENT);
 
-		JButton respawns = new JButton("Respawns");
-		respawns.setFocusPainted(false);
-		// toggle off EDT-local requested state, not the async store: re-reading isTracked()
-		// before a queued setTracked lands would swallow fast double-clicks
-		boolean[] tracking = {respawnTracker.isTracked(npc.getName())};
-		applyToggle(respawns, tracking[0], "Tracking respawns — click to stop", "Track respawn timers");
-		respawns.addActionListener(e ->
+		if (killable)
 		{
-			boolean now = !tracking[0];
-			tracking[0] = now;
-			applyToggle(respawns, now, "Tracking respawns — click to stop", "Track respawn timers");
-			clientThread.invokeLater(() -> respawnTracker.setTracked(npc.getName(), now));
-		});
-		grid.add(respawns);
+			JButton respawns = new JButton("Respawns");
+			respawns.setFocusPainted(false);
+			// toggle off EDT-local requested state, not the async store: re-reading isTracked()
+			// before a queued setTracked lands would swallow fast double-clicks
+			boolean[] tracking = {respawnTracker.isTracked(npc.getName())};
+			applyToggle(respawns, tracking[0], "Tracking respawns — click to stop", "Track respawn timers");
+			respawns.addActionListener(e ->
+			{
+				boolean now = !tracking[0];
+				tracking[0] = now;
+				applyToggle(respawns, now, "Tracking respawns — click to stop", "Track respawn timers");
+				clientThread.invokeLater(() -> respawnTracker.setTracked(npc.getName(), now));
+			});
+			grid.add(respawns);
+		}
 
 		if (!npc.getSpawnPoints().isEmpty())
 		{
@@ -464,12 +528,15 @@ public class NpcResultView extends JPanel
 			grid.add(map);
 		}
 
-		grid.add(resetButton("↺ Kills", "Reset kill count", () ->
+		if (killable)
 		{
-			store.resetNpcKills(npcId);
-			store.save();
-			refresh(store);
-		}));
+			grid.add(resetButton("↺ Kills", "Reset kill count", () ->
+			{
+				store.resetNpcKills(npcId);
+				store.save();
+				refresh(store);
+			}));
+		}
 		grid.add(resetButton("↺ Drops", "Reset drop counters", () ->
 		{
 			store.resetNpcDrops(npcId);
@@ -488,7 +555,10 @@ public class NpcResultView extends JPanel
 	 */
 	public void refresh(TrackerStore store)
 	{
-		killsValue.setText(Format.tally(store.getNpcKills(npcId)));
+		if (killsValue != null)
+		{
+			killsValue.setText(Format.tally(store.getNpcKills(npcId)));
+		}
 		for (DropRow row : dropRows)
 		{
 			row.stat.setText(statLine(row.npcId, row.drop, store));

@@ -51,7 +51,7 @@ import com.itemsearch.model.ShopData;
 import com.itemsearch.respawn.RespawnTracker;
 import com.itemsearch.tracker.TrackerStore;
 import com.itemsearch.ui.ItemResultView;
-import com.itemsearch.ui.NpcResultView;
+import com.itemsearch.ui.SourceResultView;
 import com.itemsearch.ui.ResultRow;
 import com.itemsearch.ui.ShopResultView;
 import net.runelite.client.ui.PluginPanel;
@@ -78,7 +78,7 @@ class ItemSearchPanel extends PluginPanel
 	// the item view currently on screen, if any, so its dry counters can update live on kills
 	private ItemResultView currentItemView;
 	// the npc view currently on screen, if any, so its per-drop stats update live on kills
-	private NpcResultView currentNpcView;
+	private SourceResultView currentNpcView;
 
 	ItemSearchPanel(DropDataService dataService, TrackerStore trackerStore, ItemManager itemManager,
 		OkHttpClient okHttpClient, WikiRefreshService wikiRefreshService, SpawnMapMarker spawnMapMarker,
@@ -214,7 +214,7 @@ class ItemSearchPanel extends PluginPanel
 	private void showNpc(SourceData npc)
 	{
 		currentItemView = null;
-		NpcResultView view = new NpcResultView(npc, trackerStore, spriteManager, itemManager, okHttpClient,
+		SourceResultView view = new SourceResultView(npc, trackerStore, spriteManager, itemManager, okHttpClient,
 			spawnMapMarker, respawnTracker, clientThread, this::showResults,
 			item -> showItem(item, () -> showNpc(npc)));
 		currentNpcView = view;

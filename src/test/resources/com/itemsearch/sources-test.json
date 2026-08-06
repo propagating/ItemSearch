@@ -56,6 +56,28 @@
     ]
   },
   {
+    "id": 963,
+    "npcIds": [ 963 ],
+    "name": "Kalphite Queen",
+    "type": "KILL",
+    "combatLevel": 333,
+    "spawnPoints": [],
+    "combat": {
+      "attackLevel": 150,
+      "strengthLevel": 150,
+      "defenceLevel": 150,
+      "magicLevel": 150,
+      "rangedLevel": 150,
+      "hitpoints": 255,
+      "attacks": [ { "style": "stab", "maxHit": 31, "speed": 4 } ]
+    },
+    "drops": [
+      { "itemId": 526, "itemName": "Bones", "rarity": 1.0, "quantity": 1, "noted": false, "rarityKnown": true, "category": "100%" },
+      { "itemId": 987, "itemName": "Loop half of key", "rarity": 0.0078125, "quantity": 1, "noted": false, "rarityKnown": true, "category": "Rare drop table" },
+      { "itemId": 995, "itemName": "Coins", "rarity": 0.25, "quantity": 3000, "noted": false, "rarityKnown": true }
+    ]
+  },
+  {
     "id": 3257,
     "name": "Master Farmer (pickpocket)",
     "type": "PICKPOCKET",

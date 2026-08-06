@@ -55,12 +55,13 @@ import net.runelite.client.ui.ColorScheme;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 import org.junit.Test;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-public class NpcResultViewTest
+public class SourceResultViewTest
 {
 	private static final int GOBLIN = 3031;
 	private static final int ZULRAH = 2042;
@@ -75,9 +76,9 @@ public class NpcResultViewTest
 		return ds;
 	}
 
-	private NpcResultView build(SourceData npc, TrackerStore store)
+	private SourceResultView build(SourceData npc, TrackerStore store)
 	{
-		return new NpcResultView(npc, store, mock(SpriteManager.class), mock(ItemManager.class),
+		return new SourceResultView(npc, store, mock(SpriteManager.class), mock(ItemManager.class),
 			new OkHttpClient(), mock(SpawnMapMarker.class), mock(RespawnTracker.class), mock(ClientThread.class),
 			() ->
 			{
@@ -143,7 +144,7 @@ public class NpcResultViewTest
 		}
 	}
 
-	// the bordered card (its border is the CompoundBorder built by NpcResultView.card())
+	// the bordered card (its border is the CompoundBorder built by SourceResultView.card())
 	// that transitively contains a label with the given text
 	private static JComponent cardContaining(Container root, String labelText)
 	{
@@ -169,7 +170,7 @@ public class NpcResultViewTest
 	@Test
 	public void statBoxesFillTheFullSidebarWidth()
 	{
-		NpcResultView view = build(loadedTestData().sourceById(GOBLIN),
+		SourceResultView view = build(loadedTestData().sourceById(GOBLIN),
 			new TrackerStore(mock(ConfigManager.class), new Gson()));
 		int width = 250;
 		view.setSize(width, 3000);
@@ -223,7 +224,7 @@ public class NpcResultViewTest
 	{
 		TrackerStore store = new TrackerStore(mock(ConfigManager.class), new Gson());
 		store.recordKill(GOBLIN, Collections.singleton(BRONZE_DAGGER), Arrays.asList(COINS, BRONZE_DAGGER));
-		NpcResultView view = build(loadedTestData().sourceById(GOBLIN), store);
+		SourceResultView view = build(loadedTestData().sourceById(GOBLIN), store);
 		assertTrue(labels(view).stream().anyMatch(l ->
 			l.getText() != null && l.getText().startsWith("Got: 1 · Dry: ") && l.getText().endsWith("%")));
 	}
@@ -232,14 +233,14 @@ public class NpcResultViewTest
 	public void unknownRarityDropShowsDashForDry()
 	{
 		TrackerStore store = new TrackerStore(mock(ConfigManager.class), new Gson());
-		NpcResultView view = build(loadedTestData().sourceById(ZULRAH), store);
+		SourceResultView view = build(loadedTestData().sourceById(ZULRAH), store);
 		assertTrue(labels(view).stream().anyMatch(l -> "Got: 0 · Dry: —".equals(l.getText())));
 	}
 
 	@Test
 	public void combatNpcShowsTwoColumnStatGrid()
 	{
-		NpcResultView view = build(loadedTestData().sourceById(GOBLIN),
+		SourceResultView view = build(loadedTestData().sourceById(GOBLIN),
 			new TrackerStore(mock(ConfigManager.class), new Gson()));
 		List<String> text = labelTexts(view);
 		for (String stat : Arrays.asList("Attack", "Strength", "Defence", "Magic", "Ranged", "Hitpoints"))
@@ -251,7 +252,7 @@ public class NpcResultViewTest
 	@Test
 	public void attacksBoxShowsPerStyleValuesAndPrayerIcon()
 	{
-		NpcResultView view = build(loadedTestData().sourceById(GOBLIN), // fixture attack: crush, maxHit 60, speed 6
+		SourceResultView view = build(loadedTestData().sourceById(GOBLIN), // fixture attack: crush, maxHit 60, speed 6
 			new TrackerStore(mock(ConfigManager.class), new Gson()));
 		List<String> text = labelTexts(view);
 		assertTrue("attacks box has a Speed row", text.contains("Speed"));
@@ -264,7 +265,7 @@ public class NpcResultViewTest
 	@Test
 	public void repeatedPrayerStylesGetRepeatedColumns()
 	{
-		NpcResultView view = build(npc(9001, "Multi", 100, combat(Arrays.asList("stab", "crush", "magic"))),
+		SourceResultView view = build(npc(9001, "Multi", 100, combat(Arrays.asList("stab", "crush", "magic"))),
 			new TrackerStore(mock(ConfigManager.class), new Gson()));
 		assertEquals("two melee columns for stab + crush", 2, countTooltips(view, "Protect from Melee"));
 		assertEquals("one magic column", 1, countTooltips(view, "Protect from Magic"));
@@ -273,7 +274,7 @@ public class NpcResultViewTest
 	@Test
 	public void unprotectableStyleShowsNoPrayerWarning()
 	{
-		NpcResultView view = build(npc(9002, "Ghost", 200, combat(Collections.singletonList("typeless"))),
+		SourceResultView view = build(npc(9002, "Ghost", 200, combat(Collections.singletonList("typeless"))),
 			new TrackerStore(mock(ConfigManager.class), new Gson()));
 		assertEquals(1, countTooltips(view, "No prayer protects against this attack"));
 	}
@@ -281,7 +282,7 @@ public class NpcResultViewTest
 	@Test
 	public void dragonfireShowsPartialMagicPrayerAndDragonfireShield()
 	{
-		NpcResultView view = build(npc(9003, "Dragon", 200, combat(Collections.singletonList("dragonfire"))),
+		SourceResultView view = build(npc(9003, "Dragon", 200, combat(Collections.singletonList("dragonfire"))),
 			new TrackerStore(mock(ConfigManager.class), new Gson()));
 		assertEquals(1, countTooltips(view, "Protect from Magic (partial)"));
 		assertEquals(1, countTooltips(view, "Protect with Dragonfire shield (or antifire potion)"));
@@ -291,7 +292,7 @@ public class NpcResultViewTest
 	@Test
 	public void icyBreathShowsPartialMagicPrayerAndElementalShield()
 	{
-		NpcResultView view = build(npc(9004, "Wyvern", 200, combat(Collections.singletonList("icy breath"))),
+		SourceResultView view = build(npc(9004, "Wyvern", 200, combat(Collections.singletonList("icy breath"))),
 			new TrackerStore(mock(ConfigManager.class), new Gson()));
 		assertEquals(1, countTooltips(view, "Protect from Magic (partial)"));
 		assertEquals(1, countTooltips(view, "Protect with Elemental shield"));
@@ -300,7 +301,7 @@ public class NpcResultViewTest
 	@Test
 	public void metallicDragonfireShowsShieldWithoutMagicPrayer()
 	{
-		NpcResultView view = build(
+		SourceResultView view = build(
 			npc(9005, "Steel dragon", 246, combat(Collections.singletonList("metallic dragonfire"))),
 			new TrackerStore(mock(ConfigManager.class), new Gson()));
 		assertEquals(1, countTooltips(view, "Protect with Dragonfire shield (or antifire potion)"));
@@ -312,7 +313,7 @@ public class NpcResultViewTest
 	{
 		CombatStats c = new CombatStats(1, 1, 1, 1, 1, 5,
 			Collections.singletonList(new Attack("stab", 1, 3, 4, 6, null, null)));
-		NpcResultView view = build(npc(9010, "Dwarf", 10, c),
+		SourceResultView view = build(npc(9010, "Dwarf", 10, c),
 			new TrackerStore(mock(ConfigManager.class), new Gson()));
 		List<String> text = labelTexts(view);
 		assertTrue("max hit range shown", text.contains("1-3"));
@@ -322,7 +323,7 @@ public class NpcResultViewTest
 	@Test
 	public void nonCombatNpcShowsKillsButNoStatGrid()
 	{
-		NpcResultView view = build(loadedTestData().sourceById(ZULRAH), // no combat in fixture
+		SourceResultView view = build(loadedTestData().sourceById(ZULRAH), // no combat in fixture
 			new TrackerStore(mock(ConfigManager.class), new Gson()));
 		List<String> text = labelTexts(view);
 		assertTrue("kills line still shown", text.contains("Kills:"));
@@ -336,7 +337,7 @@ public class NpcResultViewTest
 		when(cm.getConfiguration("itemsearch", "data")).thenReturn("{\"npcKills\":{\"3031\":1234}}");
 		TrackerStore store = new TrackerStore(cm, new Gson());
 		store.load();
-		NpcResultView view = build(loadedTestData().sourceById(GOBLIN), store);
+		SourceResultView view = build(loadedTestData().sourceById(GOBLIN), store);
 		assertTrue("kills render with a thousands separator",
 			labels(view).stream().anyMatch(l -> "1,234".equals(l.getText())));
 
@@ -353,7 +354,7 @@ public class NpcResultViewTest
 	@Test
 	public void actionsBoxHasAllButtons()
 	{
-		NpcResultView view = build(loadedTestData().sourceById(GOBLIN), // fixture has spawn points
+		SourceResultView view = build(loadedTestData().sourceById(GOBLIN), // fixture has spawn points
 			new TrackerStore(mock(ConfigManager.class), new Gson()));
 		assertNotNull(button(view, "Respawns"));
 		assertNotNull(button(view, "Map"));
@@ -364,7 +365,7 @@ public class NpcResultViewTest
 	@Test
 	public void toggleButtonsBorderReflectsOnOffState()
 	{
-		NpcResultView view = build(loadedTestData().sourceById(GOBLIN), // fixture has spawn points
+		SourceResultView view = build(loadedTestData().sourceById(GOBLIN), // fixture has spawn points
 			new TrackerStore(mock(ConfigManager.class), new Gson()));
 
 		JButton respawns = button(view, "Respawns");
@@ -378,7 +379,7 @@ public class NpcResultViewTest
 		assertEquals("markers shown -> green", ColorScheme.PROGRESS_COMPLETE_COLOR, borderColor(map));
 	}
 
-	// the color of a button's outer LineBorder (set by NpcResultView.setStateBorder)
+	// the color of a button's outer LineBorder (set by SourceResultView.setStateBorder)
 	private static Color borderColor(JButton button)
 	{
 		CompoundBorder cb = (CompoundBorder) button.getBorder();
@@ -390,7 +391,7 @@ public class NpcResultViewTest
 	{
 		TrackerStore store = new TrackerStore(mock(ConfigManager.class), new Gson());
 		store.recordKill(GOBLIN, Collections.emptySet(), Collections.emptyList());
-		NpcResultView view = build(loadedTestData().sourceById(GOBLIN), store);
+		SourceResultView view = build(loadedTestData().sourceById(GOBLIN), store);
 		button(view, "↺ Kills").doClick();
 		assertEquals(0, store.getNpcKills(GOBLIN));
 	}
@@ -400,7 +401,7 @@ public class NpcResultViewTest
 	{
 		TrackerStore store = new TrackerStore(mock(ConfigManager.class), new Gson());
 		store.recordKill(GOBLIN, Collections.singleton(BRONZE_DAGGER), Arrays.asList(COINS, BRONZE_DAGGER));
-		NpcResultView view = build(loadedTestData().sourceById(GOBLIN), store);
+		SourceResultView view = build(loadedTestData().sourceById(GOBLIN), store);
 		button(view, "↺ Drops").doClick();
 		assertEquals(0, store.getObtained(GOBLIN, BRONZE_DAGGER));
 		assertEquals(0, store.getDry(GOBLIN, COINS));
@@ -410,7 +411,7 @@ public class NpcResultViewTest
 	{
 		CombatStats c = new CombatStats(1, 1, 1, 1, 1, 5, Collections.singletonList(
 			new Attack("magic", 15, 15, 4, 4, "ranged", null)));
-		NpcResultView view = build(npc(9020, "Hybrid", 90, c),
+		SourceResultView view = build(npc(9020, "Hybrid", 90, c),
 			new TrackerStore(mock(ConfigManager.class), new Gson()));
 		// the protection icon reflects the PRAY style (ranged), not the accuracy style
 		assertEquals(1, countTooltips(view, "Protect from Missiles"));
@@ -424,7 +425,7 @@ public class NpcResultViewTest
 		Attack a = new Attack("magic", 15, 15, 4, 4, null, Collections.singletonList(
 			new MaxHitVariant("Insulated boots", "GEAR", 8, 8)));
 		CombatStats c = new CombatStats(1, 1, 1, 1, 1, 5, Collections.singletonList(a));
-		NpcResultView view = build(npc(9021, "Killerwatt", 55, c),
+		SourceResultView view = build(npc(9021, "Killerwatt", 55, c),
 			new TrackerStore(mock(ConfigManager.class), new Gson()));
 		List<String> text = labelTexts(view);
 		assertTrue("headline shows best-case with base in parens", text.contains("8 (15)"));
@@ -441,10 +442,58 @@ public class NpcResultViewTest
 			new MaxHitVariant("Insulated boots", "GEAR", 8, 8),
 			new MaxHitVariant("Antifire", "CONSUMABLE", 12, 12)));
 		CombatStats c = new CombatStats(1, 1, 1, 1, 1, 5, Collections.singletonList(a));
-		NpcResultView view = build(npc(9022, "Killerwatt", 55, c),
+		SourceResultView view = build(npc(9022, "Killerwatt", 55, c),
 			new TrackerStore(mock(ConfigManager.class), new Gson()));
 		assertEquals("max hit number carries a variant breakdown tooltip", 1, countTooltips(view,
 			"<html>15 unprotected<br>12 with Antifire<br>8 with Insulated boots</html>"));
+	}
+
+	@Test
+	public void rewardSourceDropsCombatAndKillTrackingSections()
+	{
+		SourceResultView view = build(loadedTestData().sourceById(-1000),
+			new TrackerStore(mock(ConfigManager.class), new Gson()));
+		List<String> text = labelTexts(view);
+
+		assertTrue("the type stands in for a combat level", text.contains("Reward chest"));
+		assertFalse("a chest has no combat stats", text.contains("Attack"));
+		assertFalse("a chest has no attack styles", text.contains("Max hit"));
+		assertFalse("nothing is killed at a chest", text.contains("Kills:"));
+		assertNull("no respawn timer for a chest", button(view, "Respawns"));
+		assertNull("no kill counter to reset", button(view, "↺ Kills"));
+		// the chest's wiki coordinates come through as a spawn point, so it is still mappable
+		assertNotNull("a chest must still be locatable on the map", button(view, "Map"));
+	}
+
+	@Test
+	public void killSourceKeepsCombatAndKillTrackingSections()
+	{
+		SourceResultView view = build(loadedTestData().sourceById(3031),
+			new TrackerStore(mock(ConfigManager.class), new Gson()));
+		List<String> text = labelTexts(view);
+		assertTrue(text.contains("Level 2"));
+		assertTrue(text.contains("Kills:"));
+		assertTrue(text.contains("Attack"));
+		assertNotNull(button(view, "Respawns"));
+		assertNotNull(button(view, "↺ Kills"));
+	}
+
+	@Test
+	public void dropsGroupUnderTheirWikiSubsectionHeadings()
+	{
+		SourceResultView view = build(loadedTestData().sourceById(963),
+			new TrackerStore(mock(ConfigManager.class), new Gson()));
+		List<String> text = labelTexts(view);
+		assertTrue("category headings render", text.contains("100%"));  // section() upper-cases; unchanged here
+		assertTrue("category headings render", text.contains("RARE DROP TABLE"));
+
+		// uncategorised drops lead, then each category in first-appearance order
+		int coins = text.indexOf("Coins");
+		int hundred = text.indexOf("100%");
+		int rare = text.indexOf("RARE DROP TABLE");
+		assertTrue("uncategorised drops come before any heading", coins < hundred);
+		assertTrue("headings keep first-appearance order", hundred < rare);
+		assertTrue("a categorised drop follows its heading", rare < text.indexOf("Loop half of key"));
 	}
 
 	@Test
@@ -452,7 +501,7 @@ public class NpcResultViewTest
 	{
 		CombatStats c = new CombatStats(1, 1, 1, 1, 1, 5, Collections.singletonList(
 			new Attack("stab", 7, 7, 4, 4, null, null)));
-		NpcResultView view = build(npc(9023, "Plain", 20, c),
+		SourceResultView view = build(npc(9023, "Plain", 20, c),
 			new TrackerStore(mock(ConfigManager.class), new Gson()));
 		assertEquals(0, countTooltips(view, "<html>7 unprotected</html>"));
 	}
