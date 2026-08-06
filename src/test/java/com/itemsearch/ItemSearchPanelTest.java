@@ -148,6 +148,83 @@ public class ItemSearchPanelTest
 		assertTrue("expected a SHOP-badged result row for 'zaff'", foundBadge);
 	}
 
+	// the badge text of the first result row whose label text contains the needle
+	private String badgeForResultNamed(JPanel results, String needle)
+	{
+		for (Component row : results.getComponents())
+		{
+			if (!(row instanceof Container))
+			{
+				continue;
+			}
+			String badge = null;
+			boolean matched = false;
+			for (Component c : ((Container) row).getComponents())
+			{
+				if (c instanceof JLabel)
+				{
+					String text = ((JLabel) c).getText();
+					if (badge == null)
+					{
+						badge = text;
+					}
+					else if (text != null && text.contains(needle))
+					{
+						matched = true;
+					}
+				}
+			}
+			if (matched)
+			{
+				return badge;
+			}
+		}
+		return null;
+	}
+
+	@Test
+	public void resultBadgesReflectTheSourceType() throws Exception
+	{
+		ItemSearchPanel panel = newPanel(loadedTestData());
+		JTextField search = field(panel, "search", JTextField.class);
+		JPanel results = field(panel, "results", JPanel.class);
+
+		search.setText("goblin");
+		invokeRebuild(panel);
+		assertEquals("NPC", badgeForResultNamed(results, "Goblin"));
+
+		search.setText("lunar chest");
+		invokeRebuild(panel);
+		assertEquals("CHEST", badgeForResultNamed(results, "Lunar Chest"));
+		// a chest has no combat level; "(lvl 0)" would be noise
+		assertEquals("Lunar Chest", labelTextContaining(results, "Lunar Chest"));
+
+		search.setText("master farmer");
+		invokeRebuild(panel);
+		assertEquals("PICKPOCKET", badgeForResultNamed(results, "Master Farmer"));
+	}
+
+	private String labelTextContaining(Container root, String needle)
+	{
+		for (Component c : root.getComponents())
+		{
+			if (c instanceof JLabel && ((JLabel) c).getText() != null
+				&& ((JLabel) c).getText().contains(needle))
+			{
+				return ((JLabel) c).getText();
+			}
+			if (c instanceof Container)
+			{
+				String found = labelTextContaining((Container) c, needle);
+				if (found != null)
+				{
+					return found;
+				}
+			}
+		}
+		return null;
+	}
+
 	private JScrollPane enclosingScrollPane(Component c)
 	{
 		Container p = c.getParent();

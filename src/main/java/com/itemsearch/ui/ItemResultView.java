@@ -106,7 +106,7 @@ public class ItemResultView extends JPanel
 			if (!rawSources.isEmpty())
 			{
 				body.add(Box.createVerticalStrut(6));
-				body.add(section("Dropped by"));
+				body.add(section("Obtained from"));
 			}
 		}
 
@@ -178,7 +178,8 @@ public class ItemResultView extends JPanel
 	private JPanel buildSourceBox(DropSource src, DropDataService data, TrackerStore store, int itemId, int npcId,
 		Consumer<SourceData> onNpcSelected)
 	{
-		SourceData owner = npcId >= 0 ? data.sourceById(npcId) : null;
+		// a synthetic chest/node id is negative but real, so only the lookup decides ownership
+		SourceData owner = data.sourceById(npcId);
 
 		JPanel box = new JPanel();
 		box.setLayout(new BoxLayout(box, BoxLayout.Y_AXIS));
@@ -207,7 +208,7 @@ public class ItemResultView extends JPanel
 
 		boolean known = src.isRarityKnown() && src.getRarity() > 0;
 		String rate = known ? Format.oneIn(src.getRarity()) : "rate unknown";
-		box.add(subLabel((owner != null ? "Lvl " + owner.getCombatLevel() + "  ·  " : "") + rate));
+		box.add(subLabel(qualifier(owner) + rate));
 
 		if (!known)
 		{
@@ -218,15 +219,37 @@ public class ItemResultView extends JPanel
 		// card carries just the two scanning stats; the full breakdown (confidence bands,
 		// obtained count, reset) lives in the NPC view behind the click-through
 		double p = src.getRarity();
-		int dry = npcId >= 0 ? store.getDry(npcId, itemId) : 0;
 		box.add(statRow("Expected", expected(DropStats.expectedKills(p))));
-		JLabel sinceValue = new JLabel(count(dry));
-		box.add(statRow("Kills since drop", sinceValue));
-		if (npcId >= 0)
+		// the dry streak counts kills, so it only means anything where something is killed:
+		// chests and gathering nodes have no npc ids and never accumulate one
+		boolean killable = owner != null && !owner.getNpcIds().isEmpty();
+		if (killable)
 		{
+			JLabel sinceValue = new JLabel(count(store.getDry(npcId, itemId)));
+			box.add(statRow("Kills since drop", sinceValue));
 			dryRows.add(new DryRow(npcId, itemId, sinceValue));
 		}
 		return box;
+	}
+
+	/** What precedes the rate on a source card: a combat level for kills, the type otherwise. */
+	private static String qualifier(SourceData owner)
+	{
+		if (owner == null)
+		{
+			return "";
+		}
+		switch (owner.getType())
+		{
+			case REWARD:
+				return "Reward  ·  ";
+			case PICKPOCKET:
+				return "Pickpocket  ·  ";
+			case GATHER:
+				return "Gather  ·  ";
+			default:
+				return "Lvl " + owner.getCombatLevel() + "  ·  ";
+		}
 	}
 
 	/**

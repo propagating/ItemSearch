@@ -284,7 +284,7 @@ public class ItemResultViewTest
 	}
 
 	@Test
-	public void droppedByHeaderSeparatesMonstersOnlyWhenShopsPresent()
+	public void obtainedFromHeaderSeparatesSourcesOnlyWhenShopsPresent()
 	{
 		ItemResultView withShops = new ItemResultView(
 			new ItemMatch(BRONZE_DAGGER, "Bronze dagger"),
@@ -299,14 +299,14 @@ public class ItemResultViewTest
 			shop ->
 			{
 			});
-		assertTrue("expected DROPPED BY header when shops precede monster sources",
-			hasLabel(withShops, "DROPPED BY"));
+		assertTrue("expected OBTAINED FROM header when shops precede other sources",
+			hasLabel(withShops, "OBTAINED FROM"));
 
 		// without shop data the view keeps its original headerless monster list
 		ItemResultView withoutShops = build(loadedTestData(),
 			new TrackerStore(mock(ConfigManager.class), new Gson()), new AtomicReference<>());
-		assertFalse("no DROPPED BY header expected without a buy-from section",
-			hasLabel(withoutShops, "DROPPED BY"));
+		assertFalse("no OBTAINED FROM header expected without a buy-from section",
+			hasLabel(withoutShops, "OBTAINED FROM"));
 	}
 
 	private static boolean hasLabel(ItemResultView view, String text)
@@ -372,5 +372,65 @@ public class ItemResultViewTest
 			assertFalse("no BUY FROM header expected",
 				"BUY FROM".equals(l.getText()));
 		}
+	}
+
+	private static List<String> allText(Container root)
+	{
+		List<String> out = new ArrayList<>();
+		for (JLabel l : collect(root, JLabel.class))
+		{
+			out.add(l.getText());
+		}
+		for (JTextArea t : collect(root, JTextArea.class))
+		{
+			out.add(t.getText());
+		}
+		return out;
+	}
+
+	@Test
+	public void rewardSourceIsLabelledByTypeAndHasNoKillCounter()
+	{
+		// Eclipse atlatl comes only from the Lunar Chest (REWARD, 1/224) in the fixture
+		ItemResultView view = new ItemResultView(
+			new ItemMatch(29028, "Eclipse atlatl"),
+			loadedTestData(), new TrackerStore(mock(ConfigManager.class), new Gson()),
+			mock(ItemManager.class),
+			() ->
+			{
+			},
+			npc ->
+			{
+			},
+			shop ->
+			{
+			});
+		List<String> text = allText(view);
+		assertTrue("reward card is labelled by type instead of a combat level",
+			text.contains("Reward  ·  1/224"));
+		assertTrue("expected-attempts stat still applies to a chest", text.contains("Expected"));
+		assertFalse("nothing is killed for a chest reward",
+			text.contains("Kills since drop"));
+	}
+
+	@Test
+	public void sourceSectionHeaderCoversEveryTypeNotJustDrops()
+	{
+		// Bronze dagger is both sold and dropped, so the disambiguating header renders
+		ItemResultView view = build(loadedTestDataWithShops(),
+			new TrackerStore(mock(ConfigManager.class), new Gson()), new AtomicReference<>());
+		assertTrue("header must not claim everything is a drop",
+			allText(view).contains("OBTAINED FROM"));
+	}
+
+	@Test
+	public void killSourceKeepsLevelAndKillCounter()
+	{
+		ItemResultView view = build(loadedTestData(),
+			new TrackerStore(mock(ConfigManager.class), new Gson()), new AtomicReference<>());
+		List<String> text = allText(view);
+		assertTrue("kill sources still show their combat level",
+			text.stream().anyMatch(t -> t != null && t.startsWith("Lvl 2  ·  ")));
+		assertTrue("kill sources keep the dry counter", text.contains("Kills since drop"));
 	}
 }

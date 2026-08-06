@@ -39,6 +39,9 @@ import com.itemsearch.model.DropSource;
  */
 final class SourceOrder
 {
+	/** Stands in for a source with no owner id at all; never resolves to a name. */
+	static final int UNKNOWN_OWNER = Integer.MIN_VALUE;
+
 	private SourceOrder()
 	{
 	}
@@ -68,8 +71,10 @@ final class SourceOrder
 		List<Entry> entries = new ArrayList<>(sources.size());
 		for (int i = 0; i < sources.size(); i++)
 		{
-			int npcId = i < owners.size() ? owners.get(i) : -1;
-			String name = npcId >= 0 ? nameOf.apply(npcId) : null;
+			int npcId = i < owners.size() ? owners.get(i) : UNKNOWN_OWNER;
+			// resolve unconditionally: non-NPC sources carry synthetic NEGATIVE ids, so the
+			// sign of the id says nothing about whether an owner exists — only the lookup does
+			String name = nameOf.apply(npcId);
 			entries.add(new Entry(sources.get(i), npcId, name));
 		}
 		entries.sort(Comparator

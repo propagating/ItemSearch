@@ -46,6 +46,7 @@ import com.itemsearch.data.WikiRefreshService;
 import com.itemsearch.map.SpawnMapMarker;
 import com.itemsearch.model.ItemMatch;
 import com.itemsearch.model.SourceData;
+import com.itemsearch.model.SourceType;
 import com.itemsearch.model.ShopData;
 import com.itemsearch.respawn.RespawnTracker;
 import com.itemsearch.tracker.TrackerStore;
@@ -152,6 +153,22 @@ class ItemSearchPanel extends PluginPanel
 		rebuildResults();
 	}
 
+	// what the player interacts with to get the loot, in their own words
+	private static String badgeFor(SourceType type)
+	{
+		switch (type)
+		{
+			case REWARD:
+				return "CHEST";
+			case PICKPOCKET:
+				return "PICKPOCKET";
+			case GATHER:
+				return "NODE";
+			default:
+				return "NPC";
+		}
+	}
+
 	private void rebuildResults()
 	{
 		results.removeAll();
@@ -160,8 +177,11 @@ class ItemSearchPanel extends PluginPanel
 		{
 			for (SourceData npc : dataService.searchSources(q))
 			{
-				results.add(new ResultRow("NPC", npc.getName() + " (lvl " + npc.getCombatLevel() + ")",
-					() -> showNpc(npc)));
+				// a chest or gathering node has no combat level; "(lvl 0)" would be noise
+				String label = npc.getCombatLevel() > 0
+					? npc.getName() + " (lvl " + npc.getCombatLevel() + ")"
+					: npc.getName();
+				results.add(new ResultRow(badgeFor(npc.getType()), label, () -> showNpc(npc)));
 			}
 			for (ShopData shop : dataService.searchShops(q))
 			{
