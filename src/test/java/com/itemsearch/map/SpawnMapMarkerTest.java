@@ -32,7 +32,8 @@ import net.runelite.api.Client;
 import net.runelite.api.coords.WorldPoint;
 import net.runelite.api.worldmap.WorldMap;
 import net.runelite.client.callback.ClientThread;
-import com.itemsearch.model.NpcData;
+import com.itemsearch.model.SourceData;
+import com.itemsearch.model.SourceType;
 import com.itemsearch.model.ShopData;
 import com.itemsearch.model.SpawnPoint;
 import net.runelite.client.ui.overlay.worldmap.WorldMapPoint;
@@ -69,10 +70,10 @@ public class SpawnMapMarkerTest
 
 	private SpawnMapMarker marker;
 
-	private static NpcData npc(int id, String name, List<SpawnPoint> spawns)
+	private static SourceData npc(int id, String name, List<SpawnPoint> spawns)
 	{
-		return new NpcData(id, name, 42, null, Collections.emptyList(), spawns,
-			Collections.singletonList(id), null);
+		return new SourceData(id, name, 42, null, Collections.emptyList(), spawns,
+			Collections.singletonList(id), null, SourceType.KILL, null, null, null);
 	}
 
 	@Before

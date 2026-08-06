@@ -35,4 +35,7 @@ public class DropSource
 	int quantity;
 	boolean noted;
 	boolean rarityKnown; // false -> rarity is meaningless, exclude from math
+	// the wiki drop-table subsection this line came from ("Rare drop table"); null when the
+	// source has one unheaded table or the heading was generic ("Drops"/"Rewards"/"Loot")
+	String category;
 }

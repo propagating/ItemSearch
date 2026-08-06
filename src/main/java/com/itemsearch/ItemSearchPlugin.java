@@ -69,7 +69,7 @@ import okhttp3.OkHttpClient;
 )
 public class ItemSearchPlugin extends Plugin
 {
-	private static final String DATA_RESOURCE = "/com/itemsearch/drops.json";
+	private static final String DATA_RESOURCE = "/com/itemsearch/sources.json";
 	private static final String SHOPS_RESOURCE = "/com/itemsearch/shops.json";
 
 	@Inject

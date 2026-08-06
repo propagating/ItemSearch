@@ -61,7 +61,7 @@ public class KillTrackerTest
 		lenient().when(itemManager.canonicalize(anyInt()))
 			.thenAnswer(inv -> inv.getArgument(0));
 		BundledDataSource ds = new BundledDataSource(new Gson(),
-			"/com/itemsearch/drops-test.json");
+			"/com/itemsearch/sources-test.json");
 		ds.load();
 		tracker = new KillTracker(ds, store, itemManager);
 	}
@@ -83,7 +83,7 @@ public class KillTrackerTest
 		// Test Beast has npcIds [7001, 7002]; a kill under the variant id 7002 must accumulate
 		// under the canonical id 7001 so all variants share one dry counter
 		BundledDataSource multi = new BundledDataSource(new Gson(),
-			"/com/itemsearch/drops-multiid-test.json");
+			"/com/itemsearch/sources-test.json");
 		multi.load();
 		KillTracker t = new KillTracker(multi, store, itemManager);
 
@@ -100,7 +100,7 @@ public class KillTrackerTest
 		// Test Beast is id 7001 in data; a live kill reports an id our data never listed (88888)
 		// but the same name + level, so it must still resolve and record under canonical 7001
 		BundledDataSource multi = new BundledDataSource(new Gson(),
-			"/com/itemsearch/drops-multiid-test.json");
+			"/com/itemsearch/sources-test.json");
 		multi.load();
 		KillTracker t = new KillTracker(multi, store, itemManager);
 

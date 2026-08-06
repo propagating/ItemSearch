@@ -27,24 +27,24 @@ package com.itemsearch.data;
 import java.util.List;
 import com.itemsearch.model.DropSource;
 import com.itemsearch.model.ItemMatch;
-import com.itemsearch.model.NpcData;
+import com.itemsearch.model.SourceData;
 import com.itemsearch.model.ShopData;
 import com.itemsearch.model.ShopEntry;
 
 public interface DropDataService
 {
-	NpcData npcById(int npcId);
+	SourceData sourceById(int npcId);
 
 	/**
 	 * Resolve a monster by name and combat level. The bundled data does not enumerate every
 	 * in-game NPC id, so a live kill's id often isn't found; matching on the name + level the
 	 * game reports recovers the canonical monster. Returns null if no monster matches.
 	 */
-	NpcData npcByNameAndLevel(String name, int combatLevel);
+	SourceData sourceByNameAndLevel(String name, int combatLevel);
 
 	List<DropSource> sourcesForItem(int itemId);
 
-	List<NpcData> searchNpcs(String query);
+	List<SourceData> searchSources(String query);
 
 	List<ItemMatch> searchItems(String query);
 

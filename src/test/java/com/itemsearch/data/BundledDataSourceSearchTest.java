@@ -27,7 +27,7 @@ package com.itemsearch.data;
 import com.google.gson.Gson;
 import java.util.List;
 import com.itemsearch.model.ItemMatch;
-import com.itemsearch.model.NpcData;
+import com.itemsearch.model.SourceData;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 import org.junit.Before;
@@ -41,14 +41,14 @@ public class BundledDataSourceSearchTest
 	public void setUp()
 	{
 		ds = new BundledDataSource(new Gson(),
-			"/com/itemsearch/drops-test.json");
+			"/com/itemsearch/sources-test.json");
 		ds.load();
 	}
 
 	@Test
-	public void searchNpcsIsCaseInsensitiveSubstring()
+	public void searchSourcesIsCaseInsensitiveSubstring()
 	{
-		List<NpcData> r = ds.searchNpcs("gob");
+		List<SourceData> r = ds.searchSources("gob");
 		assertEquals(1, r.size());
 		assertEquals("Goblin", r.get(0).getName());
 	}
@@ -65,7 +65,7 @@ public class BundledDataSourceSearchTest
 	@Test
 	public void blankQueryReturnsEmpty()
 	{
-		assertTrue(ds.searchNpcs("   ").isEmpty());
+		assertTrue(ds.searchSources("   ").isEmpty());
 		assertTrue(ds.searchItems("").isEmpty());
 	}
 
@@ -73,7 +73,7 @@ public class BundledDataSourceSearchTest
 	public void overlayImageReplacesUrlPreservingDrops()
 	{
 		ds.overlayImage(3031, "https://example/new.png");
-		NpcData goblin = ds.npcById(3031);
+		SourceData goblin = ds.sourceById(3031);
 		assertEquals("https://example/new.png", goblin.getWikiImageUrl());
 		assertEquals(2, goblin.getDrops().size());
 		// spawn points must survive the overlay too, or the "Show on map"

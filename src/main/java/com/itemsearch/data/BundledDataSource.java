@@ -44,7 +44,8 @@ import java.util.stream.Collectors;
 import lombok.extern.slf4j.Slf4j;
 import com.itemsearch.model.DropSource;
 import com.itemsearch.model.ItemMatch;
-import com.itemsearch.model.NpcData;
+import com.itemsearch.model.SourceData;
+import com.itemsearch.model.SourceType;
 import com.itemsearch.model.ShopData;
 import com.itemsearch.model.ShopEntry;
 import com.itemsearch.model.ShopItem;
@@ -61,15 +62,15 @@ public class BundledDataSource implements DropDataService
 
 	// maps EVERY npc id (each entry's npcIds) to that entry, so a kill/lookup under any
 	// variant id resolves to the one canonical monster
-	private final Map<Integer, NpcData> byNpcId = new ConcurrentHashMap<>();
+	private final Map<Integer, SourceData> byNpcId = new ConcurrentHashMap<>();
 	// distinct entries (one per canonical monster) for search; byNpcId.values() would
 	// repeat an entry once per variant id
-	private final List<NpcData> allNpcs = new CopyOnWriteArrayList<>();
+	private final List<SourceData> allNpcs = new CopyOnWriteArrayList<>();
 	// "name|combatLevel" (lower-cased) -> canonical entry, for resolving a live kill by what
 	// the game reports when its id isn't in our data
-	private final Map<String, NpcData> byNameLevel = new ConcurrentHashMap<>();
+	private final Map<String, SourceData> byNameLevel = new ConcurrentHashMap<>();
 	// lower-cased name -> first canonical entry, a looser fallback when the level doesn't match
-	private final Map<String, NpcData> byName = new ConcurrentHashMap<>();
+	private final Map<String, SourceData> byName = new ConcurrentHashMap<>();
 	private final Map<Integer, List<DropSource>> byItemId = new ConcurrentHashMap<>();
 	private final Map<Integer, String> itemNames = new ConcurrentHashMap<>();
 	// itemId -> owning npc ids, index-aligned with byItemId's list for the same itemId
@@ -98,10 +99,10 @@ public class BundledDataSource implements DropDataService
 				log.warn("itemsearch: bundled data not found at {}", resourcePath);
 				return;
 			}
-			Type listType = new TypeToken<List<NpcData>>()
+			Type listType = new TypeToken<List<SourceData>>()
 			{
 			}.getType();
-			List<NpcData> npcs = gson.fromJson(
+			List<SourceData> npcs = gson.fromJson(
 				new InputStreamReader(in, StandardCharsets.UTF_8), listType);
 			index(npcs == null ? Collections.emptyList() : npcs);
 		}
@@ -180,7 +181,7 @@ public class BundledDataSource implements DropDataService
 		return loaded;
 	}
 
-	private void index(List<NpcData> npcs)
+	private void index(List<SourceData> npcs)
 	{
 		byNpcId.clear();
 		allNpcs.clear();
@@ -189,7 +190,7 @@ public class BundledDataSource implements DropDataService
 		byItemId.clear();
 		itemNames.clear();
 		itemOwners.clear();
-		for (NpcData npc : npcs)
+		for (SourceData npc : npcs)
 		{
 			// skip malformed entries instead of letting one bad record discard the whole dataset
 			if (npc == null || npc.getName() == null)
@@ -203,16 +204,21 @@ public class BundledDataSource implements DropDataService
 			List<SpawnPoint> spawns = npc.getSpawnPoints() == null
 				? Collections.emptyList()
 				: npc.getSpawnPoints().stream().filter(Objects::nonNull).collect(Collectors.toList());
-			// older/hand data may omit npcIds; fall back to the single canonical id
+			// older/hand data may omit npcIds; fall back to the single canonical id. Non-NPC
+			// sources (chests, nodes) declare an empty list and must keep it — a synthetic
+			// negative id is not a killable npc id and must never enter byNpcId.
 			List<Integer> npcIds = npc.getNpcIds() == null
 				? Collections.emptyList()
 				: npc.getNpcIds().stream().filter(Objects::nonNull).collect(Collectors.toList());
-			if (npcIds.isEmpty())
+			if (npcIds.isEmpty() && npc.getId() >= 0)
 			{
 				npcIds = Collections.singletonList(npc.getId());
 			}
-			npc = new NpcData(npc.getId(), npc.getName(), npc.getCombatLevel(),
-				npc.getWikiImageUrl(), drops, spawns, npcIds, npc.getCombat());
+			// data written before source types existed is all monster drops
+			SourceType type = npc.getType() == null ? SourceType.KILL : npc.getType();
+			npc = new SourceData(npc.getId(), npc.getName(), npc.getCombatLevel(),
+				npc.getWikiImageUrl(), drops, spawns, npcIds, npc.getCombat(),
+				type, npc.getX(), npc.getY(), npc.getPlane());
 			allNpcs.add(npc);
 			for (Integer id : npcIds)
 			{
@@ -237,7 +243,7 @@ public class BundledDataSource implements DropDataService
 	}
 
 	@Override
-	public NpcData npcById(int npcId)
+	public SourceData sourceById(int npcId)
 	{
 		return byNpcId.get(npcId);
 	}
@@ -248,13 +254,13 @@ public class BundledDataSource implements DropDataService
 	}
 
 	@Override
-	public NpcData npcByNameAndLevel(String name, int combatLevel)
+	public SourceData sourceByNameAndLevel(String name, int combatLevel)
 	{
 		if (name == null)
 		{
 			return null;
 		}
-		NpcData exact = byNameLevel.get(nameLevelKey(name, combatLevel));
+		SourceData exact = byNameLevel.get(nameLevelKey(name, combatLevel));
 		return exact != null ? exact : byName.get(name.toLowerCase(Locale.ROOT));
 	}
 
@@ -274,15 +280,15 @@ public class BundledDataSource implements DropDataService
 	}
 
 	@Override
-	public List<NpcData> searchNpcs(String query)
+	public List<SourceData> searchSources(String query)
 	{
 		String q = query.toLowerCase(Locale.ROOT).trim();
-		List<NpcData> out = new ArrayList<>();
+		List<SourceData> out = new ArrayList<>();
 		if (q.isEmpty())
 		{
 			return out;
 		}
-		for (NpcData npc : allNpcs)
+		for (SourceData npc : allNpcs)
 		{
 			if (npc.getName().toLowerCase(Locale.ROOT).contains(q))
 			{
@@ -290,8 +296,8 @@ public class BundledDataSource implements DropDataService
 			}
 		}
 		out.sort(Comparator
-			.comparing(NpcData::getName, String.CASE_INSENSITIVE_ORDER)
-			.thenComparingInt(NpcData::getCombatLevel));
+			.comparing(SourceData::getName, String.CASE_INSENSITIVE_ORDER)
+			.thenComparingInt(SourceData::getCombatLevel));
 		return out;
 	}
 
@@ -365,13 +371,14 @@ public class BundledDataSource implements DropDataService
 		{
 			return;
 		}
-		NpcData cur = byNpcId.get(npcId);
+		SourceData cur = byNpcId.get(npcId);
 		if (cur == null)
 		{
 			return;
 		}
-		NpcData updated = new NpcData(cur.getId(), cur.getName(), cur.getCombatLevel(),
-			wikiImageUrl, cur.getDrops(), cur.getSpawnPoints(), cur.getNpcIds(), cur.getCombat());
+		SourceData updated = new SourceData(cur.getId(), cur.getName(), cur.getCombatLevel(),
+			wikiImageUrl, cur.getDrops(), cur.getSpawnPoints(), cur.getNpcIds(), cur.getCombat(),
+			cur.getType(), cur.getX(), cur.getY(), cur.getPlane());
 		// replace across every id that resolves to this entry, plus the search list, so a
 		// later reopen (search reads allNpcs) sees the fresh image too. replace(k,old,new)
 		// is a CAS: a racing overlay simply wins/loses a key without clobbering fields.

@@ -62,7 +62,7 @@ import com.itemsearch.model.CombatStats;
 import com.itemsearch.model.DropSource;
 import com.itemsearch.model.ItemMatch;
 import com.itemsearch.model.MaxHitVariant;
-import com.itemsearch.model.NpcData;
+import com.itemsearch.model.SourceData;
 import com.itemsearch.respawn.RespawnTracker;
 import com.itemsearch.tracker.TrackerStore;
 import net.runelite.client.ui.ColorScheme;
@@ -78,7 +78,7 @@ public class NpcResultView extends JPanel
 	// the kill-count value label, captured so it updates live on kills without a rebuild
 	private JLabel killsValue;
 
-	public NpcResultView(NpcData npc, TrackerStore store, SpriteManager spriteManager, ItemManager itemManager,
+	public NpcResultView(SourceData npc, TrackerStore store, SpriteManager spriteManager, ItemManager itemManager,
 		OkHttpClient okHttpClient, SpawnMapMarker mapMarker, RespawnTracker respawnTracker,
 		ClientThread clientThread, Runnable onBack, Consumer<ItemMatch> onItemSelected)
 	{
@@ -192,7 +192,7 @@ public class NpcResultView extends JPanel
 		return box;
 	}
 
-	private JPanel buildImageBox(NpcData npc)
+	private JPanel buildImageBox(SourceData npc)
 	{
 		JPanel box = card();
 		WikiImageLoader.loadInto(okHttpClient, image, npc.getWikiImageUrl());
@@ -204,7 +204,7 @@ public class NpcResultView extends JPanel
 		return box;
 	}
 
-	private JPanel buildNameBox(NpcData npc, TrackerStore store)
+	private JPanel buildNameBox(SourceData npc, TrackerStore store)
 	{
 		JPanel box = card();
 
@@ -415,7 +415,7 @@ public class NpcResultView extends JPanel
 		return cell;
 	}
 
-	private JPanel buildActionsBox(NpcData npc, TrackerStore store, SpawnMapMarker mapMarker,
+	private JPanel buildActionsBox(SourceData npc, TrackerStore store, SpawnMapMarker mapMarker,
 		RespawnTracker respawnTracker, ClientThread clientThread)
 	{
 		JPanel box = card();

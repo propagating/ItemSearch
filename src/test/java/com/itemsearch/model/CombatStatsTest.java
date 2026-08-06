@@ -32,14 +32,14 @@ import org.junit.Test;
 public class CombatStatsTest
 {
 	@Test
-	public void gsonDeserializesNestedCombatOnNpcData()
+	public void gsonDeserializesNestedCombatOnSourceData()
 	{
 		String json = "{\"id\":1,\"name\":\"Graardor\",\"combatLevel\":624,"
 			+ "\"combat\":{\"attackLevel\":280,\"strengthLevel\":350,\"defenceLevel\":250,"
 			+ "\"magicLevel\":80,\"rangedLevel\":350,\"hitpoints\":255,"
 			+ "\"attacks\":[{\"style\":\"crush\",\"maxHit\":60,\"speed\":6},"
 			+ "{\"style\":\"ranged\",\"maxHit\":35,\"speed\":6}]}}";
-		NpcData npc = new Gson().fromJson(json, NpcData.class);
+		SourceData npc = new Gson().fromJson(json, SourceData.class);
 
 		CombatStats c = npc.getCombat();
 		assertEquals(280, c.getAttackLevel());
@@ -54,7 +54,7 @@ public class CombatStatsTest
 	@Test
 	public void combatIsNullWhenAbsentFromJson()
 	{
-		NpcData npc = new Gson().fromJson("{\"id\":1,\"name\":\"Rat\",\"combatLevel\":1}", NpcData.class);
+		SourceData npc = new Gson().fromJson("{\"id\":1,\"name\":\"Rat\",\"combatLevel\":1}", SourceData.class);
 		assertNull(npc.getCombat());
 	}
 }

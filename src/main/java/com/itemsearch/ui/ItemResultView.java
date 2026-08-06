@@ -49,7 +49,7 @@ import com.itemsearch.data.BundledDataSource;
 import com.itemsearch.data.DropDataService;
 import com.itemsearch.model.DropSource;
 import com.itemsearch.model.ItemMatch;
-import com.itemsearch.model.NpcData;
+import com.itemsearch.model.SourceData;
 import com.itemsearch.model.ShopData;
 import com.itemsearch.model.ShopEntry;
 import com.itemsearch.model.ShopItem;
@@ -64,7 +64,7 @@ public class ItemResultView extends JPanel
 	private final List<DryRow> dryRows = new ArrayList<>();
 
 	public ItemResultView(ItemMatch item, DropDataService data, TrackerStore store,
-		ItemManager itemManager, Runnable onBack, Consumer<NpcData> onNpcSelected,
+		ItemManager itemManager, Runnable onBack, Consumer<SourceData> onNpcSelected,
 		Consumer<ShopData> onShopSelected)
 	{
 		setLayout(new BorderLayout(0, 6));
@@ -113,7 +113,7 @@ public class ItemResultView extends JPanel
 		for (SourceOrder.Entry entry : SourceOrder.order(rawSources, owners,
 			id ->
 			{
-				NpcData n = data.npcById(id);
+				SourceData n = data.sourceById(id);
 				return n != null ? n.getName() : null;
 			}))
 		{
@@ -176,9 +176,9 @@ public class ItemResultView extends JPanel
 	}
 
 	private JPanel buildSourceBox(DropSource src, DropDataService data, TrackerStore store, int itemId, int npcId,
-		Consumer<NpcData> onNpcSelected)
+		Consumer<SourceData> onNpcSelected)
 	{
-		NpcData owner = npcId >= 0 ? data.npcById(npcId) : null;
+		SourceData owner = npcId >= 0 ? data.sourceById(npcId) : null;
 
 		JPanel box = new JPanel();
 		box.setLayout(new BoxLayout(box, BoxLayout.Y_AXIS));

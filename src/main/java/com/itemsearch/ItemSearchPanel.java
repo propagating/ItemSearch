@@ -45,7 +45,7 @@ import com.itemsearch.data.DropDataService;
 import com.itemsearch.data.WikiRefreshService;
 import com.itemsearch.map.SpawnMapMarker;
 import com.itemsearch.model.ItemMatch;
-import com.itemsearch.model.NpcData;
+import com.itemsearch.model.SourceData;
 import com.itemsearch.model.ShopData;
 import com.itemsearch.respawn.RespawnTracker;
 import com.itemsearch.tracker.TrackerStore;
@@ -158,7 +158,7 @@ class ItemSearchPanel extends PluginPanel
 		String q = search.getText();
 		if (q != null && !q.trim().isEmpty())
 		{
-			for (NpcData npc : dataService.searchNpcs(q))
+			for (SourceData npc : dataService.searchSources(q))
 			{
 				results.add(new ResultRow("NPC", npc.getName() + " (lvl " + npc.getCombatLevel() + ")",
 					() -> showNpc(npc)));
@@ -191,7 +191,7 @@ class ItemSearchPanel extends PluginPanel
 		content.repaint();
 	}
 
-	private void showNpc(NpcData npc)
+	private void showNpc(SourceData npc)
 	{
 		currentItemView = null;
 		NpcResultView view = new NpcResultView(npc, trackerStore, spriteManager, itemManager, okHttpClient,

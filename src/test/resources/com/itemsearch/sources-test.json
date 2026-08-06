@@ -2,6 +2,7 @@
   {
     "id": 3031,
     "name": "Goblin",
+    "type": "KILL",
     "combatLevel": 2,
     "wikiImageUrl": "https://oldschool.runescape.wiki/images/Goblin.png",
     "spawnPoints": [ { "x": 3246, "y": 3235, "plane": 0 }, null, { "x": 3251, "y": 3231, "plane": 0 } ],
@@ -27,6 +28,42 @@
     "drops": [
       { "itemId": 12922, "itemName": "Toxic blowpipe", "rarity": 0.0, "quantity": 1, "noted": false, "rarityKnown": false },
       { "itemId": 1205, "itemName": "Bronze dagger", "rarity": 0.01, "quantity": 1, "noted": false, "rarityKnown": true }
+    ]
+  },
+  {
+    "id": 7001,
+    "npcIds": [ 7001, 7002 ],
+    "name": "Test Beast",
+    "type": "KILL",
+    "combatLevel": 100,
+    "spawnPoints": [],
+    "drops": [
+      { "itemId": 995, "itemName": "Coins", "rarity": 0.5, "quantity": 10, "noted": false, "rarityKnown": true }
+    ]
+  },
+  {
+    "id": -1000,
+    "name": "Lunar Chest",
+    "type": "REWARD",
+    "combatLevel": 0,
+    "x": 1512,
+    "y": 9581,
+    "plane": 0,
+    "npcIds": [],
+    "spawnPoints": [ { "x": 1512, "y": 9581, "plane": 0 } ],
+    "drops": [
+      { "itemId": 29028, "itemName": "Eclipse atlatl", "rarity": 0.004464285714285714, "quantity": 1, "noted": false, "rarityKnown": true }
+    ]
+  },
+  {
+    "id": 3257,
+    "name": "Master Farmer (pickpocket)",
+    "type": "PICKPOCKET",
+    "combatLevel": 0,
+    "npcIds": [ 3257 ],
+    "spawnPoints": [],
+    "drops": [
+      { "itemId": 5318, "itemName": "Potato seed", "rarity": 0.45, "quantity": 4, "noted": false, "rarityKnown": true }
     ]
   }
 ]

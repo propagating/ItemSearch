@@ -41,7 +41,7 @@ import net.runelite.client.config.ConfigManager;
 import net.runelite.client.game.ItemManager;
 import com.itemsearch.data.BundledDataSource;
 import com.itemsearch.model.ItemMatch;
-import com.itemsearch.model.NpcData;
+import com.itemsearch.model.SourceData;
 import com.itemsearch.tracker.TrackerStore;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
@@ -58,7 +58,7 @@ public class ItemResultViewTest
 	private BundledDataSource loadedTestData()
 	{
 		BundledDataSource ds = new BundledDataSource(new Gson(),
-			"/com/itemsearch/drops-test.json");
+			"/com/itemsearch/sources-test.json");
 		ds.load();
 		return ds;
 	}
@@ -66,13 +66,13 @@ public class ItemResultViewTest
 	private BundledDataSource loadedTestDataWithShops()
 	{
 		BundledDataSource ds = new BundledDataSource(new Gson(),
-			"/com/itemsearch/drops-test.json",
+			"/com/itemsearch/sources-test.json",
 			"/com/itemsearch/shops-test.json");
 		ds.load();
 		return ds;
 	}
 
-	private ItemResultView build(BundledDataSource ds, TrackerStore store, AtomicReference<NpcData> clicked)
+	private ItemResultView build(BundledDataSource ds, TrackerStore store, AtomicReference<SourceData> clicked)
 	{
 		return new ItemResultView(
 			new ItemMatch(BRONZE_DAGGER, "Bronze dagger"),
@@ -121,7 +121,7 @@ public class ItemResultViewTest
 	@Test
 	public void clickingNpcNameFiresCallbackWithThatNpc()
 	{
-		AtomicReference<NpcData> clicked = new AtomicReference<>();
+		AtomicReference<SourceData> clicked = new AtomicReference<>();
 		ItemResultView view = build(loadedTestData(),
 			new TrackerStore(mock(ConfigManager.class), new Gson()), clicked);
 
@@ -196,7 +196,7 @@ public class ItemResultViewTest
 	@Test
 	public void pressingAnywhereOnASourceCardFiresNpcCallback()
 	{
-		AtomicReference<NpcData> clicked = new AtomicReference<>();
+		AtomicReference<SourceData> clicked = new AtomicReference<>();
 		ItemResultView view = build(loadedTestData(),
 			new TrackerStore(mock(ConfigManager.class), new Gson()), clicked);
 

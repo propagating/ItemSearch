@@ -47,7 +47,8 @@ import com.itemsearch.map.SpawnMapMarker;
 import com.itemsearch.model.Attack;
 import com.itemsearch.model.CombatStats;
 import com.itemsearch.model.MaxHitVariant;
-import com.itemsearch.model.NpcData;
+import com.itemsearch.model.SourceData;
+import com.itemsearch.model.SourceType;
 import com.itemsearch.respawn.RespawnTracker;
 import com.itemsearch.tracker.TrackerStore;
 import net.runelite.client.ui.ColorScheme;
@@ -69,12 +70,12 @@ public class NpcResultViewTest
 	private BundledDataSource loadedTestData()
 	{
 		BundledDataSource ds = new BundledDataSource(new Gson(),
-			"/com/itemsearch/drops-test.json");
+			"/com/itemsearch/sources-test.json");
 		ds.load();
 		return ds;
 	}
 
-	private NpcResultView build(NpcData npc, TrackerStore store)
+	private NpcResultView build(SourceData npc, TrackerStore store)
 	{
 		return new NpcResultView(npc, store, mock(SpriteManager.class), mock(ItemManager.class),
 			new OkHttpClient(), mock(SpawnMapMarker.class), mock(RespawnTracker.class), mock(ClientThread.class),
@@ -86,10 +87,10 @@ public class NpcResultViewTest
 			});
 	}
 
-	private static NpcData npc(int id, String name, int level, CombatStats combat)
+	private static SourceData npc(int id, String name, int level, CombatStats combat)
 	{
-		return new NpcData(id, name, level, null, Collections.emptyList(), Collections.emptyList(),
-			Collections.singletonList(id), combat);
+		return new SourceData(id, name, level, null, Collections.emptyList(), Collections.emptyList(),
+			Collections.singletonList(id), combat, SourceType.KILL, null, null, null);
 	}
 
 	private static CombatStats combat(List<String> attackTypes)
@@ -168,7 +169,7 @@ public class NpcResultViewTest
 	@Test
 	public void statBoxesFillTheFullSidebarWidth()
 	{
-		NpcResultView view = build(loadedTestData().npcById(GOBLIN),
+		NpcResultView view = build(loadedTestData().sourceById(GOBLIN),
 			new TrackerStore(mock(ConfigManager.class), new Gson()));
 		int width = 250;
 		view.setSize(width, 3000);
@@ -222,7 +223,7 @@ public class NpcResultViewTest
 	{
 		TrackerStore store = new TrackerStore(mock(ConfigManager.class), new Gson());
 		store.recordKill(GOBLIN, Collections.singleton(BRONZE_DAGGER), Arrays.asList(COINS, BRONZE_DAGGER));
-		NpcResultView view = build(loadedTestData().npcById(GOBLIN), store);
+		NpcResultView view = build(loadedTestData().sourceById(GOBLIN), store);
 		assertTrue(labels(view).stream().anyMatch(l ->
 			l.getText() != null && l.getText().startsWith("Got: 1 · Dry: ") && l.getText().endsWith("%")));
 	}
@@ -231,14 +232,14 @@ public class NpcResultViewTest
 	public void unknownRarityDropShowsDashForDry()
 	{
 		TrackerStore store = new TrackerStore(mock(ConfigManager.class), new Gson());
-		NpcResultView view = build(loadedTestData().npcById(ZULRAH), store);
+		NpcResultView view = build(loadedTestData().sourceById(ZULRAH), store);
 		assertTrue(labels(view).stream().anyMatch(l -> "Got: 0 · Dry: —".equals(l.getText())));
 	}
 
 	@Test
 	public void combatNpcShowsTwoColumnStatGrid()
 	{
-		NpcResultView view = build(loadedTestData().npcById(GOBLIN),
+		NpcResultView view = build(loadedTestData().sourceById(GOBLIN),
 			new TrackerStore(mock(ConfigManager.class), new Gson()));
 		List<String> text = labelTexts(view);
 		for (String stat : Arrays.asList("Attack", "Strength", "Defence", "Magic", "Ranged", "Hitpoints"))
@@ -250,7 +251,7 @@ public class NpcResultViewTest
 	@Test
 	public void attacksBoxShowsPerStyleValuesAndPrayerIcon()
 	{
-		NpcResultView view = build(loadedTestData().npcById(GOBLIN), // fixture attack: crush, maxHit 60, speed 6
+		NpcResultView view = build(loadedTestData().sourceById(GOBLIN), // fixture attack: crush, maxHit 60, speed 6
 			new TrackerStore(mock(ConfigManager.class), new Gson()));
 		List<String> text = labelTexts(view);
 		assertTrue("attacks box has a Speed row", text.contains("Speed"));
@@ -321,7 +322,7 @@ public class NpcResultViewTest
 	@Test
 	public void nonCombatNpcShowsKillsButNoStatGrid()
 	{
-		NpcResultView view = build(loadedTestData().npcById(ZULRAH), // no combat in fixture
+		NpcResultView view = build(loadedTestData().sourceById(ZULRAH), // no combat in fixture
 			new TrackerStore(mock(ConfigManager.class), new Gson()));
 		List<String> text = labelTexts(view);
 		assertTrue("kills line still shown", text.contains("Kills:"));
@@ -335,7 +336,7 @@ public class NpcResultViewTest
 		when(cm.getConfiguration("itemsearch", "data")).thenReturn("{\"npcKills\":{\"3031\":1234}}");
 		TrackerStore store = new TrackerStore(cm, new Gson());
 		store.load();
-		NpcResultView view = build(loadedTestData().npcById(GOBLIN), store);
+		NpcResultView view = build(loadedTestData().sourceById(GOBLIN), store);
 		assertTrue("kills render with a thousands separator",
 			labels(view).stream().anyMatch(l -> "1,234".equals(l.getText())));
 
@@ -352,7 +353,7 @@ public class NpcResultViewTest
 	@Test
 	public void actionsBoxHasAllButtons()
 	{
-		NpcResultView view = build(loadedTestData().npcById(GOBLIN), // fixture has spawn points
+		NpcResultView view = build(loadedTestData().sourceById(GOBLIN), // fixture has spawn points
 			new TrackerStore(mock(ConfigManager.class), new Gson()));
 		assertNotNull(button(view, "Respawns"));
 		assertNotNull(button(view, "Map"));
@@ -363,7 +364,7 @@ public class NpcResultViewTest
 	@Test
 	public void toggleButtonsBorderReflectsOnOffState()
 	{
-		NpcResultView view = build(loadedTestData().npcById(GOBLIN), // fixture has spawn points
+		NpcResultView view = build(loadedTestData().sourceById(GOBLIN), // fixture has spawn points
 			new TrackerStore(mock(ConfigManager.class), new Gson()));
 
 		JButton respawns = button(view, "Respawns");
@@ -389,7 +390,7 @@ public class NpcResultViewTest
 	{
 		TrackerStore store = new TrackerStore(mock(ConfigManager.class), new Gson());
 		store.recordKill(GOBLIN, Collections.emptySet(), Collections.emptyList());
-		NpcResultView view = build(loadedTestData().npcById(GOBLIN), store);
+		NpcResultView view = build(loadedTestData().sourceById(GOBLIN), store);
 		button(view, "↺ Kills").doClick();
 		assertEquals(0, store.getNpcKills(GOBLIN));
 	}
@@ -399,7 +400,7 @@ public class NpcResultViewTest
 	{
 		TrackerStore store = new TrackerStore(mock(ConfigManager.class), new Gson());
 		store.recordKill(GOBLIN, Collections.singleton(BRONZE_DAGGER), Arrays.asList(COINS, BRONZE_DAGGER));
-		NpcResultView view = build(loadedTestData().npcById(GOBLIN), store);
+		NpcResultView view = build(loadedTestData().sourceById(GOBLIN), store);
 		button(view, "↺ Drops").doClick();
 		assertEquals(0, store.getObtained(GOBLIN, BRONZE_DAGGER));
 		assertEquals(0, store.getDry(GOBLIN, COINS));

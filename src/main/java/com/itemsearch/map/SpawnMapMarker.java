@@ -33,7 +33,7 @@ import net.runelite.api.Client;
 import net.runelite.api.coords.WorldPoint;
 import net.runelite.api.worldmap.WorldMap;
 import net.runelite.client.callback.ClientThread;
-import com.itemsearch.model.NpcData;
+import com.itemsearch.model.SourceData;
 import com.itemsearch.model.ShopData;
 import com.itemsearch.model.SpawnPoint;
 import net.runelite.client.ui.overlay.worldmap.WorldMapPoint;
@@ -69,7 +69,7 @@ public class SpawnMapMarker
 		this.browser = browser;
 	}
 
-	public void showSpawns(NpcData npc)
+	public void showSpawns(SourceData npc)
 	{
 		clear();
 		List<SpawnPoint> spawns = npc.getSpawnPoints();

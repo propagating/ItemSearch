@@ -68,7 +68,7 @@ public class ItemSearchPanelTest
 	private BundledDataSource loadedTestData()
 	{
 		BundledDataSource ds = new BundledDataSource(new Gson(),
-			"/com/itemsearch/drops-test.json", "/com/itemsearch/shops-test.json");
+			"/com/itemsearch/sources-test.json", "/com/itemsearch/shops-test.json");
 		ds.load();
 		return ds;
 	}

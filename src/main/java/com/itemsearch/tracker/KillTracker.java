@@ -32,7 +32,7 @@ import net.runelite.client.game.ItemManager;
 import net.runelite.client.game.ItemStack;
 import com.itemsearch.data.DropDataService;
 import com.itemsearch.model.DropSource;
-import com.itemsearch.model.NpcData;
+import com.itemsearch.model.SourceData;
 
 // Loot arriving via ServerNpcLoot (script-provided loot) is deliberately NOT consumed:
 // that channel also delivers pickpocket loot, which would count as false kills for
@@ -53,7 +53,7 @@ public class KillTracker
 
 	public void onKill(int npcId, Set<Integer> droppedItemIds)
 	{
-		record(dataService.npcById(npcId), droppedItemIds);
+		record(dataService.sourceById(npcId), droppedItemIds);
 	}
 
 	public void onNpcLootReceived(NpcLootReceived event)
@@ -73,10 +73,10 @@ public class KillTracker
 		}
 		// Match by id first; fall back to the name + level the game reports, because the
 		// bundled data does not list every in-game NPC id (id-only matching missed most kills).
-		NpcData data = dataService.npcById(npc.getId());
+		SourceData data = dataService.sourceById(npc.getId());
 		if (data == null)
 		{
-			data = dataService.npcByNameAndLevel(npc.getName(), npc.getCombatLevel());
+			data = dataService.sourceByNameAndLevel(npc.getName(), npc.getCombatLevel());
 		}
 		record(data, dropped);
 	}
@@ -84,7 +84,7 @@ public class KillTracker
 	// Record one kill against a resolved monster. The data maps every variant id of a monster
 	// to one canonical entry, so kills recorded under the canonical id (npc.getId()) all
 	// accumulate into a single shared dry counter regardless of which variant was killed.
-	private void record(NpcData npc, Set<Integer> droppedItemIds)
+	private void record(SourceData npc, Set<Integer> droppedItemIds)
 	{
 		if (npc == null)
 		{

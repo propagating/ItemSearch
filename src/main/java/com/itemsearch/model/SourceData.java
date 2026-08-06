@@ -28,7 +28,7 @@ import java.util.List;
 import lombok.Value;
 
 @Value
-public class NpcData
+public class SourceData
 {
 	int id;
 	String name;
@@ -37,8 +37,16 @@ public class NpcData
 	List<DropSource> drops;
 	List<SpawnPoint> spawnPoints;
 	// every game NPC id that maps to this monster (same name + combat level); includes id.
-	// A kill under any of these counts as this monster. May be null in older/hand data.
+	// A kill under any of these counts as this monster. Empty for non-NPC sources
+	// (chests, gathering nodes), which nothing can be killed under.
 	List<Integer> npcIds;
 	// combat stats + attack styles; null for non-combat NPCs or pre-combat bundled data
 	CombatStats combat;
+	// how the item is obtained here; never null after loading (older data defaults to KILL)
+	SourceType type;
+	// wiki {{Map}} location for chest/node sources; null for NPC-backed sources, which
+	// locate themselves through spawnPoints instead
+	Integer x;
+	Integer y;
+	Integer plane;
 }

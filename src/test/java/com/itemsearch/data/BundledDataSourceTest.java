@@ -27,7 +27,8 @@ package com.itemsearch.data;
 import com.google.gson.Gson;
 import java.util.List;
 import com.itemsearch.model.DropSource;
-import com.itemsearch.model.NpcData;
+import com.itemsearch.model.SourceData;
+import com.itemsearch.model.SourceType;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
@@ -44,14 +45,14 @@ public class BundledDataSourceTest
 	public void setUp()
 	{
 		ds = new BundledDataSource(new Gson(),
-			"/com/itemsearch/drops-test.json");
+			"/com/itemsearch/sources-test.json");
 		ds.load();
 	}
 
 	@Test
 	public void loadsNpcById()
 	{
-		NpcData goblin = ds.npcById(3031);
+		SourceData goblin = ds.sourceById(3031);
 		assertEquals("Goblin", goblin.getName());
 		assertEquals(2, goblin.getDrops().size());
 	}
@@ -59,7 +60,7 @@ public class BundledDataSourceTest
 	@Test
 	public void unknownNpcIsNull()
 	{
-		assertNull(ds.npcById(999999));
+		assertNull(ds.sourceById(999999));
 	}
 
 	@Test
@@ -79,7 +80,7 @@ public class BundledDataSourceTest
 	@Test
 	public void spawnPointsAreParsedAndNullEntriesSkipped()
 	{
-		NpcData goblin = ds.npcById(3031);
+		SourceData goblin = ds.sourceById(3031);
 		assertEquals(2, goblin.getSpawnPoints().size());
 		assertEquals(3246, goblin.getSpawnPoints().get(0).getX());
 		assertEquals(3235, goblin.getSpawnPoints().get(0).getY());
@@ -89,7 +90,7 @@ public class BundledDataSourceTest
 	@Test
 	public void absentSpawnPointsNormalizeToEmptyList()
 	{
-		NpcData zulrah = ds.npcById(2042);
+		SourceData zulrah = ds.sourceById(2042);
 		assertNotNull(zulrah.getSpawnPoints());
 		assertTrue(zulrah.getSpawnPoints().isEmpty());
 	}
@@ -98,25 +99,41 @@ public class BundledDataSourceTest
 	public void variantIdsResolveToOneCanonicalEntry()
 	{
 		BundledDataSource multi = new BundledDataSource(new Gson(),
-			"/com/itemsearch/drops-multiid-test.json");
+			"/com/itemsearch/sources-test.json");
 		multi.load();
 
-		NpcData viaCanonical = multi.npcById(7001);
-		NpcData viaVariant = multi.npcById(7002);
+		SourceData viaCanonical = multi.sourceById(7001);
+		SourceData viaVariant = multi.sourceById(7002);
 		assertNotNull(viaVariant);
 		assertEquals(7001, viaVariant.getId()); // variant id resolves to the canonical entry
 		assertEquals("Test Beast", viaVariant.getName());
 		assertEquals(viaCanonical.getId(), viaVariant.getId());
 
 		// search lists the monster once, not once per underlying id
-		assertEquals(1, multi.searchNpcs("beast").size());
+		assertEquals(1, multi.searchSources("beast").size());
+	}
+
+	@Test
+	public void typedSourcesLoadAndDefaultToKill()
+	{
+		SourceData chest = ds.sourceById(-1000);
+		assertNotNull("synthetic-id sources must still resolve by their own id", chest);
+		assertEquals(SourceType.REWARD, chest.getType());
+		assertEquals(Integer.valueOf(1512), chest.getX());
+		assertEquals(Integer.valueOf(9581), chest.getY());
+		// a chest is not killable: no npc id may be synthesized from its negative canonical id
+		assertTrue(chest.getNpcIds().isEmpty());
+
+		assertEquals(SourceType.PICKPOCKET, ds.sourceById(3257).getType());
+		// Zulrah predates source types in the fixture — untyped data is monster drops
+		assertEquals(SourceType.KILL, ds.sourceById(2042).getType());
 	}
 
 	@Test
 	public void isLoadedReflectsLoadLifecycle()
 	{
 		BundledDataSource ds = new BundledDataSource(new com.google.gson.Gson(),
-			"/com/itemsearch/drops-test.json");
+			"/com/itemsearch/sources-test.json");
 		assertFalse(ds.isLoaded());
 		ds.load();
 		assertTrue(ds.isLoaded());
