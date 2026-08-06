@@ -47,6 +47,13 @@ import net.runelite.client.ui.overlay.worldmap.WorldMapPointManager;
 @Slf4j
 public class SpawnMapMarker
 {
+	/**
+	 * Ceiling on markers drawn for one source. The generator already caps spawns well below this;
+	 * the limit exists so a stale or hand-edited data file cannot stall the client by asking for
+	 * hundreds of world-map points at once.
+	 */
+	public static final int MAX_MARKERS = 50;
+
 	private final Client client;
 	private final ClientThread clientThread;
 	private final WorldMapPointManager worldMapPointManager;
@@ -94,6 +101,12 @@ public class SpawnMapMarker
 		{
 			log.warn("itemsearch: marker icon missing, not marking map");
 			return;
+		}
+		if (spawns.size() > MAX_MARKERS)
+		{
+			log.debug("itemsearch: {} has {} spawns, marking the first {}",
+				npc.getName(), spawns.size(), MAX_MARKERS);
+			spawns = spawns.subList(0, MAX_MARKERS);
 		}
 		for (SpawnPoint sp : spawns)
 		{

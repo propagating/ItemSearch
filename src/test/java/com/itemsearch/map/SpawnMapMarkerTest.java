@@ -179,6 +179,21 @@ public class SpawnMapMarkerTest
 		verify(worldMapPointManager, times(2)).remove(any(WorldMapPoint.class));
 	}
 
+	// Defence in depth: the generator caps spawns per source, but a stale or hand-edited data
+	// file must not be able to stall the client by flooding the world map with markers.
+	@Test
+	public void floodOfSpawnsIsTruncatedRatherThanDrawn()
+	{
+		List<SpawnPoint> flood = new java.util.ArrayList<>();
+		for (int i = 0; i < 500; i++)
+		{
+			flood.add(new SpawnPoint(3000 + i, 3000, 0));
+		}
+		marker.showSpawns(npc(1, "Rat", flood));
+		verify(worldMapPointManager, times(SpawnMapMarker.MAX_MARKERS))
+			.add(any(WorldMapPoint.class));
+	}
+
 	@Test
 	public void emptySpawnListOnlyClears()
 	{
