@@ -48,7 +48,6 @@ import com.itemsearch.model.ItemMatch;
 import com.itemsearch.model.SourceData;
 import com.itemsearch.model.SourceType;
 import com.itemsearch.model.ShopData;
-import com.itemsearch.respawn.RespawnTracker;
 import com.itemsearch.tracker.TrackerStore;
 import com.itemsearch.ui.ItemResultView;
 import com.itemsearch.ui.SourceResultView;
@@ -63,7 +62,6 @@ class ItemSearchPanel extends PluginPanel
 	private final ItemManager itemManager;
 	private final WikiRefreshService wikiRefreshService;
 	private final SpawnMapMarker spawnMapMarker;
-	private final RespawnTracker respawnTracker;
 	private final ClientThread clientThread;
 	private final ItemSearchConfig config;
 	private final SpriteManager spriteManager;
@@ -82,7 +80,7 @@ class ItemSearchPanel extends PluginPanel
 
 	ItemSearchPanel(DropDataService dataService, TrackerStore trackerStore, ItemManager itemManager,
 		OkHttpClient okHttpClient, WikiRefreshService wikiRefreshService, SpawnMapMarker spawnMapMarker,
-		RespawnTracker respawnTracker, ClientThread clientThread, ItemSearchConfig config,
+		ClientThread clientThread, ItemSearchConfig config,
 		SpriteManager spriteManager)
 	{
 		super(false);
@@ -92,7 +90,6 @@ class ItemSearchPanel extends PluginPanel
 		this.itemManager = itemManager;
 		this.wikiRefreshService = wikiRefreshService;
 		this.spawnMapMarker = spawnMapMarker;
-		this.respawnTracker = respawnTracker;
 		this.clientThread = clientThread;
 		this.config = config;
 		this.spriteManager = spriteManager;
@@ -215,7 +212,7 @@ class ItemSearchPanel extends PluginPanel
 	{
 		currentItemView = null;
 		SourceResultView view = new SourceResultView(npc, trackerStore, spriteManager, itemManager, okHttpClient,
-			spawnMapMarker, respawnTracker, clientThread, this::showResults,
+			spawnMapMarker, clientThread, this::showResults,
 			item -> showItem(item, () -> showNpc(npc)));
 		currentNpcView = view;
 		showDetail(view);

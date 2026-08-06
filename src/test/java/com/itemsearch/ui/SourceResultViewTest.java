@@ -49,7 +49,6 @@ import com.itemsearch.model.CombatStats;
 import com.itemsearch.model.MaxHitVariant;
 import com.itemsearch.model.SourceData;
 import com.itemsearch.model.SourceType;
-import com.itemsearch.respawn.RespawnTracker;
 import com.itemsearch.tracker.TrackerStore;
 import net.runelite.client.ui.ColorScheme;
 import static org.junit.Assert.assertEquals;
@@ -79,7 +78,7 @@ public class SourceResultViewTest
 	private SourceResultView build(SourceData npc, TrackerStore store)
 	{
 		return new SourceResultView(npc, store, mock(SpriteManager.class), mock(ItemManager.class),
-			new OkHttpClient(), mock(SpawnMapMarker.class), mock(RespawnTracker.class), mock(ClientThread.class),
+			new OkHttpClient(), mock(SpawnMapMarker.class), mock(ClientThread.class),
 			() ->
 			{
 			},
@@ -356,7 +355,6 @@ public class SourceResultViewTest
 	{
 		SourceResultView view = build(loadedTestData().sourceById(GOBLIN), // fixture has spawn points
 			new TrackerStore(mock(ConfigManager.class), new Gson()));
-		assertNotNull(button(view, "Respawns"));
 		assertNotNull(button(view, "Map"));
 		assertNotNull(button(view, "↺ Kills"));
 		assertNotNull(button(view, "↺ Drops"));
@@ -367,11 +365,6 @@ public class SourceResultViewTest
 	{
 		SourceResultView view = build(loadedTestData().sourceById(GOBLIN), // fixture has spawn points
 			new TrackerStore(mock(ConfigManager.class), new Gson()));
-
-		JButton respawns = button(view, "Respawns");
-		assertEquals("untracked -> orange", ColorScheme.BRAND_ORANGE, borderColor(respawns));
-		respawns.doClick();
-		assertEquals("tracking -> green", ColorScheme.PROGRESS_COMPLETE_COLOR, borderColor(respawns));
 
 		JButton map = button(view, "Map");
 		assertEquals("markers hidden -> orange", ColorScheme.BRAND_ORANGE, borderColor(map));
@@ -459,7 +452,6 @@ public class SourceResultViewTest
 		assertFalse("a chest has no combat stats", text.contains("Attack"));
 		assertFalse("a chest has no attack styles", text.contains("Max hit"));
 		assertFalse("nothing is killed at a chest", text.contains("Kills:"));
-		assertNull("no respawn timer for a chest", button(view, "Respawns"));
 		assertNull("no kill counter to reset", button(view, "↺ Kills"));
 		// the chest's wiki coordinates come through as a spawn point, so it is still mappable
 		assertNotNull("a chest must still be locatable on the map", button(view, "Map"));
@@ -474,7 +466,6 @@ public class SourceResultViewTest
 		assertTrue(text.contains("Level 2"));
 		assertTrue(text.contains("Kills:"));
 		assertTrue(text.contains("Attack"));
-		assertNotNull(button(view, "Respawns"));
 		assertNotNull(button(view, "↺ Kills"));
 	}
 

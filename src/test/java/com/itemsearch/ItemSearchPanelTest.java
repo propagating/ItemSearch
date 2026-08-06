@@ -40,7 +40,6 @@ import okhttp3.OkHttpClient;
 import com.itemsearch.data.BundledDataSource;
 import com.itemsearch.data.WikiRefreshService;
 import com.itemsearch.map.SpawnMapMarker;
-import com.itemsearch.respawn.RespawnTracker;
 import com.itemsearch.tracker.TrackerStore;
 import org.junit.Test;
 import static org.junit.Assert.assertEquals;
@@ -59,7 +58,6 @@ public class ItemSearchPanelTest
 			new OkHttpClient(),
 			mock(WikiRefreshService.class),
 			mock(SpawnMapMarker.class),
-			mock(RespawnTracker.class),
 			mock(ClientThread.class),
 			mock(ItemSearchConfig.class),
 			mock(SpriteManager.class));

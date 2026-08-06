@@ -52,14 +52,4 @@ public interface ItemSearchConfig extends Config
 	{
 		return true;
 	}
-
-	@ConfigItem(
-		keyName = "showRespawnTiles",
-		name = "Show respawn tiles",
-		description = "Draw respawn tiles and countdowns for NPCs you are tracking"
-	)
-	default boolean showRespawnTiles()
-	{
-		return true;
-	}
 }

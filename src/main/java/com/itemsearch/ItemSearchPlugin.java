@@ -49,9 +49,6 @@ import net.runelite.client.plugins.PluginDescriptor;
 import com.itemsearch.data.BundledDataSource;
 import com.itemsearch.data.WikiRefreshService;
 import com.itemsearch.map.SpawnMapMarker;
-import com.itemsearch.respawn.RespawnOverlay;
-import com.itemsearch.respawn.RespawnTimeStore;
-import com.itemsearch.respawn.RespawnTracker;
 import com.itemsearch.tracker.KillTracker;
 import com.itemsearch.tracker.TrackerStore;
 import net.runelite.client.ui.ClientToolbar;
@@ -102,9 +99,6 @@ public class ItemSearchPlugin extends Plugin
 	private KillTracker killTracker;
 	private WikiRefreshService wikiRefreshService;
 	private SpawnMapMarker spawnMapMarker;
-	private RespawnTimeStore respawnTimeStore;
-	private RespawnTracker respawnTracker;
-	private RespawnOverlay respawnOverlay;
 	private ItemSearchPanel panel;
 	private NavigationButton navButton;
 
@@ -138,14 +132,8 @@ public class ItemSearchPlugin extends Plugin
 		spawnMapMarker = new SpawnMapMarker(client, clientThread, worldMapPointManager, markerIcon,
 			net.runelite.client.util.LinkBrowser::browse);
 
-		respawnTimeStore = new RespawnTimeStore(configManager, gson);
-		respawnTimeStore.load();
-		respawnTracker = new RespawnTracker(client, respawnTimeStore);
-		respawnOverlay = new RespawnOverlay(client, respawnTracker, config);
-		overlayManager.add(respawnOverlay);
-
 		panel = new ItemSearchPanel(dataService, trackerStore, itemManager, okHttpClient,
-			wikiRefreshService, spawnMapMarker, respawnTracker, clientThread, config, spriteManager);
+			wikiRefreshService, spawnMapMarker, clientThread, config, spriteManager);
 
 		final BufferedImage icon = ImageUtil.loadImageResource(getClass(), "panel_icon.png");
 		navButton = NavigationButton.builder()
@@ -176,10 +164,6 @@ public class ItemSearchPlugin extends Plugin
 	@Override
 	protected void shutDown()
 	{
-		if (respawnOverlay != null)
-		{
-			overlayManager.remove(respawnOverlay);
-		}
 		if (spawnMapMarker != null)
 		{
 			spawnMapMarker.clear();
@@ -223,47 +207,4 @@ public class ItemSearchPlugin extends Plugin
 		}
 	}
 
-	@Subscribe
-	public void onNpcSpawned(NpcSpawned event)
-	{
-		if (respawnTracker != null)
-		{
-			respawnTracker.onNpcSpawned(event.getNpc());
-		}
-	}
-
-	@Subscribe
-	public void onNpcDespawned(NpcDespawned event)
-	{
-		if (respawnTracker != null)
-		{
-			respawnTracker.onNpcDespawned(event.getNpc());
-		}
-	}
-
-	@Subscribe
-	public void onGameTick(GameTick event)
-	{
-		if (respawnTracker != null)
-		{
-			respawnTracker.onGameTick();
-		}
-	}
-
-	@Subscribe
-	public void onGameStateChanged(GameStateChanged event)
-	{
-		if (respawnTracker != null
-			&& (event.getGameState() == GameState.LOADING
-			|| event.getGameState() == GameState.HOPPING
-			|| event.getGameState() == GameState.LOGGED_IN))
-		{
-			// teleports, region loads, world hops: pending timers no longer correspond.
-			// Deliberately broader than npchighlight (which only guards hops/login):
-			// LOADING also fires on region-boundary crossings, trading a few extra
-			// invalidations for never showing a timer we can't vouch for. No state
-			// transition fires while camping one spot, so the main use case is unaffected.
-			respawnTracker.invalidateAll();
-		}
-	}
 }

@@ -66,7 +66,6 @@ import com.itemsearch.model.ItemMatch;
 import com.itemsearch.model.MaxHitVariant;
 import com.itemsearch.model.SourceData;
 import com.itemsearch.model.SourceType;
-import com.itemsearch.respawn.RespawnTracker;
 import com.itemsearch.tracker.TrackerStore;
 import net.runelite.client.ui.ColorScheme;
 import net.runelite.client.util.AsyncBufferedImage;
@@ -79,14 +78,14 @@ public class SourceResultView extends JPanel
 	private final List<DropRow> dropRows = new ArrayList<>();
 	private final int npcId;
 	// whether anything can be killed here: chests and gathering nodes carry no npc ids, so
-	// kill counts, dry streaks, and respawn timers are all meaningless for them
+	// kill counts and dry streaks are meaningless for them
 	private final boolean killable;
 	// the kill-count value label, captured so it updates live on kills without a rebuild.
 	// null for sources that are not killable, where no such row is rendered.
 	private JLabel killsValue;
 
 	public SourceResultView(SourceData npc, TrackerStore store, SpriteManager spriteManager, ItemManager itemManager,
-		OkHttpClient okHttpClient, SpawnMapMarker mapMarker, RespawnTracker respawnTracker,
+		OkHttpClient okHttpClient, SpawnMapMarker mapMarker,
 		ClientThread clientThread, Runnable onBack, Consumer<ItemMatch> onItemSelected)
 	{
 		this.okHttpClient = okHttpClient;
@@ -113,7 +112,7 @@ public class SourceResultView extends JPanel
 			body.add(buildAttacksBox(c, spriteManager, itemManager));
 		}
 
-		body.add(buildActionsBox(npc, store, mapMarker, respawnTracker, clientThread));
+		body.add(buildActionsBox(npc, store, mapMarker));
 
 		// wiki drop tables are split into meaningful subsections ("Rare drop table", "100%");
 		// keep those groupings, with anything uncategorised leading as before
@@ -476,8 +475,7 @@ public class SourceResultView extends JPanel
 		return cell;
 	}
 
-	private JPanel buildActionsBox(SourceData npc, TrackerStore store, SpawnMapMarker mapMarker,
-		RespawnTracker respawnTracker, ClientThread clientThread)
+	private JPanel buildActionsBox(SourceData npc, TrackerStore store, SpawnMapMarker mapMarker)
 	{
 		JPanel box = card();
 		box.add(section("Actions"));
@@ -485,24 +483,6 @@ public class SourceResultView extends JPanel
 		JPanel grid = new JPanel(new GridLayout(0, 2, 4, 4));
 		grid.setOpaque(false);
 		grid.setAlignmentX(Component.LEFT_ALIGNMENT);
-
-		if (killable)
-		{
-			JButton respawns = new JButton("Respawns");
-			respawns.setFocusPainted(false);
-			// toggle off EDT-local requested state, not the async store: re-reading isTracked()
-			// before a queued setTracked lands would swallow fast double-clicks
-			boolean[] tracking = {respawnTracker.isTracked(npc.getName())};
-			applyToggle(respawns, tracking[0], "Tracking respawns — click to stop", "Track respawn timers");
-			respawns.addActionListener(e ->
-			{
-				boolean now = !tracking[0];
-				tracking[0] = now;
-				applyToggle(respawns, now, "Tracking respawns — click to stop", "Track respawn timers");
-				clientThread.invokeLater(() -> respawnTracker.setTracked(npc.getName(), now));
-			});
-			grid.add(respawns);
-		}
 
 		if (!npc.getSpawnPoints().isEmpty())
 		{
