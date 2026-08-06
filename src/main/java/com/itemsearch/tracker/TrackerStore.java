@@ -29,6 +29,7 @@ import com.google.gson.reflect.TypeToken;
 import java.lang.reflect.Type;
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
@@ -51,6 +52,10 @@ public class TrackerStore
 	private final Map<String, Integer> dry = new ConcurrentHashMap<>();
 	// "npcId:itemId" -> total times the item has dropped for the player
 	private final Map<String, Integer> obtained = new ConcurrentHashMap<>();
+	// "itemId:sourceId" for each item-view source card the player has expanded. A set of the
+	// expanded ones (rather than a flag per card) keeps the persisted blob proportional to what
+	// the player actually opened, not to the thousands of sources some items have.
+	private final Set<String> expanded = ConcurrentHashMap.newKeySet();
 
 	public TrackerStore(ConfigManager configManager, Gson gson)
 	{
@@ -83,6 +88,7 @@ public class TrackerStore
 			npcKills.clear();
 			dry.clear();
 			obtained.clear();
+			expanded.clear();
 			if (p != null)
 			{
 				if (p.npcKills != null)
@@ -105,6 +111,7 @@ public class TrackerStore
 			npcKills.clear();
 			dry.clear();
 			obtained.clear();
+			expanded.clear();
 		}
 	}
 
@@ -116,6 +123,21 @@ public class TrackerStore
 	public int getDry(int npcId, int itemId)
 	{
 		return dry.getOrDefault(pairKey(npcId, itemId), 0);
+	}
+
+	/** Whether the player has expanded this item's card for this source. */
+	public boolean isExpanded(int itemId, int sourceId)
+	{
+		return expanded.contains(itemId + ":" + sourceId);
+	}
+
+	public void setExpanded(int itemId, int sourceId, boolean isExpanded)
+	{
+		String key = itemId + ":" + sourceId;
+		if (isExpanded ? expanded.add(key) : expanded.remove(key))
+		{
+			save();
+		}
 	}
 
 	public int getObtained(int npcId, int itemId)
@@ -179,6 +201,7 @@ public class TrackerStore
 		p.npcKills = new HashMap<>(npcKills);
 		p.dry = new HashMap<>(dry);
 		p.obtained = new HashMap<>(obtained);
+		p.expanded = new HashSet<>(expanded);
 		configManager.setConfiguration(GROUP, KEY, gson.toJson(p));
 	}
 
@@ -187,5 +210,6 @@ public class TrackerStore
 		Map<Integer, Integer> npcKills;
 		Map<String, Integer> dry;
 		Map<String, Integer> obtained;
+		Set<String> expanded;
 	}
 }

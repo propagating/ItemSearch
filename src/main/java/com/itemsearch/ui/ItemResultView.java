@@ -60,6 +60,9 @@ import net.runelite.client.util.AsyncBufferedImage;
 
 public class ItemResultView extends JPanel
 {
+	private static final String MORE = "▸ more";
+	private static final String LESS = "▾ less";
+
 	// live dry-streak values, updated in place when a kill is recorded (no rebuild/scroll reset)
 	private final List<DryRow> dryRows = new ArrayList<>();
 
@@ -215,9 +218,8 @@ public class ItemResultView extends JPanel
 			return box;
 		}
 
-		// compact on purpose: an item like uncut sapphire has dozens of sources, so each
-		// card carries just the two scanning stats; the full breakdown (confidence bands,
-		// obtained count, reset) lives in the NPC view behind the click-through
+		// compact by default: an item like Coins has thousands of sources, so a card carries just
+		// the scanning stats until the player opens it for the confidence bands
 		double p = src.getRarity();
 		box.add(statRow("Expected", expected(DropStats.expectedKills(p))));
 		// the dry streak counts kills, so it only means anything where something is killed:
@@ -229,7 +231,69 @@ public class ItemResultView extends JPanel
 			box.add(statRow("Kills since drop", sinceValue));
 			dryRows.add(new DryRow(npcId, itemId, sinceValue));
 		}
+		addExpander(box, itemId, npcId, p, store);
 		return box;
+	}
+
+	/**
+	 * The show/hide control for one card's confidence bands.
+	 *
+	 * <p>The bands are what make a card expensive to build, and an item like Coins has thousands
+	 * of cards, so they are created the first time the card is opened and not before. The control
+	 * carries its own mouse listener, which keeps the press away from the card's navigate-to-source
+	 * handler — Swing delivers the event to the innermost component that is listening.
+	 */
+	private void addExpander(JPanel box, int itemId, int sourceId, double p, TrackerStore store)
+	{
+		List<Component> bands = new ArrayList<>();
+		JLabel toggle = new JLabel(MORE);
+		toggle.setForeground(ColorScheme.LIGHT_GRAY_COLOR);
+		toggle.setFont(toggle.getFont().deriveFont(toggle.getFont().getSize2D() - 1f));
+		toggle.setAlignmentX(Component.LEFT_ALIGNMENT);
+		toggle.setCursor(new Cursor(Cursor.HAND_CURSOR));
+		toggle.addMouseListener(new MouseAdapter()
+		{
+			@Override
+			public void mousePressed(MouseEvent e)
+			{
+				setBandsShown(box, bands, toggle, p, bands.isEmpty());
+				store.setExpanded(itemId, sourceId, !bands.isEmpty());
+			}
+		});
+		// the toggle sits above its bands, so it is added before they can be
+		box.add(toggle);
+		if (store.isExpanded(itemId, sourceId))
+		{
+			setBandsShown(box, bands, toggle, p, true);
+		}
+	}
+
+	/**
+	 * Adds or removes the band rows outright rather than hiding them, so a collapsed card carries
+	 * only the toggle. With thousands of cards on an item like Coins, a hidden-but-present panel
+	 * per card is a cost worth avoiding.
+	 */
+	private static void setBandsShown(JPanel box, List<Component> bands, JLabel toggle,
+		double p, boolean show)
+	{
+		if (show)
+		{
+			for (double c : new double[]{0.10, 0.50, 0.90})
+			{
+				JPanel row = statRow(Math.round(c * 100) + "% chance",
+					count(DropStats.killsForConfidence(p, c)));
+				bands.add(row);
+				box.add(row);
+			}
+		}
+		else
+		{
+			bands.forEach(box::remove);
+			bands.clear();
+		}
+		toggle.setText(show ? LESS : MORE);
+		box.revalidate();
+		box.repaint();
 	}
 
 	/** What precedes the rate on a source card: a combat level for kills, the type otherwise. */

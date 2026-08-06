@@ -46,6 +46,7 @@ import com.itemsearch.tracker.TrackerStore;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 import org.junit.Test;
 import static org.mockito.Mockito.mock;
@@ -421,6 +422,67 @@ public class ItemResultViewTest
 			new TrackerStore(mock(ConfigManager.class), new Gson()), new AtomicReference<>());
 		assertTrue("header must not claim everything is a drop",
 			allText(view).contains("OBTAINED FROM"));
+	}
+
+	// The bands are what makes a card expensive, and an item like Coins has thousands of cards.
+	// They render only for cards the user has opened.
+	@Test
+	public void percentileBandsAreHiddenUntilACardIsExpanded()
+	{
+		TrackerStore store = new TrackerStore(mock(ConfigManager.class), new Gson());
+		ItemResultView view = build(loadedTestData(), store, new AtomicReference<>());
+		List<String> text = allText(view);
+		assertFalse("collapsed cards must not render bands", text.contains("10% chance"));
+		assertFalse(text.contains("50% chance"));
+		assertFalse(text.contains("90% chance"));
+		assertTrue("the expander must be offered", text.stream()
+			.anyMatch(t -> t != null && t.contains("more")));
+	}
+
+	@Test
+	public void expandingACardRevealsItsBandsAndRemembersTheChoice()
+	{
+		TrackerStore store = new TrackerStore(mock(ConfigManager.class), new Gson());
+		ItemResultView view = build(loadedTestData(), store, new AtomicReference<>());
+
+		JLabel toggle = expanderIn(cardWithTextArea(view, "Goblin"));
+		assertNotNull("each source card needs its own expander", toggle);
+		press(toggle);
+
+		List<String> text = allText(view);
+		assertTrue("expanding reveals the bands", text.contains("10% chance"));
+		assertTrue(text.contains("50% chance"));
+		assertTrue(text.contains("90% chance"));
+		assertTrue("the choice is recorded for next time", store.isExpanded(BRONZE_DAGGER, GOBLIN));
+
+		// a freshly built view for the same item restores the expansion
+		ItemResultView reopened = build(loadedTestData(), store, new AtomicReference<>());
+		assertTrue("expansion must survive rebuilding the view",
+			allText(reopened).contains("10% chance"));
+	}
+
+	@Test
+	public void expandingOneCardDoesNotNavigateAway()
+	{
+		AtomicReference<SourceData> clicked = new AtomicReference<>();
+		TrackerStore store = new TrackerStore(mock(ConfigManager.class), new Gson());
+		ItemResultView view = build(loadedTestData(), store, clicked);
+
+		press(expanderIn(cardWithTextArea(view, "Goblin")));
+		assertNull("pressing the expander must not open the source view", clicked.get());
+	}
+
+	// the expander control inside one source card
+	private static JLabel expanderIn(Container card)
+	{
+		for (JLabel l : collect(card, JLabel.class))
+		{
+			if (l.getText() != null && (l.getText().contains("more") || l.getText().contains("less")))
+			{
+				return l;
+			}
+		}
+		return null;
 	}
 
 	@Test
