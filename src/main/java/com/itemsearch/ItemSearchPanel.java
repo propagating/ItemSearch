@@ -212,7 +212,7 @@ class ItemSearchPanel extends PluginPanel
 	{
 		currentItemView = null;
 		SourceResultView view = new SourceResultView(npc, trackerStore, spriteManager, itemManager, okHttpClient,
-			spawnMapMarker, clientThread, this::showResults,
+			spawnMapMarker, clientThread, config.groupDropsByTable(), this::showResults,
 			item -> showItem(item, () -> showNpc(npc)));
 		currentNpcView = view;
 		showDetail(view);

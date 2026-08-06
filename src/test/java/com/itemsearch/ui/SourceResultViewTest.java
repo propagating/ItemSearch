@@ -77,8 +77,13 @@ public class SourceResultViewTest
 
 	private SourceResultView build(SourceData npc, TrackerStore store)
 	{
+		return build(npc, store, false);
+	}
+
+	private SourceResultView build(SourceData npc, TrackerStore store, boolean groupByDropTable)
+	{
 		return new SourceResultView(npc, store, mock(SpriteManager.class), mock(ItemManager.class),
-			new OkHttpClient(), mock(SpawnMapMarker.class), mock(ClientThread.class),
+			new OkHttpClient(), mock(SpawnMapMarker.class), mock(ClientThread.class), groupByDropTable,
 			() ->
 			{
 			},
@@ -541,6 +546,26 @@ public class SourceResultViewTest
 		return x;
 	}
 
+
+	@Test
+	public void dropsCanGroupByTheirSharedDropTableInstead()
+	{
+		// default: grouped by the page's wiki section
+		List<String> bySection = labelTexts(build(loadedTestData().sourceById(963),
+			new TrackerStore(mock(ConfigManager.class), new Gson()), false));
+		assertTrue(bySection.contains("HERBS"));
+		assertFalse("the shared table is not the grouping by default",
+			bySection.contains("HERB DROP TABLE"));
+
+		List<String> byTable = labelTexts(build(loadedTestData().sourceById(963),
+			new TrackerStore(mock(ConfigManager.class), new Gson()), true));
+		assertTrue("grouping by drop table names the shared table",
+			byTable.contains("HERB DROP TABLE"));
+		assertFalse(byTable.contains("HERBS"));
+		// a drop belonging to no shared table keeps its section heading either way
+		assertTrue("uncategorised drops still fall back to their section",
+			byTable.contains("RARE DROP TABLE"));
+	}
 
 	@Test
 	public void unconditionalMaxHitNumberHasNoTooltip()

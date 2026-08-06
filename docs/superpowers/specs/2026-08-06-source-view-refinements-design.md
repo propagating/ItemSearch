@@ -17,17 +17,17 @@ quantity. `KillTracker` collects dropped items into a `Set<Integer>` and
 `TrackerStore.recordKill` does `merge(key, 1, sum)`, so a drop of 50 runite
 bolts increments "Got" by exactly 1. Left alone.
 
-## Open: the unreproduced freeze
+## Resolved: the freeze
 
 The user's client froze (whole machine lagging, force quit) after clicking
-`'No fingers' (pickpocket)`. **Not reproduced.** Headless, that view builds in
-287 ms from 2 drops and 1 spawn point; nothing in its data is pathological, and
-no exception appears in the client log — consistent with a hang, not a crash.
+`'No fingers' (pickpocket)`. It was never reproduced directly — headless, that
+view builds in 287 ms from 2 drops and 1 spawn point, and no exception appears
+in the client log, consistent with a hang rather than a crash.
 
-The investigation did find two real regressions (below). Neither explains that
-specific source, so the freeze stays open. If it recurs, the things worth
-knowing are whether "Auto-mark spawns on map" was enabled, whether the world map
-was open, and what was clicked immediately before.
+The uncapped spawn points (item 1) are the most likely cause: with auto-mark
+enabled, opening `Rat` or another high-spawn monster adds hundreds of world-map
+markers, and those accumulate across clicks. **The user confirmed the freeze is
+gone after Pass 1** (2026-08-06), which fits that explanation.
 
 ---
 

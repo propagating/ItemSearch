@@ -38,4 +38,7 @@ public class DropSource
 	// the wiki drop-table subsection this line came from ("Rare drop table"); null when the
 	// source has one unheaded table or the heading was generic ("Drops"/"Rewards"/"Loot")
 	String category;
+	// the wiki's shared drop table this line came from ("Herb drop table"); null when the drop
+	// belongs to the source's own table rather than a shared one
+	String dropTable;
 }

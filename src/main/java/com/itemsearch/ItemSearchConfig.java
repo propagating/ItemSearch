@@ -52,4 +52,15 @@ public interface ItemSearchConfig extends Config
 	{
 		return true;
 	}
+
+	@ConfigItem(
+		keyName = "groupDropsByTable",
+		name = "Group drops by drop table",
+		description = "Group a source's drops by the shared drop table they come from "
+			+ "(herb, seed, rare) instead of by the wiki section they are listed under"
+	)
+	default boolean groupDropsByTable()
+	{
+		return false;
+	}
 }
