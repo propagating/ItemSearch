@@ -27,7 +27,6 @@ package com.itemsearch.map;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.function.Consumer;
 import lombok.extern.slf4j.Slf4j;
 import net.runelite.api.Client;
 import net.runelite.api.coords.WorldPoint;
@@ -58,22 +57,16 @@ public class SpawnMapMarker
 	private final ClientThread clientThread;
 	private final WorldMapPointManager worldMapPointManager;
 	private final BufferedImage markerIcon;
-	// opens layered locations in the external map explorer (LinkBrowser::browse in the
-	// live client; injected so tests never launch a real browser)
-	private final Consumer<String> browser;
-
 	// points we added; clear() removes exactly these, never other plugins' pins
 	private final List<WorldMapPoint> shown = new ArrayList<>();
 
 	public SpawnMapMarker(Client client, ClientThread clientThread,
-		WorldMapPointManager worldMapPointManager, BufferedImage markerIcon,
-		Consumer<String> browser)
+		WorldMapPointManager worldMapPointManager, BufferedImage markerIcon)
 	{
 		this.client = client;
 		this.clientThread = clientThread;
 		this.worldMapPointManager = worldMapPointManager;
 		this.markerIcon = markerIcon;
-		this.browser = browser;
 	}
 
 	public void showSpawns(SourceData npc)
@@ -83,19 +76,6 @@ public class SpawnMapMarker
 		if (spawns.isEmpty())
 		{
 			return;
-		}
-		// every spawn above ground level: the in-game map can't show any of them, so
-		// open the explorer on the right floor instead
-		if (spawns.stream().noneMatch(sp -> sp.getPlane() == 0))
-		{
-			SpawnPoint first = spawns.get(0);
-			String layered = MapLinks.layeredMapUrl(first.getX(), first.getY(),
-				first.getPlane(), null);
-			if (layered != null)
-			{
-				browser.accept(layered);
-				return;
-			}
 		}
 		if (markerIcon == null)
 		{
@@ -116,7 +96,7 @@ public class SpawnMapMarker
 				.snapToEdge(true)
 				.jumpOnClick(true)
 				.name(npc.getName())
-				.tooltip(npc.getName())
+				.tooltip(tooltipFor(npc.getName(), sp.getPlane(), null))
 				.build();
 			worldMapPointManager.add(point);
 			shown.add(point);
@@ -133,23 +113,12 @@ public class SpawnMapMarker
 		});
 	}
 
-	/**
-	 * Marks a single shop's location and pans the world map to it — unless the shop is
-	 * on an upper floor or a special map layer the in-game map cannot display, in which
-	 * case the external map explorer opens on the right layer instead.
-	 */
+	/** Marks a single shop's location and pans the world map to it. */
 	public void showShop(ShopData shop)
 	{
 		clear();
 		if (shop.getX() == null || shop.getY() == null)
 		{
-			return;
-		}
-		String layered = MapLinks.layeredMapUrl(shop.getX(), shop.getY(),
-			shop.getPlane(), shop.getMapId());
-		if (layered != null)
-		{
-			browser.accept(layered);
 			return;
 		}
 		if (markerIcon == null)
@@ -165,7 +134,7 @@ public class SpawnMapMarker
 			.snapToEdge(true)
 			.jumpOnClick(true)
 			.name(shop.getName())
-			.tooltip(shop.getName())
+			.tooltip(tooltipFor(shop.getName(), shop.getPlane(), shop.getMapId()))
 			.build();
 		worldMapPointManager.add(point);
 		shown.add(point);
@@ -177,6 +146,28 @@ public class SpawnMapMarker
 				worldMap.setWorldMapPositionTarget(target);
 			}
 		});
+	}
+
+	/**
+	 * Marker tooltip, saying so when the surface map cannot place the point exactly.
+	 *
+	 * <p>The in-game map draws the surface, so a point on an upper floor or a separate map layer
+	 * lands at those coordinates on the surface rather than where it really is. Naming the floor
+	 * is more use than being thrown out to an external map mid-session.
+	 */
+	private static String tooltipFor(String name, Integer plane, Integer mapId)
+	{
+		boolean layered = mapId != null && mapId > 0;
+		boolean upstairs = plane != null && plane > 0;
+		if (layered)
+		{
+			return name + " — separate map layer, surface position approximate";
+		}
+		if (upstairs)
+		{
+			return name + " — floor " + plane + ", surface position approximate";
+		}
+		return name;
 	}
 
 	public void clear()

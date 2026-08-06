@@ -39,6 +39,7 @@ import com.itemsearch.model.SpawnPoint;
 import net.runelite.client.ui.overlay.worldmap.WorldMapPoint;
 import net.runelite.client.ui.overlay.worldmap.WorldMapPointManager;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -88,10 +89,8 @@ public class SpawnMapMarkerTest
 		lenient().when(client.getWorldMap()).thenReturn(worldMap);
 
 		marker = new SpawnMapMarker(client, clientThread, worldMapPointManager,
-			new BufferedImage(1, 1, BufferedImage.TYPE_INT_ARGB), openedUrls::add);
+			new BufferedImage(1, 1, BufferedImage.TYPE_INT_ARGB));
 	}
-
-	private final java.util.List<String> openedUrls = new java.util.ArrayList<>();
 
 	private static ShopData shopAt(Integer x, Integer y, Integer plane, Integer mapId)
 	{
@@ -104,26 +103,38 @@ public class SpawnMapMarkerTest
 	{
 		marker.showShop(shopAt(3203, 3434, 0, null));
 		verify(worldMapPointManager).add(any(WorldMapPoint.class));
-		assertEquals(0, openedUrls.size());
 	}
 
+	// Being thrown out to a browser mid-session is worse than an approximate pin, so a layered
+	// location is marked in game and the tooltip says the surface map cannot place it exactly.
 	@Test
-	public void layeredShopOpensTheExplorerInsteadOfPinning()
+	public void layeredShopPinsInGameAndSaysSoInTheTooltip()
 	{
 		marker.showShop(shopAt(2857, 10189, 0, 10));
-		verify(worldMapPointManager, never()).add(any(WorldMapPoint.class));
-		assertEquals(1, openedUrls.size());
-		assertEquals("https://mejrs.github.io/osrs?m=10&z=4&p=0&x=2857&y=10189", openedUrls.get(0));
+		ArgumentCaptor<WorldMapPoint> captor = ArgumentCaptor.forClass(WorldMapPoint.class);
+		verify(worldMapPointManager).add(captor.capture());
+		assertTrue("tooltip must flag the approximation: " + captor.getValue().getTooltip(),
+			captor.getValue().getTooltip().contains("approximate"));
 	}
 
 	@Test
-	public void allUpstairsSpawnsOpenTheExplorerOnThatFloor()
+	public void upstairsSpawnsPinInGameWithTheFloorNoted()
 	{
 		marker.showSpawns(npc(1, "Upstairs guy", Arrays.asList(
 			new SpawnPoint(2662, 3657, 1), new SpawnPoint(2660, 3655, 2))));
-		verify(worldMapPointManager, never()).add(any(WorldMapPoint.class));
-		assertEquals(1, openedUrls.size());
-		assertEquals("https://mejrs.github.io/osrs?m=-1&z=4&p=1&x=2662&y=3657", openedUrls.get(0));
+		ArgumentCaptor<WorldMapPoint> captor = ArgumentCaptor.forClass(WorldMapPoint.class);
+		verify(worldMapPointManager, times(2)).add(captor.capture());
+		assertTrue("tooltip must name the floor: " + captor.getAllValues().get(0).getTooltip(),
+			captor.getAllValues().get(0).getTooltip().contains("floor 1"));
+	}
+
+	@Test
+	public void groundFloorSpawnsGetAPlainTooltip()
+	{
+		marker.showSpawns(npc(1, "Goblin", Collections.singletonList(new SpawnPoint(3246, 3235, 0))));
+		ArgumentCaptor<WorldMapPoint> captor = ArgumentCaptor.forClass(WorldMapPoint.class);
+		verify(worldMapPointManager).add(captor.capture());
+		assertEquals("Goblin", captor.getValue().getTooltip());
 	}
 
 	@Test
@@ -132,7 +143,6 @@ public class SpawnMapMarkerTest
 		marker.showSpawns(npc(1, "Mixed", Arrays.asList(
 			new SpawnPoint(2662, 3657, 1), new SpawnPoint(2660, 3655, 0))));
 		verify(worldMapPointManager, times(2)).add(any(WorldMapPoint.class));
-		assertEquals(0, openedUrls.size());
 	}
 
 	@Test
