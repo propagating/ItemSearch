@@ -199,7 +199,42 @@ public class ItemSearchPanelTest
 
 		search.setText("master farmer");
 		invokeRebuild(panel);
-		assertEquals("PICKPOCKET", badgeForResultNamed(results, "Master Farmer"));
+		assertEquals("STEAL", badgeForResultNamed(results, "Master Farmer"));
+	}
+
+	// A long badge used to eat the width of the name beside it, clipping the source name.
+	// Reserving one badge column keeps every name starting at the same x.
+	@Test
+	public void badgeColumnIsFixedWidthSoNamesAreNotClipped() throws Exception
+	{
+		ItemSearchPanel panel = newPanel(loadedTestData());
+		JTextField search = field(panel, "search", JTextField.class);
+		JPanel results = field(panel, "results", JPanel.class);
+
+		search.setText("a"); // matches every source type at once
+		invokeRebuild(panel);
+
+		java.util.Set<Integer> widths = new java.util.HashSet<>();
+		java.util.Set<String> badges = new java.util.HashSet<>();
+		for (Component row : results.getComponents())
+		{
+			if (!(row instanceof Container))
+			{
+				continue;
+			}
+			for (Component c : ((Container) row).getComponents())
+			{
+				if (c instanceof JLabel && ((java.awt.BorderLayout) ((Container) row).getLayout())
+					.getConstraints(c) == java.awt.BorderLayout.WEST)
+				{
+					widths.add(c.getPreferredSize().width);
+					badges.add(((JLabel) c).getText());
+				}
+			}
+		}
+		assertTrue("expected several badge kinds in this result set", badges.size() > 1);
+		assertEquals("every badge must reserve the same width, got " + badges,
+			1, widths.size());
 	}
 
 	private String labelTextContaining(Container root, String needle)

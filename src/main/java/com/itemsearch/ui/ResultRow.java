@@ -26,6 +26,7 @@ package com.itemsearch.ui;
 
 import java.awt.BorderLayout;
 import java.awt.Cursor;
+import java.awt.Dimension;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import javax.swing.BorderFactory;
@@ -35,6 +36,9 @@ import net.runelite.client.ui.ColorScheme;
 
 public class ResultRow extends JPanel
 {
+	// wide enough for the longest badge ("PICKPOCKET" was; "STEAL" and "STORE" are shorter)
+	private static final int BADGE_WIDTH = 46;
+
 	public ResultRow(String badge, String text, Runnable onClick)
 	{
 		setLayout(new BorderLayout(6, 0));
@@ -44,8 +48,17 @@ public class ResultRow extends JPanel
 
 		JLabel badgeLabel = new JLabel(badge);
 		badgeLabel.setForeground(ColorScheme.BRAND_ORANGE);
+		// One reserved column for every badge: sized to the longest, so a long badge cannot eat
+		// the width of the name beside it and every row's name starts at the same x.
+		Dimension badgeSize = new Dimension(BADGE_WIDTH, badgeLabel.getPreferredSize().height);
+		badgeLabel.setPreferredSize(badgeSize);
+		badgeLabel.setMinimumSize(badgeSize);
 		add(badgeLabel, BorderLayout.WEST);
-		add(new JLabel(text), BorderLayout.CENTER);
+
+		JLabel nameLabel = new JLabel(text);
+		// let the name shrink into the remaining space instead of forcing the row wider
+		nameLabel.setMinimumSize(new Dimension(0, nameLabel.getPreferredSize().height));
+		add(nameLabel, BorderLayout.CENTER);
 
 		addMouseListener(new MouseAdapter()
 		{

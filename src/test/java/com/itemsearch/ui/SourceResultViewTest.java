@@ -487,6 +487,61 @@ public class SourceResultViewTest
 		assertTrue("a categorised drop follows its heading", rare < text.indexOf("Loop half of key"));
 	}
 
+	// A Y_AXIS BoxLayout offsets a child whose alignmentX differs from its siblings, so a
+	// LEFT_ALIGNMENT heading among CENTER_ALIGNMENT rows gets pushed right and clipped.
+	@Test
+	public void dropGroupHeadingsSpanTheSidebarAndStartAtTheLeftEdge()
+	{
+		SourceResultView view = build(loadedTestData().sourceById(963),
+			new TrackerStore(mock(ConfigManager.class), new Gson()));
+		int width = 225;
+		view.setSize(width, 4000);
+		deepLayout(view);
+
+		JLabel heading = labelWithText(view, "RARE DROP TABLE");
+		assertNotNull("the group heading must render", heading);
+		JLabel dropName = labelWithText(view, "Loop half of key");
+		assertNotNull("a drop row must render to compare against", dropName);
+
+		assertTrue("heading is offset right of the drop rows: heading at "
+				+ absoluteX(heading, view) + ", rows at " + absoluteX(dropName, view),
+			absoluteX(heading, view) <= absoluteX(dropName, view));
+		assertTrue("heading must not be clipped: needs " + heading.getPreferredSize().width
+				+ "px, got " + heading.getWidth(),
+			heading.getWidth() >= heading.getPreferredSize().width);
+	}
+
+	private static JLabel labelWithText(Container root, String text)
+	{
+		for (Component c : root.getComponents())
+		{
+			if (c instanceof JLabel && text.equals(((JLabel) c).getText()))
+			{
+				return (JLabel) c;
+			}
+			if (c instanceof Container)
+			{
+				JLabel found = labelWithText((Container) c, text);
+				if (found != null)
+				{
+					return found;
+				}
+			}
+		}
+		return null;
+	}
+
+	private static int absoluteX(Component c, Component root)
+	{
+		int x = 0;
+		for (Component cur = c; cur != null && cur != root; cur = cur.getParent())
+		{
+			x += cur.getX();
+		}
+		return x;
+	}
+
+
 	@Test
 	public void unconditionalMaxHitNumberHasNoTooltip()
 	{

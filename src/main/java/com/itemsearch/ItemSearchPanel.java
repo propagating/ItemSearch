@@ -158,7 +158,7 @@ class ItemSearchPanel extends PluginPanel
 			case REWARD:
 				return "CHEST";
 			case PICKPOCKET:
-				return "PICKPOCKET";
+				return "STEAL";
 			case GATHER:
 				return "NODE";
 			default:

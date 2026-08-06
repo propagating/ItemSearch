@@ -120,7 +120,7 @@ public class SourceResultView extends JPanel
 		{
 			if (group.getKey() != null)
 			{
-				body.add(section(group.getKey()));
+				body.add(groupHeading(group.getKey()));
 			}
 			for (DropSource d : group.getValue())
 			{
@@ -129,6 +129,32 @@ public class SourceResultView extends JPanel
 		}
 
 		add(body, BorderLayout.CENTER);
+	}
+
+	/**
+	 * A drop-group heading sized to span the sidebar.
+	 *
+	 * <p>The label cannot be added to the body directly: a Y_AXIS BoxLayout offsets any child
+	 * whose alignmentX differs from its siblings, so a LEFT_ALIGNMENT label among the
+	 * CENTER_ALIGNMENT rows gets pushed to the right and long names run off the edge. Wrapping it
+	 * in a full-width row that matches the rows' alignment and horizontal inset keeps the text at
+	 * the left edge with the whole sidebar to spread into.
+	 */
+	private static JPanel groupHeading(String title)
+	{
+		JPanel row = new JPanel(new BorderLayout())
+		{
+			@Override
+			public Dimension getMaximumSize()
+			{
+				return new Dimension(Integer.MAX_VALUE, getPreferredSize().height);
+			}
+		};
+		row.setOpaque(false);
+		row.setAlignmentX(Component.CENTER_ALIGNMENT);
+		row.setBorder(BorderFactory.createEmptyBorder(6, 4, 2, 4));
+		row.add(section(title), BorderLayout.WEST);
+		return row;
 	}
 
 	/**
