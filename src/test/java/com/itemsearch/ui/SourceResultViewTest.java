@@ -95,7 +95,7 @@ public class SourceResultViewTest
 	private static SourceData npc(int id, String name, int level, CombatStats combat)
 	{
 		return new SourceData(id, name, level, null, Collections.emptyList(), Collections.emptyList(),
-			Collections.singletonList(id), combat, SourceType.KILL, null, null, null, null);
+			Collections.singletonList(id), combat, SourceType.KILL, null, null, null, null, null);
 	}
 
 	private static CombatStats combat(List<String> attackTypes)
@@ -302,7 +302,7 @@ public class SourceResultViewTest
 		SourceResultView view = build(npc(9003, "Dragon", 200, combat(Collections.singletonList("dragonfire"))),
 			new TrackerStore(mock(ConfigManager.class), new Gson()));
 		assertEquals(1, countTooltips(view, "Protect from Magic (partial)"));
-		assertEquals(1, countTooltips(view, "Protect with Dragonfire shield (or antifire potion)"));
+		assertEquals(1, countTooltips(view, "Protect with Anti-dragon shield (or antifire potion)"));
 		assertEquals(0, countTooltips(view, "No prayer protects against this attack"));
 	}
 
@@ -321,7 +321,7 @@ public class SourceResultViewTest
 		SourceResultView view = build(
 			npc(9005, "Steel dragon", 246, combat(Collections.singletonList("metallic dragonfire"))),
 			new TrackerStore(mock(ConfigManager.class), new Gson()));
-		assertEquals(1, countTooltips(view, "Protect with Dragonfire shield (or antifire potion)"));
+		assertEquals(1, countTooltips(view, "Protect with Anti-dragon shield (or antifire potion)"));
 		assertEquals(0, countTooltips(view, "Protect from Magic (partial)"));
 	}
 
@@ -460,6 +460,41 @@ public class SourceResultViewTest
 			new TrackerStore(mock(ConfigManager.class), new Gson()));
 		assertEquals(1, countLabels(view, "8/12/15"));
 		assertEquals(0, countLabels(view, "8 (15)"));
+	}
+
+	// the attacks table is the card's only GridBagLayout panel
+	private static Container attackTable(Container root)
+	{
+		for (Component c : root.getComponents())
+		{
+			if (c instanceof Container)
+			{
+				if (((Container) c).getLayout() instanceof java.awt.GridBagLayout)
+				{
+					return (Container) c;
+				}
+				Container found = attackTable((Container) c);
+				if (found != null)
+				{
+					return found;
+				}
+			}
+		}
+		return null;
+	}
+
+	/** The cell above "Speed"/"Max hit" held a space, which rendered as a stray mark. */
+	@Test
+	public void theAttackTableHasNoSpacerAboveTheRowLabels()
+	{
+		SourceResultView view = build(npc(9050, "Steel dragon", 246, combat(
+			Arrays.asList("slash", "metallic dragonfire"))),
+			new TrackerStore(mock(ConfigManager.class), new Gson()));
+		Container table = attackTable(view);
+		assertNotNull("the attacks table should exist", table);
+		assertEquals("no blank filler cell above the row labels", 0, countLabels(table, " "));
+		assertEquals(1, countLabels(table, "Speed"));
+		assertEquals(1, countLabels(table, "Max hit"));
 	}
 
 	/** Two mitigations that land on the same number are one rung of the ladder, not two. */

@@ -71,7 +71,7 @@ public final class AttackStyles
 
 	/**
 	 * @return the item that counters this attack (shown as its icon) when no prayer applies —
-	 *         a Dragonfire shield for dragonfire, an Elemental shield for icy breath — else {@code null}.
+	 *         an Anti-dragon shield for dragonfire, an Elemental shield for icy breath — else {@code null}.
 	 */
 	@Nullable
 	public static ProtectionItem protectionItemFor(String attackType)
@@ -84,7 +84,7 @@ public final class AttackStyles
 		{
 			case "dragonfire":
 			case "metallic dragonfire":
-				return ProtectionItem.DRAGONFIRE_SHIELD;
+				return ProtectionItem.ANTIDRAGON_SHIELD;
 			case "icy breath":
 				return ProtectionItem.ELEMENTAL_SHIELD;
 			default:
@@ -114,12 +114,12 @@ public final class AttackStyles
 			case "dragonfire":
 				return Arrays.asList(
 					Protection.prayer(ProtectionPrayer.MAGIC, true),
-					Protection.item(ProtectionItem.DRAGONFIRE_SHIELD, "(or antifire potion)"));
+					Protection.item(ProtectionItem.ANTIDRAGON_SHIELD, "(or antifire potion)"));
 			case "metallic dragonfire":
 				// metallic dragons' dragonfire is typeless — Protect from Magic does nothing,
 				// only a shield or antifire potion reduces it
 				return Collections.singletonList(
-					Protection.item(ProtectionItem.DRAGONFIRE_SHIELD, "(or antifire potion)"));
+					Protection.item(ProtectionItem.ANTIDRAGON_SHIELD, "(or antifire potion)"));
 			case "icy breath":
 				return Arrays.asList(
 					Protection.prayer(ProtectionPrayer.MAGIC, true),

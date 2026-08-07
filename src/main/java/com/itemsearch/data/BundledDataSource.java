@@ -278,7 +278,7 @@ public class BundledDataSource implements DropDataService
 			SourceType type = npc.getType() == null ? SourceType.KILL : npc.getType();
 			npc = new SourceData(npc.getId(), npc.getName(), npc.getCombatLevel(),
 				npc.getWikiImageUrl(), drops, spawns, npcIds, npc.getCombat(),
-				type, npc.getX(), npc.getY(), npc.getPlane(), npc.getTables());
+				type, npc.getX(), npc.getY(), npc.getPlane(), npc.getTables(), npc.getWikiPage());
 			allNpcs.add(npc);
 			for (Integer id : npcIds)
 			{
@@ -445,7 +445,7 @@ public class BundledDataSource implements DropDataService
 		}
 		SourceData updated = new SourceData(cur.getId(), cur.getName(), cur.getCombatLevel(),
 			wikiImageUrl, cur.getDrops(), cur.getSpawnPoints(), cur.getNpcIds(), cur.getCombat(),
-			cur.getType(), cur.getX(), cur.getY(), cur.getPlane(), cur.getTables());
+			cur.getType(), cur.getX(), cur.getY(), cur.getPlane(), cur.getTables(), cur.getWikiPage());
 		// replace across every id that resolves to this entry, plus the search list, so a
 		// later reopen (search reads allNpcs) sees the fresh image too. replace(k,old,new)
 		// is a CAS: a racing overlay simply wins/loses a key without clobbering fields.

@@ -70,9 +70,9 @@ public class AttackStylesTest
 	@Test
 	public void unprayableAttacksMapToProtectionItems()
 	{
-		assertEquals(ProtectionItem.DRAGONFIRE_SHIELD, AttackStyles.protectionItemFor("dragonfire"));
+		assertEquals(ProtectionItem.ANTIDRAGON_SHIELD, AttackStyles.protectionItemFor("dragonfire"));
 		assertEquals(ProtectionItem.ELEMENTAL_SHIELD, AttackStyles.protectionItemFor("icy breath"));
-		assertEquals(ProtectionItem.DRAGONFIRE_SHIELD, AttackStyles.protectionItemFor("Dragonfire"));
+		assertEquals(ProtectionItem.ANTIDRAGON_SHIELD, AttackStyles.protectionItemFor("Dragonfire"));
 	}
 
 	@Test
@@ -101,8 +101,8 @@ public class AttackStylesTest
 		assertEquals(2, p.size());
 		assertEquals(ProtectionPrayer.MAGIC, p.get(0).getPrayer());
 		assertEquals("Protect from Magic (partial)", p.get(0).getDisplayName());
-		assertEquals(ProtectionItem.DRAGONFIRE_SHIELD, p.get(1).getItem());
-		assertEquals("Protect with Dragonfire shield (or antifire potion)", p.get(1).getDisplayName());
+		assertEquals(ProtectionItem.ANTIDRAGON_SHIELD, p.get(1).getItem());
+		assertEquals("Protect with Anti-dragon shield (or antifire potion)", p.get(1).getDisplayName());
 	}
 
 	@Test
@@ -111,8 +111,8 @@ public class AttackStylesTest
 		List<Protection> p = AttackStyles.protectionsFor("metallic dragonfire");
 		assertEquals(1, p.size());
 		assertFalse(p.get(0).isPrayer());
-		assertEquals(ProtectionItem.DRAGONFIRE_SHIELD, p.get(0).getItem());
-		assertEquals("Protect with Dragonfire shield (or antifire potion)", p.get(0).getDisplayName());
+		assertEquals(ProtectionItem.ANTIDRAGON_SHIELD, p.get(0).getItem());
+		assertEquals("Protect with Anti-dragon shield (or antifire potion)", p.get(0).getDisplayName());
 	}
 
 	@Test

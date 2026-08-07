@@ -370,11 +370,10 @@ public class SourceResultView extends JPanel
 		GridBagConstraints gc = new GridBagConstraints();
 		gc.insets = new Insets(1, 3, 1, 3);
 
-		// column 0: row labels (blank above the icons, then "Speed" and "Max hit")
+		// column 0: row labels. Nothing sits above the icons — a spacer label there rendered as a
+		// stray mark, and the column is sized by "Speed"/"Max hit" without one.
 		gc.gridx = 0;
 		gc.anchor = GridBagConstraints.WEST;
-		gc.gridy = 0;
-		table.add(new JLabel(" "), gc);
 		gc.gridy = 1;
 		table.add(dim("Speed"), gc);
 		gc.gridy = 2;

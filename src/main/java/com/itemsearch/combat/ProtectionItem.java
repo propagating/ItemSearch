@@ -29,7 +29,9 @@ import net.runelite.api.gameval.ItemID;
 /** An item that counters an otherwise-unprayable attack, shown in the UI as the item's icon. */
 public enum ProtectionItem
 {
-	DRAGONFIRE_SHIELD(ItemID.DRAGONFIRE_SHIELD, "Dragonfire shield"),
+	// the shield to name for dragonfire is the one a player can actually be holding: an
+	// anti-dragon shield is a quest reward anyone has, a dragonfire shield is a grind
+	ANTIDRAGON_SHIELD(ItemID.ANTIDRAGONBREATHSHIELD, "Anti-dragon shield"),
 	ELEMENTAL_SHIELD(ItemID.ELEMENTAL_SHIELD, "Elemental shield");
 
 	private final int itemId;

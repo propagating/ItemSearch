@@ -51,11 +51,24 @@ public class SourceData
 	Integer plane;
 	// indexes into the bundled file's shared drop tables; resolved into drops at load time
 	java.util.List<Integer> tables;
+	// the wiki page behind this source, when the display name is no longer that page's title.
+	// A version split calls itself "Killerwatt (Attacking)", which is not a page anyone can
+	// fetch. Null whenever the name is the title, which is most sources.
+	String wikiPage;
+
+	/**
+	 * The title to ask the wiki about. The display name is not always one: version splits and
+	 * pickpocket variants are named for the player's benefit, not the wiki's.
+	 */
+	public String wikiTitle()
+	{
+		return wikiPage != null && !wikiPage.trim().isEmpty() ? wikiPage : name;
+	}
 
 	/** A copy carrying the given drops, used once the shared tables have been resolved. */
 	public SourceData withDrops(List<DropSource> resolved)
 	{
 		return new SourceData(id, name, combatLevel, wikiImageUrl, resolved, spawnPoints,
-			npcIds, combat, type, x, y, plane, tables);
+			npcIds, combat, type, x, y, plane, tables, wikiPage);
 	}
 }

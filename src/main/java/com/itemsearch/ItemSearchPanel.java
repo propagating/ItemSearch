@@ -337,8 +337,10 @@ class ItemSearchPanel extends PluginPanel
 		{
 			spawnMapMarker.showSpawns(npc);
 		}
-		// fetch a fresher wiki image and push it into the view we just opened
-		wikiRefreshService.refreshNpcImage(npc.getId(), npc.getName(), view::updateImage);
+		// fetch a fresher wiki image and push it into the view we just opened. By page title,
+		// not display name — "Killerwatt (Attacking)" is a name we made up when splitting
+		// versions, and the wiki answers such a title with a page that does not exist.
+		wikiRefreshService.refreshNpcImage(npc.getId(), npc.wikiTitle(), view::updateImage);
 	}
 
 	private void showShop(ShopData shop)
