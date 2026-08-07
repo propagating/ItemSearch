@@ -54,16 +54,27 @@ public class BundledSourceDataTest
         ds.load();
     }
 
+    /**
+     * The source called {@code name}, or its first version when the wiki splits that monster
+     * into versions — Zulrah is three colour phases, Vorkath two quest states.
+     */
     private static SourceData named(String name)
     {
+        SourceData versioned = null;
+        String prefix = name + " (";
         for (SourceData s : ds.searchSources(name))
         {
             if (name.equalsIgnoreCase(s.getName()))
             {
                 return s;
             }
+            if (versioned == null
+                && s.getName().regionMatches(true, 0, prefix, 0, prefix.length()))
+            {
+                versioned = s;
+            }
         }
-        return null;
+        return versioned;
     }
 
     @Test
