@@ -29,6 +29,7 @@ import java.awt.Component;
 import java.awt.Container;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
+import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -44,6 +45,7 @@ import com.itemsearch.tracker.TrackerStore;
 import org.junit.Test;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.mock;
 
@@ -256,6 +258,98 @@ public class ItemSearchPanelTest
 			}
 		}
 		return null;
+	}
+
+	private static JButton backButton(Container root)
+	{
+		for (Component c : root.getComponents())
+		{
+			if (c instanceof JButton && "< Back".equals(((JButton) c).getText()))
+			{
+				return (JButton) c;
+			}
+			if (c instanceof Container)
+			{
+				JButton found = backButton((Container) c);
+				if (found != null)
+				{
+					return found;
+				}
+			}
+		}
+		return null;
+	}
+
+	private static boolean showing(Container root, String text)
+	{
+		return collectText(root).stream().anyMatch(t -> t != null && t.contains(text));
+	}
+
+	private static java.util.List<String> collectText(Container root)
+	{
+		java.util.List<String> out = new java.util.ArrayList<>();
+		for (Component c : root.getComponents())
+		{
+			if (c instanceof javax.swing.JTextArea)
+			{
+				out.add(((javax.swing.JTextArea) c).getText());
+			}
+			if (c instanceof JLabel)
+			{
+				out.add(((JLabel) c).getText());
+			}
+			if (c instanceof Container)
+			{
+				out.addAll(collectText((Container) c));
+			}
+		}
+		return out;
+	}
+
+	/** Back should retrace the path taken, not jump to search from wherever you are. */
+	@Test
+	public void backReturnsToThePreviousPageNotTheSearch() throws Exception
+	{
+		ItemSearchPanel panel = newPanel(loadedTestData());
+		panel.showSource(loadedTestData().sourceById(3031)); // Goblin
+		assertTrue("the source page is showing", showing(panel, "Goblin"));
+
+		// step into one of its drops, then back out again
+		panel.showItemForTest(new com.itemsearch.model.ItemMatch(1205, "Bronze dagger"));
+		assertTrue("the item page is showing", showing(panel, "Bronze dagger"));
+
+		backButton(panel).doClick();
+		assertTrue("back must land on the source page again", showing(panel, "Goblin"));
+
+		backButton(panel).doClick();
+		assertNull("a second back leaves the detail views entirely", backButton(panel));
+	}
+
+	@Test
+	public void typingASearchResetsToTheResultsPage() throws Exception
+	{
+		ItemSearchPanel panel = newPanel(loadedTestData());
+		JTextField search = field(panel, "search", JTextField.class);
+		panel.showSource(loadedTestData().sourceById(3031));
+		assertNotNull("a detail page is open", backButton(panel));
+
+		search.setText("zulrah");
+		invokeRebuild(panel);
+
+		assertNull("a new search clears the back button", backButton(panel));
+		assertTrue("and shows the results", showing(panel, "Zulrah"));
+	}
+
+	/** The empty search page is worth browsing rather than a bare instruction. */
+	@Test
+	public void theDefaultPageListsSourcesToBrowse() throws Exception
+	{
+		ItemSearchPanel panel = newPanel(loadedTestData());
+		JPanel results = field(panel, "results", JPanel.class);
+		invokeRebuild(panel);
+
+		assertTrue("the empty search browses the data", results.getComponentCount() > 1);
+		assertTrue("and names something real", showing(results, "Goblin"));
 	}
 
 	private JScrollPane enclosingScrollPane(Component c)

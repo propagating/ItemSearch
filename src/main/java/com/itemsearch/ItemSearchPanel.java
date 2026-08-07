@@ -27,6 +27,7 @@ package com.itemsearch;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.Rectangle;
+import java.util.List;
 import javax.swing.BoxLayout;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -73,11 +74,20 @@ class ItemSearchPanel extends PluginPanel
 	private final JScrollPane resultsScroll;
 	private final JPanel content = new JPanel(new BorderLayout());
 	private final JLabel hintLabel = new JLabel("Search for an NPC or item above.");
+	// rendering thousands of rows at once stalls the sidebar, so the browsable list grows on demand
+	private static final int BROWSE_PAGE = 100;
 	private final Timer debounce;
 	// the item view currently on screen, if any, so its dry counters can update live on kills
 	private ItemResultView currentItemView;
 	// the npc view currently on screen, if any, so its per-drop stats update live on kills
 	private SourceResultView currentNpcView;
+	// pages behind the one on screen, most recent first. Back retraces the path taken rather
+	// than jumping to search, so stepping npc -> drop -> npc returns where you came from.
+	private final java.util.Deque<Runnable> history = new java.util.ArrayDeque<>();
+	// how to redraw whatever is on screen, so it can be pushed onto the history when leaving
+	private Runnable currentPage;
+	// how many rows the browsable (unsearched) list shows; "Show more" extends it
+	private int browseLimit = BROWSE_PAGE;
 
 	ItemSearchPanel(DropDataService dataService, TrackerStore trackerStore, ItemManager itemManager,
 		OkHttpClient okHttpClient, WikiRefreshService wikiRefreshService, SpawnMapMarker spawnMapMarker,
@@ -169,6 +179,11 @@ class ItemSearchPanel extends PluginPanel
 
 	private void rebuildResults()
 	{
+		// typing is a reset: it returns to the search page and drops the trail behind it
+		history.clear();
+		currentPage = null;
+		renderResults();
+
 		results.removeAll();
 		String q = search.getText();
 		if (q != null && !q.trim().isEmpty())
@@ -192,13 +207,82 @@ class ItemSearchPanel extends PluginPanel
 		}
 		else
 		{
-			results.add(hintLabel);
+			browse();
 		}
 		results.revalidate();
 		results.repaint();
 	}
 
+	/**
+	 * The page with nothing typed: a list worth scrolling rather than an instruction to search.
+	 *
+	 * <p>Rendering all several thousand sources at once stalls the sidebar, so it starts at
+	 * {@value #BROWSE_PAGE} and grows when asked.
+	 */
+	private void browse()
+	{
+		List<SourceData> all = dataService.allSources();
+		if (all.isEmpty())
+		{
+			results.add(hintLabel); // data still loading
+			return;
+		}
+		int shown = Math.min(browseLimit, all.size());
+		for (SourceData npc : all.subList(0, shown))
+		{
+			String label = npc.getCombatLevel() > 0
+				? npc.getName() + " (lvl " + npc.getCombatLevel() + ")"
+				: npc.getName();
+			results.add(new ResultRow(badgeFor(npc.getType()), label, () -> showNpc(npc)));
+		}
+		if (shown < all.size())
+		{
+			results.add(new ResultRow("MORE",
+				"Show more  (" + shown + " of " + all.size() + ")", () ->
+				{
+					browseLimit += BROWSE_PAGE;
+					rebuildResults();
+				}));
+		}
+	}
+
+	/**
+	 * Opens a page, remembering the one being left so Back can return to it.
+	 *
+	 * <p>Pages used to carry their own "where back goes" callback, which meant anything opened
+	 * from outside a chain — the in-game menu entry, a search result — could only go back to the
+	 * search. Keeping the trail here lets Back retrace whatever path was actually taken.
+	 */
+	private void go(Runnable page)
+	{
+		if (currentPage != null)
+		{
+			history.push(currentPage);
+		}
+		currentPage = page;
+		page.run();
+	}
+
+	private void back()
+	{
+		if (history.isEmpty())
+		{
+			showResults();
+			return;
+		}
+		currentPage = history.pop();
+		currentPage.run();
+	}
+
+	/** Returns to the search page and forgets the trail — a new search starts over. */
 	private void showResults()
+	{
+		history.clear();
+		currentPage = null;
+		renderResults();
+	}
+
+	private void renderResults()
 	{
 		currentItemView = null;
 		currentNpcView = null;
@@ -215,12 +299,22 @@ class ItemSearchPanel extends PluginPanel
 		showNpc(source);
 	}
 
+	/** Opens an item's page. Package-visible so tests can walk the navigation. */
+	void showItemForTest(ItemMatch item)
+	{
+		showItem(item);
+	}
+
 	private void showNpc(SourceData npc)
+	{
+		go(() -> renderNpc(npc));
+	}
+
+	private void renderNpc(SourceData npc)
 	{
 		currentItemView = null;
 		SourceResultView view = new SourceResultView(npc, trackerStore, spriteManager, itemManager, okHttpClient,
-			spawnMapMarker, clientThread, config.groupDropsByTable(), this::showResults,
-			item -> showItem(item, () -> showNpc(npc)));
+			spawnMapMarker, clientThread, config.groupDropsByTable(), this::back, this::showItem);
 		currentNpcView = view;
 		showDetail(view);
 		if (config.autoMarkSpawns())
@@ -233,32 +327,29 @@ class ItemSearchPanel extends PluginPanel
 
 	private void showShop(ShopData shop)
 	{
-		showShop(shop, this::showResults);
+		go(() -> renderShop(shop));
 	}
 
-	// onBack lets a shop opened from an item's buy-from list return to that item
-	private void showShop(ShopData shop, Runnable onBack)
+	private void renderShop(ShopData shop)
 	{
 		currentItemView = null;
 		currentNpcView = null;
-		ShopResultView view = new ShopResultView(shop, itemManager, onBack, line ->
-			showItem(new ItemMatch(line.getItemId(), line.getItemName()),
-				() -> showShop(shop, onBack)),
+		ShopResultView view = new ShopResultView(shop, itemManager, this::back, line ->
+			showItem(new ItemMatch(line.getItemId(), line.getItemName())),
 			spawnMapMarker::showShop);
 		showDetail(view);
 	}
 
 	private void showItem(ItemMatch item)
 	{
-		showItem(item, this::showResults);
+		go(() -> renderItem(item));
 	}
 
-	// onBack lets an item opened from an NPC's loot table return to that NPC instead of search
-	private void showItem(ItemMatch item, Runnable onBack)
+	private void renderItem(ItemMatch item)
 	{
 		currentNpcView = null;
-		currentItemView = new ItemResultView(item, dataService, trackerStore, itemManager, onBack,
-			this::showNpc, shop -> showShop(shop, () -> showItem(item, onBack)));
+		currentItemView = new ItemResultView(item, dataService, trackerStore, itemManager, this::back,
+			this::showNpc, this::showShop);
 		showDetail(currentItemView);
 	}
 

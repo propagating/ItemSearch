@@ -46,6 +46,9 @@ public interface DropDataService
 
 	List<SourceData> searchSources(String query);
 
+	/** Every source, name-ordered — what the panel browses when nothing has been searched for. */
+	List<SourceData> allSources();
+
 	List<ItemMatch> searchItems(String query);
 
 	/**

@@ -362,6 +362,13 @@ public class BundledDataSource implements DropDataService
 	}
 
 	@Override
+	public List<SourceData> allSources()
+	{
+		// already name-ordered by the generator; copy so callers cannot mutate the index
+		return new ArrayList<>(allNpcs);
+	}
+
+	@Override
 	public List<ItemMatch> searchItems(String query)
 	{
 		String q = query.toLowerCase(Locale.ROOT).trim();
