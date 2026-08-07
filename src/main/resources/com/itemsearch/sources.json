@@ -270250,6 +270250,7 @@
       "name": "Albatross",
       "combatLevel": 110,
       "spawnPoints": [],
+      "locationName": "Anglerfish's Light - north-east of Last Light",
       "tables": [
         47
       ],
@@ -270553,7 +270554,18 @@
       ],
       "name": "Alomone",
       "combatLevel": 13,
-      "spawnPoints": [],
+      "spawnPoints": [
+        {
+          "x": 2608,
+          "y": 9671,
+          "plane": 0
+        }
+      ],
+      "entrance": {
+        "x": 2566,
+        "y": 3243,
+        "plane": 0
+      },
       "tables": [
         3
       ],
@@ -270688,7 +270700,133 @@
       ],
       "name": "Ammonite Crab",
       "combatLevel": 25,
-      "spawnPoints": [],
+      "spawnPoints": [
+        {
+          "x": 3800,
+          "y": 3752,
+          "plane": 0
+        },
+        {
+          "x": 3802,
+          "y": 3756,
+          "plane": 0
+        },
+        {
+          "x": 3806,
+          "y": 3755,
+          "plane": 0
+        },
+        {
+          "x": 3817,
+          "y": 3760,
+          "plane": 0
+        },
+        {
+          "x": 3656,
+          "y": 3878,
+          "plane": 0
+        },
+        {
+          "x": 3657,
+          "y": 3872,
+          "plane": 0
+        },
+        {
+          "x": 3658,
+          "y": 3875,
+          "plane": 0
+        },
+        {
+          "x": 3707,
+          "y": 3898,
+          "plane": 0
+        },
+        {
+          "x": 3714,
+          "y": 3881,
+          "plane": 0
+        },
+        {
+          "x": 3714,
+          "y": 3887,
+          "plane": 0
+        },
+        {
+          "x": 3714,
+          "y": 3898,
+          "plane": 0
+        },
+        {
+          "x": 3715,
+          "y": 3845,
+          "plane": 0
+        },
+        {
+          "x": 3715,
+          "y": 3870,
+          "plane": 0
+        },
+        {
+          "x": 3716,
+          "y": 3849,
+          "plane": 0
+        },
+        {
+          "x": 3716,
+          "y": 3862,
+          "plane": 0
+        },
+        {
+          "x": 3718,
+          "y": 3843,
+          "plane": 0
+        },
+        {
+          "x": 3718,
+          "y": 3878,
+          "plane": 0
+        },
+        {
+          "x": 3718,
+          "y": 3892,
+          "plane": 0
+        },
+        {
+          "x": 3720,
+          "y": 3868,
+          "plane": 0
+        },
+        {
+          "x": 3722,
+          "y": 3845,
+          "plane": 0
+        },
+        {
+          "x": 3723,
+          "y": 3897,
+          "plane": 0
+        },
+        {
+          "x": 3726,
+          "y": 3889,
+          "plane": 0
+        },
+        {
+          "x": 3731,
+          "y": 3844,
+          "plane": 0
+        },
+        {
+          "x": 3732,
+          "y": 3848,
+          "plane": 0
+        },
+        {
+          "x": 3735,
+          "y": 3888,
+          "plane": 0
+        }
+      ],
       "tables": [
         59,
         60
@@ -270749,6 +270887,7 @@
       "wikiPage": "Amoxliatl",
       "combatLevel": 263,
       "spawnPoints": [],
+      "locationName": "Ruins of Tapoyauik",
       "tables": [
         62
       ],
@@ -270780,6 +270919,7 @@
       "wikiPage": "Amoxliatl",
       "combatLevel": 226,
       "spawnPoints": [],
+      "locationName": "Ruins of Tapoyauik",
       "tables": [
         62
       ],
@@ -270901,6 +271041,7 @@
       "name": "Ancient feral vyre",
       "combatLevel": 117,
       "spawnPoints": [],
+      "locationName": "Path between Sangvesti and the Ruined Village",
       "tables": [
         69
       ],
@@ -271138,6 +271279,7 @@
       "name": "Ancient Zygomite",
       "combatLevel": 109,
       "spawnPoints": [],
+      "locationName": "Fossil Island",
       "tables": [
         77,
         78,
@@ -271221,7 +271363,18 @@
       "name": "Angry giant rat (Level 45)",
       "wikiPage": "Angry giant rat",
       "combatLevel": 45,
-      "spawnPoints": [],
+      "spawnPoints": [
+        {
+          "x": 3088,
+          "y": 5304,
+          "plane": 0
+        },
+        {
+          "x": 3094,
+          "y": 5286,
+          "plane": 0
+        }
+      ],
       "tables": [
         3
       ],
@@ -272451,6 +272604,7 @@
       "name": "Aquanite",
       "combatLevel": 145,
       "spawnPoints": [],
+      "locationName": "Ynysdail Cavern",
       "tables": [
         101
       ],
@@ -272481,6 +272635,7 @@
       "name": "Araxxor",
       "combatLevel": 890,
       "spawnPoints": [],
+      "locationName": "Morytania Spider Cave",
       "tables": [
         102,
         103
@@ -272527,6 +272682,7 @@
       "wikiPage": "Araxyte",
       "combatLevel": 146,
       "spawnPoints": [],
+      "locationName": "Morytania Spider Cave",
       "tables": [
         104,
         105,
@@ -272564,6 +272720,7 @@
       "wikiPage": "Araxyte",
       "combatLevel": 96,
       "spawnPoints": [],
+      "locationName": "Morytania Spider Cave",
       "tables": [
         104,
         105,
@@ -272812,6 +272969,7 @@
       "name": "Armoured kraken",
       "combatLevel": 180,
       "spawnPoints": [],
+      "locationName": "Crystal Sea - south-east of Port Roberts",
       "tables": [
         112,
         113
@@ -272853,6 +273011,7 @@
       "wikiPage": "Armoured zombie (Defender of Varrock)",
       "combatLevel": 82,
       "spawnPoints": [],
+      "locationName": "Varrock Palace",
       "tables": [
         114
       ],
@@ -272889,6 +273048,7 @@
       "wikiPage": "Armoured zombie (Defender of Varrock)",
       "combatLevel": 82,
       "spawnPoints": [],
+      "locationName": "Varrock Palace",
       "tables": [
         114
       ],
@@ -272924,6 +273084,7 @@
       "wikiPage": "Armoured zombie (Zemouregal's Base)",
       "combatLevel": 82,
       "spawnPoints": [],
+      "locationName": "Zemouregal's Base",
       "tables": [
         115,
         116
@@ -272960,6 +273121,7 @@
       "wikiPage": "Armoured zombie (Zemouregal's Base)",
       "combatLevel": 82,
       "spawnPoints": [],
+      "locationName": "Zemouregal's Base",
       "tables": [
         115,
         116
@@ -272995,6 +273157,7 @@
       "name": "Armoured zombie (Zemouregal's Fort)",
       "combatLevel": 105,
       "spawnPoints": [],
+      "locationName": "Zemouregal's Fort",
       "tables": [
         117,
         118
@@ -273138,7 +273301,13 @@
       ],
       "name": "Artio",
       "combatLevel": 320,
-      "spawnPoints": [],
+      "spawnPoints": [
+        {
+          "x": 3116,
+          "y": 3677,
+          "plane": 0
+        }
+      ],
       "tables": [
         123,
         124
@@ -275675,7 +275844,53 @@
       "name": "Bandit (Pollnivneach) (Bearded)",
       "wikiPage": "Bandit (Pollnivneach)",
       "combatLevel": 41,
-      "spawnPoints": [],
+      "spawnPoints": [
+        {
+          "x": 3354,
+          "y": 2987,
+          "plane": 0
+        },
+        {
+          "x": 3354,
+          "y": 2994,
+          "plane": 0
+        },
+        {
+          "x": 3354,
+          "y": 3000,
+          "plane": 0
+        },
+        {
+          "x": 3357,
+          "y": 3001,
+          "plane": 0
+        },
+        {
+          "x": 3360,
+          "y": 2999,
+          "plane": 0
+        },
+        {
+          "x": 3361,
+          "y": 3003,
+          "plane": 0
+        },
+        {
+          "x": 3362,
+          "y": 2988,
+          "plane": 0
+        },
+        {
+          "x": 3367,
+          "y": 2997,
+          "plane": 0
+        },
+        {
+          "x": 3371,
+          "y": 2984,
+          "plane": 0
+        }
+      ],
       "tables": [
         3
       ],
@@ -275707,7 +275922,53 @@
       "name": "Bandit (Pollnivneach) (No beard)",
       "wikiPage": "Bandit (Pollnivneach)",
       "combatLevel": 56,
-      "spawnPoints": [],
+      "spawnPoints": [
+        {
+          "x": 3354,
+          "y": 2987,
+          "plane": 0
+        },
+        {
+          "x": 3354,
+          "y": 2994,
+          "plane": 0
+        },
+        {
+          "x": 3354,
+          "y": 3000,
+          "plane": 0
+        },
+        {
+          "x": 3357,
+          "y": 3001,
+          "plane": 0
+        },
+        {
+          "x": 3360,
+          "y": 2999,
+          "plane": 0
+        },
+        {
+          "x": 3361,
+          "y": 3003,
+          "plane": 0
+        },
+        {
+          "x": 3362,
+          "y": 2988,
+          "plane": 0
+        },
+        {
+          "x": 3367,
+          "y": 2997,
+          "plane": 0
+        },
+        {
+          "x": 3371,
+          "y": 2984,
+          "plane": 0
+        }
+      ],
       "tables": [
         3
       ],
@@ -275741,7 +276002,53 @@
       "name": "Bandit (Pollnivneach) (pickpocket)",
       "wikiPage": "Bandit (Pollnivneach)",
       "combatLevel": 0,
-      "spawnPoints": [],
+      "spawnPoints": [
+        {
+          "x": 3354,
+          "y": 2987,
+          "plane": 0
+        },
+        {
+          "x": 3354,
+          "y": 2994,
+          "plane": 0
+        },
+        {
+          "x": 3354,
+          "y": 3000,
+          "plane": 0
+        },
+        {
+          "x": 3357,
+          "y": 3001,
+          "plane": 0
+        },
+        {
+          "x": 3360,
+          "y": 2999,
+          "plane": 0
+        },
+        {
+          "x": 3361,
+          "y": 3003,
+          "plane": 0
+        },
+        {
+          "x": 3362,
+          "y": 2988,
+          "plane": 0
+        },
+        {
+          "x": 3367,
+          "y": 2997,
+          "plane": 0
+        },
+        {
+          "x": 3371,
+          "y": 2984,
+          "plane": 0
+        }
+      ],
       "tables": [
         156
       ],
@@ -275825,7 +276132,93 @@
       ],
       "name": "Bandit (Varlamore)",
       "combatLevel": 23,
-      "spawnPoints": [],
+      "spawnPoints": [
+        {
+          "x": 1425,
+          "y": 3283,
+          "plane": 0
+        },
+        {
+          "x": 1427,
+          "y": 3281,
+          "plane": 0
+        },
+        {
+          "x": 1430,
+          "y": 3282,
+          "plane": 0
+        },
+        {
+          "x": 1429,
+          "y": 3278,
+          "plane": 0
+        },
+        {
+          "x": 1496,
+          "y": 3179,
+          "plane": 0
+        },
+        {
+          "x": 1494,
+          "y": 3176,
+          "plane": 0
+        },
+        {
+          "x": 1497,
+          "y": 3177,
+          "plane": 0
+        },
+        {
+          "x": 1499,
+          "y": 3173,
+          "plane": 0
+        },
+        {
+          "x": 1465,
+          "y": 3053,
+          "plane": 0
+        },
+        {
+          "x": 1469,
+          "y": 3056,
+          "plane": 0
+        },
+        {
+          "x": 1470,
+          "y": 3054,
+          "plane": 0
+        },
+        {
+          "x": 1471,
+          "y": 3051,
+          "plane": 0
+        },
+        {
+          "x": 1471,
+          "y": 3055,
+          "plane": 0
+        },
+        {
+          "x": 1307,
+          "y": 2921,
+          "plane": 0
+        },
+        {
+          "x": 1309,
+          "y": 2910,
+          "plane": 0
+        },
+        {
+          "x": 1309,
+          "y": 2918,
+          "plane": 0
+        },
+        {
+          "x": 1311,
+          "y": 2919,
+          "plane": 0
+        }
+      ],
       "tables": [
         157,
         120
@@ -279643,6 +280036,7 @@
       "name": "Black jaguar",
       "combatLevel": 67,
       "spawnPoints": [],
+      "locationName": "South of Ralos' Rise",
       "tables": [
         230
       ],
@@ -280515,6 +280909,7 @@
       "wikiPage": "Blood Reaver",
       "combatLevel": 174,
       "spawnPoints": [],
+      "locationName": "God Wars Dungeon - Ancient Prison",
       "tables": [
         241
       ],
@@ -280546,6 +280941,7 @@
       "wikiPage": "Blood Reaver",
       "combatLevel": 161,
       "spawnPoints": [],
+      "locationName": "God Wars Dungeon - Ancient Prison",
       "tables": [
         241
       ],
@@ -281896,6 +282292,7 @@
       "name": "Blue crab (Hunter)",
       "combatLevel": 0,
       "spawnPoints": [],
+      "locationName": "North coast of The Great Conch",
       "tables": [
         309
       ],
@@ -284378,7 +284775,13 @@
       ],
       "name": "Brutus",
       "combatLevel": 30,
-      "spawnPoints": [],
+      "spawnPoints": [
+        {
+          "x": 3263,
+          "y": 3297,
+          "plane": 0
+        }
+      ],
       "tables": [
         386
       ],
@@ -284520,7 +284923,118 @@
       ],
       "name": "Buffalo",
       "combatLevel": 9,
-      "spawnPoints": [],
+      "spawnPoints": [
+        {
+          "x": 1604,
+          "y": 3089,
+          "plane": 0
+        },
+        {
+          "x": 1607,
+          "y": 3086,
+          "plane": 0
+        },
+        {
+          "x": 1607,
+          "y": 3092,
+          "plane": 0
+        },
+        {
+          "x": 1609,
+          "y": 3099,
+          "plane": 0
+        },
+        {
+          "x": 1610,
+          "y": 3088,
+          "plane": 0
+        },
+        {
+          "x": 1610,
+          "y": 3095,
+          "plane": 0
+        },
+        {
+          "x": 1612,
+          "y": 3084,
+          "plane": 0
+        },
+        {
+          "x": 1613,
+          "y": 3091,
+          "plane": 0
+        },
+        {
+          "x": 1613,
+          "y": 3100,
+          "plane": 0
+        },
+        {
+          "x": 1615,
+          "y": 3096,
+          "plane": 0
+        },
+        {
+          "x": 1566,
+          "y": 3114,
+          "plane": 0
+        },
+        {
+          "x": 1567,
+          "y": 3111,
+          "plane": 0
+        },
+        {
+          "x": 1567,
+          "y": 3117,
+          "plane": 0
+        },
+        {
+          "x": 1570,
+          "y": 3113,
+          "plane": 0
+        },
+        {
+          "x": 1571,
+          "y": 3120,
+          "plane": 0
+        },
+        {
+          "x": 1573,
+          "y": 3117,
+          "plane": 0
+        },
+        {
+          "x": 1574,
+          "y": 3122,
+          "plane": 0
+        },
+        {
+          "x": 1576,
+          "y": 3115,
+          "plane": 0
+        },
+        {
+          "x": 1577,
+          "y": 3120,
+          "plane": 0
+        },
+        {
+          "x": 1581,
+          "y": 3115,
+          "plane": 0
+        },
+        {
+          "x": 1583,
+          "y": 3118,
+          "plane": 0
+        },
+        {
+          "x": 1585,
+          "y": 3114,
+          "plane": 0
+        }
+      ],
       "tables": [
         392
       ],
@@ -284551,6 +285065,7 @@
       "name": "Bull shark",
       "combatLevel": 65,
       "spawnPoints": [],
+      "locationName": "Around Crandor",
       "tables": [
         393
       ],
@@ -284779,6 +285294,7 @@
       "name": "Butterfly ray",
       "combatLevel": 68,
       "spawnPoints": [],
+      "locationName": "Dusk's Maw - west of Mistrock",
       "tables": [
         400,
         401,
@@ -285989,6 +286505,7 @@
       "name": "Catherby monodon",
       "combatLevel": 41,
       "spawnPoints": [],
+      "locationName": "Catherby Inlet",
       "tables": [
         437,
         438,
@@ -286019,6 +286536,7 @@
       "name": "Catherby monodon",
       "combatLevel": 41,
       "spawnPoints": [],
+      "locationName": "Catherby Inlet",
       "tables": [
         440
       ],
@@ -289763,6 +290281,7 @@
       "name": "Chilled jelly",
       "combatLevel": 112,
       "spawnPoints": [],
+      "locationName": "Ruins of Tapoyauik",
       "tables": [
         533
       ],
@@ -290217,6 +290736,7 @@
       "name": "Citizen (Aldarin)",
       "combatLevel": 0,
       "spawnPoints": [],
+      "locationName": "Aldarin",
       "tables": [
         543
       ],
@@ -290246,6 +290766,7 @@
       "name": "Citizen (Auburnvale)",
       "combatLevel": 0,
       "spawnPoints": [],
+      "locationName": "Auburnvale",
       "tables": [
         543
       ],
@@ -290302,6 +290823,7 @@
       "wikiPage": "Citizen (Civitas illa Fortis)",
       "combatLevel": 0,
       "spawnPoints": [],
+      "locationName": "Aldarin",
       "tables": [
         544
       ],
@@ -290322,6 +290844,7 @@
       "name": "Citizen (Kastori)",
       "combatLevel": 0,
       "spawnPoints": [],
+      "locationName": "Kastori",
       "tables": [
         543
       ],
@@ -290351,6 +290874,7 @@
       "name": "Citizen (Tal Teklan)",
       "combatLevel": 0,
       "spawnPoints": [],
+      "locationName": "Tal Teklan",
       "tables": [
         543
       ],
@@ -292605,6 +293129,7 @@
       "name": "Crandor shark",
       "combatLevel": 31,
       "spawnPoints": [],
+      "locationName": "Rimmington Strait",
       "tables": [
         599,
         600
@@ -293091,7 +293616,63 @@
       "name": "Crawling Hand (Level 11 (unused))",
       "wikiPage": "Crawling Hand",
       "combatLevel": 11,
-      "spawnPoints": [],
+      "spawnPoints": [
+        {
+          "x": 3609,
+          "y": 9776,
+          "plane": 0
+        },
+        {
+          "x": 3616,
+          "y": 9751,
+          "plane": 0
+        },
+        {
+          "x": 3617,
+          "y": 9759,
+          "plane": 0
+        },
+        {
+          "x": 3612,
+          "y": 9774,
+          "plane": 0
+        },
+        {
+          "x": 3622,
+          "y": 9746,
+          "plane": 0
+        },
+        {
+          "x": 3608,
+          "y": 9773,
+          "plane": 0
+        },
+        {
+          "x": 3620,
+          "y": 9755,
+          "plane": 0
+        },
+        {
+          "x": 3611,
+          "y": 9771,
+          "plane": 0
+        },
+        {
+          "x": 3619,
+          "y": 9748,
+          "plane": 0
+        },
+        {
+          "x": 3616,
+          "y": 9756,
+          "plane": 0
+        }
+      ],
+      "entrance": {
+        "x": 3593,
+        "y": 3272,
+        "plane": 0
+      },
       "tables": [
         622
       ],
@@ -296711,7 +297292,138 @@
       ],
       "name": "Dagannoth spawn",
       "combatLevel": 42,
-      "spawnPoints": [],
+      "spawnPoints": [
+        {
+          "x": 2546,
+          "y": 10144,
+          "plane": 0
+        },
+        {
+          "x": 2546,
+          "y": 10142,
+          "plane": 0
+        },
+        {
+          "x": 2492,
+          "y": 10155,
+          "plane": 0
+        },
+        {
+          "x": 2489,
+          "y": 10144,
+          "plane": 0
+        },
+        {
+          "x": 2492,
+          "y": 10139,
+          "plane": 0
+        },
+        {
+          "x": 2487,
+          "y": 10124,
+          "plane": 0
+        },
+        {
+          "x": 2485,
+          "y": 10123,
+          "plane": 0
+        },
+        {
+          "x": 2481,
+          "y": 10125,
+          "plane": 0
+        },
+        {
+          "x": 2475,
+          "y": 10126,
+          "plane": 0
+        },
+        {
+          "x": 2469,
+          "y": 10125,
+          "plane": 0
+        },
+        {
+          "x": 2465,
+          "y": 10125,
+          "plane": 0
+        },
+        {
+          "x": 2462,
+          "y": 10128,
+          "plane": 0
+        },
+        {
+          "x": 2459,
+          "y": 10127,
+          "plane": 0
+        },
+        {
+          "x": 2454,
+          "y": 10126,
+          "plane": 0
+        },
+        {
+          "x": 2454,
+          "y": 10129,
+          "plane": 0
+        },
+        {
+          "x": 2454,
+          "y": 10132,
+          "plane": 0
+        },
+        {
+          "x": 2452,
+          "y": 10133,
+          "plane": 0
+        },
+        {
+          "x": 2451,
+          "y": 10134,
+          "plane": 0
+        },
+        {
+          "x": 2452,
+          "y": 10136,
+          "plane": 0
+        },
+        {
+          "x": 2444,
+          "y": 10137,
+          "plane": 0
+        },
+        {
+          "x": 2447,
+          "y": 10164,
+          "plane": 0
+        },
+        {
+          "x": 2448,
+          "y": 10166,
+          "plane": 0
+        },
+        {
+          "x": 2449,
+          "y": 10167,
+          "plane": 0
+        },
+        {
+          "x": 2459,
+          "y": 10169,
+          "plane": 0
+        },
+        {
+          "x": 2460,
+          "y": 10169,
+          "plane": 0
+        }
+      ],
+      "entrance": {
+        "x": 2544,
+        "y": 3741,
+        "plane": 0
+      },
       "tables": [
         677
       ],
@@ -299542,7 +300254,18 @@
       "npcIds": [],
       "name": "Desert devil",
       "combatLevel": 0,
-      "spawnPoints": [],
+      "spawnPoints": [
+        {
+          "x": 3396,
+          "y": 3106,
+          "plane": 0
+        },
+        {
+          "x": 3402,
+          "y": 3131,
+          "plane": 0
+        }
+      ],
       "tables": [
         715
       ],
@@ -300305,6 +301028,7 @@
       "name": "Dire bat",
       "combatLevel": 142,
       "spawnPoints": [],
+      "locationName": "Sangvesti",
       "tables": [
         728
       ],
@@ -300553,6 +301277,7 @@
       "wikiPage": "Dire Wolf",
       "combatLevel": 72,
       "spawnPoints": [],
+      "locationName": "Wolf Den entrance north of Ralos' Rise mine",
       "tables": [
         717
       ],
@@ -300583,6 +301308,7 @@
       "name": "Dire Wolf Alpha",
       "combatLevel": 113,
       "spawnPoints": [],
+      "locationName": "Wolf Den (during Meat and Greet)",
       "tables": [
         732
       ],
@@ -300625,7 +301351,73 @@
       ],
       "name": "Disciple of Iban",
       "combatLevel": 13,
-      "spawnPoints": [],
+      "spawnPoints": [
+        {
+          "x": 2149,
+          "y": 4646,
+          "plane": 0
+        },
+        {
+          "x": 2150,
+          "y": 4648,
+          "plane": 0
+        },
+        {
+          "x": 2153,
+          "y": 4646,
+          "plane": 0
+        },
+        {
+          "x": 2153,
+          "y": 4649,
+          "plane": 0
+        },
+        {
+          "x": 2156,
+          "y": 4646,
+          "plane": 0
+        },
+        {
+          "x": 2157,
+          "y": 4649,
+          "plane": 0
+        },
+        {
+          "x": 2159,
+          "y": 4635,
+          "plane": 0
+        },
+        {
+          "x": 2159,
+          "y": 4642,
+          "plane": 0
+        },
+        {
+          "x": 2159,
+          "y": 4646,
+          "plane": 0
+        },
+        {
+          "x": 2159,
+          "y": 4650,
+          "plane": 0
+        },
+        {
+          "x": 2160,
+          "y": 4662,
+          "plane": 0
+        },
+        {
+          "x": 2163,
+          "y": 4653,
+          "plane": 0
+        },
+        {
+          "x": 2163,
+          "y": 4660,
+          "plane": 0
+        }
+      ],
       "tables": [
         734
       ],
@@ -300667,6 +301459,7 @@
       "name": "Dolphin",
       "combatLevel": 22,
       "spawnPoints": [],
+      "locationName": "Anglerfish's Light - north-east of Charred Island",
       "tables": [
         736
       ],
@@ -300787,7 +301580,13 @@
       ],
       "name": "Doomion",
       "combatLevel": 91,
-      "spawnPoints": [],
+      "spawnPoints": [
+        {
+          "x": 2134,
+          "y": 4565,
+          "plane": 0
+        }
+      ],
       "tables": [
         738
       ],
@@ -301624,6 +302423,7 @@
       "name": "Duke Sucellus",
       "combatLevel": 758,
       "spawnPoints": [],
+      "locationName": "Ghorrock Prison - Asylum",
       "tables": [
         766
       ],
@@ -303002,6 +303802,7 @@
       "name": "Eagle ray",
       "combatLevel": 44,
       "spawnPoints": [],
+      "locationName": "Anglerfish's Light - south-west of Last Light",
       "tables": [
         777,
         778,
@@ -303352,6 +304153,7 @@
       "name": "Earthen Nagua",
       "combatLevel": 128,
       "spawnPoints": [],
+      "locationName": "Tonali Cavern - Southern Cavern (middle floor)",
       "tables": [
         788
       ],
@@ -303743,6 +304545,7 @@
       "name": "Elder custodian stalker",
       "combatLevel": 142,
       "spawnPoints": [],
+      "locationName": "Stalker Den (single-combat)",
       "tables": [
         799
       ],
@@ -304004,6 +304807,7 @@
       "name": "Elite Black Knight",
       "combatLevel": 138,
       "spawnPoints": [],
+      "locationName": "Black Knight Catacombs",
       "tables": [
         806
       ],
@@ -304035,6 +304839,7 @@
       "name": "Elite Dark Mage",
       "combatLevel": 96,
       "spawnPoints": [],
+      "locationName": "Black Knight Catacombs",
       "tables": [
         807
       ],
@@ -304066,6 +304871,7 @@
       "name": "Elite Dark Ranger",
       "combatLevel": 96,
       "spawnPoints": [],
+      "locationName": "Black Knight Catacombs",
       "tables": [
         807
       ],
@@ -304097,6 +304903,7 @@
       "name": "Elite Dark Warrior",
       "combatLevel": 96,
       "spawnPoints": [],
+      "locationName": "Black Knight Catacombs",
       "tables": [
         807
       ],
@@ -304247,7 +305054,103 @@
       ],
       "name": "Embertailed jerboa",
       "combatLevel": 2,
-      "spawnPoints": [],
+      "spawnPoints": [
+        {
+          "x": 1510,
+          "y": 3046,
+          "plane": 0
+        },
+        {
+          "x": 1511,
+          "y": 3050,
+          "plane": 0
+        },
+        {
+          "x": 1513,
+          "y": 3043,
+          "plane": 0
+        },
+        {
+          "x": 1515,
+          "y": 3049,
+          "plane": 0
+        },
+        {
+          "x": 1518,
+          "y": 3051,
+          "plane": 0
+        },
+        {
+          "x": 1518,
+          "y": 3041,
+          "plane": 0
+        },
+        {
+          "x": 1519,
+          "y": 3045,
+          "plane": 0
+        },
+        {
+          "x": 1521,
+          "y": 3048,
+          "plane": 0
+        },
+        {
+          "x": 1522,
+          "y": 3043,
+          "plane": 0
+        },
+        {
+          "x": 1524,
+          "y": 3050,
+          "plane": 0
+        },
+        {
+          "x": 1524,
+          "y": 3046,
+          "plane": 0
+        },
+        {
+          "x": 1664,
+          "y": 2998,
+          "plane": 0
+        },
+        {
+          "x": 1664,
+          "y": 3003,
+          "plane": 0
+        },
+        {
+          "x": 1664,
+          "y": 3005,
+          "plane": 0
+        },
+        {
+          "x": 1666,
+          "y": 3006,
+          "plane": 0
+        },
+        {
+          "x": 1667,
+          "y": 2996,
+          "plane": 0
+        },
+        {
+          "x": 1667,
+          "y": 3001,
+          "plane": 0
+        },
+        {
+          "x": 1667,
+          "y": 3004,
+          "plane": 0
+        },
+        {
+          "x": 1671,
+          "y": 3005,
+          "plane": 0
+        }
+      ],
       "tables": [
         811
       ],
@@ -304281,6 +305184,7 @@
       "name": "Emissary Acolyte",
       "combatLevel": 0,
       "spawnPoints": [],
+      "locationName": "Twilight Temple",
       "tables": [
         157,
         120
@@ -304318,6 +305222,7 @@
       "name": "Emissary Ascended",
       "combatLevel": 0,
       "spawnPoints": [],
+      "locationName": "Twilight Temple",
       "tables": [
         3
       ],
@@ -304341,6 +305246,7 @@
       "name": "Emissary Chosen",
       "combatLevel": 0,
       "spawnPoints": [],
+      "locationName": "Twilight Temple",
       "tables": [
         157,
         120
@@ -304550,7 +305456,13 @@
       ],
       "name": "Enraged Boar",
       "combatLevel": 12,
-      "spawnPoints": [],
+      "spawnPoints": [
+        {
+          "x": 3100,
+          "y": 3011,
+          "plane": 0
+        }
+      ],
       "tables": [
         820
       ],
@@ -305534,6 +306446,7 @@
       "name": "Famished shark",
       "combatLevel": 16,
       "spawnPoints": [],
+      "locationName": "Bay of Sarim",
       "tables": [
         839,
         600
@@ -305780,7 +306693,38 @@
       "name": "Farmer (Kastori) (pickpocket)",
       "wikiPage": "Farmer (Kastori)",
       "combatLevel": 0,
-      "spawnPoints": [],
+      "spawnPoints": [
+        {
+          "x": 1382,
+          "y": 3068,
+          "plane": 0
+        },
+        {
+          "x": 1360,
+          "y": 3015,
+          "plane": 0
+        },
+        {
+          "x": 1376,
+          "y": 3029,
+          "plane": 0
+        },
+        {
+          "x": 1387,
+          "y": 3051,
+          "plane": 0
+        },
+        {
+          "x": 1368,
+          "y": 3058,
+          "plane": 0
+        },
+        {
+          "x": 1350,
+          "y": 3051,
+          "plane": 0
+        }
+      ],
       "tables": [
         843
       ],
@@ -305882,7 +306826,88 @@
       "name": "Farmer (Varlamore) (pickpocket)",
       "wikiPage": "Farmer (Varlamore)",
       "combatLevel": 0,
-      "spawnPoints": [],
+      "spawnPoints": [
+        {
+          "x": 1345,
+          "y": 2964,
+          "plane": 0
+        },
+        {
+          "x": 1354,
+          "y": 2966,
+          "plane": 0
+        },
+        {
+          "x": 1396,
+          "y": 2906,
+          "plane": 0
+        },
+        {
+          "x": 1402,
+          "y": 2896,
+          "plane": 0
+        },
+        {
+          "x": 1403,
+          "y": 2941,
+          "plane": 0
+        },
+        {
+          "x": 1549,
+          "y": 3120,
+          "plane": 0
+        },
+        {
+          "x": 1584,
+          "y": 3120,
+          "plane": 0
+        },
+        {
+          "x": 1693,
+          "y": 3044,
+          "plane": 0
+        },
+        {
+          "x": 1621,
+          "y": 3070,
+          "plane": 0
+        },
+        {
+          "x": 1653,
+          "y": 3070,
+          "plane": 0
+        },
+        {
+          "x": 1747,
+          "y": 3058,
+          "plane": 0
+        },
+        {
+          "x": 1690,
+          "y": 3058,
+          "plane": 0
+        },
+        {
+          "x": 1595,
+          "y": 3086,
+          "plane": 0
+        },
+        {
+          "x": 1627,
+          "y": 3066,
+          "plane": 0
+        },
+        {
+          "x": 1735,
+          "y": 3053,
+          "plane": 0
+        },
+        {
+          "x": 1666,
+          "y": 3056,
+          "plane": 0
+        }
+      ],
       "tables": [
         843
       ],
@@ -305957,7 +306982,113 @@
       "name": "Feral Vampyre (Level 100 (Temple Trekking))",
       "wikiPage": "Feral Vampyre",
       "combatLevel": 100,
-      "spawnPoints": [],
+      "spawnPoints": [
+        {
+          "x": 3458,
+          "y": 3225,
+          "plane": 0
+        },
+        {
+          "x": 3459,
+          "y": 3229,
+          "plane": 0
+        },
+        {
+          "x": 3459,
+          "y": 3234,
+          "plane": 0
+        },
+        {
+          "x": 3460,
+          "y": 3231,
+          "plane": 0
+        },
+        {
+          "x": 3461,
+          "y": 3236,
+          "plane": 0
+        },
+        {
+          "x": 3462,
+          "y": 3240,
+          "plane": 0
+        },
+        {
+          "x": 2950,
+          "y": 5272,
+          "plane": 0
+        },
+        {
+          "x": 2954,
+          "y": 5275,
+          "plane": 0
+        },
+        {
+          "x": 2829,
+          "y": 5330,
+          "plane": 0
+        },
+        {
+          "x": 2862,
+          "y": 5292,
+          "plane": 0
+        },
+        {
+          "x": 2853,
+          "y": 5327,
+          "plane": 0
+        },
+        {
+          "x": 2880,
+          "y": 5318,
+          "plane": 0
+        },
+        {
+          "x": 2880,
+          "y": 5332,
+          "plane": 0
+        },
+        {
+          "x": 2885,
+          "y": 5312,
+          "plane": 0
+        },
+        {
+          "x": 2888,
+          "y": 5320,
+          "plane": 0
+        },
+        {
+          "x": 2894,
+          "y": 5325,
+          "plane": 0
+        },
+        {
+          "x": 2898,
+          "y": 5312,
+          "plane": 0
+        },
+        {
+          "x": 2878,
+          "y": 5286,
+          "plane": 0
+        },
+        {
+          "x": 2854,
+          "y": 5347,
+          "plane": 0
+        },
+        {
+          "x": 2956,
+          "y": 10101,
+          "plane": 0
+        },
+        {
+          "x": 2957,
+          "y": 10098,
+          "plane": 0
+        }
+      ],
       "tables": [
         846,
         110,
@@ -305990,7 +307121,113 @@
       "name": "Feral Vampyre (Level 130 (Temple Trekking))",
       "wikiPage": "Feral Vampyre",
       "combatLevel": 130,
-      "spawnPoints": [],
+      "spawnPoints": [
+        {
+          "x": 3458,
+          "y": 3225,
+          "plane": 0
+        },
+        {
+          "x": 3459,
+          "y": 3229,
+          "plane": 0
+        },
+        {
+          "x": 3459,
+          "y": 3234,
+          "plane": 0
+        },
+        {
+          "x": 3460,
+          "y": 3231,
+          "plane": 0
+        },
+        {
+          "x": 3461,
+          "y": 3236,
+          "plane": 0
+        },
+        {
+          "x": 3462,
+          "y": 3240,
+          "plane": 0
+        },
+        {
+          "x": 2950,
+          "y": 5272,
+          "plane": 0
+        },
+        {
+          "x": 2954,
+          "y": 5275,
+          "plane": 0
+        },
+        {
+          "x": 2829,
+          "y": 5330,
+          "plane": 0
+        },
+        {
+          "x": 2862,
+          "y": 5292,
+          "plane": 0
+        },
+        {
+          "x": 2853,
+          "y": 5327,
+          "plane": 0
+        },
+        {
+          "x": 2880,
+          "y": 5318,
+          "plane": 0
+        },
+        {
+          "x": 2880,
+          "y": 5332,
+          "plane": 0
+        },
+        {
+          "x": 2885,
+          "y": 5312,
+          "plane": 0
+        },
+        {
+          "x": 2888,
+          "y": 5320,
+          "plane": 0
+        },
+        {
+          "x": 2894,
+          "y": 5325,
+          "plane": 0
+        },
+        {
+          "x": 2898,
+          "y": 5312,
+          "plane": 0
+        },
+        {
+          "x": 2878,
+          "y": 5286,
+          "plane": 0
+        },
+        {
+          "x": 2854,
+          "y": 5347,
+          "plane": 0
+        },
+        {
+          "x": 2956,
+          "y": 10101,
+          "plane": 0
+        },
+        {
+          "x": 2957,
+          "y": 10098,
+          "plane": 0
+        }
+      ],
       "tables": [
         846,
         110,
@@ -306184,7 +307421,113 @@
       "name": "Feral Vampyre (Level 64 (Juvenile/Juvinate))",
       "wikiPage": "Feral Vampyre",
       "combatLevel": 64,
-      "spawnPoints": [],
+      "spawnPoints": [
+        {
+          "x": 3458,
+          "y": 3225,
+          "plane": 0
+        },
+        {
+          "x": 3459,
+          "y": 3229,
+          "plane": 0
+        },
+        {
+          "x": 3459,
+          "y": 3234,
+          "plane": 0
+        },
+        {
+          "x": 3460,
+          "y": 3231,
+          "plane": 0
+        },
+        {
+          "x": 3461,
+          "y": 3236,
+          "plane": 0
+        },
+        {
+          "x": 3462,
+          "y": 3240,
+          "plane": 0
+        },
+        {
+          "x": 2950,
+          "y": 5272,
+          "plane": 0
+        },
+        {
+          "x": 2954,
+          "y": 5275,
+          "plane": 0
+        },
+        {
+          "x": 2829,
+          "y": 5330,
+          "plane": 0
+        },
+        {
+          "x": 2862,
+          "y": 5292,
+          "plane": 0
+        },
+        {
+          "x": 2853,
+          "y": 5327,
+          "plane": 0
+        },
+        {
+          "x": 2880,
+          "y": 5318,
+          "plane": 0
+        },
+        {
+          "x": 2880,
+          "y": 5332,
+          "plane": 0
+        },
+        {
+          "x": 2885,
+          "y": 5312,
+          "plane": 0
+        },
+        {
+          "x": 2888,
+          "y": 5320,
+          "plane": 0
+        },
+        {
+          "x": 2894,
+          "y": 5325,
+          "plane": 0
+        },
+        {
+          "x": 2898,
+          "y": 5312,
+          "plane": 0
+        },
+        {
+          "x": 2878,
+          "y": 5286,
+          "plane": 0
+        },
+        {
+          "x": 2854,
+          "y": 5347,
+          "plane": 0
+        },
+        {
+          "x": 2956,
+          "y": 10101,
+          "plane": 0
+        },
+        {
+          "x": 2957,
+          "y": 10098,
+          "plane": 0
+        }
+      ],
       "tables": [
         846,
         110,
@@ -306217,7 +307560,113 @@
       "name": "Feral Vampyre (Level 70 (Temple Trekking))",
       "wikiPage": "Feral Vampyre",
       "combatLevel": 70,
-      "spawnPoints": [],
+      "spawnPoints": [
+        {
+          "x": 3458,
+          "y": 3225,
+          "plane": 0
+        },
+        {
+          "x": 3459,
+          "y": 3229,
+          "plane": 0
+        },
+        {
+          "x": 3459,
+          "y": 3234,
+          "plane": 0
+        },
+        {
+          "x": 3460,
+          "y": 3231,
+          "plane": 0
+        },
+        {
+          "x": 3461,
+          "y": 3236,
+          "plane": 0
+        },
+        {
+          "x": 3462,
+          "y": 3240,
+          "plane": 0
+        },
+        {
+          "x": 2950,
+          "y": 5272,
+          "plane": 0
+        },
+        {
+          "x": 2954,
+          "y": 5275,
+          "plane": 0
+        },
+        {
+          "x": 2829,
+          "y": 5330,
+          "plane": 0
+        },
+        {
+          "x": 2862,
+          "y": 5292,
+          "plane": 0
+        },
+        {
+          "x": 2853,
+          "y": 5327,
+          "plane": 0
+        },
+        {
+          "x": 2880,
+          "y": 5318,
+          "plane": 0
+        },
+        {
+          "x": 2880,
+          "y": 5332,
+          "plane": 0
+        },
+        {
+          "x": 2885,
+          "y": 5312,
+          "plane": 0
+        },
+        {
+          "x": 2888,
+          "y": 5320,
+          "plane": 0
+        },
+        {
+          "x": 2894,
+          "y": 5325,
+          "plane": 0
+        },
+        {
+          "x": 2898,
+          "y": 5312,
+          "plane": 0
+        },
+        {
+          "x": 2878,
+          "y": 5286,
+          "plane": 0
+        },
+        {
+          "x": 2854,
+          "y": 5347,
+          "plane": 0
+        },
+        {
+          "x": 2956,
+          "y": 10101,
+          "plane": 0
+        },
+        {
+          "x": 2957,
+          "y": 10098,
+          "plane": 0
+        }
+      ],
       "tables": [
         846,
         110,
@@ -306250,7 +307699,113 @@
       "name": "Feral Vampyre (Level 72 (Spider))",
       "wikiPage": "Feral Vampyre",
       "combatLevel": 72,
-      "spawnPoints": [],
+      "spawnPoints": [
+        {
+          "x": 3458,
+          "y": 3225,
+          "plane": 0
+        },
+        {
+          "x": 3459,
+          "y": 3229,
+          "plane": 0
+        },
+        {
+          "x": 3459,
+          "y": 3234,
+          "plane": 0
+        },
+        {
+          "x": 3460,
+          "y": 3231,
+          "plane": 0
+        },
+        {
+          "x": 3461,
+          "y": 3236,
+          "plane": 0
+        },
+        {
+          "x": 3462,
+          "y": 3240,
+          "plane": 0
+        },
+        {
+          "x": 2950,
+          "y": 5272,
+          "plane": 0
+        },
+        {
+          "x": 2954,
+          "y": 5275,
+          "plane": 0
+        },
+        {
+          "x": 2829,
+          "y": 5330,
+          "plane": 0
+        },
+        {
+          "x": 2862,
+          "y": 5292,
+          "plane": 0
+        },
+        {
+          "x": 2853,
+          "y": 5327,
+          "plane": 0
+        },
+        {
+          "x": 2880,
+          "y": 5318,
+          "plane": 0
+        },
+        {
+          "x": 2880,
+          "y": 5332,
+          "plane": 0
+        },
+        {
+          "x": 2885,
+          "y": 5312,
+          "plane": 0
+        },
+        {
+          "x": 2888,
+          "y": 5320,
+          "plane": 0
+        },
+        {
+          "x": 2894,
+          "y": 5325,
+          "plane": 0
+        },
+        {
+          "x": 2898,
+          "y": 5312,
+          "plane": 0
+        },
+        {
+          "x": 2878,
+          "y": 5286,
+          "plane": 0
+        },
+        {
+          "x": 2854,
+          "y": 5347,
+          "plane": 0
+        },
+        {
+          "x": 2956,
+          "y": 10101,
+          "plane": 0
+        },
+        {
+          "x": 2957,
+          "y": 10098,
+          "plane": 0
+        }
+      ],
       "tables": [
         846,
         110,
@@ -310526,6 +312081,7 @@
       "name": "Frigatebird",
       "combatLevel": 78,
       "spawnPoints": [],
+      "locationName": "Anglerfish's Light - west of Last Light",
       "tables": [
         917,
         918
@@ -310765,6 +312321,7 @@
       "name": "Frost Crab",
       "combatLevel": 15,
       "spawnPoints": [],
+      "locationName": "Ruins of Tapoyauik bottom floor",
       "tables": [
         920
       ],
@@ -310795,6 +312352,7 @@
       "name": "Frost dragon",
       "combatLevel": 202,
       "spawnPoints": [],
+      "locationName": "Grimstone Dungeon",
       "tables": [
         921
       ],
@@ -310834,6 +312392,7 @@
       "name": "Frost Nagua",
       "combatLevel": 104,
       "spawnPoints": [],
+      "locationName": "Ruins of Tapoyauik",
       "tables": [
         922
       ],
@@ -311628,6 +313187,7 @@
       "name": "Gemstone Crab",
       "combatLevel": 160,
       "spawnPoints": [],
+      "locationName": "Tlati Rainforest",
       "tables": [
         935
       ],
@@ -311823,7 +313383,133 @@
       ],
       "name": "Ghast",
       "combatLevel": 30,
-      "spawnPoints": [],
+      "spawnPoints": [
+        {
+          "x": 3457,
+          "y": 3411,
+          "plane": 0
+        },
+        {
+          "x": 3458,
+          "y": 3401,
+          "plane": 0
+        },
+        {
+          "x": 3461,
+          "y": 3406,
+          "plane": 0
+        },
+        {
+          "x": 3461,
+          "y": 3437,
+          "plane": 0
+        },
+        {
+          "x": 3462,
+          "y": 3399,
+          "plane": 0
+        },
+        {
+          "x": 3463,
+          "y": 3416,
+          "plane": 0
+        },
+        {
+          "x": 3463,
+          "y": 3425,
+          "plane": 0
+        },
+        {
+          "x": 3463,
+          "y": 3448,
+          "plane": 0
+        },
+        {
+          "x": 3464,
+          "y": 3441,
+          "plane": 0
+        },
+        {
+          "x": 3466,
+          "y": 3433,
+          "plane": 0
+        },
+        {
+          "x": 3467,
+          "y": 3415,
+          "plane": 0
+        },
+        {
+          "x": 3469,
+          "y": 3397,
+          "plane": 0
+        },
+        {
+          "x": 3470,
+          "y": 3426,
+          "plane": 0
+        },
+        {
+          "x": 3472,
+          "y": 3420,
+          "plane": 0
+        },
+        {
+          "x": 3473,
+          "y": 3394,
+          "plane": 0
+        },
+        {
+          "x": 3473,
+          "y": 3412,
+          "plane": 0
+        },
+        {
+          "x": 3475,
+          "y": 3401,
+          "plane": 0
+        },
+        {
+          "x": 3475,
+          "y": 3440,
+          "plane": 0
+        },
+        {
+          "x": 3478,
+          "y": 3429,
+          "plane": 0
+        },
+        {
+          "x": 3481,
+          "y": 3406,
+          "plane": 0
+        },
+        {
+          "x": 3482,
+          "y": 3419,
+          "plane": 0
+        },
+        {
+          "x": 3482,
+          "y": 3431,
+          "plane": 0
+        },
+        {
+          "x": 3485,
+          "y": 3436,
+          "plane": 0
+        },
+        {
+          "x": 3485,
+          "y": 3451,
+          "plane": 0
+        },
+        {
+          "x": 3486,
+          "y": 3399,
+          "plane": 0
+        }
+      ],
       "tables": [
         939,
         940
@@ -317551,6 +319237,7 @@
       "name": "Goblin guard",
       "combatLevel": 42,
       "spawnPoints": [],
+      "locationName": "Observatory Dungeon",
       "tables": [
         980
       ],
@@ -318611,6 +320298,7 @@
       "name": "Great white shark",
       "combatLevel": 175,
       "spawnPoints": [],
+      "locationName": "Dusk's Maw - north-west of Laguna Aurorae",
       "tables": [
         1014
       ],
@@ -319677,7 +321365,48 @@
       ],
       "name": "Grimy Lizard",
       "combatLevel": 50,
-      "spawnPoints": [],
+      "spawnPoints": [
+        {
+          "x": 1483,
+          "y": 9716,
+          "plane": 0
+        },
+        {
+          "x": 1489,
+          "y": 9704,
+          "plane": 0
+        },
+        {
+          "x": 1490,
+          "y": 9714,
+          "plane": 0
+        },
+        {
+          "x": 1494,
+          "y": 9711,
+          "plane": 0
+        },
+        {
+          "x": 1498,
+          "y": 9709,
+          "plane": 0
+        },
+        {
+          "x": 1499,
+          "y": 9718,
+          "plane": 0
+        },
+        {
+          "x": 1504,
+          "y": 9714,
+          "plane": 0
+        },
+        {
+          "x": 1510,
+          "y": 9715,
+          "plane": 0
+        }
+      ],
       "tables": [
         1031,
         110,
@@ -320248,6 +321977,7 @@
       "name": "Gryphon",
       "combatLevel": 95,
       "spawnPoints": [],
+      "locationName": "Gryphons (dungeon)",
       "tables": [
         1040,
         1041,
@@ -320407,6 +322137,7 @@
       "name": "Guard (Aldarin)",
       "combatLevel": 21,
       "spawnPoints": [],
+      "locationName": "Aldarin - market",
       "tables": [
         1045
       ],
@@ -320447,6 +322178,7 @@
       "wikiPage": "Guard (Aldarin)",
       "combatLevel": 21,
       "spawnPoints": [],
+      "locationName": "Aldarin - market",
       "tables": [
         1046
       ],
@@ -320463,7 +322195,83 @@
       "name": "Guard (Auburnvale) (1)",
       "wikiPage": "Guard (Auburnvale)",
       "combatLevel": 21,
-      "spawnPoints": [],
+      "spawnPoints": [
+        {
+          "x": 1339,
+          "y": 3340,
+          "plane": 0
+        },
+        {
+          "x": 1341,
+          "y": 3343,
+          "plane": 0
+        },
+        {
+          "x": 1342,
+          "y": 3341,
+          "plane": 0
+        },
+        {
+          "x": 1365,
+          "y": 3342,
+          "plane": 0
+        },
+        {
+          "x": 1367,
+          "y": 3340,
+          "plane": 0
+        },
+        {
+          "x": 1370,
+          "y": 3344,
+          "plane": 0
+        },
+        {
+          "x": 1385,
+          "y": 3364,
+          "plane": 0
+        },
+        {
+          "x": 1394,
+          "y": 3344,
+          "plane": 0
+        },
+        {
+          "x": 1405,
+          "y": 3359,
+          "plane": 0
+        },
+        {
+          "x": 1408,
+          "y": 3348,
+          "plane": 0
+        },
+        {
+          "x": 1418,
+          "y": 3361,
+          "plane": 0
+        },
+        {
+          "x": 1432,
+          "y": 3347,
+          "plane": 0
+        },
+        {
+          "x": 1435,
+          "y": 3346,
+          "plane": 0
+        },
+        {
+          "x": 1436,
+          "y": 3343,
+          "plane": 0
+        },
+        {
+          "x": 1437,
+          "y": 3347,
+          "plane": 0
+        }
+      ],
       "tables": [
         1047
       ],
@@ -320497,7 +322305,83 @@
       "name": "Guard (Auburnvale) (3)",
       "wikiPage": "Guard (Auburnvale)",
       "combatLevel": 21,
-      "spawnPoints": [],
+      "spawnPoints": [
+        {
+          "x": 1339,
+          "y": 3340,
+          "plane": 0
+        },
+        {
+          "x": 1341,
+          "y": 3343,
+          "plane": 0
+        },
+        {
+          "x": 1342,
+          "y": 3341,
+          "plane": 0
+        },
+        {
+          "x": 1365,
+          "y": 3342,
+          "plane": 0
+        },
+        {
+          "x": 1367,
+          "y": 3340,
+          "plane": 0
+        },
+        {
+          "x": 1370,
+          "y": 3344,
+          "plane": 0
+        },
+        {
+          "x": 1385,
+          "y": 3364,
+          "plane": 0
+        },
+        {
+          "x": 1394,
+          "y": 3344,
+          "plane": 0
+        },
+        {
+          "x": 1405,
+          "y": 3359,
+          "plane": 0
+        },
+        {
+          "x": 1408,
+          "y": 3348,
+          "plane": 0
+        },
+        {
+          "x": 1418,
+          "y": 3361,
+          "plane": 0
+        },
+        {
+          "x": 1432,
+          "y": 3347,
+          "plane": 0
+        },
+        {
+          "x": 1435,
+          "y": 3346,
+          "plane": 0
+        },
+        {
+          "x": 1436,
+          "y": 3343,
+          "plane": 0
+        },
+        {
+          "x": 1437,
+          "y": 3347,
+          "plane": 0
+        }
+      ],
       "tables": [
         1047
       ],
@@ -320535,7 +322419,83 @@
       "name": "Guard (Auburnvale) (pickpocket)",
       "wikiPage": "Guard (Auburnvale)",
       "combatLevel": 21,
-      "spawnPoints": [],
+      "spawnPoints": [
+        {
+          "x": 1339,
+          "y": 3340,
+          "plane": 0
+        },
+        {
+          "x": 1341,
+          "y": 3343,
+          "plane": 0
+        },
+        {
+          "x": 1342,
+          "y": 3341,
+          "plane": 0
+        },
+        {
+          "x": 1365,
+          "y": 3342,
+          "plane": 0
+        },
+        {
+          "x": 1367,
+          "y": 3340,
+          "plane": 0
+        },
+        {
+          "x": 1370,
+          "y": 3344,
+          "plane": 0
+        },
+        {
+          "x": 1385,
+          "y": 3364,
+          "plane": 0
+        },
+        {
+          "x": 1394,
+          "y": 3344,
+          "plane": 0
+        },
+        {
+          "x": 1405,
+          "y": 3359,
+          "plane": 0
+        },
+        {
+          "x": 1408,
+          "y": 3348,
+          "plane": 0
+        },
+        {
+          "x": 1418,
+          "y": 3361,
+          "plane": 0
+        },
+        {
+          "x": 1432,
+          "y": 3347,
+          "plane": 0
+        },
+        {
+          "x": 1435,
+          "y": 3346,
+          "plane": 0
+        },
+        {
+          "x": 1436,
+          "y": 3343,
+          "plane": 0
+        },
+        {
+          "x": 1437,
+          "y": 3347,
+          "plane": 0
+        }
+      ],
       "tables": [
         1046
       ],
@@ -321273,6 +323233,7 @@
       "name": "Guard (Port Roberts)",
       "combatLevel": 21,
       "spawnPoints": [],
+      "locationName": "Port Roberts",
       "tables": [
         1044
       ],
@@ -321307,6 +323268,7 @@
       "wikiPage": "Guard (Port Roberts)",
       "combatLevel": 21,
       "spawnPoints": [],
+      "locationName": "Port Roberts",
       "tables": [
         1046
       ],
@@ -321977,7 +323939,108 @@
       "name": "Guard (Tlati Rainforest) (1)",
       "wikiPage": "Guard (Tlati Rainforest)",
       "combatLevel": 21,
-      "spawnPoints": [],
+      "spawnPoints": [
+        {
+          "x": 1347,
+          "y": 3026,
+          "plane": 0
+        },
+        {
+          "x": 1345,
+          "y": 3026,
+          "plane": 0
+        },
+        {
+          "x": 1346,
+          "y": 3024,
+          "plane": 0
+        },
+        {
+          "x": 1372,
+          "y": 3027,
+          "plane": 0
+        },
+        {
+          "x": 1379,
+          "y": 3046,
+          "plane": 0
+        },
+        {
+          "x": 1380,
+          "y": 3048,
+          "plane": 0
+        },
+        {
+          "x": 1247,
+          "y": 3103,
+          "plane": 0
+        },
+        {
+          "x": 1244,
+          "y": 3102,
+          "plane": 0
+        },
+        {
+          "x": 1245,
+          "y": 3104,
+          "plane": 0
+        },
+        {
+          "x": 1242,
+          "y": 3104,
+          "plane": 0
+        },
+        {
+          "x": 1226,
+          "y": 3093,
+          "plane": 0
+        },
+        {
+          "x": 1236,
+          "y": 3095,
+          "plane": 0
+        },
+        {
+          "x": 1226,
+          "y": 3112,
+          "plane": 0
+        },
+        {
+          "x": 1216,
+          "y": 3114,
+          "plane": 0
+        },
+        {
+          "x": 1209,
+          "y": 3116,
+          "plane": 0
+        },
+        {
+          "x": 1210,
+          "y": 3103,
+          "plane": 0
+        },
+        {
+          "x": 1236,
+          "y": 3118,
+          "plane": 0
+        },
+        {
+          "x": 1246,
+          "y": 3129,
+          "plane": 0
+        },
+        {
+          "x": 1248,
+          "y": 3130,
+          "plane": 0
+        },
+        {
+          "x": 1249,
+          "y": 3129,
+          "plane": 0
+        }
+      ],
       "tables": [
         1044
       ],
@@ -322011,7 +324074,108 @@
       "name": "Guard (Tlati Rainforest) (3)",
       "wikiPage": "Guard (Tlati Rainforest)",
       "combatLevel": 21,
-      "spawnPoints": [],
+      "spawnPoints": [
+        {
+          "x": 1347,
+          "y": 3026,
+          "plane": 0
+        },
+        {
+          "x": 1345,
+          "y": 3026,
+          "plane": 0
+        },
+        {
+          "x": 1346,
+          "y": 3024,
+          "plane": 0
+        },
+        {
+          "x": 1372,
+          "y": 3027,
+          "plane": 0
+        },
+        {
+          "x": 1379,
+          "y": 3046,
+          "plane": 0
+        },
+        {
+          "x": 1380,
+          "y": 3048,
+          "plane": 0
+        },
+        {
+          "x": 1247,
+          "y": 3103,
+          "plane": 0
+        },
+        {
+          "x": 1244,
+          "y": 3102,
+          "plane": 0
+        },
+        {
+          "x": 1245,
+          "y": 3104,
+          "plane": 0
+        },
+        {
+          "x": 1242,
+          "y": 3104,
+          "plane": 0
+        },
+        {
+          "x": 1226,
+          "y": 3093,
+          "plane": 0
+        },
+        {
+          "x": 1236,
+          "y": 3095,
+          "plane": 0
+        },
+        {
+          "x": 1226,
+          "y": 3112,
+          "plane": 0
+        },
+        {
+          "x": 1216,
+          "y": 3114,
+          "plane": 0
+        },
+        {
+          "x": 1209,
+          "y": 3116,
+          "plane": 0
+        },
+        {
+          "x": 1210,
+          "y": 3103,
+          "plane": 0
+        },
+        {
+          "x": 1236,
+          "y": 3118,
+          "plane": 0
+        },
+        {
+          "x": 1246,
+          "y": 3129,
+          "plane": 0
+        },
+        {
+          "x": 1248,
+          "y": 3130,
+          "plane": 0
+        },
+        {
+          "x": 1249,
+          "y": 3129,
+          "plane": 0
+        }
+      ],
       "tables": [
         1044
       ],
@@ -322049,7 +324213,108 @@
       "name": "Guard (Tlati Rainforest) (pickpocket)",
       "wikiPage": "Guard (Tlati Rainforest)",
       "combatLevel": 21,
-      "spawnPoints": [],
+      "spawnPoints": [
+        {
+          "x": 1347,
+          "y": 3026,
+          "plane": 0
+        },
+        {
+          "x": 1345,
+          "y": 3026,
+          "plane": 0
+        },
+        {
+          "x": 1346,
+          "y": 3024,
+          "plane": 0
+        },
+        {
+          "x": 1372,
+          "y": 3027,
+          "plane": 0
+        },
+        {
+          "x": 1379,
+          "y": 3046,
+          "plane": 0
+        },
+        {
+          "x": 1380,
+          "y": 3048,
+          "plane": 0
+        },
+        {
+          "x": 1247,
+          "y": 3103,
+          "plane": 0
+        },
+        {
+          "x": 1244,
+          "y": 3102,
+          "plane": 0
+        },
+        {
+          "x": 1245,
+          "y": 3104,
+          "plane": 0
+        },
+        {
+          "x": 1242,
+          "y": 3104,
+          "plane": 0
+        },
+        {
+          "x": 1226,
+          "y": 3093,
+          "plane": 0
+        },
+        {
+          "x": 1236,
+          "y": 3095,
+          "plane": 0
+        },
+        {
+          "x": 1226,
+          "y": 3112,
+          "plane": 0
+        },
+        {
+          "x": 1216,
+          "y": 3114,
+          "plane": 0
+        },
+        {
+          "x": 1209,
+          "y": 3116,
+          "plane": 0
+        },
+        {
+          "x": 1210,
+          "y": 3103,
+          "plane": 0
+        },
+        {
+          "x": 1236,
+          "y": 3118,
+          "plane": 0
+        },
+        {
+          "x": 1246,
+          "y": 3129,
+          "plane": 0
+        },
+        {
+          "x": 1248,
+          "y": 3130,
+          "plane": 0
+        },
+        {
+          "x": 1249,
+          "y": 3129,
+          "plane": 0
+        }
+      ],
       "tables": [
         1046
       ],
@@ -322072,6 +324337,7 @@
       "name": "Guard (Varlamore)",
       "combatLevel": 21,
       "spawnPoints": [],
+      "locationName": "Civitas illa Fortis",
       "tables": [
         1055
       ],
@@ -322112,6 +324378,7 @@
       "wikiPage": "Guard (Varlamore)",
       "combatLevel": 21,
       "spawnPoints": [],
+      "locationName": "Civitas illa Fortis",
       "tables": [
         1046
       ],
@@ -323114,6 +325381,7 @@
       "name": "Hammerhead shark",
       "combatLevel": 90,
       "spawnPoints": [],
+      "locationName": "Arrow Passage - north of Crash Island",
       "tables": [
         1072
       ],
@@ -323586,6 +325854,7 @@
       "name": "Headless Beast",
       "combatLevel": 82,
       "spawnPoints": [],
+      "locationName": "Headless Beast's Lair west of the Kebos Swamp",
       "tables": [
         122
       ],
@@ -324176,7 +326445,53 @@
       ],
       "name": "Herbiboar",
       "combatLevel": 0,
-      "spawnPoints": [],
+      "spawnPoints": [
+        {
+          "x": 3710,
+          "y": 3883,
+          "plane": 0
+        },
+        {
+          "x": 3697,
+          "y": 3876,
+          "plane": 0
+        },
+        {
+          "x": 3683,
+          "y": 3870,
+          "plane": 0
+        },
+        {
+          "x": 3681,
+          "y": 3865,
+          "plane": 0
+        },
+        {
+          "x": 3753,
+          "y": 3851,
+          "plane": 0
+        },
+        {
+          "x": 3717,
+          "y": 3840,
+          "plane": 0
+        },
+        {
+          "x": 3705,
+          "y": 3827,
+          "plane": 0
+        },
+        {
+          "x": 3704,
+          "y": 3808,
+          "plane": 0
+        },
+        {
+          "x": 3696,
+          "y": 3796,
+          "plane": 0
+        }
+      ],
       "tables": [
         1087,
         1088
@@ -324276,7 +326591,133 @@
       ],
       "name": "Hermit crab",
       "combatLevel": 19,
-      "spawnPoints": [],
+      "spawnPoints": [
+        {
+          "x": 3282,
+          "y": 2358,
+          "plane": 0
+        },
+        {
+          "x": 3281,
+          "y": 2357,
+          "plane": 0
+        },
+        {
+          "x": 3283,
+          "y": 2357,
+          "plane": 0
+        },
+        {
+          "x": 3292,
+          "y": 2354,
+          "plane": 0
+        },
+        {
+          "x": 3292,
+          "y": 2352,
+          "plane": 0
+        },
+        {
+          "x": 3294,
+          "y": 2348,
+          "plane": 0
+        },
+        {
+          "x": 3291,
+          "y": 2343,
+          "plane": 0
+        },
+        {
+          "x": 3292,
+          "y": 2342,
+          "plane": 0
+        },
+        {
+          "x": 3300,
+          "y": 2343,
+          "plane": 0
+        },
+        {
+          "x": 3305,
+          "y": 2336,
+          "plane": 0
+        },
+        {
+          "x": 3311,
+          "y": 2334,
+          "plane": 0
+        },
+        {
+          "x": 3311,
+          "y": 2332,
+          "plane": 0
+        },
+        {
+          "x": 3304,
+          "y": 2330,
+          "plane": 0
+        },
+        {
+          "x": 3305,
+          "y": 2329,
+          "plane": 0
+        },
+        {
+          "x": 3306,
+          "y": 2330,
+          "plane": 0
+        },
+        {
+          "x": 3298,
+          "y": 2320,
+          "plane": 0
+        },
+        {
+          "x": 3286,
+          "y": 2316,
+          "plane": 0
+        },
+        {
+          "x": 3285,
+          "y": 2316,
+          "plane": 0
+        },
+        {
+          "x": 3277,
+          "y": 2314,
+          "plane": 0
+        },
+        {
+          "x": 3276,
+          "y": 2313,
+          "plane": 0
+        },
+        {
+          "x": 3277,
+          "y": 2312,
+          "plane": 0
+        },
+        {
+          "x": 3268,
+          "y": 2317,
+          "plane": 0
+        },
+        {
+          "x": 3268,
+          "y": 2319,
+          "plane": 0
+        },
+        {
+          "x": 3271,
+          "y": 2324,
+          "plane": 0
+        },
+        {
+          "x": 3263,
+          "y": 2327,
+          "plane": 0
+        }
+      ],
       "tables": [
         1091
       ],
@@ -325099,7 +327540,13 @@
       ],
       "name": "Holthion",
       "combatLevel": 91,
-      "spawnPoints": [],
+      "spawnPoints": [
+        {
+          "x": 2132,
+          "y": 4554,
+          "plane": 0
+        }
+      ],
       "tables": [
         1102
       ],
@@ -327704,6 +330151,7 @@
       "name": "Impaler deer",
       "combatLevel": 119,
       "spawnPoints": [],
+      "locationName": "Sotfa Forest - south-west of the Ruined Village",
       "tables": [
         1134
       ],
@@ -328945,7 +331393,68 @@
       ],
       "name": "Jaguar",
       "combatLevel": 67,
-      "spawnPoints": [],
+      "spawnPoints": [
+        {
+          "x": 1604,
+          "y": 2990,
+          "plane": 0
+        },
+        {
+          "x": 1609,
+          "y": 2984,
+          "plane": 0
+        },
+        {
+          "x": 1568,
+          "y": 2982,
+          "plane": 0
+        },
+        {
+          "x": 1580,
+          "y": 2983,
+          "plane": 0
+        },
+        {
+          "x": 1582,
+          "y": 2976,
+          "plane": 0
+        },
+        {
+          "x": 1342,
+          "y": 3144,
+          "plane": 0
+        },
+        {
+          "x": 1340,
+          "y": 3150,
+          "plane": 0
+        },
+        {
+          "x": 1336,
+          "y": 3148,
+          "plane": 0
+        },
+        {
+          "x": 1334,
+          "y": 3152,
+          "plane": 0
+        },
+        {
+          "x": 1321,
+          "y": 3115,
+          "plane": 0
+        },
+        {
+          "x": 1336,
+          "y": 3116,
+          "plane": 0
+        },
+        {
+          "x": 1332,
+          "y": 3111,
+          "plane": 0
+        }
+      ],
       "tables": [
         230
       ],
@@ -328975,7 +331484,48 @@
       ],
       "name": "Jaguar cub",
       "combatLevel": 31,
-      "spawnPoints": [],
+      "spawnPoints": [
+        {
+          "x": 1606,
+          "y": 2986,
+          "plane": 0
+        },
+        {
+          "x": 1573,
+          "y": 2980,
+          "plane": 0
+        },
+        {
+          "x": 1579,
+          "y": 2978,
+          "plane": 0
+        },
+        {
+          "x": 1581,
+          "y": 2981,
+          "plane": 0
+        },
+        {
+          "x": 1338,
+          "y": 3143,
+          "plane": 0
+        },
+        {
+          "x": 1340,
+          "y": 3148,
+          "plane": 0
+        },
+        {
+          "x": 1324,
+          "y": 3114,
+          "plane": 0
+        },
+        {
+          "x": 1338,
+          "y": 3113,
+          "plane": 0
+        }
+      ],
       "tables": [
         3
       ],
@@ -330598,6 +333148,7 @@
       "name": "Juvenile custodian stalker",
       "combatLevel": 93,
       "spawnPoints": [],
+      "locationName": "Stalker Den (single-combat)",
       "tables": [
         1176
       ],
@@ -331457,6 +334008,7 @@
       "name": "Karamjan tiger shark",
       "combatLevel": 25,
       "spawnPoints": [],
+      "locationName": "The Storm Tempor",
       "tables": [
         1186,
         600
@@ -331620,6 +334172,7 @@
       "name": "Kharazi monodon",
       "combatLevel": 64,
       "spawnPoints": [],
+      "locationName": "The Kharazi Strait",
       "tables": [
         1192,
         438,
@@ -332163,7 +334716,13 @@
       ],
       "name": "Khazard warlord",
       "combatLevel": 112,
-      "spawnPoints": [],
+      "spawnPoints": [
+        {
+          "x": 2457,
+          "y": 3302,
+          "plane": 0
+        }
+      ],
       "tables": [
         1194
       ],
@@ -332256,7 +334815,133 @@
       "name": "Killerwatt (Attacking)",
       "wikiPage": "Killerwatt",
       "combatLevel": 55,
-      "spawnPoints": [],
+      "spawnPoints": [
+        {
+          "x": 2642,
+          "y": 5202,
+          "plane": 0
+        },
+        {
+          "x": 2642,
+          "y": 5212,
+          "plane": 0
+        },
+        {
+          "x": 2643,
+          "y": 5224,
+          "plane": 0
+        },
+        {
+          "x": 2644,
+          "y": 5206,
+          "plane": 0
+        },
+        {
+          "x": 2646,
+          "y": 5226,
+          "plane": 0
+        },
+        {
+          "x": 2647,
+          "y": 5198,
+          "plane": 0
+        },
+        {
+          "x": 2647,
+          "y": 5219,
+          "plane": 0
+        },
+        {
+          "x": 2650,
+          "y": 5211,
+          "plane": 0
+        },
+        {
+          "x": 2651,
+          "y": 5204,
+          "plane": 0
+        },
+        {
+          "x": 2652,
+          "y": 5230,
+          "plane": 0
+        },
+        {
+          "x": 2655,
+          "y": 5225,
+          "plane": 0
+        },
+        {
+          "x": 2656,
+          "y": 5210,
+          "plane": 0
+        },
+        {
+          "x": 2656,
+          "y": 5218,
+          "plane": 0
+        },
+        {
+          "x": 2657,
+          "y": 5229,
+          "plane": 0
+        },
+        {
+          "x": 2660,
+          "y": 5199,
+          "plane": 0
+        },
+        {
+          "x": 2663,
+          "y": 5211,
+          "plane": 0
+        },
+        {
+          "x": 2663,
+          "y": 5223,
+          "plane": 0
+        },
+        {
+          "x": 2664,
+          "y": 5201,
+          "plane": 0
+        },
+        {
+          "x": 2666,
+          "y": 5197,
+          "plane": 0
+        },
+        {
+          "x": 2666,
+          "y": 5216,
+          "plane": 0
+        },
+        {
+          "x": 2666,
+          "y": 5222,
+          "plane": 0
+        },
+        {
+          "x": 2669,
+          "y": 5204,
+          "plane": 0
+        },
+        {
+          "x": 2671,
+          "y": 5226,
+          "plane": 0
+        },
+        {
+          "x": 2672,
+          "y": 5211,
+          "plane": 0
+        },
+        {
+          "x": 2673,
+          "y": 5201,
+          "plane": 0
+        }
+      ],
       "tables": [
         1195,
         1196
@@ -332981,6 +335666,7 @@
       "name": "King Scorpion (Realm of Memories)",
       "combatLevel": 0,
       "spawnPoints": [],
+      "locationName": "Realm of Memories",
       "tables": [
         1012
       ],
@@ -333320,6 +336006,7 @@
       "name": "Knight of Varlamore",
       "combatLevel": 46,
       "spawnPoints": [],
+      "locationName": "Kualti Headquarters",
       "tables": [
         1209
       ],
@@ -333356,6 +336043,7 @@
       "wikiPage": "Knight of Varlamore",
       "combatLevel": 46,
       "spawnPoints": [],
+      "locationName": "Kualti Headquarters",
       "tables": [
         1210
       ],
@@ -333419,7 +336107,18 @@
       "name": "Kraken (Kraken)",
       "wikiPage": "Kraken",
       "combatLevel": 291,
-      "spawnPoints": [],
+      "spawnPoints": [
+        {
+          "x": 2278,
+          "y": 10034,
+          "plane": 0
+        }
+      ],
+      "entrance": {
+        "x": 2278,
+        "y": 3610,
+        "plane": 0
+      },
       "tables": [
         1213
       ],
@@ -333972,6 +336671,7 @@
       "name": "Large shipwreck",
       "combatLevel": 0,
       "spawnPoints": [],
+      "locationName": "South of Shimmering Atoll",
       "tables": [
         1225
       ],
@@ -334112,6 +336812,7 @@
       "name": "Lava Strykewyrm",
       "combatLevel": 116,
       "spawnPoints": [],
+      "locationName": "Charred Dungeon",
       "tables": [
         1231,
         227
@@ -334741,6 +337442,7 @@
       "name": "Letvek (Hunter)",
       "combatLevel": 0,
       "spawnPoints": [],
+      "locationName": "Vampyrium - Apsul and Virer Hunting Grounds",
       "tables": [
         1239
       ],
@@ -335994,7 +338696,133 @@
       ],
       "name": "Locust",
       "combatLevel": 18,
-      "spawnPoints": [],
+      "spawnPoints": [
+        {
+          "x": 3309,
+          "y": 2806,
+          "plane": 0
+        },
+        {
+          "x": 3312,
+          "y": 2806,
+          "plane": 0
+        },
+        {
+          "x": 3314,
+          "y": 2752,
+          "plane": 0
+        },
+        {
+          "x": 3314,
+          "y": 2806,
+          "plane": 0
+        },
+        {
+          "x": 3315,
+          "y": 2805,
+          "plane": 0
+        },
+        {
+          "x": 3316,
+          "y": 2780,
+          "plane": 0
+        },
+        {
+          "x": 3316,
+          "y": 2795,
+          "plane": 0
+        },
+        {
+          "x": 3317,
+          "y": 2752,
+          "plane": 0
+        },
+        {
+          "x": 3317,
+          "y": 2779,
+          "plane": 0
+        },
+        {
+          "x": 3317,
+          "y": 2794,
+          "plane": 0
+        },
+        {
+          "x": 3318,
+          "y": 2778,
+          "plane": 0
+        },
+        {
+          "x": 3318,
+          "y": 2781,
+          "plane": 0
+        },
+        {
+          "x": 3318,
+          "y": 2794,
+          "plane": 0
+        },
+        {
+          "x": 3318,
+          "y": 2795,
+          "plane": 0
+        },
+        {
+          "x": 3318,
+          "y": 2755,
+          "plane": 0
+        },
+        {
+          "x": 3319,
+          "y": 2754,
+          "plane": 0
+        },
+        {
+          "x": 3319,
+          "y": 2768,
+          "plane": 0
+        },
+        {
+          "x": 3320,
+          "y": 2756,
+          "plane": 0
+        },
+        {
+          "x": 3320,
+          "y": 2766,
+          "plane": 0
+        },
+        {
+          "x": 3430,
+          "y": 2810,
+          "plane": 0
+        },
+        {
+          "x": 3431,
+          "y": 2803,
+          "plane": 0
+        },
+        {
+          "x": 3434,
+          "y": 2807,
+          "plane": 0
+        },
+        {
+          "x": 3436,
+          "y": 2813,
+          "plane": 0
+        },
+        {
+          "x": 3437,
+          "y": 2810,
+          "plane": 0
+        },
+        {
+          "x": 3439,
+          "y": 2806,
+          "plane": 0
+        }
+      ],
       "tables": [
         1261
       ],
@@ -336026,6 +338854,7 @@
       "wikiPage": "Locust rider",
       "combatLevel": 68,
       "spawnPoints": [],
+      "locationName": "Scabaras Dungeon",
       "tables": [
         1262,
         1263,
@@ -336153,6 +338982,7 @@
       "wikiPage": "Locust rider",
       "combatLevel": 68,
       "spawnPoints": [],
+      "locationName": "Scabaras Dungeon",
       "tables": [
         1262,
         1263,
@@ -337049,7 +339879,13 @@
       "name": "Mad Angel (Post-quest)",
       "wikiPage": "Mad Angel",
       "combatLevel": 588,
-      "spawnPoints": [],
+      "spawnPoints": [
+        {
+          "x": 2532,
+          "y": 2215,
+          "plane": 0
+        }
+      ],
       "tables": [
         1290
       ],
@@ -337088,7 +339924,13 @@
       "name": "Mad Angel (Quest)",
       "wikiPage": "Mad Angel",
       "combatLevel": 270,
-      "spawnPoints": [],
+      "spawnPoints": [
+        {
+          "x": 2532,
+          "y": 2215,
+          "plane": 0
+        }
+      ],
       "tables": [
         1290
       ],
@@ -338625,6 +341467,7 @@
       "name": "Manta ray (monster)",
       "combatLevel": 133,
       "spawnPoints": [],
+      "locationName": "The Everdeep - south of Deepfin Point",
       "tables": [
         1311,
         1312,
@@ -339136,6 +341979,7 @@
       "name": "Mature custodian stalker",
       "combatLevel": 117,
       "spawnPoints": [],
+      "locationName": "Stalker Den (single-combat)",
       "tables": [
         1328
       ],
@@ -339389,7 +342233,58 @@
       ],
       "name": "Menaphite Thug",
       "combatLevel": 55,
-      "spawnPoints": [],
+      "spawnPoints": [
+        {
+          "x": 3333,
+          "y": 2952,
+          "plane": 0
+        },
+        {
+          "x": 3338,
+          "y": 2946,
+          "plane": 0
+        },
+        {
+          "x": 3338,
+          "y": 2950,
+          "plane": 0
+        },
+        {
+          "x": 3342,
+          "y": 2958,
+          "plane": 0
+        },
+        {
+          "x": 3344,
+          "y": 2950,
+          "plane": 0
+        },
+        {
+          "x": 3346,
+          "y": 2945,
+          "plane": 0
+        },
+        {
+          "x": 3346,
+          "y": 2954,
+          "plane": 0
+        },
+        {
+          "x": 3347,
+          "y": 2961,
+          "plane": 0
+        },
+        {
+          "x": 3351,
+          "y": 2961,
+          "plane": 0
+        },
+        {
+          "x": 3352,
+          "y": 2951,
+          "plane": 0
+        }
+      ],
       "tables": [
         3
       ],
@@ -339421,7 +342316,58 @@
       "name": "Menaphite Thug (pickpocket)",
       "wikiPage": "Menaphite Thug",
       "combatLevel": 55,
-      "spawnPoints": [],
+      "spawnPoints": [
+        {
+          "x": 3333,
+          "y": 2952,
+          "plane": 0
+        },
+        {
+          "x": 3338,
+          "y": 2946,
+          "plane": 0
+        },
+        {
+          "x": 3338,
+          "y": 2950,
+          "plane": 0
+        },
+        {
+          "x": 3342,
+          "y": 2958,
+          "plane": 0
+        },
+        {
+          "x": 3344,
+          "y": 2950,
+          "plane": 0
+        },
+        {
+          "x": 3346,
+          "y": 2945,
+          "plane": 0
+        },
+        {
+          "x": 3346,
+          "y": 2954,
+          "plane": 0
+        },
+        {
+          "x": 3347,
+          "y": 2961,
+          "plane": 0
+        },
+        {
+          "x": 3351,
+          "y": 2961,
+          "plane": 0
+        },
+        {
+          "x": 3352,
+          "y": 2951,
+          "plane": 0
+        }
+      ],
       "tables": [
         1333
       ],
@@ -339915,7 +342861,133 @@
       "name": "Minotaur (Unused)",
       "wikiPage": "Minotaur",
       "combatLevel": 19,
-      "spawnPoints": [],
+      "spawnPoints": [
+        {
+          "x": 1862,
+          "y": 5190,
+          "plane": 0
+        },
+        {
+          "x": 1863,
+          "y": 5189,
+          "plane": 0
+        },
+        {
+          "x": 1867,
+          "y": 5188,
+          "plane": 0
+        },
+        {
+          "x": 1871,
+          "y": 5191,
+          "plane": 0
+        },
+        {
+          "x": 1870,
+          "y": 5235,
+          "plane": 0
+        },
+        {
+          "x": 1871,
+          "y": 5242,
+          "plane": 0
+        },
+        {
+          "x": 1872,
+          "y": 5227,
+          "plane": 0
+        },
+        {
+          "x": 1873,
+          "y": 5212,
+          "plane": 0
+        },
+        {
+          "x": 1873,
+          "y": 5238,
+          "plane": 0
+        },
+        {
+          "x": 1874,
+          "y": 5216,
+          "plane": 0
+        },
+        {
+          "x": 1875,
+          "y": 5214,
+          "plane": 0
+        },
+        {
+          "x": 1875,
+          "y": 5218,
+          "plane": 0
+        },
+        {
+          "x": 1878,
+          "y": 5216,
+          "plane": 0
+        },
+        {
+          "x": 1879,
+          "y": 5218,
+          "plane": 0
+        },
+        {
+          "x": 1880,
+          "y": 5217,
+          "plane": 0
+        },
+        {
+          "x": 1880,
+          "y": 5220,
+          "plane": 0
+        },
+        {
+          "x": 1890,
+          "y": 5243,
+          "plane": 0
+        },
+        {
+          "x": 1893,
+          "y": 5238,
+          "plane": 0
+        },
+        {
+          "x": 1893,
+          "y": 5241,
+          "plane": 0
+        },
+        {
+          "x": 1894,
+          "y": 5243,
+          "plane": 0
+        },
+        {
+          "x": 1897,
+          "y": 5244,
+          "plane": 0
+        },
+        {
+          "x": 1899,
+          "y": 5242,
+          "plane": 0
+        },
+        {
+          "x": 1890,
+          "y": 5195,
+          "plane": 0
+        },
+        {
+          "x": 1893,
+          "y": 5189,
+          "plane": 0
+        },
+        {
+          "x": 1893,
+          "y": 5198,
+          "plane": 0
+        }
+      ],
       "tables": [
         1341
       ],
@@ -340106,6 +343178,7 @@
       "name": "Mogre",
       "combatLevel": 60,
       "spawnPoints": [],
+      "locationName": "Mudskipper Point ({{Fairycode|aiq",
       "tables": [
         1344,
         1345
@@ -340138,6 +343211,7 @@
       "name": "Mogre (sea)",
       "combatLevel": 54,
       "spawnPoints": [],
+      "locationName": "Kharazi Strait - south of the Kharazi Jungle",
       "tables": [
         1346,
         1347
@@ -340169,6 +343243,7 @@
       "name": "Molanisk",
       "combatLevel": 51,
       "spawnPoints": [],
+      "locationName": "Dorgesh-Kaan South Dungeon ({{Fairycode|ajq",
       "tables": [
         1348,
         1196
@@ -341614,6 +344689,7 @@
       "name": "Moonlight antelope",
       "combatLevel": 0,
       "spawnPoints": [],
+      "locationName": "Hunters' Guild (underground)",
       "tables": [
         1358
       ],
@@ -341635,7 +344711,53 @@
       ],
       "name": "Moonlight Cockatrice",
       "combatLevel": 49,
-      "spawnPoints": [],
+      "spawnPoints": [
+        {
+          "x": 1352,
+          "y": 9680,
+          "plane": 0
+        },
+        {
+          "x": 1354,
+          "y": 9697,
+          "plane": 0
+        },
+        {
+          "x": 1355,
+          "y": 9683,
+          "plane": 0
+        },
+        {
+          "x": 1355,
+          "y": 9692,
+          "plane": 0
+        },
+        {
+          "x": 1356,
+          "y": 9677,
+          "plane": 0
+        },
+        {
+          "x": 1358,
+          "y": 9681,
+          "plane": 0
+        },
+        {
+          "x": 1358,
+          "y": 9700,
+          "plane": 0
+        },
+        {
+          "x": 1359,
+          "y": 9687,
+          "plane": 0
+        },
+        {
+          "x": 1359,
+          "y": 9694,
+          "plane": 0
+        }
+      ],
       "tables": [
         1359,
         110
@@ -341668,7 +344790,133 @@
       ],
       "name": "Moonlight moth",
       "combatLevel": 0,
-      "spawnPoints": [],
+      "spawnPoints": [
+        {
+          "x": 1370,
+          "y": 9685,
+          "plane": 0
+        },
+        {
+          "x": 1371,
+          "y": 9707,
+          "plane": 0
+        },
+        {
+          "x": 1372,
+          "y": 9674,
+          "plane": 0
+        },
+        {
+          "x": 1372,
+          "y": 9680,
+          "plane": 0
+        },
+        {
+          "x": 1372,
+          "y": 9712,
+          "plane": 0
+        },
+        {
+          "x": 1373,
+          "y": 9704,
+          "plane": 0
+        },
+        {
+          "x": 1374,
+          "y": 9688,
+          "plane": 0
+        },
+        {
+          "x": 1375,
+          "y": 9672,
+          "plane": 0
+        },
+        {
+          "x": 1378,
+          "y": 9704,
+          "plane": 0
+        },
+        {
+          "x": 1378,
+          "y": 9715,
+          "plane": 0
+        },
+        {
+          "x": 1380,
+          "y": 9713,
+          "plane": 0
+        },
+        {
+          "x": 1382,
+          "y": 9705,
+          "plane": 0
+        },
+        {
+          "x": 1384,
+          "y": 9712,
+          "plane": 0
+        },
+        {
+          "x": 1386,
+          "y": 9678,
+          "plane": 0
+        },
+        {
+          "x": 1389,
+          "y": 9683,
+          "plane": 0
+        },
+        {
+          "x": 1392,
+          "y": 9701,
+          "plane": 0
+        },
+        {
+          "x": 1393,
+          "y": 9696,
+          "plane": 0
+        },
+        {
+          "x": 1394,
+          "y": 9688,
+          "plane": 0
+        },
+        {
+          "x": 1395,
+          "y": 9680,
+          "plane": 0
+        },
+        {
+          "x": 1396,
+          "y": 9709,
+          "plane": 0
+        },
+        {
+          "x": 1398,
+          "y": 9698,
+          "plane": 0
+        },
+        {
+          "x": 1399,
+          "y": 9690,
+          "plane": 0
+        },
+        {
+          "x": 1400,
+          "y": 9685,
+          "plane": 0
+        },
+        {
+          "x": 1363,
+          "y": 9705,
+          "plane": 0
+        },
+        {
+          "x": 1370,
+          "y": 9691,
+          "plane": 0
+        }
+      ],
       "tables": [
         1360
       ],
@@ -342703,7 +345951,33 @@
       "name": "Mourner (level 108)",
       "wikiPage": "Mourner",
       "combatLevel": 108,
-      "spawnPoints": [],
+      "spawnPoints": [
+        {
+          "x": 2299,
+          "y": 3328,
+          "plane": 0
+        },
+        {
+          "x": 2037,
+          "y": 4636,
+          "plane": 0
+        },
+        {
+          "x": 2038,
+          "y": 4644,
+          "plane": 0
+        },
+        {
+          "x": 2041,
+          "y": 4638,
+          "plane": 0
+        },
+        {
+          "x": 2044,
+          "y": 4642,
+          "plane": 0
+        }
+      ],
       "tables": [
         1369,
         120
@@ -342735,7 +346009,33 @@
       "name": "Mourner (level 11)",
       "wikiPage": "Mourner",
       "combatLevel": 11,
-      "spawnPoints": [],
+      "spawnPoints": [
+        {
+          "x": 2299,
+          "y": 3328,
+          "plane": 0
+        },
+        {
+          "x": 2037,
+          "y": 4636,
+          "plane": 0
+        },
+        {
+          "x": 2038,
+          "y": 4644,
+          "plane": 0
+        },
+        {
+          "x": 2041,
+          "y": 4638,
+          "plane": 0
+        },
+        {
+          "x": 2044,
+          "y": 4642,
+          "plane": 0
+        }
+      ],
       "tables": [
         1369,
         120
@@ -344429,6 +347729,7 @@
       "name": "Narwhal",
       "combatLevel": 111,
       "spawnPoints": [],
+      "locationName": "Everwinter Sea - west of Brittle Isle",
       "tables": [
         1390
       ],
@@ -345592,6 +348893,7 @@
       "name": "Obor",
       "combatLevel": 106,
       "spawnPoints": [],
+      "locationName": "Obor's Lair (Edgeville Dungeon)",
       "tables": [
         1426,
         1427
@@ -345645,6 +348947,7 @@
       "name": "Ocelot",
       "combatLevel": 35,
       "spawnPoints": [],
+      "locationName": "Tlati Rainforest",
       "tables": [
         3
       ],
@@ -346439,6 +349742,7 @@
       "name": "Ogre monodon",
       "combatLevel": 79,
       "spawnPoints": [],
+      "locationName": "Oo'glog Shore",
       "tables": [
         437,
         438,
@@ -346469,6 +349773,7 @@
       "name": "Ogre monodon",
       "combatLevel": 79,
       "spawnPoints": [],
+      "locationName": "Oo'glog Shore",
       "tables": [
         1432
       ],
@@ -347335,6 +350640,7 @@
       "name": "Orca",
       "combatLevel": 205,
       "spawnPoints": [],
+      "locationName": "Fremennik Strait - south-west of Neitiznot",
       "tables": [
         1449
       ],
@@ -347593,7 +350899,63 @@
       ],
       "name": "Oryx",
       "combatLevel": 15,
-      "spawnPoints": [],
+      "spawnPoints": [
+        {
+          "x": 1647,
+          "y": 2959,
+          "plane": 0
+        },
+        {
+          "x": 1650,
+          "y": 2962,
+          "plane": 0
+        },
+        {
+          "x": 1654,
+          "y": 2957,
+          "plane": 0
+        },
+        {
+          "x": 1728,
+          "y": 3028,
+          "plane": 0
+        },
+        {
+          "x": 1489,
+          "y": 3030,
+          "plane": 0
+        },
+        {
+          "x": 1493,
+          "y": 3036,
+          "plane": 0
+        },
+        {
+          "x": 1494,
+          "y": 3032,
+          "plane": 0
+        },
+        {
+          "x": 1499,
+          "y": 3037,
+          "plane": 0
+        },
+        {
+          "x": 1724,
+          "y": 3026,
+          "plane": 0
+        },
+        {
+          "x": 1523,
+          "y": 3092,
+          "plane": 0
+        },
+        {
+          "x": 1526,
+          "y": 3095,
+          "plane": 0
+        }
+      ],
       "tables": [
         829
       ],
@@ -347624,6 +350986,7 @@
       "name": "Osprey",
       "combatLevel": 63,
       "spawnPoints": [],
+      "locationName": "Around Chinchompa Island",
       "tables": [
         1456
       ],
@@ -347653,7 +351016,13 @@
       ],
       "name": "Othainian",
       "combatLevel": 91,
-      "spawnPoints": [],
+      "spawnPoints": [
+        {
+          "x": 2122,
+          "y": 4562,
+          "plane": 0
+        }
+      ],
       "tables": [
         1457
       ],
@@ -348482,7 +351851,13 @@
       "name": "Penance Fighter (Wave 2)",
       "wikiPage": "Penance Fighter",
       "combatLevel": 32,
-      "spawnPoints": [],
+      "spawnPoints": [
+        {
+          "x": 1880,
+          "y": 5486,
+          "plane": 0
+        }
+      ],
       "tables": [
         1469
       ],
@@ -348513,7 +351888,13 @@
       "name": "Penance Fighter (Wave 3)",
       "wikiPage": "Penance Fighter",
       "combatLevel": 37,
-      "spawnPoints": [],
+      "spawnPoints": [
+        {
+          "x": 1880,
+          "y": 5486,
+          "plane": 0
+        }
+      ],
       "tables": [
         1469
       ],
@@ -348544,7 +351925,13 @@
       "name": "Penance Fighter (Wave 4)",
       "wikiPage": "Penance Fighter",
       "combatLevel": 42,
-      "spawnPoints": [],
+      "spawnPoints": [
+        {
+          "x": 1880,
+          "y": 5486,
+          "plane": 0
+        }
+      ],
       "tables": [
         1469
       ],
@@ -348575,7 +351962,13 @@
       "name": "Penance Fighter (Wave 5)",
       "wikiPage": "Penance Fighter",
       "combatLevel": 47,
-      "spawnPoints": [],
+      "spawnPoints": [
+        {
+          "x": 1880,
+          "y": 5486,
+          "plane": 0
+        }
+      ],
       "tables": [
         1469
       ],
@@ -348606,7 +351999,13 @@
       "name": "Penance Fighter (Wave 6)",
       "wikiPage": "Penance Fighter",
       "combatLevel": 56,
-      "spawnPoints": [],
+      "spawnPoints": [
+        {
+          "x": 1880,
+          "y": 5486,
+          "plane": 0
+        }
+      ],
       "tables": [
         1469
       ],
@@ -348637,7 +352036,13 @@
       "name": "Penance Fighter (Wave 7/10)",
       "wikiPage": "Penance Fighter",
       "combatLevel": 61,
-      "spawnPoints": [],
+      "spawnPoints": [
+        {
+          "x": 1880,
+          "y": 5486,
+          "plane": 0
+        }
+      ],
       "tables": [
         1469
       ],
@@ -348668,7 +352073,13 @@
       "name": "Penance Fighter (Wave 8)",
       "wikiPage": "Penance Fighter",
       "combatLevel": 68,
-      "spawnPoints": [],
+      "spawnPoints": [
+        {
+          "x": 1880,
+          "y": 5486,
+          "plane": 0
+        }
+      ],
       "tables": [
         1469
       ],
@@ -348699,7 +352110,13 @@
       "name": "Penance Fighter (Wave 9)",
       "wikiPage": "Penance Fighter",
       "combatLevel": 77,
-      "spawnPoints": [],
+      "spawnPoints": [
+        {
+          "x": 1880,
+          "y": 5486,
+          "plane": 0
+        }
+      ],
       "tables": [
         1469
       ],
@@ -348816,7 +352233,13 @@
       "name": "Penance Ranger (Wave 2)",
       "wikiPage": "Penance Ranger",
       "combatLevel": 25,
-      "spawnPoints": [],
+      "spawnPoints": [
+        {
+          "x": 1874,
+          "y": 5485,
+          "plane": 0
+        }
+      ],
       "tables": [
         1469
       ],
@@ -348847,7 +352270,13 @@
       "name": "Penance Ranger (Wave 3)",
       "wikiPage": "Penance Ranger",
       "combatLevel": 32,
-      "spawnPoints": [],
+      "spawnPoints": [
+        {
+          "x": 1874,
+          "y": 5485,
+          "plane": 0
+        }
+      ],
       "tables": [
         1469
       ],
@@ -348878,7 +352307,13 @@
       "name": "Penance Ranger (Wave 4)",
       "wikiPage": "Penance Ranger",
       "combatLevel": 38,
-      "spawnPoints": [],
+      "spawnPoints": [
+        {
+          "x": 1874,
+          "y": 5485,
+          "plane": 0
+        }
+      ],
       "tables": [
         1469
       ],
@@ -348909,7 +352344,13 @@
       "name": "Penance Ranger (Wave 5)",
       "wikiPage": "Penance Ranger",
       "combatLevel": 43,
-      "spawnPoints": [],
+      "spawnPoints": [
+        {
+          "x": 1874,
+          "y": 5485,
+          "plane": 0
+        }
+      ],
       "tables": [
         1469
       ],
@@ -348940,7 +352381,13 @@
       "name": "Penance Ranger (Wave 6)",
       "wikiPage": "Penance Ranger",
       "combatLevel": 51,
-      "spawnPoints": [],
+      "spawnPoints": [
+        {
+          "x": 1874,
+          "y": 5485,
+          "plane": 0
+        }
+      ],
       "tables": [
         1469
       ],
@@ -348971,7 +352418,13 @@
       "name": "Penance Ranger (Wave 7/10)",
       "wikiPage": "Penance Ranger",
       "combatLevel": 57,
-      "spawnPoints": [],
+      "spawnPoints": [
+        {
+          "x": 1874,
+          "y": 5485,
+          "plane": 0
+        }
+      ],
       "tables": [
         1469
       ],
@@ -349002,7 +352455,13 @@
       "name": "Penance Ranger (Wave 8)",
       "wikiPage": "Penance Ranger",
       "combatLevel": 64,
-      "spawnPoints": [],
+      "spawnPoints": [
+        {
+          "x": 1874,
+          "y": 5485,
+          "plane": 0
+        }
+      ],
       "tables": [
         1469
       ],
@@ -349033,7 +352492,13 @@
       "name": "Penance Ranger (Wave 9)",
       "wikiPage": "Penance Ranger",
       "combatLevel": 72,
-      "spawnPoints": [],
+      "spawnPoints": [
+        {
+          "x": 1874,
+          "y": 5485,
+          "plane": 0
+        }
+      ],
       "tables": [
         1469
       ],
@@ -349521,6 +352986,7 @@
       "wikiPage": "Phantom Muspah",
       "combatLevel": 741,
       "spawnPoints": [],
+      "locationName": "Ghorrock Dungeon",
       "tables": [
         1475,
         1476
@@ -349553,6 +353019,7 @@
       "wikiPage": "Phantom Muspah",
       "combatLevel": 741,
       "spawnPoints": [],
+      "locationName": "Ghorrock Dungeon",
       "tables": [
         1475,
         1476
@@ -349593,6 +353060,7 @@
       "wikiPage": "Phantom Muspah",
       "combatLevel": 741,
       "spawnPoints": [],
+      "locationName": "Ghorrock Dungeon",
       "tables": [
         1475,
         1476
@@ -349632,6 +353100,7 @@
       "wikiPage": "Phantom Muspah",
       "combatLevel": 741,
       "spawnPoints": [],
+      "locationName": "Ghorrock Dungeon",
       "tables": [
         1475,
         1476
@@ -350579,6 +354048,7 @@
       "name": "Pirate (Thieving)",
       "combatLevel": 52,
       "spawnPoints": [],
+      "locationName": "The Onyx Crest",
       "tables": [
         1494
       ],
@@ -350614,6 +354084,7 @@
       "wikiPage": "Pirate (Thieving)",
       "combatLevel": 52,
       "spawnPoints": [],
+      "locationName": "The Onyx Crest",
       "tables": [
         1495
       ],
@@ -351023,7 +354494,138 @@
       "name": "Poison spider (Level 31)",
       "wikiPage": "Poison spider",
       "combatLevel": 31,
-      "spawnPoints": [],
+      "spawnPoints": [
+        {
+          "x": 3088,
+          "y": 9945,
+          "plane": 0
+        },
+        {
+          "x": 3089,
+          "y": 9943,
+          "plane": 0
+        },
+        {
+          "x": 3090,
+          "y": 9944,
+          "plane": 0
+        },
+        {
+          "x": 2850,
+          "y": 9808,
+          "plane": 0
+        },
+        {
+          "x": 2857,
+          "y": 9822,
+          "plane": 0
+        },
+        {
+          "x": 2859,
+          "y": 9802,
+          "plane": 0
+        },
+        {
+          "x": 2859,
+          "y": 9814,
+          "plane": 0
+        },
+        {
+          "x": 2864,
+          "y": 9819,
+          "plane": 0
+        },
+        {
+          "x": 2870,
+          "y": 9799,
+          "plane": 0
+        },
+        {
+          "x": 2871,
+          "y": 9792,
+          "plane": 0
+        },
+        {
+          "x": 2876,
+          "y": 9806,
+          "plane": 0
+        },
+        {
+          "x": 3037,
+          "y": 10263,
+          "plane": 0
+        },
+        {
+          "x": 3043,
+          "y": 10262,
+          "plane": 0
+        },
+        {
+          "x": 3044,
+          "y": 10252,
+          "plane": 0
+        },
+        {
+          "x": 3051,
+          "y": 10257,
+          "plane": 0
+        },
+        {
+          "x": 3055,
+          "y": 10253,
+          "plane": 0
+        },
+        {
+          "x": 2530,
+          "y": 9447,
+          "plane": 0
+        },
+        {
+          "x": 2535,
+          "y": 9458,
+          "plane": 0
+        },
+        {
+          "x": 2537,
+          "y": 9460,
+          "plane": 0
+        },
+        {
+          "x": 2538,
+          "y": 9463,
+          "plane": 0
+        },
+        {
+          "x": 2539,
+          "y": 9457,
+          "plane": 0
+        },
+        {
+          "x": 2539,
+          "y": 9463,
+          "plane": 0
+        },
+        {
+          "x": 2541,
+          "y": 9463,
+          "plane": 0
+        },
+        {
+          "x": 2542,
+          "y": 9457,
+          "plane": 0
+        },
+        {
+          "x": 2544,
+          "y": 9455,
+          "plane": 0
+        }
+      ],
+      "entrance": {
+        "x": 3053,
+        "y": 3382,
+        "plane": 0
+      },
       "tables": [
         1501,
         15
@@ -351217,6 +354819,7 @@
       "name": "Polar kebbit",
       "combatLevel": 0,
       "spawnPoints": [],
+      "locationName": "Rellekka Hunter area ({{Fairycode|dks",
       "tables": [
         1502
       ],
@@ -351370,7 +354973,58 @@
       ],
       "name": "Porcupine",
       "combatLevel": 4,
-      "spawnPoints": [],
+      "spawnPoints": [
+        {
+          "x": 1416,
+          "y": 2993,
+          "plane": 0
+        },
+        {
+          "x": 1349,
+          "y": 2976,
+          "plane": 0
+        },
+        {
+          "x": 1367,
+          "y": 2980,
+          "plane": 0
+        },
+        {
+          "x": 1400,
+          "y": 2985,
+          "plane": 0
+        },
+        {
+          "x": 1353,
+          "y": 2901,
+          "plane": 0
+        },
+        {
+          "x": 1327,
+          "y": 2950,
+          "plane": 0
+        },
+        {
+          "x": 1328,
+          "y": 2954,
+          "plane": 0
+        },
+        {
+          "x": 1332,
+          "y": 2977,
+          "plane": 0
+        },
+        {
+          "x": 1338,
+          "y": 2951,
+          "plane": 0
+        },
+        {
+          "x": 1340,
+          "y": 2903,
+          "plane": 0
+        }
+      ],
       "tables": [
         3
       ],
@@ -351942,6 +355596,7 @@
       "name": "Pygmy kraken",
       "combatLevel": 93,
       "spawnPoints": [],
+      "locationName": "Laguna Aurorae - eastern coastline",
       "tables": [
         1521,
         1522,
@@ -351974,6 +355629,7 @@
       "name": "Pyre fox",
       "combatLevel": 0,
       "spawnPoints": [],
+      "locationName": "Avium Savannah ({{fairycode|AJP",
       "tables": [
         1524
       ],
@@ -352695,6 +356351,7 @@
       "name": "Rainbow crab (Hunter)",
       "combatLevel": 0,
       "spawnPoints": [],
+      "locationName": "The Crown Jewel",
       "tables": [
         1530
       ],
@@ -353418,6 +357075,7 @@
       "name": "Red crab (Hunter)",
       "combatLevel": 0,
       "spawnPoints": [],
+      "locationName": "The Pandemonium",
       "tables": [
         1546
       ],
@@ -358415,6 +362073,7 @@
       "wikiPage": "Scarab Mage",
       "combatLevel": 119,
       "spawnPoints": [],
+      "locationName": "Scabaras Dungeon",
       "tables": [
         1665,
         1263,
@@ -358448,6 +362107,7 @@
       "wikiPage": "Scarab Mage",
       "combatLevel": 66,
       "spawnPoints": [],
+      "locationName": "Scabaras Dungeon",
       "tables": [
         1665,
         1263,
@@ -359074,7 +362734,133 @@
       "name": "Scorpion (Level 1)",
       "wikiPage": "Scorpion",
       "combatLevel": 1,
-      "spawnPoints": [],
+      "spawnPoints": [
+        {
+          "x": 3292,
+          "y": 3297,
+          "plane": 0
+        },
+        {
+          "x": 3298,
+          "y": 3304,
+          "plane": 0
+        },
+        {
+          "x": 3298,
+          "y": 3311,
+          "plane": 0
+        },
+        {
+          "x": 3299,
+          "y": 3288,
+          "plane": 0
+        },
+        {
+          "x": 3300,
+          "y": 3315,
+          "plane": 0
+        },
+        {
+          "x": 3301,
+          "y": 3278,
+          "plane": 0
+        },
+        {
+          "x": 3302,
+          "y": 3306,
+          "plane": 0
+        },
+        {
+          "x": 3303,
+          "y": 3292,
+          "plane": 0
+        },
+        {
+          "x": 3298,
+          "y": 3299,
+          "plane": 0
+        },
+        {
+          "x": 3292,
+          "y": 3142,
+          "plane": 0
+        },
+        {
+          "x": 2752,
+          "y": 2762,
+          "plane": 0
+        },
+        {
+          "x": 2766,
+          "y": 2761,
+          "plane": 0
+        },
+        {
+          "x": 2776,
+          "y": 2764,
+          "plane": 0
+        },
+        {
+          "x": 2762,
+          "y": 2749,
+          "plane": 0
+        },
+        {
+          "x": 2769,
+          "y": 2734,
+          "plane": 0
+        },
+        {
+          "x": 2772,
+          "y": 2740,
+          "plane": 0
+        },
+        {
+          "x": 2781,
+          "y": 2743,
+          "plane": 0
+        },
+        {
+          "x": 2761,
+          "y": 2803,
+          "plane": 0
+        },
+        {
+          "x": 2769,
+          "y": 2806,
+          "plane": 0
+        },
+        {
+          "x": 2894,
+          "y": 2715,
+          "plane": 0
+        },
+        {
+          "x": 2899,
+          "y": 2734,
+          "plane": 0
+        },
+        {
+          "x": 2901,
+          "y": 2721,
+          "plane": 0
+        },
+        {
+          "x": 2902,
+          "y": 2727,
+          "plane": 0
+        },
+        {
+          "x": 2792,
+          "y": 2796,
+          "plane": 0
+        },
+        {
+          "x": 2793,
+          "y": 2778,
+          "plane": 0
+        }
+      ],
       "tables": [
         1673,
         15
@@ -359527,6 +363313,7 @@
       "name": "Scorpion (Realm of Memories)",
       "combatLevel": 0,
       "spawnPoints": [],
+      "locationName": "Realm of Memories",
       "tables": [
         1012
       ],
@@ -359670,6 +363457,7 @@
       "wikiPage": "Scurrius",
       "combatLevel": 250,
       "spawnPoints": [],
+      "locationName": "Varrock Sewers",
       "tables": [
         1680
       ],
@@ -359715,6 +363503,7 @@
       "wikiPage": "Scurrius",
       "combatLevel": 200,
       "spawnPoints": [],
+      "locationName": "Varrock Sewers",
       "tables": [
         1680
       ],
@@ -359797,6 +363586,7 @@
       "name": "Sea monodon",
       "combatLevel": 196,
       "spawnPoints": [],
+      "locationName": "The Unquiet Ocean",
       "tables": [
         1683,
         438,
@@ -361531,6 +365321,7 @@
       "name": "Shark (Sailing alpha)",
       "combatLevel": 57,
       "spawnPoints": [],
+      "locationName": "Mudskipper Sound",
       "tables": [
         1704
       ],
@@ -362044,7 +365835,18 @@
       ],
       "name": "Sir Carl",
       "combatLevel": 62,
-      "spawnPoints": [],
+      "spawnPoints": [
+        {
+          "x": 2422,
+          "y": 9718,
+          "plane": 0
+        }
+      ],
+      "entrance": {
+        "x": 2173,
+        "y": 4724,
+        "plane": 1
+      },
       "tables": [
         1728,
         957
@@ -362075,7 +365877,18 @@
       ],
       "name": "Sir Harry",
       "combatLevel": 62,
-      "spawnPoints": [],
+      "spawnPoints": [
+        {
+          "x": 2426,
+          "y": 9718,
+          "plane": 0
+        }
+      ],
+      "entrance": {
+        "x": 2173,
+        "y": 4724,
+        "plane": 1
+      },
       "tables": [
         1729,
         957
@@ -362106,7 +365919,18 @@
       ],
       "name": "Sir Jerro",
       "combatLevel": 62,
-      "spawnPoints": [],
+      "spawnPoints": [
+        {
+          "x": 2424,
+          "y": 9721,
+          "plane": 0
+        }
+      ],
+      "entrance": {
+        "x": 2173,
+        "y": 4724,
+        "plane": 1
+      },
       "tables": [
         1730,
         957
@@ -362958,7 +366782,128 @@
       ],
       "name": "Skeleton (Lucien's camp)",
       "combatLevel": 132,
-      "spawnPoints": [],
+      "spawnPoints": [
+        {
+          "x": 2906,
+          "y": 3808,
+          "plane": 0
+        },
+        {
+          "x": 2907,
+          "y": 3806,
+          "plane": 0
+        },
+        {
+          "x": 2908,
+          "y": 3809,
+          "plane": 0
+        },
+        {
+          "x": 2910,
+          "y": 3805,
+          "plane": 0
+        },
+        {
+          "x": 2910,
+          "y": 3808,
+          "plane": 0
+        },
+        {
+          "x": 2912,
+          "y": 3812,
+          "plane": 0
+        },
+        {
+          "x": 2918,
+          "y": 3805,
+          "plane": 0
+        },
+        {
+          "x": 2919,
+          "y": 3823,
+          "plane": 0
+        },
+        {
+          "x": 2921,
+          "y": 3802,
+          "plane": 0
+        },
+        {
+          "x": 2921,
+          "y": 3824,
+          "plane": 0
+        },
+        {
+          "x": 2922,
+          "y": 3827,
+          "plane": 0
+        },
+        {
+          "x": 2923,
+          "y": 3823,
+          "plane": 0
+        },
+        {
+          "x": 2924,
+          "y": 3825,
+          "plane": 0
+        },
+        {
+          "x": 2927,
+          "y": 3811,
+          "plane": 0
+        },
+        {
+          "x": 2927,
+          "y": 3827,
+          "plane": 0
+        },
+        {
+          "x": 2928,
+          "y": 3815,
+          "plane": 0
+        },
+        {
+          "x": 2932,
+          "y": 3797,
+          "plane": 0
+        },
+        {
+          "x": 2935,
+          "y": 3785,
+          "plane": 0
+        },
+        {
+          "x": 2936,
+          "y": 3796,
+          "plane": 0
+        },
+        {
+          "x": 2938,
+          "y": 3786,
+          "plane": 0
+        },
+        {
+          "x": 2938,
+          "y": 3812,
+          "plane": 0
+        },
+        {
+          "x": 2938,
+          "y": 3832,
+          "plane": 0
+        },
+        {
+          "x": 2939,
+          "y": 3829,
+          "plane": 0
+        },
+        {
+          "x": 2940,
+          "y": 3816,
+          "plane": 0
+        }
+      ],
       "tables": [
         1746,
         1747
@@ -363897,7 +367842,133 @@
       "name": "Skeleton (Tarn's Lair) (Level 72)",
       "wikiPage": "Skeleton (Tarn's Lair)",
       "combatLevel": 72,
-      "spawnPoints": [],
+      "spawnPoints": [
+        {
+          "x": 3177,
+          "y": 4549,
+          "plane": 0
+        },
+        {
+          "x": 3182,
+          "y": 4562,
+          "plane": 0
+        },
+        {
+          "x": 3182,
+          "y": 4577,
+          "plane": 0
+        },
+        {
+          "x": 3184,
+          "y": 4550,
+          "plane": 0
+        },
+        {
+          "x": 3185,
+          "y": 4560,
+          "plane": 0
+        },
+        {
+          "x": 3185,
+          "y": 4562,
+          "plane": 0
+        },
+        {
+          "x": 3187,
+          "y": 4578,
+          "plane": 0
+        },
+        {
+          "x": 3290,
+          "y": 4599,
+          "plane": 0
+        },
+        {
+          "x": 3248,
+          "y": 4569,
+          "plane": 0
+        },
+        {
+          "x": 3254,
+          "y": 4560,
+          "plane": 0
+        },
+        {
+          "x": 3270,
+          "y": 4566,
+          "plane": 0
+        },
+        {
+          "x": 3143,
+          "y": 4595,
+          "plane": 0
+        },
+        {
+          "x": 3145,
+          "y": 4598,
+          "plane": 0
+        },
+        {
+          "x": 3348,
+          "y": 4567,
+          "plane": 0
+        },
+        {
+          "x": 3291,
+          "y": 4577,
+          "plane": 0
+        },
+        {
+          "x": 3254,
+          "y": 4589,
+          "plane": 0
+        },
+        {
+          "x": 3157,
+          "y": 4568,
+          "plane": 0
+        },
+        {
+          "x": 3158,
+          "y": 4552,
+          "plane": 0
+        },
+        {
+          "x": 3158,
+          "y": 4584,
+          "plane": 0
+        },
+        {
+          "x": 3159,
+          "y": 4577,
+          "plane": 0
+        },
+        {
+          "x": 3163,
+          "y": 4569,
+          "plane": 0
+        },
+        {
+          "x": 3169,
+          "y": 4587,
+          "plane": 0
+        },
+        {
+          "x": 3427,
+          "y": 9644,
+          "plane": 0
+        },
+        {
+          "x": 3428,
+          "y": 9658,
+          "plane": 0
+        },
+        {
+          "x": 3428,
+          "y": 2828,
+          "plane": 0
+        }
+      ],
       "tables": [
         1752,
         1753
@@ -364045,7 +368116,133 @@
       "name": "Skeleton (Tarn's Lair) (Level 87)",
       "wikiPage": "Skeleton (Tarn's Lair)",
       "combatLevel": 87,
-      "spawnPoints": [],
+      "spawnPoints": [
+        {
+          "x": 3177,
+          "y": 4549,
+          "plane": 0
+        },
+        {
+          "x": 3182,
+          "y": 4562,
+          "plane": 0
+        },
+        {
+          "x": 3182,
+          "y": 4577,
+          "plane": 0
+        },
+        {
+          "x": 3184,
+          "y": 4550,
+          "plane": 0
+        },
+        {
+          "x": 3185,
+          "y": 4560,
+          "plane": 0
+        },
+        {
+          "x": 3185,
+          "y": 4562,
+          "plane": 0
+        },
+        {
+          "x": 3187,
+          "y": 4578,
+          "plane": 0
+        },
+        {
+          "x": 3290,
+          "y": 4599,
+          "plane": 0
+        },
+        {
+          "x": 3248,
+          "y": 4569,
+          "plane": 0
+        },
+        {
+          "x": 3254,
+          "y": 4560,
+          "plane": 0
+        },
+        {
+          "x": 3270,
+          "y": 4566,
+          "plane": 0
+        },
+        {
+          "x": 3143,
+          "y": 4595,
+          "plane": 0
+        },
+        {
+          "x": 3145,
+          "y": 4598,
+          "plane": 0
+        },
+        {
+          "x": 3348,
+          "y": 4567,
+          "plane": 0
+        },
+        {
+          "x": 3291,
+          "y": 4577,
+          "plane": 0
+        },
+        {
+          "x": 3254,
+          "y": 4589,
+          "plane": 0
+        },
+        {
+          "x": 3157,
+          "y": 4568,
+          "plane": 0
+        },
+        {
+          "x": 3158,
+          "y": 4552,
+          "plane": 0
+        },
+        {
+          "x": 3158,
+          "y": 4584,
+          "plane": 0
+        },
+        {
+          "x": 3159,
+          "y": 4577,
+          "plane": 0
+        },
+        {
+          "x": 3163,
+          "y": 4569,
+          "plane": 0
+        },
+        {
+          "x": 3169,
+          "y": 4587,
+          "plane": 0
+        },
+        {
+          "x": 3427,
+          "y": 9644,
+          "plane": 0
+        },
+        {
+          "x": 3428,
+          "y": 9658,
+          "plane": 0
+        },
+        {
+          "x": 3428,
+          "y": 2828,
+          "plane": 0
+        }
+      ],
       "tables": [
         1752,
         1753
@@ -364157,7 +368354,88 @@
       ],
       "name": "Skeleton (Wilderness Agility Course)",
       "combatLevel": 18,
-      "spawnPoints": [],
+      "spawnPoints": [
+        {
+          "x": 2998,
+          "y": 3952,
+          "plane": 0
+        },
+        {
+          "x": 2993,
+          "y": 3955,
+          "plane": 0
+        },
+        {
+          "x": 2996,
+          "y": 3958,
+          "plane": 0
+        },
+        {
+          "x": 2995,
+          "y": 3959,
+          "plane": 0
+        },
+        {
+          "x": 2995,
+          "y": 3961,
+          "plane": 0
+        },
+        {
+          "x": 3004,
+          "y": 3960,
+          "plane": 0
+        },
+        {
+          "x": 3006,
+          "y": 3959,
+          "plane": 0
+        },
+        {
+          "x": 3003,
+          "y": 3951,
+          "plane": 0
+        },
+        {
+          "x": 3006,
+          "y": 3951,
+          "plane": 0
+        },
+        {
+          "x": 2994,
+          "y": 3946,
+          "plane": 0
+        },
+        {
+          "x": 2994,
+          "y": 3944,
+          "plane": 0
+        },
+        {
+          "x": 2990,
+          "y": 3940,
+          "plane": 0
+        },
+        {
+          "x": 2997,
+          "y": 3939,
+          "plane": 0
+        },
+        {
+          "x": 2993,
+          "y": 3932,
+          "plane": 0
+        },
+        {
+          "x": 2995,
+          "y": 3933,
+          "plane": 0
+        },
+        {
+          "x": 2996,
+          "y": 3932,
+          "plane": 0
+        }
+      ],
       "tables": [
         1025,
         15
@@ -364993,6 +369271,7 @@
       "name": "Skotizo",
       "combatLevel": 321,
       "spawnPoints": [],
+      "locationName": "Catacombs of Kourend",
       "tables": [
         1764
       ],
@@ -365115,6 +369394,7 @@
       "name": "Slagilith",
       "combatLevel": 92,
       "spawnPoints": [],
+      "locationName": "Goblin Cave",
       "tables": [
         1765
       ],
@@ -366867,7 +371147,13 @@
       ],
       "name": "Soldier (tier 1)",
       "combatLevel": 39,
-      "spawnPoints": [],
+      "spawnPoints": [
+        {
+          "x": 1540,
+          "y": 3624,
+          "plane": 0
+        }
+      ],
       "tables": [
         1792
       ],
@@ -366898,7 +371184,13 @@
       ],
       "name": "Soldier (tier 2)",
       "combatLevel": 48,
-      "spawnPoints": [],
+      "spawnPoints": [
+        {
+          "x": 1545,
+          "y": 3619,
+          "plane": 0
+        }
+      ],
       "tables": [
         1793
       ],
@@ -366929,7 +371221,13 @@
       ],
       "name": "Soldier (tier 3)",
       "combatLevel": 58,
-      "spawnPoints": [],
+      "spawnPoints": [
+        {
+          "x": 1544,
+          "y": 3626,
+          "plane": 0
+        }
+      ],
       "tables": [
         1794
       ],
@@ -366960,7 +371258,13 @@
       ],
       "name": "Soldier (tier 4)",
       "combatLevel": 70,
-      "spawnPoints": [],
+      "spawnPoints": [
+        {
+          "x": 1541,
+          "y": 3619,
+          "plane": 0
+        }
+      ],
       "tables": [
         1795
       ],
@@ -366991,7 +371295,13 @@
       ],
       "name": "Soldier (tier 5)",
       "combatLevel": 99,
-      "spawnPoints": [],
+      "spawnPoints": [
+        {
+          "x": 1547,
+          "y": 3623,
+          "plane": 0
+        }
+      ],
       "tables": [
         1796
       ],
@@ -367470,7 +371780,138 @@
       ],
       "name": "Soulless",
       "combatLevel": 18,
-      "spawnPoints": [],
+      "spawnPoints": [
+        {
+          "x": 2311,
+          "y": 9857,
+          "plane": 0
+        },
+        {
+          "x": 2314,
+          "y": 9862,
+          "plane": 0
+        },
+        {
+          "x": 2315,
+          "y": 9857,
+          "plane": 0
+        },
+        {
+          "x": 2317,
+          "y": 9867,
+          "plane": 0
+        },
+        {
+          "x": 2320,
+          "y": 9856,
+          "plane": 0
+        },
+        {
+          "x": 2320,
+          "y": 9859,
+          "plane": 0
+        },
+        {
+          "x": 2323,
+          "y": 9863,
+          "plane": 0
+        },
+        {
+          "x": 2324,
+          "y": 9856,
+          "plane": 0
+        },
+        {
+          "x": 2324,
+          "y": 9874,
+          "plane": 0
+        },
+        {
+          "x": 2325,
+          "y": 9859,
+          "plane": 0
+        },
+        {
+          "x": 2325,
+          "y": 9864,
+          "plane": 0
+        },
+        {
+          "x": 2325,
+          "y": 9867,
+          "plane": 0
+        },
+        {
+          "x": 2328,
+          "y": 9871,
+          "plane": 0
+        },
+        {
+          "x": 2329,
+          "y": 9856,
+          "plane": 0
+        },
+        {
+          "x": 2330,
+          "y": 9859,
+          "plane": 0
+        },
+        {
+          "x": 2331,
+          "y": 9857,
+          "plane": 0
+        },
+        {
+          "x": 2333,
+          "y": 9858,
+          "plane": 0
+        },
+        {
+          "x": 2335,
+          "y": 9868,
+          "plane": 0
+        },
+        {
+          "x": 2337,
+          "y": 9856,
+          "plane": 0
+        },
+        {
+          "x": 2337,
+          "y": 9872,
+          "plane": 0
+        },
+        {
+          "x": 2338,
+          "y": 9862,
+          "plane": 0
+        },
+        {
+          "x": 2340,
+          "y": 9860,
+          "plane": 0
+        },
+        {
+          "x": 2342,
+          "y": 9857,
+          "plane": 0
+        },
+        {
+          "x": 2342,
+          "y": 9862,
+          "plane": 0
+        },
+        {
+          "x": 2342,
+          "y": 9866,
+          "plane": 0
+        }
+      ],
+      "entrance": {
+        "x": 2146,
+        "y": 4583,
+        "plane": 1
+      },
       "tables": [
         3
       ],
@@ -368168,6 +372609,7 @@
       "name": "Spined kraken",
       "combatLevel": 128,
       "spawnPoints": [],
+      "locationName": "Calidum Reach - south-east of Laguna Aurorae",
       "tables": [
         1816,
         1817,
@@ -368909,6 +373351,7 @@
       "wikiPage": "Spiritual mage",
       "combatLevel": 182,
       "spawnPoints": [],
+      "locationName": "God Wars Dungeon",
       "tables": [
         1821,
         15
@@ -369288,6 +373731,7 @@
       "wikiPage": "Spiritual ranger",
       "combatLevel": 158,
       "spawnPoints": [],
+      "locationName": "God Wars Dungeon",
       "tables": [
         1822,
         15
@@ -369732,6 +374176,7 @@
       "wikiPage": "Spiritual warrior",
       "combatLevel": 158,
       "spawnPoints": [],
+      "locationName": "God Wars Dungeon",
       "tables": [
         1823,
         15
@@ -370535,6 +374980,7 @@
       "name": "Stingray",
       "combatLevel": 92,
       "spawnPoints": [],
+      "locationName": "The Lonely Sea - west of Charred Island",
       "tables": [
         1835,
         1836
@@ -371088,7 +375534,78 @@
       ],
       "name": "Sulphur Nagua",
       "combatLevel": 98,
-      "spawnPoints": [],
+      "spawnPoints": [
+        {
+          "x": 1351,
+          "y": 9574,
+          "plane": 0
+        },
+        {
+          "x": 1358,
+          "y": 9573,
+          "plane": 0
+        },
+        {
+          "x": 1352,
+          "y": 9568,
+          "plane": 0
+        },
+        {
+          "x": 1359,
+          "y": 9567,
+          "plane": 0
+        },
+        {
+          "x": 1355,
+          "y": 9563,
+          "plane": 0
+        },
+        {
+          "x": 1350,
+          "y": 9558,
+          "plane": 0
+        },
+        {
+          "x": 1358,
+          "y": 9556,
+          "plane": 0
+        },
+        {
+          "x": 1352,
+          "y": 9552,
+          "plane": 0
+        },
+        {
+          "x": 1359,
+          "y": 9550,
+          "plane": 0
+        },
+        {
+          "x": 1372,
+          "y": 9563,
+          "plane": 0
+        },
+        {
+          "x": 1378,
+          "y": 9563,
+          "plane": 0
+        },
+        {
+          "x": 1375,
+          "y": 9560,
+          "plane": 0
+        },
+        {
+          "x": 1372,
+          "y": 9557,
+          "plane": 0
+        },
+        {
+          "x": 1378,
+          "y": 9557,
+          "plane": 0
+        }
+      ],
       "tables": [
         1855
       ],
@@ -371149,6 +375666,7 @@
       "name": "Sunlight antelope",
       "combatLevel": 0,
       "spawnPoints": [],
+      "locationName": "Avium Savannah ({{fairycode|AJP",
       "tables": [
         1856
       ],
@@ -371171,6 +375689,7 @@
       "name": "Sunlight Moth",
       "combatLevel": 0,
       "spawnPoints": [],
+      "locationName": "Avium Savannah",
       "tables": [
         1857
       ],
@@ -372294,6 +376813,7 @@
       "name": "Tar Monster",
       "combatLevel": 132,
       "spawnPoints": [],
+      "locationName": "Tar Swamp",
       "tables": [
         1874,
         1875
@@ -372637,7 +377157,33 @@
       ],
       "name": "Tecu salamander (Hunter)",
       "combatLevel": 0,
-      "spawnPoints": [],
+      "spawnPoints": [
+        {
+          "x": 1472,
+          "y": 3088,
+          "plane": 0
+        },
+        {
+          "x": 1472,
+          "y": 3096,
+          "plane": 0
+        },
+        {
+          "x": 1473,
+          "y": 3086,
+          "plane": 0
+        },
+        {
+          "x": 1475,
+          "y": 3101,
+          "plane": 0
+        },
+        {
+          "x": 1477,
+          "y": 3099,
+          "plane": 0
+        }
+      ],
       "tables": [
         1894
       ],
@@ -372893,6 +377439,7 @@
       "name": "Tern",
       "combatLevel": 20,
       "spawnPoints": [],
+      "locationName": "Bay of Sarim - south-east of Mudskipper Point",
       "tables": [
         1902
       ],
@@ -373142,6 +377689,7 @@
       "name": "The Hueycoatl",
       "combatLevel": 642,
       "spawnPoints": [],
+      "locationName": "The Darkfrost",
       "tables": [
         1906
       ],
@@ -373186,7 +377734,18 @@
       ],
       "name": "The Kendal",
       "combatLevel": 70,
-      "spawnPoints": [],
+      "spawnPoints": [
+        {
+          "x": 2786,
+          "y": 10081,
+          "plane": 0
+        }
+      ],
+      "entrance": {
+        "x": 2808,
+        "y": 3703,
+        "plane": 0
+      },
       "tables": [
         1907
       ],
@@ -373280,6 +377839,7 @@
       "wikiPage": "The Leviathan",
       "combatLevel": 1157,
       "spawnPoints": [],
+      "locationName": "The Scar",
       "tables": [
         1908
       ],
@@ -373325,6 +377885,7 @@
       "wikiPage": "The Leviathan",
       "combatLevel": 798,
       "spawnPoints": [],
+      "locationName": "The Scar",
       "tables": [
         1908
       ],
@@ -373371,6 +377932,7 @@
       "wikiPage": "The Leviathan",
       "combatLevel": 593,
       "spawnPoints": [],
+      "locationName": "The Scar",
       "tables": [
         1908
       ],
@@ -373700,6 +378262,7 @@
       "wikiPage": "The Whisperer",
       "combatLevel": 1146,
       "spawnPoints": [],
+      "locationName": "Lassar Undercity - Sunken Cathedral",
       "tables": [
         1915
       ],
@@ -373732,6 +378295,7 @@
       "wikiPage": "The Whisperer",
       "combatLevel": 791,
       "spawnPoints": [],
+      "locationName": "Lassar Undercity - Sunken Cathedral",
       "tables": [
         1915
       ],
@@ -373764,6 +378328,7 @@
       "wikiPage": "The Whisperer",
       "combatLevel": 587,
       "spawnPoints": [],
+      "locationName": "Lassar Undercity - Sunken Cathedral",
       "tables": [
         1915
       ],
@@ -374148,6 +378713,7 @@
       "name": "Thief (Varlamore)",
       "combatLevel": 16,
       "spawnPoints": [],
+      "locationName": "Outer Fortis",
       "tables": [
         1920,
         34
@@ -374530,6 +379096,7 @@
       "name": "Tiger shark",
       "combatLevel": 125,
       "spawnPoints": [],
+      "locationName": "Anglerfish's Light - south-east of Charred Island",
       "tables": [
         1923
       ],
@@ -374805,6 +379372,7 @@
       "name": "Tormented Demon",
       "combatLevel": 450,
       "spawnPoints": [],
+      "locationName": "Ancient Guthixian Temple",
       "tables": [
         1934,
         1935
@@ -375175,7 +379743,48 @@
       "name": "Tortured gorilla (Level 142)",
       "wikiPage": "Tortured gorilla",
       "combatLevel": 142,
-      "spawnPoints": [],
+      "spawnPoints": [
+        {
+          "x": 2131,
+          "y": 5644,
+          "plane": 0
+        },
+        {
+          "x": 2136,
+          "y": 5646,
+          "plane": 0
+        },
+        {
+          "x": 2145,
+          "y": 5643,
+          "plane": 0
+        },
+        {
+          "x": 2146,
+          "y": 5650,
+          "plane": 0
+        },
+        {
+          "x": 2151,
+          "y": 5649,
+          "plane": 0
+        },
+        {
+          "x": 2132,
+          "y": 5660,
+          "plane": 0
+        },
+        {
+          "x": 2137,
+          "y": 5660,
+          "plane": 0
+        },
+        {
+          "x": 2141,
+          "y": 5661,
+          "plane": 0
+        }
+      ],
       "tables": [
         1939,
         1940
@@ -375315,6 +379924,7 @@
       "wikiPage": "Tourist",
       "combatLevel": 0,
       "spawnPoints": [],
+      "locationName": "Aldarin",
       "tables": [
         543
       ],
@@ -375329,6 +379939,7 @@
       "wikiPage": "Tower Archer",
       "combatLevel": 34,
       "spawnPoints": [],
+      "locationName": "Ranging Guild (North)",
       "tables": [
         1943
       ],
@@ -375360,6 +379971,7 @@
       "wikiPage": "Tower Archer",
       "combatLevel": 19,
       "spawnPoints": [],
+      "locationName": "Ranging Guild (North)",
       "tables": [
         1943
       ],
@@ -375391,6 +380003,7 @@
       "wikiPage": "Tower Archer",
       "combatLevel": 49,
       "spawnPoints": [],
+      "locationName": "Ranging Guild (North)",
       "tables": [
         1943
       ],
@@ -375422,6 +380035,7 @@
       "wikiPage": "Tower Archer",
       "combatLevel": 64,
       "spawnPoints": [],
+      "locationName": "Ranging Guild (North)",
       "tables": [
         1943
       ],
@@ -376364,7 +380978,38 @@
       ],
       "name": "Tribeswoman",
       "combatLevel": 32,
-      "spawnPoints": [],
+      "spawnPoints": [
+        {
+          "x": 2937,
+          "y": 2993,
+          "plane": 0
+        },
+        {
+          "x": 2942,
+          "y": 2995,
+          "plane": 0
+        },
+        {
+          "x": 2724,
+          "y": 3158,
+          "plane": 0
+        },
+        {
+          "x": 2723,
+          "y": 3159,
+          "plane": 0
+        },
+        {
+          "x": 2729,
+          "y": 3164,
+          "plane": 0
+        },
+        {
+          "x": 2730,
+          "y": 3162,
+          "plane": 0
+        }
+      ],
       "tables": [
         1949,
         1950
@@ -380868,7 +385513,128 @@
       "name": "Vampyre Juvinate (Level 119 (Temple Trekking))",
       "wikiPage": "Vampyre Juvinate",
       "combatLevel": 119,
-      "spawnPoints": [],
+      "spawnPoints": [
+        {
+          "x": 3630,
+          "y": 3213,
+          "plane": 0
+        },
+        {
+          "x": 3631,
+          "y": 3225,
+          "plane": 0
+        },
+        {
+          "x": 3633,
+          "y": 3211,
+          "plane": 0
+        },
+        {
+          "x": 3540,
+          "y": 3206,
+          "plane": 0
+        },
+        {
+          "x": 3546,
+          "y": 3206,
+          "plane": 0
+        },
+        {
+          "x": 3546,
+          "y": 3218,
+          "plane": 0
+        },
+        {
+          "x": 3550,
+          "y": 3213,
+          "plane": 0
+        },
+        {
+          "x": 3564,
+          "y": 3232,
+          "plane": 0
+        },
+        {
+          "x": 3567,
+          "y": 3214,
+          "plane": 0
+        },
+        {
+          "x": 3572,
+          "y": 3216,
+          "plane": 0
+        },
+        {
+          "x": 3575,
+          "y": 3240,
+          "plane": 0
+        },
+        {
+          "x": 3577,
+          "y": 3216,
+          "plane": 0
+        },
+        {
+          "x": 3578,
+          "y": 3221,
+          "plane": 0
+        },
+        {
+          "x": 3578,
+          "y": 3231,
+          "plane": 0
+        },
+        {
+          "x": 3579,
+          "y": 3207,
+          "plane": 0
+        },
+        {
+          "x": 3579,
+          "y": 3250,
+          "plane": 0
+        },
+        {
+          "x": 3581,
+          "y": 3210,
+          "plane": 0
+        },
+        {
+          "x": 3582,
+          "y": 3242,
+          "plane": 0
+        },
+        {
+          "x": 3653,
+          "y": 3356,
+          "plane": 0
+        },
+        {
+          "x": 3658,
+          "y": 3361,
+          "plane": 0
+        },
+        {
+          "x": 3663,
+          "y": 3354,
+          "plane": 0
+        },
+        {
+          "x": 3630,
+          "y": 3341,
+          "plane": 0
+        },
+        {
+          "x": 3632,
+          "y": 3334,
+          "plane": 0
+        },
+        {
+          "x": 3637,
+          "y": 3346,
+          "plane": 0
+        }
+      ],
       "tables": [
         1995
       ],
@@ -380900,7 +385666,128 @@
       "name": "Vampyre Juvinate (Level 50 (In Aid of the Myreque))",
       "wikiPage": "Vampyre Juvinate",
       "combatLevel": 50,
-      "spawnPoints": [],
+      "spawnPoints": [
+        {
+          "x": 3630,
+          "y": 3213,
+          "plane": 0
+        },
+        {
+          "x": 3631,
+          "y": 3225,
+          "plane": 0
+        },
+        {
+          "x": 3633,
+          "y": 3211,
+          "plane": 0
+        },
+        {
+          "x": 3540,
+          "y": 3206,
+          "plane": 0
+        },
+        {
+          "x": 3546,
+          "y": 3206,
+          "plane": 0
+        },
+        {
+          "x": 3546,
+          "y": 3218,
+          "plane": 0
+        },
+        {
+          "x": 3550,
+          "y": 3213,
+          "plane": 0
+        },
+        {
+          "x": 3564,
+          "y": 3232,
+          "plane": 0
+        },
+        {
+          "x": 3567,
+          "y": 3214,
+          "plane": 0
+        },
+        {
+          "x": 3572,
+          "y": 3216,
+          "plane": 0
+        },
+        {
+          "x": 3575,
+          "y": 3240,
+          "plane": 0
+        },
+        {
+          "x": 3577,
+          "y": 3216,
+          "plane": 0
+        },
+        {
+          "x": 3578,
+          "y": 3221,
+          "plane": 0
+        },
+        {
+          "x": 3578,
+          "y": 3231,
+          "plane": 0
+        },
+        {
+          "x": 3579,
+          "y": 3207,
+          "plane": 0
+        },
+        {
+          "x": 3579,
+          "y": 3250,
+          "plane": 0
+        },
+        {
+          "x": 3581,
+          "y": 3210,
+          "plane": 0
+        },
+        {
+          "x": 3582,
+          "y": 3242,
+          "plane": 0
+        },
+        {
+          "x": 3653,
+          "y": 3356,
+          "plane": 0
+        },
+        {
+          "x": 3658,
+          "y": 3361,
+          "plane": 0
+        },
+        {
+          "x": 3663,
+          "y": 3354,
+          "plane": 0
+        },
+        {
+          "x": 3630,
+          "y": 3341,
+          "plane": 0
+        },
+        {
+          "x": 3632,
+          "y": 3334,
+          "plane": 0
+        },
+        {
+          "x": 3637,
+          "y": 3346,
+          "plane": 0
+        }
+      ],
       "tables": [
         1995
       ],
@@ -381097,7 +385984,128 @@
       "name": "Vampyre Juvinate (Level 59 (Temple Trekking))",
       "wikiPage": "Vampyre Juvinate",
       "combatLevel": 59,
-      "spawnPoints": [],
+      "spawnPoints": [
+        {
+          "x": 3630,
+          "y": 3213,
+          "plane": 0
+        },
+        {
+          "x": 3631,
+          "y": 3225,
+          "plane": 0
+        },
+        {
+          "x": 3633,
+          "y": 3211,
+          "plane": 0
+        },
+        {
+          "x": 3540,
+          "y": 3206,
+          "plane": 0
+        },
+        {
+          "x": 3546,
+          "y": 3206,
+          "plane": 0
+        },
+        {
+          "x": 3546,
+          "y": 3218,
+          "plane": 0
+        },
+        {
+          "x": 3550,
+          "y": 3213,
+          "plane": 0
+        },
+        {
+          "x": 3564,
+          "y": 3232,
+          "plane": 0
+        },
+        {
+          "x": 3567,
+          "y": 3214,
+          "plane": 0
+        },
+        {
+          "x": 3572,
+          "y": 3216,
+          "plane": 0
+        },
+        {
+          "x": 3575,
+          "y": 3240,
+          "plane": 0
+        },
+        {
+          "x": 3577,
+          "y": 3216,
+          "plane": 0
+        },
+        {
+          "x": 3578,
+          "y": 3221,
+          "plane": 0
+        },
+        {
+          "x": 3578,
+          "y": 3231,
+          "plane": 0
+        },
+        {
+          "x": 3579,
+          "y": 3207,
+          "plane": 0
+        },
+        {
+          "x": 3579,
+          "y": 3250,
+          "plane": 0
+        },
+        {
+          "x": 3581,
+          "y": 3210,
+          "plane": 0
+        },
+        {
+          "x": 3582,
+          "y": 3242,
+          "plane": 0
+        },
+        {
+          "x": 3653,
+          "y": 3356,
+          "plane": 0
+        },
+        {
+          "x": 3658,
+          "y": 3361,
+          "plane": 0
+        },
+        {
+          "x": 3663,
+          "y": 3354,
+          "plane": 0
+        },
+        {
+          "x": 3630,
+          "y": 3341,
+          "plane": 0
+        },
+        {
+          "x": 3632,
+          "y": 3334,
+          "plane": 0
+        },
+        {
+          "x": 3637,
+          "y": 3346,
+          "plane": 0
+        }
+      ],
       "tables": [
         1995
       ],
@@ -381128,7 +386136,128 @@
       "name": "Vampyre Juvinate (Level 75 (In Aid of the Myreque))",
       "wikiPage": "Vampyre Juvinate",
       "combatLevel": 75,
-      "spawnPoints": [],
+      "spawnPoints": [
+        {
+          "x": 3630,
+          "y": 3213,
+          "plane": 0
+        },
+        {
+          "x": 3631,
+          "y": 3225,
+          "plane": 0
+        },
+        {
+          "x": 3633,
+          "y": 3211,
+          "plane": 0
+        },
+        {
+          "x": 3540,
+          "y": 3206,
+          "plane": 0
+        },
+        {
+          "x": 3546,
+          "y": 3206,
+          "plane": 0
+        },
+        {
+          "x": 3546,
+          "y": 3218,
+          "plane": 0
+        },
+        {
+          "x": 3550,
+          "y": 3213,
+          "plane": 0
+        },
+        {
+          "x": 3564,
+          "y": 3232,
+          "plane": 0
+        },
+        {
+          "x": 3567,
+          "y": 3214,
+          "plane": 0
+        },
+        {
+          "x": 3572,
+          "y": 3216,
+          "plane": 0
+        },
+        {
+          "x": 3575,
+          "y": 3240,
+          "plane": 0
+        },
+        {
+          "x": 3577,
+          "y": 3216,
+          "plane": 0
+        },
+        {
+          "x": 3578,
+          "y": 3221,
+          "plane": 0
+        },
+        {
+          "x": 3578,
+          "y": 3231,
+          "plane": 0
+        },
+        {
+          "x": 3579,
+          "y": 3207,
+          "plane": 0
+        },
+        {
+          "x": 3579,
+          "y": 3250,
+          "plane": 0
+        },
+        {
+          "x": 3581,
+          "y": 3210,
+          "plane": 0
+        },
+        {
+          "x": 3582,
+          "y": 3242,
+          "plane": 0
+        },
+        {
+          "x": 3653,
+          "y": 3356,
+          "plane": 0
+        },
+        {
+          "x": 3658,
+          "y": 3361,
+          "plane": 0
+        },
+        {
+          "x": 3663,
+          "y": 3354,
+          "plane": 0
+        },
+        {
+          "x": 3630,
+          "y": 3341,
+          "plane": 0
+        },
+        {
+          "x": 3632,
+          "y": 3334,
+          "plane": 0
+        },
+        {
+          "x": 3637,
+          "y": 3346,
+          "plane": 0
+        }
+      ],
       "tables": [
         1995
       ],
@@ -381160,7 +386289,128 @@
       "name": "Vampyre Juvinate (Level 90 (Temple Trekking))",
       "wikiPage": "Vampyre Juvinate",
       "combatLevel": 90,
-      "spawnPoints": [],
+      "spawnPoints": [
+        {
+          "x": 3630,
+          "y": 3213,
+          "plane": 0
+        },
+        {
+          "x": 3631,
+          "y": 3225,
+          "plane": 0
+        },
+        {
+          "x": 3633,
+          "y": 3211,
+          "plane": 0
+        },
+        {
+          "x": 3540,
+          "y": 3206,
+          "plane": 0
+        },
+        {
+          "x": 3546,
+          "y": 3206,
+          "plane": 0
+        },
+        {
+          "x": 3546,
+          "y": 3218,
+          "plane": 0
+        },
+        {
+          "x": 3550,
+          "y": 3213,
+          "plane": 0
+        },
+        {
+          "x": 3564,
+          "y": 3232,
+          "plane": 0
+        },
+        {
+          "x": 3567,
+          "y": 3214,
+          "plane": 0
+        },
+        {
+          "x": 3572,
+          "y": 3216,
+          "plane": 0
+        },
+        {
+          "x": 3575,
+          "y": 3240,
+          "plane": 0
+        },
+        {
+          "x": 3577,
+          "y": 3216,
+          "plane": 0
+        },
+        {
+          "x": 3578,
+          "y": 3221,
+          "plane": 0
+        },
+        {
+          "x": 3578,
+          "y": 3231,
+          "plane": 0
+        },
+        {
+          "x": 3579,
+          "y": 3207,
+          "plane": 0
+        },
+        {
+          "x": 3579,
+          "y": 3250,
+          "plane": 0
+        },
+        {
+          "x": 3581,
+          "y": 3210,
+          "plane": 0
+        },
+        {
+          "x": 3582,
+          "y": 3242,
+          "plane": 0
+        },
+        {
+          "x": 3653,
+          "y": 3356,
+          "plane": 0
+        },
+        {
+          "x": 3658,
+          "y": 3361,
+          "plane": 0
+        },
+        {
+          "x": 3663,
+          "y": 3354,
+          "plane": 0
+        },
+        {
+          "x": 3630,
+          "y": 3341,
+          "plane": 0
+        },
+        {
+          "x": 3632,
+          "y": 3334,
+          "plane": 0
+        },
+        {
+          "x": 3637,
+          "y": 3346,
+          "plane": 0
+        }
+      ],
       "tables": [
         1995
       ],
@@ -381190,7 +386440,133 @@
       ],
       "name": "Vampyre kraken",
       "combatLevel": 211,
-      "spawnPoints": [],
+      "spawnPoints": [
+        {
+          "x": 1890,
+          "y": 4145,
+          "plane": 0
+        },
+        {
+          "x": 1900,
+          "y": 4118,
+          "plane": 0
+        },
+        {
+          "x": 1924,
+          "y": 4137,
+          "plane": 0
+        },
+        {
+          "x": 1926,
+          "y": 4127,
+          "plane": 0
+        },
+        {
+          "x": 1929,
+          "y": 4147,
+          "plane": 0
+        },
+        {
+          "x": 1935,
+          "y": 4141,
+          "plane": 0
+        },
+        {
+          "x": 1941,
+          "y": 4135,
+          "plane": 0
+        },
+        {
+          "x": 1941,
+          "y": 4152,
+          "plane": 0
+        },
+        {
+          "x": 1951,
+          "y": 4145,
+          "plane": 0
+        },
+        {
+          "x": 1956,
+          "y": 4132,
+          "plane": 0
+        },
+        {
+          "x": 1961,
+          "y": 4152,
+          "plane": 0
+        },
+        {
+          "x": 1965,
+          "y": 4120,
+          "plane": 0
+        },
+        {
+          "x": 1965,
+          "y": 4141,
+          "plane": 0
+        },
+        {
+          "x": 1973,
+          "y": 4133,
+          "plane": 0
+        },
+        {
+          "x": 1975,
+          "y": 4151,
+          "plane": 0
+        },
+        {
+          "x": 1978,
+          "y": 4145,
+          "plane": 0
+        },
+        {
+          "x": 2820,
+          "y": 4144,
+          "plane": 0
+        },
+        {
+          "x": 2821,
+          "y": 4108,
+          "plane": 0
+        },
+        {
+          "x": 2822,
+          "y": 4126,
+          "plane": 0
+        },
+        {
+          "x": 2833,
+          "y": 4120,
+          "plane": 0
+        },
+        {
+          "x": 2837,
+          "y": 4137,
+          "plane": 0
+        },
+        {
+          "x": 2842,
+          "y": 4111,
+          "plane": 0
+        },
+        {
+          "x": 2851,
+          "y": 4122,
+          "plane": 0
+        },
+        {
+          "x": 2852,
+          "y": 4138,
+          "plane": 0
+        },
+        {
+          "x": 2864,
+          "y": 4132,
+          "plane": 0
+        }
+      ],
       "tables": [
         1996,
         1997,
@@ -381455,6 +386831,7 @@
       "wikiPage": "Vardorvis",
       "combatLevel": 1136,
       "spawnPoints": [],
+      "locationName": "The Stranglewood - Ritual Site",
       "tables": [
         2001
       ],
@@ -381517,6 +386894,7 @@
       "wikiPage": "Vardorvis",
       "combatLevel": 784,
       "spawnPoints": [],
+      "locationName": "The Stranglewood - Ritual Site",
       "tables": [
         2001
       ],
@@ -381550,6 +386928,7 @@
       "wikiPage": "Vardorvis",
       "combatLevel": 572,
       "spawnPoints": [],
+      "locationName": "The Stranglewood - Ritual Site",
       "tables": [
         2001
       ],
@@ -381656,6 +387035,7 @@
       "name": "Veiled kraken",
       "combatLevel": 210,
       "spawnPoints": [],
+      "locationName": "South of Rainbow's End",
       "tables": [
         2004,
         2005
@@ -381691,6 +387071,7 @@
       "name": "Venator",
       "combatLevel": 246,
       "spawnPoints": [],
+      "locationName": "Apsul Hunting Ground",
       "tables": [
         2006
       ],
@@ -382010,7 +387391,68 @@
       "name": "Villager (pickpocket)",
       "wikiPage": "Villager",
       "combatLevel": 0,
-      "spawnPoints": [],
+      "spawnPoints": [
+        {
+          "x": 3362,
+          "y": 2975,
+          "plane": 0
+        },
+        {
+          "x": 3358,
+          "y": 2969,
+          "plane": 0
+        },
+        {
+          "x": 3355,
+          "y": 2949,
+          "plane": 0
+        },
+        {
+          "x": 3361,
+          "y": 2969,
+          "plane": 0
+        },
+        {
+          "x": 3363,
+          "y": 2963,
+          "plane": 0
+        },
+        {
+          "x": 3355,
+          "y": 2957,
+          "plane": 0
+        },
+        {
+          "x": 3342,
+          "y": 2954,
+          "plane": 0
+        },
+        {
+          "x": 3365,
+          "y": 2991,
+          "plane": 0
+        },
+        {
+          "x": 3367,
+          "y": 2983,
+          "plane": 0
+        },
+        {
+          "x": 3359,
+          "y": 2975,
+          "plane": 0
+        },
+        {
+          "x": 3361,
+          "y": 2967,
+          "plane": 0
+        },
+        {
+          "x": 3349,
+          "y": 2954,
+          "plane": 0
+        }
+      ],
       "tables": [
         2014
       ],
@@ -383007,7 +388449,133 @@
       "name": "Vyrewatch (Level 87)",
       "wikiPage": "Vyrewatch",
       "combatLevel": 87,
-      "spawnPoints": [],
+      "spawnPoints": [
+        {
+          "x": 3624,
+          "y": 3322,
+          "plane": 0
+        },
+        {
+          "x": 3600,
+          "y": 3245,
+          "plane": 0
+        },
+        {
+          "x": 3615,
+          "y": 3248,
+          "plane": 0
+        },
+        {
+          "x": 3626,
+          "y": 3245,
+          "plane": 0
+        },
+        {
+          "x": 3629,
+          "y": 3252,
+          "plane": 0
+        },
+        {
+          "x": 3630,
+          "y": 3279,
+          "plane": 0
+        },
+        {
+          "x": 3636,
+          "y": 3270,
+          "plane": 0
+        },
+        {
+          "x": 3593,
+          "y": 3208,
+          "plane": 0
+        },
+        {
+          "x": 3606,
+          "y": 3217,
+          "plane": 0
+        },
+        {
+          "x": 3607,
+          "y": 3225,
+          "plane": 0
+        },
+        {
+          "x": 3611,
+          "y": 3205,
+          "plane": 0
+        },
+        {
+          "x": 3626,
+          "y": 3224,
+          "plane": 0
+        },
+        {
+          "x": 3634,
+          "y": 3200,
+          "plane": 0
+        },
+        {
+          "x": 3597,
+          "y": 3193,
+          "plane": 0
+        },
+        {
+          "x": 3601,
+          "y": 3183,
+          "plane": 0
+        },
+        {
+          "x": 3614,
+          "y": 3189,
+          "plane": 0
+        },
+        {
+          "x": 3621,
+          "y": 3182,
+          "plane": 0
+        },
+        {
+          "x": 3629,
+          "y": 3190,
+          "plane": 0
+        },
+        {
+          "x": 3638,
+          "y": 3187,
+          "plane": 0
+        },
+        {
+          "x": 3631,
+          "y": 3305,
+          "plane": 0
+        },
+        {
+          "x": 3713,
+          "y": 3368,
+          "plane": 0
+        },
+        {
+          "x": 3719,
+          "y": 3373,
+          "plane": 0
+        },
+        {
+          "x": 3722,
+          "y": 3369,
+          "plane": 0
+        },
+        {
+          "x": 3728,
+          "y": 3374,
+          "plane": 0
+        },
+        {
+          "x": 3730,
+          "y": 3365,
+          "plane": 0
+        }
+      ],
       "tables": [
         2026,
         2027
@@ -383647,6 +389215,7 @@
       "wikiPage": "Warped Terrorbird",
       "combatLevel": 138,
       "spawnPoints": [],
+      "locationName": "Poison Waste Dungeon - main level",
       "tables": [
         2040
       ],
@@ -383692,6 +389261,7 @@
       "wikiPage": "Warped Terrorbird",
       "combatLevel": 96,
       "spawnPoints": [],
+      "locationName": "Poison Waste Dungeon - main level",
       "tables": [
         2040
       ],
@@ -383729,6 +389299,7 @@
       "name": "Warped Tortoise",
       "combatLevel": 121,
       "spawnPoints": [],
+      "locationName": "Poison Waste Dungeon - main level",
       "tables": [
         2041
       ],
@@ -384475,6 +390046,7 @@
       "name": "Weaponsmaster",
       "combatLevel": 23,
       "spawnPoints": [],
+      "locationName": "House in South-East Varrock, {{FloorNumber|uk=1",
       "tables": [
         3
       ],
@@ -384583,7 +390155,133 @@
       "name": "Werewolf (Boris)",
       "wikiPage": "Werewolf",
       "combatLevel": 88,
-      "spawnPoints": [],
+      "spawnPoints": [
+        {
+          "x": 2836,
+          "y": 5349,
+          "plane": 0
+        },
+        {
+          "x": 2847,
+          "y": 5352,
+          "plane": 0
+        },
+        {
+          "x": 2858,
+          "y": 5315,
+          "plane": 0
+        },
+        {
+          "x": 2869,
+          "y": 5328,
+          "plane": 0
+        },
+        {
+          "x": 2872,
+          "y": 5318,
+          "plane": 0
+        },
+        {
+          "x": 2875,
+          "y": 5313,
+          "plane": 0
+        },
+        {
+          "x": 2880,
+          "y": 5321,
+          "plane": 0
+        },
+        {
+          "x": 2886,
+          "y": 5323,
+          "plane": 0
+        },
+        {
+          "x": 2892,
+          "y": 5320,
+          "plane": 0
+        },
+        {
+          "x": 2896,
+          "y": 5312,
+          "plane": 0
+        },
+        {
+          "x": 2884,
+          "y": 5295,
+          "plane": 0
+        },
+        {
+          "x": 2891,
+          "y": 5285,
+          "plane": 0
+        },
+        {
+          "x": 2835,
+          "y": 5286,
+          "plane": 0
+        },
+        {
+          "x": 2924,
+          "y": 5237,
+          "plane": 0
+        },
+        {
+          "x": 2909,
+          "y": 5297,
+          "plane": 0
+        },
+        {
+          "x": 2848,
+          "y": 5277,
+          "plane": 0
+        },
+        {
+          "x": 2859,
+          "y": 5283,
+          "plane": 0
+        },
+        {
+          "x": 2884,
+          "y": 5354,
+          "plane": 0
+        },
+        {
+          "x": 2891,
+          "y": 5361,
+          "plane": 0
+        },
+        {
+          "x": 2897,
+          "y": 5352,
+          "plane": 0
+        },
+        {
+          "x": 2900,
+          "y": 5355,
+          "plane": 0
+        },
+        {
+          "x": 2910,
+          "y": 5342,
+          "plane": 0
+        },
+        {
+          "x": 2912,
+          "y": 5353,
+          "plane": 0
+        },
+        {
+          "x": 2914,
+          "y": 5335,
+          "plane": 0
+        },
+        {
+          "x": 2916,
+          "y": 5342,
+          "plane": 0
+        }
+      ],
       "tables": [
         2053,
         2054
@@ -384797,7 +390495,18 @@
       ],
       "name": "White jaguar",
       "combatLevel": 67,
-      "spawnPoints": [],
+      "spawnPoints": [
+        {
+          "x": 1421,
+          "y": 3233,
+          "plane": 0
+        },
+        {
+          "x": 1467,
+          "y": 3294,
+          "plane": 0
+        }
+      ],
       "tables": [
         230
       ],
@@ -387690,7 +393399,38 @@
       ],
       "name": "Wyrmling",
       "combatLevel": 55,
-      "spawnPoints": [],
+      "spawnPoints": [
+        {
+          "x": 1363,
+          "y": 9707,
+          "plane": 0
+        },
+        {
+          "x": 1366,
+          "y": 9704,
+          "plane": 0
+        },
+        {
+          "x": 1366,
+          "y": 9709,
+          "plane": 0
+        },
+        {
+          "x": 1367,
+          "y": 9693,
+          "plane": 0
+        },
+        {
+          "x": 1367,
+          "y": 9697,
+          "plane": 0
+        },
+        {
+          "x": 1371,
+          "y": 9695,
+          "plane": 0
+        }
+      ],
       "tables": [
         2094
       ],
@@ -387724,7 +393464,113 @@
       ],
       "name": "Wyrmscraig Goat",
       "combatLevel": 0,
-      "spawnPoints": [],
+      "spawnPoints": [
+        {
+          "x": 2563,
+          "y": 2193,
+          "plane": 0
+        },
+        {
+          "x": 2564,
+          "y": 2186,
+          "plane": 0
+        },
+        {
+          "x": 2565,
+          "y": 2191,
+          "plane": 0
+        },
+        {
+          "x": 2566,
+          "y": 2194,
+          "plane": 0
+        },
+        {
+          "x": 2567,
+          "y": 2197,
+          "plane": 0
+        },
+        {
+          "x": 2569,
+          "y": 2199,
+          "plane": 0
+        },
+        {
+          "x": 2569,
+          "y": 2193,
+          "plane": 0
+        },
+        {
+          "x": 2570,
+          "y": 2189,
+          "plane": 0
+        },
+        {
+          "x": 2572,
+          "y": 2201,
+          "plane": 0
+        },
+        {
+          "x": 2574,
+          "y": 2192,
+          "plane": 0
+        },
+        {
+          "x": 2575,
+          "y": 2200,
+          "plane": 0
+        },
+        {
+          "x": 2576,
+          "y": 2197,
+          "plane": 0
+        },
+        {
+          "x": 2576,
+          "y": 2194,
+          "plane": 0
+        },
+        {
+          "x": 2578,
+          "y": 2199,
+          "plane": 0
+        },
+        {
+          "x": 2578,
+          "y": 2192,
+          "plane": 0
+        },
+        {
+          "x": 2580,
+          "y": 2201,
+          "plane": 0
+        },
+        {
+          "x": 2581,
+          "y": 2191,
+          "plane": 0
+        },
+        {
+          "x": 2583,
+          "y": 2199,
+          "plane": 0
+        },
+        {
+          "x": 2583,
+          "y": 2195,
+          "plane": 0
+        },
+        {
+          "x": 2587,
+          "y": 2200,
+          "plane": 0
+        },
+        {
+          "x": 2587,
+          "y": 2194,
+          "plane": 0
+        }
+      ],
       "tables": [
         2095
       ],
@@ -388366,6 +394212,7 @@
       "wikiPage": "Zalcano",
       "combatLevel": 336,
       "spawnPoints": [],
+      "locationName": "Volcanic caverns beneath Prifddinas",
       "tables": [
         2111
       ],
@@ -391412,7 +397259,133 @@
       "name": "Zombie pirate (Level 22)",
       "wikiPage": "Zombie pirate",
       "combatLevel": 22,
-      "spawnPoints": [],
+      "spawnPoints": [
+        {
+          "x": 3234,
+          "y": 3621,
+          "plane": 0
+        },
+        {
+          "x": 3235,
+          "y": 3626,
+          "plane": 0
+        },
+        {
+          "x": 3243,
+          "y": 3621,
+          "plane": 0
+        },
+        {
+          "x": 3248,
+          "y": 3614,
+          "plane": 0
+        },
+        {
+          "x": 3239,
+          "y": 3622,
+          "plane": 0
+        },
+        {
+          "x": 3243,
+          "y": 3617,
+          "plane": 0
+        },
+        {
+          "x": 3252,
+          "y": 3610,
+          "plane": 0
+        },
+        {
+          "x": 3242,
+          "y": 3607,
+          "plane": 0
+        },
+        {
+          "x": 3237,
+          "y": 3607,
+          "plane": 0
+        },
+        {
+          "x": 3249,
+          "y": 3603,
+          "plane": 0
+        },
+        {
+          "x": 3236,
+          "y": 3599,
+          "plane": 0
+        },
+        {
+          "x": 3245,
+          "y": 3598,
+          "plane": 0
+        },
+        {
+          "x": 3250,
+          "y": 3606,
+          "plane": 0
+        },
+        {
+          "x": 3237,
+          "y": 3618,
+          "plane": 0
+        },
+        {
+          "x": 3227,
+          "y": 3610,
+          "plane": 0
+        },
+        {
+          "x": 3226,
+          "y": 3608,
+          "plane": 0
+        },
+        {
+          "x": 3240,
+          "y": 3599,
+          "plane": 0
+        },
+        {
+          "x": 3244,
+          "y": 3619,
+          "plane": 0
+        },
+        {
+          "x": 3251,
+          "y": 3607,
+          "plane": 0
+        },
+        {
+          "x": 3233,
+          "y": 3620,
+          "plane": 0
+        },
+        {
+          "x": 3227,
+          "y": 3606,
+          "plane": 0
+        },
+        {
+          "x": 3231,
+          "y": 3616,
+          "plane": 0
+        },
+        {
+          "x": 3229,
+          "y": 3605,
+          "plane": 0
+        },
+        {
+          "x": 3251,
+          "y": 3613,
+          "plane": 0
+        },
+        {
+          "x": 3245,
+          "y": 3603,
+          "plane": 0
+        }
+      ],
       "tables": [
         2139,
         96
@@ -391445,7 +397418,133 @@
       "name": "Zombie pirate (Level 28)",
       "wikiPage": "Zombie pirate",
       "combatLevel": 28,
-      "spawnPoints": [],
+      "spawnPoints": [
+        {
+          "x": 3234,
+          "y": 3621,
+          "plane": 0
+        },
+        {
+          "x": 3235,
+          "y": 3626,
+          "plane": 0
+        },
+        {
+          "x": 3243,
+          "y": 3621,
+          "plane": 0
+        },
+        {
+          "x": 3248,
+          "y": 3614,
+          "plane": 0
+        },
+        {
+          "x": 3239,
+          "y": 3622,
+          "plane": 0
+        },
+        {
+          "x": 3243,
+          "y": 3617,
+          "plane": 0
+        },
+        {
+          "x": 3252,
+          "y": 3610,
+          "plane": 0
+        },
+        {
+          "x": 3242,
+          "y": 3607,
+          "plane": 0
+        },
+        {
+          "x": 3237,
+          "y": 3607,
+          "plane": 0
+        },
+        {
+          "x": 3249,
+          "y": 3603,
+          "plane": 0
+        },
+        {
+          "x": 3236,
+          "y": 3599,
+          "plane": 0
+        },
+        {
+          "x": 3245,
+          "y": 3598,
+          "plane": 0
+        },
+        {
+          "x": 3250,
+          "y": 3606,
+          "plane": 0
+        },
+        {
+          "x": 3237,
+          "y": 3618,
+          "plane": 0
+        },
+        {
+          "x": 3227,
+          "y": 3610,
+          "plane": 0
+        },
+        {
+          "x": 3226,
+          "y": 3608,
+          "plane": 0
+        },
+        {
+          "x": 3240,
+          "y": 3599,
+          "plane": 0
+        },
+        {
+          "x": 3244,
+          "y": 3619,
+          "plane": 0
+        },
+        {
+          "x": 3251,
+          "y": 3607,
+          "plane": 0
+        },
+        {
+          "x": 3233,
+          "y": 3620,
+          "plane": 0
+        },
+        {
+          "x": 3227,
+          "y": 3606,
+          "plane": 0
+        },
+        {
+          "x": 3231,
+          "y": 3616,
+          "plane": 0
+        },
+        {
+          "x": 3229,
+          "y": 3605,
+          "plane": 0
+        },
+        {
+          "x": 3251,
+          "y": 3613,
+          "plane": 0
+        },
+        {
+          "x": 3245,
+          "y": 3603,
+          "plane": 0
+        }
+      ],
       "tables": [
         2139,
         96
@@ -391478,7 +397577,133 @@
       "name": "Zombie pirate (Level 34)",
       "wikiPage": "Zombie pirate",
       "combatLevel": 34,
-      "spawnPoints": [],
+      "spawnPoints": [
+        {
+          "x": 3234,
+          "y": 3621,
+          "plane": 0
+        },
+        {
+          "x": 3235,
+          "y": 3626,
+          "plane": 0
+        },
+        {
+          "x": 3243,
+          "y": 3621,
+          "plane": 0
+        },
+        {
+          "x": 3248,
+          "y": 3614,
+          "plane": 0
+        },
+        {
+          "x": 3239,
+          "y": 3622,
+          "plane": 0
+        },
+        {
+          "x": 3243,
+          "y": 3617,
+          "plane": 0
+        },
+        {
+          "x": 3252,
+          "y": 3610,
+          "plane": 0
+        },
+        {
+          "x": 3242,
+          "y": 3607,
+          "plane": 0
+        },
+        {
+          "x": 3237,
+          "y": 3607,
+          "plane": 0
+        },
+        {
+          "x": 3249,
+          "y": 3603,
+          "plane": 0
+        },
+        {
+          "x": 3236,
+          "y": 3599,
+          "plane": 0
+        },
+        {
+          "x": 3245,
+          "y": 3598,
+          "plane": 0
+        },
+        {
+          "x": 3250,
+          "y": 3606,
+          "plane": 0
+        },
+        {
+          "x": 3237,
+          "y": 3618,
+          "plane": 0
+        },
+        {
+          "x": 3227,
+          "y": 3610,
+          "plane": 0
+        },
+        {
+          "x": 3226,
+          "y": 3608,
+          "plane": 0
+        },
+        {
+          "x": 3240,
+          "y": 3599,
+          "plane": 0
+        },
+        {
+          "x": 3244,
+          "y": 3619,
+          "plane": 0
+        },
+        {
+          "x": 3251,
+          "y": 3607,
+          "plane": 0
+        },
+        {
+          "x": 3233,
+          "y": 3620,
+          "plane": 0
+        },
+        {
+          "x": 3227,
+          "y": 3606,
+          "plane": 0
+        },
+        {
+          "x": 3231,
+          "y": 3616,
+          "plane": 0
+        },
+        {
+          "x": 3229,
+          "y": 3605,
+          "plane": 0
+        },
+        {
+          "x": 3251,
+          "y": 3613,
+          "plane": 0
+        },
+        {
+          "x": 3245,
+          "y": 3603,
+          "plane": 0
+        }
+      ],
       "tables": [
         2139,
         96
@@ -391777,6 +398002,7 @@
       "name": "Zygomite",
       "combatLevel": 74,
       "spawnPoints": [],
+      "locationName": "Zanaris",
       "tables": [
         2143
       ],

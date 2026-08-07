@@ -87,10 +87,31 @@ public class SourceResultViewTest
 			});
 	}
 
+	private static SourceData npc(int id, String name, int level, CombatStats combat,
+		String locationName)
+	{
+		return new SourceData(id, name, level, null, Collections.emptyList(), Collections.emptyList(),
+			Collections.singletonList(id), combat, SourceType.KILL, null, null, null, null, null,
+			null, locationName);
+	}
+
+	/**
+	 * A place the wiki has no map of gives coordinates in a drawing, not world tiles — so there is
+	 * nothing to mark, and naming the place is what is left. Elite Black Knights live in one.
+	 */
+	@Test
+	public void aSourceWithNoMappableTilesNamesItsPlaceInstead()
+	{
+		SourceResultView view = build(npc(13463, "Elite Black Knight", 138, null,
+			"Black Knight Catacombs"), new TrackerStore(mock(ConfigManager.class), new Gson()));
+		assertTrue(labelTexts(view).contains("Found in: Black Knight Catacombs"));
+		assertNull("and offers no map button it cannot honour", button(view, "Map"));
+	}
+
 	private static SourceData npc(int id, String name, int level, CombatStats combat)
 	{
 		return new SourceData(id, name, level, null, Collections.emptyList(), Collections.emptyList(),
-			Collections.singletonList(id), combat, SourceType.KILL, null, null, null, null, null, null);
+			Collections.singletonList(id), combat, SourceType.KILL, null, null, null, null, null, null, null);
 	}
 
 	private static CombatStats combat(List<String> attackTypes)

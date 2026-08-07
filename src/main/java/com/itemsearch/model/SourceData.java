@@ -58,6 +58,9 @@ public class SourceData
 	// the surface tile you go in by, when this source's own tiles are somewhere the world map
 	// does not draw (underground). Null for anything reachable on foot above ground.
 	SpawnPoint entrance;
+	// where this source is found, in words, when the wiki gives no coordinates the map can use —
+	// the Black Knight Catacombs have no wiki map, so their tiles are drawing coordinates
+	String locationName;
 
 	/**
 	 * The title to ask the wiki about. The display name is not always one: version splits and
@@ -72,6 +75,6 @@ public class SourceData
 	public SourceData withDrops(List<DropSource> resolved)
 	{
 		return new SourceData(id, name, combatLevel, wikiImageUrl, resolved, spawnPoints,
-			npcIds, combat, type, x, y, plane, tables, wikiPage, entrance);
+			npcIds, combat, type, x, y, plane, tables, wikiPage, entrance, locationName);
 	}
 }

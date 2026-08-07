@@ -658,6 +658,16 @@ public class SourceResultView extends JPanel
 			});
 			grid.add(map);
 		}
+		else if (npc.getLocationName() != null && !npc.getLocationName().trim().isEmpty())
+		{
+			// No tiles the map can use — the wiki has no map of this place, so its coordinates are
+			// positions in a drawing. Naming the place is the honest thing left to offer.
+			JLabel where = new JLabel("Found in: " + npc.getLocationName().trim());
+			where.setForeground(ColorScheme.LIGHT_GRAY_COLOR);
+			where.setAlignmentX(Component.LEFT_ALIGNMENT);
+			where.setToolTipText("The wiki has no map of this place, so it cannot be marked");
+			box.add(where);
+		}
 
 		if (killable)
 		{

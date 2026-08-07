@@ -82,7 +82,7 @@ public class SpawnMapMarkerTest
 	{
 		return new SourceData(id, name, 42, null, Collections.emptyList(), spawns,
 			Collections.singletonList(id), null, SourceType.KILL, null, null, null, null, null,
-			entrance);
+			entrance, null);
 	}
 
 	@Before
