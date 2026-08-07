@@ -340,7 +340,45 @@ public class SourceResultView extends JPanel
 		grid.add(statCell("Hitpoints", c.getHitpoints()));
 		grid.setMaximumSize(new Dimension(Integer.MAX_VALUE, grid.getPreferredSize().height));
 		box.add(grid);
+
+		String weakness = weaknessText(c);
+		if (weakness != null)
+		{
+			// what to bring, which is the question these stats are usually being read to answer
+			JLabel label = new JLabel("Weak to: " + weakness);
+			label.setForeground(ColorScheme.PROGRESS_COMPLETE_COLOR);
+			label.setAlignmentX(Component.LEFT_ALIGNMENT);
+			label.setToolTipText("Lowest defence bonus, from the wiki's own numbers");
+			box.add(label);
+		}
 		return box;
+	}
+
+	/**
+	 * "Stab  ·  +50% from Earth spells", or null when there is nothing useful to say.
+	 *
+	 * <p>The wiki publishes defence bonuses rather than weaknesses, so the styles named here are
+	 * the ones it defends worst against; a monster that defends everything alike names none.
+	 */
+	static String weaknessText(CombatStats c)
+	{
+		List<String> parts = new ArrayList<>();
+		if (c.getWeakTo() != null && !c.getWeakTo().isEmpty())
+		{
+			List<String> styles = new ArrayList<>();
+			for (String style : c.getWeakTo())
+			{
+				styles.add(capitalize(style.toLowerCase(Locale.ROOT)));
+			}
+			parts.add(String.join(", ", styles));
+		}
+		if (c.getElementalWeakness() != null && !c.getElementalWeakness().trim().isEmpty())
+		{
+			Integer percent = c.getElementalWeaknessPercent();
+			parts.add((percent != null ? "+" + percent + "% from " : "")
+				+ c.getElementalWeakness().trim() + " spells");
+		}
+		return parts.isEmpty() ? null : String.join("  ·  ", parts);
 	}
 
 	private JPanel buildAttacksBox(CombatStats c, SpriteManager spriteManager, ItemManager itemManager)

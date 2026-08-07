@@ -114,6 +114,49 @@ public class SourceResultViewTest
 			Collections.singletonList(id), combat, SourceType.KILL, null, null, null, null, null, null, null);
 	}
 
+	/**
+	 * The wiki publishes defence bonuses, so the plugin has to say the useful half out loud: what
+	 * to bring. A steel dragon defends stab at 0 and slash at 70, and takes half again from Earth.
+	 */
+	@Test
+	public void theStatsSayWhatTheMonsterIsWeakTo()
+	{
+		CombatStats c = new CombatStats(1, 1, 1, 1, 1, 5, Collections.emptyList(),
+			Collections.singletonList("STAB"), "Earth", 50);
+		SourceResultView view = build(npc(9060, "Steel dragon", 246, c),
+			new TrackerStore(mock(ConfigManager.class), new Gson()));
+		assertTrue(labelTexts(view).contains("Weak to: Stab  ·  +50% from Earth spells"));
+	}
+
+	/** Vorkath defends stab and ranged equally badly; both are worth bringing. */
+	@Test
+	public void severalEquallyWeakStylesAreAllNamed()
+	{
+		assertEquals("Stab, Ranged  ·  +40% from Fire spells",
+			SourceResultView.weaknessText(new CombatStats(1, 1, 1, 1, 1, 5, Collections.emptyList(),
+				Arrays.asList("STAB", "RANGED"), "Fire", 40)));
+	}
+
+	/** Nothing to say beats saying nothing useful. */
+	@Test
+	public void aMonsterWithNoStatedWeaknessSaysNothing()
+	{
+		CombatStats c = new CombatStats(1, 1, 1, 1, 1, 5, Collections.emptyList(), null, null, null);
+		assertNull(SourceResultView.weaknessText(c));
+		SourceResultView view = build(npc(9061, "Even", 50, c),
+			new TrackerStore(mock(ConfigManager.class), new Gson()));
+		assertFalse(labelTexts(view).stream().anyMatch(s -> s != null && s.startsWith("Weak to")));
+	}
+
+	/** An elemental weakness alone still reads properly. */
+	@Test
+	public void anElementalWeaknessAloneIsEnough()
+	{
+		assertEquals("+30% from Water spells",
+			SourceResultView.weaknessText(new CombatStats(1, 1, 1, 1, 1, 5,
+				Collections.emptyList(), null, "Water", 30)));
+	}
+
 	private static CombatStats combat(List<String> attackTypes)
 	{
 		List<Attack> attacks = new ArrayList<>();
@@ -121,7 +164,7 @@ public class SourceResultViewTest
 		{
 			attacks.add(new Attack(t, 5, 5, 4, 4, null, null, null, null));
 		}
-		return new CombatStats(1, 1, 1, 1, 1, 5, attacks);
+		return new CombatStats(1, 1, 1, 1, 1, 5, attacks, null, null, null);
 	}
 
 	private static List<JLabel> labels(Container root)
@@ -345,7 +388,7 @@ public class SourceResultViewTest
 	public void attackRangesRenderAsMinDashMax()
 	{
 		CombatStats c = new CombatStats(1, 1, 1, 1, 1, 5,
-			Collections.singletonList(new Attack("stab", 1, 3, 4, 6, null, null, null, null)));
+			Collections.singletonList(new Attack("stab", 1, 3, 4, 6, null, null, null, null)), null, null, null);
 		SourceResultView view = build(npc(9010, "Dwarf", 10, c),
 			new TrackerStore(mock(ConfigManager.class), new Gson()));
 		List<String> text = labelTexts(view);
@@ -437,7 +480,7 @@ public class SourceResultViewTest
 	public void hybridAttackPraysWithPrayStyleAndExplainsInTooltip()
 	{
 		CombatStats c = new CombatStats(1, 1, 1, 1, 1, 5, Collections.singletonList(
-			new Attack("magic", 15, 15, 4, 4, "ranged", null, null, null)));
+			new Attack("magic", 15, 15, 4, 4, "ranged", null, null, null)), null, null, null);
 		SourceResultView view = build(npc(9020, "Hybrid", 90, c),
 			new TrackerStore(mock(ConfigManager.class), new Gson()));
 		// the protection icon reflects the PRAY style (ranged), not the accuracy style, and
@@ -455,7 +498,7 @@ public class SourceResultViewTest
 		Attack a = new Attack("magic", 15, 15, 4, 4, null, Arrays.asList(
 			new MaxHitVariant("Insulated boots", "GEAR", 8, 8),
 			new MaxHitVariant("Antifire", "CONSUMABLE", 12, 12)), null, null);
-		CombatStats c = new CombatStats(1, 1, 1, 1, 1, 5, Collections.singletonList(a));
+		CombatStats c = new CombatStats(1, 1, 1, 1, 1, 5, Collections.singletonList(a), null, null, null);
 		SourceResultView view = build(npc(9022, "Killerwatt", 55, c),
 			new TrackerStore(mock(ConfigManager.class), new Gson()));
 		assertEquals("max hit number carries a variant breakdown tooltip", 1, countTooltips(view,
@@ -472,7 +515,7 @@ public class SourceResultViewTest
 		Attack a = new Attack("magic", 15, 15, 4, 4, null, Arrays.asList(
 			new MaxHitVariant("Antifire", "CONSUMABLE", 12, 12),
 			new MaxHitVariant("Insulated boots", "GEAR", 8, 8)), null, null);
-		CombatStats c = new CombatStats(1, 1, 1, 1, 1, 5, Collections.singletonList(a));
+		CombatStats c = new CombatStats(1, 1, 1, 1, 1, 5, Collections.singletonList(a), null, null, null);
 		SourceResultView view = build(npc(9022, "Killerwatt", 55, c),
 			new TrackerStore(mock(ConfigManager.class), new Gson()));
 		assertEquals(1, countLabels(view, "15*"));
@@ -487,7 +530,7 @@ public class SourceResultViewTest
 		Attack a = new Attack("magic", 20, 20, 4, 4, null, Arrays.asList(
 			new MaxHitVariant("Insulated boots", "GEAR", 8, 8),
 			new MaxHitVariant("both at once (combo)", "GEAR", 35, 35)), null, null);
-		CombatStats c = new CombatStats(1, 1, 1, 1, 1, 5, Collections.singletonList(a));
+		CombatStats c = new CombatStats(1, 1, 1, 1, 1, 5, Collections.singletonList(a), null, null, null);
 		SourceResultView view = build(npc(9023, "Comboer", 55, c),
 			new TrackerStore(mock(ConfigManager.class), new Gson()));
 		assertEquals(1, countLabels(view, "35*"));
@@ -537,7 +580,7 @@ public class SourceResultViewTest
 			new MaxHitVariant("Antifire", "CONSUMABLE", 5, 5),
 			new MaxHitVariant("Super antifire", "CONSUMABLE", 20, 20),
 			new MaxHitVariant("Anti-dragon shield", "GEAR", 35, 35)), null, null);
-		CombatStats c = new CombatStats(1, 1, 1, 1, 1, 5, Collections.singletonList(a));
+		CombatStats c = new CombatStats(1, 1, 1, 1, 1, 5, Collections.singletonList(a), null, null, null);
 		SourceResultView view = build(npc(9024, "Steel dragon", 246, c),
 			new TrackerStore(mock(ConfigManager.class), new Gson()));
 		assertEquals(1, countLabels(view, "50*"));
@@ -670,7 +713,7 @@ public class SourceResultViewTest
 			new Attack("dragonfire", 50, 50, 4, 4, null, null, null, null),
 			new Attack("crush", 10, 10, 4, 4, null, null, null, null),
 			new Attack("ranged", 20, 20, 4, 4, null, null, null, null),
-			new Attack("magic", 30, 30, 4, 4, null, null, null, null)));
+			new Attack("magic", 30, 30, 4, 4, null, null, null, null)), null, null, null);
 		SourceResultView view = build(npc(9030, "Everything", 300, c),
 			new TrackerStore(mock(ConfigManager.class), new Gson()));
 
@@ -690,7 +733,7 @@ public class SourceResultViewTest
 	{
 		CombatStats c = new CombatStats(1, 1, 1, 1, 1, 5, Arrays.asList(
 			new Attack("magic", 40, 40, 4, 4, "melee", null, null, null),
-			new Attack("magic", 30, 30, 4, 4, null, null, null, null)));
+			new Attack("magic", 30, 30, 4, 4, null, null, null, null)), null, null, null);
 		List<String> text = labelTexts(build(npc(9031, "Bloodveld", 76, c),
 			new TrackerStore(mock(ConfigManager.class), new Gson())));
 		assertTrue("the pure magic attack comes before the magic-melee one",
@@ -702,7 +745,7 @@ public class SourceResultViewTest
 	{
 		Attack a = new Attack("magic", 15, 15, 4, 4, null, Collections.singletonList(
 			new MaxHitVariant("Insulated boots", "GEAR", 8, 8)), null, null);
-		CombatStats c = new CombatStats(1, 1, 1, 1, 1, 5, Collections.singletonList(a));
+		CombatStats c = new CombatStats(1, 1, 1, 1, 1, 5, Collections.singletonList(a), null, null, null);
 		List<String> text = labelTexts(build(npc(9032, "Killerwatt", 55, c),
 			new TrackerStore(mock(ConfigManager.class), new Gson())));
 		assertTrue("the headline still shows the conditional", text.contains("15*"));
@@ -714,7 +757,7 @@ public class SourceResultViewTest
 	public void curatorNotesShowOnHoverOverTheAttackIcon()
 	{
 		CombatStats c = new CombatStats(1, 1, 1, 1, 1, 5, Collections.singletonList(
-			new Attack("magic", 15, 15, 4, 4, null, null, "Only casts below 50% hitpoints", null)));
+			new Attack("magic", 15, 15, 4, 4, null, null, "Only casts below 50% hitpoints", null)), null, null, null);
 		SourceResultView view = build(npc(9033, "Noted", 100, c),
 			new TrackerStore(mock(ConfigManager.class), new Gson()));
 		// on the icon itself: a note set only on the panel behind it could never be reached
@@ -731,7 +774,7 @@ public class SourceResultViewTest
 	{
 		CombatStats c = new CombatStats(1, 1, 1, 1, 1, 5, Collections.singletonList(
 			new Attack("crush", 6, 6, 4, 4, null, null, null,
-				Arrays.asList("POISON", "DRAIN_PRAYER"))));
+				Arrays.asList("POISON", "DRAIN_PRAYER"))), null, null, null);
 		SourceResultView view = build(npc(9040, "Saradomin wizard", 60, c),
 			new TrackerStore(mock(ConfigManager.class), new Gson()));
 		assertEquals(1, countTooltips(view,
@@ -745,7 +788,7 @@ public class SourceResultViewTest
 			new Attack("magic", 20, 20, 4, 4, null, null, null,
 				Collections.singletonList("VENOM")),
 			new Attack("ranged", 10, 10, 4, 4, null, null, null,
-				Collections.singletonList("DISEASE"))));
+				Collections.singletonList("DISEASE"))), null, null, null);
 		SourceResultView view = build(npc(9041, "Nasty", 100, c),
 			new TrackerStore(mock(ConfigManager.class), new Gson()));
 		assertEquals(1, countTooltips(view, "<html>May inflict venom</html>"));
@@ -758,7 +801,7 @@ public class SourceResultViewTest
 		Attack a = new Attack("magic", 15, 15, 4, 4, null, Collections.singletonList(
 			new MaxHitVariant("Insulated boots", "GEAR", 8, 8)), null,
 			Collections.singletonList("POISON"));
-		CombatStats c = new CombatStats(1, 1, 1, 1, 1, 5, Collections.singletonList(a));
+		CombatStats c = new CombatStats(1, 1, 1, 1, 1, 5, Collections.singletonList(a), null, null, null);
 		SourceResultView view = build(npc(9042, "Both", 55, c),
 			new TrackerStore(mock(ConfigManager.class), new Gson()));
 		assertEquals(1, countTooltips(view,
@@ -769,7 +812,7 @@ public class SourceResultViewTest
 	public void unconditionalMaxHitNumberHasNoTooltip()
 	{
 		CombatStats c = new CombatStats(1, 1, 1, 1, 1, 5, Collections.singletonList(
-			new Attack("stab", 7, 7, 4, 4, null, null, null, null)));
+			new Attack("stab", 7, 7, 4, 4, null, null, null, null)), null, null, null);
 		SourceResultView view = build(npc(9023, "Plain", 20, c),
 			new TrackerStore(mock(ConfigManager.class), new Gson()));
 		assertEquals(0, countTooltips(view, "<html>7 unprotected</html>"));

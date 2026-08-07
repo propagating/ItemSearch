@@ -38,4 +38,10 @@ public class CombatStats
 	int hitpoints;
 	// per-attack-style max hit + speed; may be null or empty for NPCs with no wiki attack data
 	List<Attack> attacks;
+	// the attack styles this monster defends worst against (STAB/SLASH/CRUSH/MAGIC/RANGED).
+	// Null or empty when it defends every style alike, which is no use to anyone.
+	List<String> weakTo;
+	// the spell school it takes extra damage from, and by how much: "Earth", 50
+	String elementalWeakness;
+	Integer elementalWeaknessPercent;
 }
