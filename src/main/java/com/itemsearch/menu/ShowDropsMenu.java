@@ -75,7 +75,10 @@ public class ShowDropsMenu
 		{
 			return;
 		}
-		client.createMenuEntry(-1)
+		// index 0, not -1: the menu is drawn from the end of this array backwards, so the last
+		// entry appears at the top and the first at the bottom. Ours belongs out of the way of
+		// the options that actually do something in game.
+		client.createMenuEntry(0)
 			.setOption(OPTION)
 			.setTarget(target(source))
 			.setType(MenuAction.RUNELITE)

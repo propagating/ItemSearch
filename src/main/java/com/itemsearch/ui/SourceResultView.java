@@ -394,11 +394,10 @@ public class SourceResultView extends JPanel
 			// prayStyle — the icon must show what to PRAY, with the roll explained on hover
 			String prayToken = attack.getPrayStyle() != null ? attack.getPrayStyle() : attack.getStyle();
 			JComponent icon = protectionCell(prayToken, spriteManager, itemManager);
-			String hover = iconTooltip(attack);
-			if (hover != null)
-			{
-				icon.setToolTipText(hover);
-			}
+			// onto the icons themselves, not just their container: Swing shows the tooltip of the
+			// deepest component under the pointer, so a note set on the panel behind the icons was
+			// never the one displayed — hovering an icon always found the icon's own text instead
+			applyHover(icon, iconTooltip(attack));
 			table.add(icon, gc);
 			gc.gridy = 1;
 			table.add(new JLabel(range(attack.getSpeed(), attack.getSpeedMax())), gc);
@@ -564,6 +563,34 @@ public class SourceResultView extends JPanel
 	private static String capitalize(String s)
 	{
 		return s == null || s.isEmpty() ? "" : Character.toUpperCase(s.charAt(0)) + s.substring(1);
+	}
+
+	/**
+	 * Adds hover text to a cell and to every icon inside it, keeping what each already said.
+	 *
+	 * <p>The icons carry their own tooltip ("Protect from Melee"), and Swing shows the innermost
+	 * one under the pointer — so anything set on the cell alone is unreachable.
+	 */
+	private static void applyHover(JComponent cell, String extra)
+	{
+		if (extra == null)
+		{
+			return;
+		}
+		String body = extra.replace("<html>", "").replace("</html>", "");
+		cell.setToolTipText("<html>" + body + "</html>");
+		for (Component child : cell.getComponents())
+		{
+			if (!(child instanceof JComponent))
+			{
+				continue;
+			}
+			JComponent inner = (JComponent) child;
+			String own = inner.getToolTipText();
+			inner.setToolTipText(own == null || own.isEmpty()
+				? "<html>" + body + "</html>"
+				: "<html>" + own.replace("<html>", "").replace("</html>", "") + "<br>" + body + "</html>");
+		}
 	}
 
 	// The icons telling the player how to counter this attack style: each protection prayer or

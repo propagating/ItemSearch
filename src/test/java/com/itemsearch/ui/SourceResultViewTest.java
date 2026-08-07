@@ -424,11 +424,12 @@ public class SourceResultViewTest
 			new Attack("magic", 15, 15, 4, 4, "ranged", null, null, null)));
 		SourceResultView view = build(npc(9020, "Hybrid", 90, c),
 			new TrackerStore(mock(ConfigManager.class), new Gson()));
-		// the protection icon reflects the PRAY style (ranged), not the accuracy style
-		assertEquals(1, countTooltips(view, "Protect from Missiles"));
+		// the protection icon reflects the PRAY style (ranged), not the accuracy style, and
+		// hovering it says both what to pray and why — one tooltip, since Swing only shows the
+		// innermost one and the icon has its own
+		assertEquals(1, countTooltips(view, "<html>Protect from Missiles<br>Magic accuracy roll "
+			+ "— prayed against as Ranged</html>"));
 		assertEquals(0, countTooltips(view, "Protect from Magic"));
-		assertEquals(1, countTooltips(view,
-			"<html>Magic accuracy roll — prayed against as Ranged</html>"));
 	}
 
 
@@ -703,7 +704,9 @@ public class SourceResultViewTest
 			new Attack("magic", 15, 15, 4, 4, null, null, "Only casts below 50% hitpoints", null)));
 		SourceResultView view = build(npc(9033, "Noted", 100, c),
 			new TrackerStore(mock(ConfigManager.class), new Gson()));
-		assertEquals(1, countTooltips(view, "<html>Only casts below 50% hitpoints</html>"));
+		// on the icon itself: a note set only on the panel behind it could never be reached
+		assertEquals("the note reaches the icon the player actually hovers", 1,
+			countTooltips(view, "<html>Protect from Magic<br>Only casts below 50% hitpoints</html>"));
 	}
 
 	/**

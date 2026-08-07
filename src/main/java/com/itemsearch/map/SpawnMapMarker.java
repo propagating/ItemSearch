@@ -29,6 +29,7 @@ import java.util.ArrayList;
 import java.util.List;
 import lombok.extern.slf4j.Slf4j;
 import net.runelite.api.Client;
+import net.runelite.api.Point;
 import net.runelite.api.coords.WorldPoint;
 import net.runelite.api.worldmap.WorldMap;
 import net.runelite.client.callback.ClientThread;
@@ -52,6 +53,22 @@ public class SpawnMapMarker
 	 * hundreds of world-map points at once.
 	 */
 	public static final int MAX_MARKERS = 50;
+
+	/**
+	 * How far to lift the entrance marker off the map's own dungeon icon, at full zoom.
+	 *
+	 * <p>Our marker is drawn at a fixed size whatever the zoom, but the icon underneath is part of
+	 * the map and shrinks with it — so a fixed lift that clears the icon zoomed in leaves the
+	 * marker floating well above it zoomed out. The lift scales with the zoom for that reason.
+	 */
+	private static final int ENTRANCE_LIFT = 20;
+
+	/** The zoom {@link #ENTRANCE_LIFT} was measured at, i.e. fully zoomed in. */
+	private static final double FULL_ZOOM = 8.0;
+
+	// kept so the lift can follow the zoom while the map is open
+	private WorldMapPoint entranceMarker;
+	private BufferedImage entranceIcon;
 
 	private final Client client;
 	private final ClientThread clientThread;
@@ -115,6 +132,9 @@ public class SpawnMapMarker
 				.name(npc.getName())
 				.tooltip(npc.getName() + " — entrance")
 				.build();
+			entranceMarker = way;
+			entranceIcon = markerIcon;
+			liftEntranceMarker();
 			worldMapPointManager.add(way);
 			shown.add(way);
 		}
@@ -190,6 +210,26 @@ public class SpawnMapMarker
 		return name;
 	}
 
+	/**
+	 * Keeps the entrance marker clear of the map's own dungeon icon as the map is zoomed.
+	 *
+	 * <p>Called on the client thread each tick while a marker is shown. {@code imagePoint} is the
+	 * pixel of the image pinned to the tile, so pushing it below centre lifts the marker.
+	 */
+	public void liftEntranceMarker()
+	{
+		WorldMapPoint marker = entranceMarker;
+		BufferedImage icon = entranceIcon;
+		if (marker == null || icon == null)
+		{
+			return;
+		}
+		WorldMap worldMap = client.getWorldMap();
+		double zoom = worldMap == null ? FULL_ZOOM : worldMap.getWorldMapZoom();
+		int lift = (int) Math.round(ENTRANCE_LIFT * Math.min(zoom, FULL_ZOOM) / FULL_ZOOM);
+		marker.setImagePoint(new Point(icon.getWidth() / 2, icon.getHeight() / 2 + lift));
+	}
+
 	public void clear()
 	{
 		for (WorldMapPoint point : shown)
@@ -197,5 +237,7 @@ public class SpawnMapMarker
 			worldMapPointManager.remove(point);
 		}
 		shown.clear();
+		entranceMarker = null;
+		entranceIcon = null;
 	}
 }

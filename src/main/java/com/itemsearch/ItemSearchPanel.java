@@ -452,8 +452,12 @@ class ItemSearchPanel extends PluginPanel
 	 */
 	private ResultRow itemRow(ItemMatch item)
 	{
-		return new ResultRow("ITEM", item.getItemName(), () -> showItem(item),
-			itemManager.getImage(item.getItemId()));
+		// a negative id is one the wiki never stated (clue scrolls say "id = N/A", having one per
+		// step). ItemManager answers those with whatever sprite happens to sit there, which is how
+		// a clue scroll came to be illustrated with somebody's face — better nothing than a lie.
+		AsyncBufferedImage icon = item.getItemId() >= 0
+			? itemManager.getImage(item.getItemId()) : null;
+		return new ResultRow("ITEM", item.getItemName(), () -> showItem(item), icon);
 	}
 
 	// a chest or gathering node has no combat level; "(lvl 0)" would be noise

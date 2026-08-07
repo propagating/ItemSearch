@@ -211,6 +211,17 @@ public class ItemSearchPlugin extends Plugin
 	}
 
 	@Subscribe
+	public void onGameTick(GameTick event)
+	{
+		if (spawnMapMarker != null)
+		{
+			// the entrance marker sits above the map's own dungeon icon, and how far above
+			// depends on the zoom, which the player can change at any time
+			spawnMapMarker.liftEntranceMarker();
+		}
+	}
+
+	@Subscribe
 	public void onMenuOpened(MenuOpened event)
 	{
 		if (showDropsMenu != null)
