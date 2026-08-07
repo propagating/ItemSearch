@@ -339401,6 +339401,7 @@
           },
           {
             "style": "magic",
+            "prayStyle": "ranged",
             "maxHit": 18,
             "maxHitMax": 18,
             "speed": 4,
@@ -369349,7 +369350,34 @@
             "maxHit": 50,
             "maxHitMax": 50,
             "speed": 4,
-            "speedMax": 4
+            "speedMax": 4,
+            "variants": [
+              {
+                "label": "Dragonfire Shield",
+                "kind": "GEAR",
+                "maxHit": 5,
+                "maxHitMax": 5
+              },
+              {
+                "label": "Anti-dragon Shield",
+                "kind": "GEAR",
+                "maxHit": 5,
+                "maxHitMax": 5
+              },
+              {
+                "label": "Extended Super Antifire",
+                "kind": "CONSUMABLE",
+                "maxHit": 0,
+                "maxHitMax": 0
+              },
+              {
+                "label": "Antifire",
+                "kind": "CONSUMABLE",
+                "maxHit": 35,
+                "maxHitMax": 35
+              }
+            ],
+            "notes": "Prayer has no effect on metallic dragonfire. Combining a shield and an antifire potion will completely negate the damage from the attack."
           }
         ]
       },
@@ -369399,7 +369427,34 @@
             "maxHit": 50,
             "maxHitMax": 50,
             "speed": 4,
-            "speedMax": 4
+            "speedMax": 4,
+            "variants": [
+              {
+                "label": "Dragonfire Shield",
+                "kind": "GEAR",
+                "maxHit": 5,
+                "maxHitMax": 5
+              },
+              {
+                "label": "Anti-dragon Shield",
+                "kind": "GEAR",
+                "maxHit": 5,
+                "maxHitMax": 5
+              },
+              {
+                "label": "Extended Super Antifire",
+                "kind": "CONSUMABLE",
+                "maxHit": 0,
+                "maxHitMax": 0
+              },
+              {
+                "label": "Antifire",
+                "kind": "CONSUMABLE",
+                "maxHit": 35,
+                "maxHitMax": 35
+              }
+            ],
+            "notes": "Prayer has no effect on metallic dragonfire. Combining a shield and an antifire potion will completely negate the damage from the attack."
           }
         ]
       },
