@@ -489,24 +489,61 @@ public class SourceResultView extends JPanel
 		return range(best.getMaxHit(), best.getMaxHitMax()) + " (" + base + ")";
 	}
 
-	// hover breakdown for a conditional max hit: the unmitigated base, then each
-	// mitigation descending — the same story as the legend row, at the number itself
+	/**
+	 * Hover text for a max hit: what mitigates it, and what it does besides damage.
+	 *
+	 * <p>Both belong at the number. A Saradomin wizard poisons with its melee, which matters
+	 * exactly when you are reading how hard that melee hits.
+	 */
 	private static String maxHitTooltip(Attack attack)
 	{
-		if (attack.getVariants() == null || attack.getVariants().isEmpty())
+		List<String> lines = new ArrayList<>();
+		if (attack.getVariants() != null && !attack.getVariants().isEmpty())
+		{
+			lines.add(range(attack.getMaxHit(), attack.getMaxHitMax()) + " unprotected");
+			attack.getVariants().stream()
+				.sorted((a, b) -> Integer.compare(
+					Math.max(b.getMaxHit(), b.getMaxHitMax()),
+					Math.max(a.getMaxHit(), a.getMaxHitMax())))
+				.forEach(v -> lines.add(range(v.getMaxHit(), v.getMaxHitMax())
+					+ " with " + v.getLabel()));
+		}
+		if (attack.getEffects() != null)
+		{
+			for (String effect : attack.getEffects())
+			{
+				String phrase = effectPhrase(effect);
+				if (phrase != null)
+				{
+					lines.add(phrase);
+				}
+			}
+		}
+		return lines.isEmpty() ? null : "<html>" + String.join("<br>", lines) + "</html>";
+	}
+
+	/** Reads as a warning rather than a data field: "May inflict poison", "May drain Prayer". */
+	private static String effectPhrase(String effect)
+	{
+		if (effect == null)
 		{
 			return null;
 		}
-		StringBuilder tip = new StringBuilder("<html>")
-			.append(range(attack.getMaxHit(), attack.getMaxHitMax()))
-			.append(" unprotected");
-		attack.getVariants().stream()
-			.sorted((a, b) -> Integer.compare(
-				Math.max(b.getMaxHit(), b.getMaxHitMax()), Math.max(a.getMaxHit(), a.getMaxHitMax())))
-			.forEach(v -> tip.append("<br>")
-				.append(range(v.getMaxHit(), v.getMaxHitMax()))
-				.append(" with ").append(v.getLabel()));
-		return tip.append("</html>").toString();
+		switch (effect.toUpperCase(Locale.ROOT))
+		{
+			case "POISON":
+				return "May inflict poison";
+			case "VENOM":
+				return "May inflict venom";
+			case "DISEASE":
+				return "May inflict disease";
+			case "DRAIN_PRAYER":
+				return "May drain Prayer";
+			case "DRAIN_STATS":
+				return "May drain stats";
+			default:
+				return null; // an effect this build does not know how to word
+		}
 	}
 
 	private static String capitalize(String s)

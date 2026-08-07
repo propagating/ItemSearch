@@ -44,4 +44,6 @@ public class Attack
 	java.util.List<MaxHitVariant> variants;
 	// curator's free text about this attack, shown on hover over its prayer icon; null = none
 	String notes;
+	// what it does beyond damage: POISON, VENOM, DISEASE, DRAIN_PRAYER, DRAIN_STATS
+	java.util.List<String> effects;
 }
