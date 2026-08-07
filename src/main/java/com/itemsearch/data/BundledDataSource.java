@@ -390,6 +390,18 @@ public class BundledDataSource implements DropDataService
 	}
 
 	@Override
+	public List<ItemMatch> allItems()
+	{
+		List<ItemMatch> list = new ArrayList<>();
+		for (Map.Entry<Integer, String> e : itemNames.entrySet())
+		{
+			list.add(new ItemMatch(e.getKey(), e.getValue()));
+		}
+		list.sort((a, b) -> a.getItemName().compareToIgnoreCase(b.getItemName()));
+		return list;
+	}
+
+	@Override
 	public List<ShopEntry> shopsForItem(int itemId)
 	{
 		List<ShopEntry> purchasable = new ArrayList<>();

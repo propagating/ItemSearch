@@ -25,11 +25,14 @@
 package com.itemsearch;
 
 import java.awt.BorderLayout;
+import java.awt.Component;
 import java.awt.Dimension;
+import java.awt.Insets;
 import java.awt.Rectangle;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.BoxLayout;
+import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -56,6 +59,7 @@ import com.itemsearch.ui.ItemResultView;
 import com.itemsearch.ui.SourceResultView;
 import com.itemsearch.ui.ResultRow;
 import com.itemsearch.ui.ShopResultView;
+import net.runelite.client.ui.ColorScheme;
 import net.runelite.client.ui.PluginPanel;
 
 class ItemSearchPanel extends PluginPanel
@@ -90,6 +94,32 @@ class ItemSearchPanel extends PluginPanel
 	// how many rows the list shows; "Show more" extends it, a new query resets it
 	private int shownLimit = PAGE;
 	private String lastQuery = "";
+	// what the browse list is narrowed to when nothing has been typed
+	private final JPanel filterBar = new JPanel(new java.awt.GridLayout(0, 3, 4, 4));
+	private BrowseFilter browseFilter = BrowseFilter.ALL;
+
+	/**
+	 * The kinds of thing the browse list can be narrowed to. Browsing 2758 sources and every
+	 * dropped item in one undifferentiated list is not browsing, it is scrolling.
+	 */
+	private enum BrowseFilter
+	{
+		ALL("All", null),
+		NPC("NPCs", SourceType.KILL),
+		CHEST("Chests", SourceType.REWARD),
+		STEAL("Steal", SourceType.PICKPOCKET),
+		NODE("Nodes", SourceType.GATHER),
+		ITEM("Items", null);
+
+		private final String label;
+		private final SourceType type;
+
+		BrowseFilter(String label, SourceType type)
+		{
+			this.label = label;
+			this.type = type;
+		}
+	}
 
 	ItemSearchPanel(DropDataService dataService, TrackerStore trackerStore, ItemManager itemManager,
 		OkHttpClient okHttpClient, WikiRefreshService wikiRefreshService, SpawnMapMarker spawnMapMarker,
@@ -142,9 +172,16 @@ class ItemSearchPanel extends PluginPanel
 		// Top padding pushes the search bar down off the sidebar edge so it does not
 		// get lost against the toolbar; the search stays fixed above the scrolling
 		// content while detail views swap in and out below it.
+		buildFilterBar();
+		// search and filters both stay put while the list scrolls beneath them — a filter you
+		// have to scroll back up to reach is not much of a filter
+		JPanel header = new JPanel(new BorderLayout(0, 6));
+		header.add(search, BorderLayout.NORTH);
+		header.add(filterBar, BorderLayout.CENTER);
+
 		JPanel container = new JPanel(new BorderLayout(0, 8));
 		container.setBorder(new EmptyBorder(10, 8, 8, 8));
-		container.add(search, BorderLayout.NORTH);
+		container.add(header, BorderLayout.NORTH);
 		container.add(content, BorderLayout.CENTER);
 		add(container, BorderLayout.CENTER);
 
@@ -161,6 +198,39 @@ class ItemSearchPanel extends PluginPanel
 	void onDataReady()
 	{
 		rebuildResults();
+	}
+
+	private void buildFilterBar()
+	{
+		filterBar.setBorder(new EmptyBorder(0, 0, 0, 0));
+		for (BrowseFilter filter : BrowseFilter.values())
+		{
+			JButton button = new JButton(filter.label);
+			button.setFocusPainted(false);
+			button.setMargin(new Insets(2, 2, 2, 2));
+			button.addActionListener(e ->
+			{
+				browseFilter = filter;
+				shownLimit = PAGE;   // a different slice starts from its own beginning
+				paintFilterBar();
+				rebuildResults();
+				scrollToTop();
+			});
+			filterBar.add(button);
+		}
+		paintFilterBar();
+	}
+
+	// the selected filter is the one drawn in the brand colour; the rest are plain
+	private void paintFilterBar()
+	{
+		int i = 0;
+		for (BrowseFilter filter : BrowseFilter.values())
+		{
+			Component c = filterBar.getComponent(i++);
+			c.setForeground(filter == browseFilter
+				? ColorScheme.BRAND_ORANGE : ColorScheme.LIGHT_GRAY_COLOR);
+		}
 	}
 
 	// what the player interacts with to get the loot, in their own words
@@ -184,13 +254,17 @@ class ItemSearchPanel extends PluginPanel
 		// typing is a reset: it returns to the search page and drops the trail behind it
 		history.clear();
 		currentPage = null;
-		renderResults();
 
+		// settled before rendering: the filter bar's visibility depends on whether this is a
+		// search or a browse, and renderResults reads that
 		String q = search.getText() == null ? "" : search.getText().trim();
-		if (!q.equals(lastQuery))
+		boolean changed = !q.equals(lastQuery);
+		lastQuery = q;
+		renderResults();
+		if (changed)
 		{
-			lastQuery = q;
 			shownLimit = PAGE; // a different query starts from the top again
+			scrollToTop();     // ...including the scrollbar, which "Show more" must not move
 		}
 
 		results.removeAll();
@@ -237,20 +311,47 @@ class ItemSearchPanel extends PluginPanel
 		}
 		for (ItemMatch item : dataService.searchItems(q))
 		{
+			// no icon here: search results mix items with sources, and only some rows having one
+			// would leave their names starting at different x
 			rows.add(new ResultRow("ITEM", item.getItemName(), () -> showItem(item)));
 		}
 		return rows;
 	}
 
-	/** The page with nothing typed: a list worth scrolling rather than an instruction to search. */
+	/**
+	 * The page with nothing typed: a list worth scrolling rather than an instruction to search,
+	 * narrowed to whichever kind of thing the filter bar has selected.
+	 */
 	private List<ResultRow> browseRows()
 	{
 		List<ResultRow> rows = new ArrayList<>();
+		if (browseFilter == BrowseFilter.ITEM)
+		{
+			for (ItemMatch item : dataService.allItems())
+			{
+				rows.add(itemRow(item));
+			}
+			return rows;
+		}
 		for (SourceData npc : dataService.allSources())
 		{
-			rows.add(new ResultRow(badgeFor(npc.getType()), sourceLabel(npc), () -> showNpc(npc)));
+			if (browseFilter.type == null || browseFilter.type == npc.getType())
+			{
+				rows.add(new ResultRow(badgeFor(npc.getType()), sourceLabel(npc),
+					() -> showNpc(npc)));
+			}
 		}
 		return rows;
+	}
+
+	/**
+	 * A row for an item, carrying the item's own in-game icon. The sprite comes from the client's
+	 * cache rather than the network, so a hundred of them cost nothing to show.
+	 */
+	private ResultRow itemRow(ItemMatch item)
+	{
+		return new ResultRow("ITEM", item.getItemName(), () -> showItem(item),
+			itemManager.getImage(item.getItemId()));
 	}
 
 	// a chest or gathering node has no combat level; "(lvl 0)" would be noise
@@ -277,6 +378,7 @@ class ItemSearchPanel extends PluginPanel
 		}
 		currentPage = page;
 		page.run();
+		scrollToTop();
 	}
 
 	private void back()
@@ -288,6 +390,7 @@ class ItemSearchPanel extends PluginPanel
 		}
 		currentPage = history.pop();
 		currentPage.run();
+		scrollToTop();
 	}
 
 	/** Returns to the search page and forgets the trail — a new search starts over. */
@@ -296,6 +399,29 @@ class ItemSearchPanel extends PluginPanel
 		history.clear();
 		currentPage = null;
 		renderResults();
+		scrollToTop();
+	}
+
+	/**
+	 * Puts a newly shown page at its top. Arriving somewhere — forwards or via Back — should not
+	 * inherit how far down the previous page happened to be scrolled. Only which cards are
+	 * expanded survives a move, because that is a choice the player made about the content.
+	 *
+	 * <p>Deliberately not called from {@link #rebuildResults()}: "Show more" re-renders the same
+	 * page and must leave the player where they were reading.
+	 */
+	void scrollToTop()
+	{
+		for (Component c : content.getComponents())
+		{
+			if (c instanceof JScrollPane)
+			{
+				JScrollPane pane = (JScrollPane) c;
+				// deferred: the viewport clamps the value against a content size that this
+				// layout pass has not settled yet, so setting it now can be undone
+				SwingUtilities.invokeLater(() -> pane.getVerticalScrollBar().setValue(0));
+			}
+		}
 	}
 
 	private void renderResults()
@@ -303,6 +429,8 @@ class ItemSearchPanel extends PluginPanel
 		currentItemView = null;
 		currentNpcView = null;
 		spawnMapMarker.clear();
+		// the filters narrow the browse list, so they belong to it and to nothing else
+		filterBar.setVisible(lastQuery.isEmpty());
 		content.removeAll();
 		content.add(resultsScroll, BorderLayout.CENTER);
 		content.revalidate();
@@ -387,6 +515,7 @@ class ItemSearchPanel extends PluginPanel
 
 	private void showDetail(JPanel view)
 	{
+		filterBar.setVisible(false);
 		content.removeAll();
 		// detail views can outgrow the sidebar. Anchor the view to a wrapper's NORTH before
 		// scrolling it: a view placed directly in a viewport gets stretched to the viewport

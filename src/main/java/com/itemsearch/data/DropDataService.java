@@ -51,6 +51,9 @@ public interface DropDataService
 
 	List<ItemMatch> searchItems(String query);
 
+	/** Every item that drops from something, name-ordered — the browse list's Items filter. */
+	List<ItemMatch> allItems();
+
 	/**
 	 * Shops that currently sell the item: entries whose base stock is 0 are excluded
 	 * ("not a way to purchase", for now); infinite (-1) and unknown (null) stock are

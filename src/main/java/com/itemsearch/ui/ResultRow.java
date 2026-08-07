@@ -32,14 +32,29 @@ import java.awt.event.MouseEvent;
 import javax.swing.BorderFactory;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import net.runelite.client.util.AsyncBufferedImage;
 import net.runelite.client.ui.ColorScheme;
 
 public class ResultRow extends JPanel
 {
 	// wide enough for the longest badge ("PICKPOCKET" was; "STEAL" and "STORE" are shorter)
 	private static final int BADGE_WIDTH = 46;
+	private static final int ICON_HEIGHT = 32;
+
+	// square reserved for an icon, so named rows still line up with iconless ones beside them
+	private static final int ICON_WIDTH = 34;
 
 	public ResultRow(String badge, String text, Runnable onClick)
+	{
+		this(badge, text, onClick, null);
+	}
+
+	/**
+	 * @param icon drawn left of the badge, or null for a text-only row. An
+	 *             {@link AsyncBufferedImage} paints itself in once it has loaded, so the row does
+	 *             not wait on it.
+	 */
+	public ResultRow(String badge, String text, Runnable onClick, AsyncBufferedImage icon)
 	{
 		setLayout(new BorderLayout(6, 0));
 		setBorder(BorderFactory.createEmptyBorder(4, 6, 4, 6));
@@ -53,7 +68,25 @@ public class ResultRow extends JPanel
 		Dimension badgeSize = new Dimension(BADGE_WIDTH, badgeLabel.getPreferredSize().height);
 		badgeLabel.setPreferredSize(badgeSize);
 		badgeLabel.setMinimumSize(badgeSize);
-		add(badgeLabel, BorderLayout.WEST);
+		if (icon == null)
+		{
+			add(badgeLabel, BorderLayout.WEST);
+		}
+		else
+		{
+			// icons only appear in lists where every row has one, so wrapping the icon in beside
+			// the badge here cannot leave some rows' names starting further right than others
+			JPanel left = new JPanel(new BorderLayout(4, 0));
+			left.setOpaque(false);
+			JLabel iconLabel = new JLabel();
+			Dimension iconSize = new Dimension(ICON_WIDTH, ICON_HEIGHT);
+			iconLabel.setPreferredSize(iconSize);
+			iconLabel.setMinimumSize(iconSize);
+			icon.addTo(iconLabel);
+			left.add(iconLabel, BorderLayout.WEST);
+			left.add(badgeLabel, BorderLayout.CENTER);
+			add(left, BorderLayout.WEST);
+		}
 
 		JLabel nameLabel = new JLabel(text);
 		// let the name shrink into the remaining space instead of forcing the row wider

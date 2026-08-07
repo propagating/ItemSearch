@@ -26,9 +26,12 @@ package com.itemsearch;
 
 import com.google.gson.Gson;
 import java.awt.Component;
+import java.awt.image.BufferedImage;
 import java.awt.Container;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
+import java.util.ArrayList;
+import java.util.List;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -37,6 +40,7 @@ import javax.swing.JTextField;
 import net.runelite.client.callback.ClientThread;
 import net.runelite.client.game.ItemManager;
 import net.runelite.client.game.SpriteManager;
+import net.runelite.client.util.AsyncBufferedImage;
 import okhttp3.OkHttpClient;
 import com.itemsearch.data.BundledDataSource;
 import com.itemsearch.data.WikiRefreshService;
@@ -44,19 +48,27 @@ import com.itemsearch.map.SpawnMapMarker;
 import com.itemsearch.tracker.TrackerStore;
 import org.junit.Test;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
+import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 public class ItemSearchPanelTest
 {
 	private ItemSearchPanel newPanel(BundledDataSource ds)
 	{
+		return newPanel(ds, mock(ItemManager.class));
+	}
+
+	private ItemSearchPanel newPanel(BundledDataSource ds, ItemManager itemManager)
+	{
 		return new ItemSearchPanel(
 			ds,
 			mock(TrackerStore.class),
-			mock(ItemManager.class),
+			itemManager,
 			new OkHttpClient(),
 			mock(WikiRefreshService.class),
 			mock(SpawnMapMarker.class),
@@ -386,6 +398,111 @@ public class ItemSearchPanelTest
 
 		assertTrue("the empty search browses the data", results.getComponentCount() > 1);
 		assertTrue("and names something real", showing(results, "Goblin"));
+	}
+
+	// clicks the browse filter button with the given label
+	private void clickFilter(ItemSearchPanel panel, String label) throws Exception
+	{
+		JPanel bar = field(panel, "filterBar", JPanel.class);
+		for (Component c : bar.getComponents())
+		{
+			if (c instanceof JButton && label.equals(((JButton) c).getText()))
+			{
+				((JButton) c).doClick();
+				return;
+			}
+		}
+		throw new AssertionError("no filter button labelled " + label);
+	}
+
+	/**
+	 * One undifferentiated list of every source and item is not browsable. Picking a kind narrows
+	 * it to that kind and nothing else.
+	 */
+	@Test
+	public void aBrowseFilterNarrowsTheListToOneKind() throws Exception
+	{
+		ItemSearchPanel panel = newPanel(loadedTestData());
+		JPanel results = field(panel, "results", JPanel.class);
+		invokeRebuild(panel);
+		assertTrue("unfiltered browsing shows a chest", showing(results, "Lunar Chest"));
+
+		clickFilter(panel, "NPCs");
+		assertTrue("the NPC filter keeps monsters", showing(results, "Goblin"));
+		assertFalse("and drops everything that is not one", showing(results, "Lunar Chest"));
+
+		clickFilter(panel, "Chests");
+		assertTrue(showing(results, "Lunar Chest"));
+		assertFalse(showing(results, "Goblin"));
+
+		clickFilter(panel, "All");
+		assertTrue(showing(results, "Goblin"));
+		assertTrue(showing(results, "Lunar Chest"));
+	}
+
+	/** The Items filter browses what drops rather than what drops it, and shows each item's icon. */
+	@Test
+	public void theItemsFilterListsItemsWithTheirIcons() throws Exception
+	{
+		ItemManager itemManager = mock(ItemManager.class);
+		when(itemManager.getImage(anyInt()))
+			.thenReturn(new AsyncBufferedImage(mock(ClientThread.class), 16, 16, BufferedImage.TYPE_INT_ARGB));
+		ItemSearchPanel panel = newPanel(loadedTestData(), itemManager);
+		JPanel results = field(panel, "results", JPanel.class);
+		clickFilter(panel, "Items");
+
+		assertTrue("items are listed by name", showing(results, "Bronze dagger"));
+		assertFalse("and sources are not", showing(results, "Goblin (lvl"));
+
+		int withIcons = 0;
+		for (Component row : results.getComponents())
+		{
+			for (JLabel l : allLabels((Container) row))
+			{
+				if (l.getIcon() != null)
+				{
+					withIcons++;
+				}
+			}
+		}
+		assertTrue("every item row carries its in-game icon, got " + withIcons,
+			withIcons >= results.getComponentCount() - 1);
+	}
+
+	/** The filters narrow the browse list, so they have no business on a search or a detail page. */
+	@Test
+	public void theFilterBarBelongsToBrowsingOnly() throws Exception
+	{
+		ItemSearchPanel panel = newPanel(loadedTestData());
+		JPanel bar = field(panel, "filterBar", JPanel.class);
+		invokeRebuild(panel);
+		assertTrue("shown while browsing", bar.isVisible());
+
+		JTextField search = field(panel, "search", JTextField.class);
+		search.setText("goblin");
+		invokeRebuild(panel);
+		assertFalse("hidden while searching", bar.isVisible());
+
+		search.setText("");
+		invokeRebuild(panel);
+		assertTrue("and back when the search is cleared", bar.isVisible());
+	}
+
+	private static List<JLabel> allLabels(Container root)
+	{
+		List<JLabel> out = new ArrayList<>();
+		for (Component c : root.getComponents())
+		{
+			if (c instanceof JLabel)
+			{
+				out.add((JLabel) c);
+			}
+			if (c instanceof Container)
+			{
+				out.addAll(allLabels((Container) c));
+			}
+		}
+		return out;
 	}
 
 	private JScrollPane enclosingScrollPane(Component c)
