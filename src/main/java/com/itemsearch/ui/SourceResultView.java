@@ -86,7 +86,7 @@ public class SourceResultView extends JPanel
 
 	public SourceResultView(SourceData npc, TrackerStore store, SpriteManager spriteManager, ItemManager itemManager,
 		OkHttpClient okHttpClient, SpawnMapMarker mapMarker,
-		ClientThread clientThread, boolean groupByDropTable,
+		ClientThread clientThread,
 		Runnable onBack, Consumer<ItemMatch> onItemSelected)
 	{
 		this.okHttpClient = okHttpClient;
@@ -118,7 +118,7 @@ public class SourceResultView extends JPanel
 		// wiki drop tables are split into meaningful subsections ("Rare drop table", "100%");
 		// keep those groupings, with anything uncategorised leading as before
 		for (Map.Entry<String, List<DropSource>> group
-			: groupDrops(npc.getDrops(), groupByDropTable).entrySet())
+			: groupDrops(npc.getDrops()).entrySet())
 		{
 			if (group.getKey() != null)
 			{
@@ -163,11 +163,8 @@ public class SourceResultView extends JPanel
 	 * Drops grouped for display, uncategorised first, then each group in the order it first
 	 * appears. Each group keeps the display sort: known rarities first, commonest first.
 	 *
-	 * @param byDropTable group by the shared drop table a drop came from rather than by the wiki
-	 *                    section it is listed under
 	 */
-	private static Map<String, List<DropSource>> groupDrops(List<DropSource> drops,
-		boolean byDropTable)
+	static Map<String, List<DropSource>> groupDrops(List<DropSource> drops)
 	{
 		List<DropSource> sorted = new ArrayList<>(drops);
 		sorted.sort(Comparator
@@ -178,12 +175,9 @@ public class SourceResultView extends JPanel
 		grouped.put(null, new ArrayList<>()); // reserve first position for the uncategorised group
 		for (DropSource d : sorted)
 		{
-			// Each mode falls back to the other rather than collapsing into one unnamed group:
-			// a drop outside any shared table has no table name, and a shared table pulled in
-			// without a heading introducing it has no wiki section.
-			String key = byDropTable
-				? (d.getDropTable() != null ? d.getDropTable() : d.getCategory())
-				: (d.getCategory() != null ? d.getCategory() : d.getDropTable());
+			// the wiki's own section, falling back to the shared table a drop was transcluded from
+			// when it arrived without a heading to introduce it
+			String key = d.getCategory() != null ? d.getCategory() : d.getDropTable();
 			grouped.computeIfAbsent(key, k -> new ArrayList<>()).add(d);
 		}
 		grouped.values().removeIf(List::isEmpty);

@@ -77,13 +77,8 @@ public class SourceResultViewTest
 
 	private SourceResultView build(SourceData npc, TrackerStore store)
 	{
-		return build(npc, store, false);
-	}
-
-	private SourceResultView build(SourceData npc, TrackerStore store, boolean groupByDropTable)
-	{
 		return new SourceResultView(npc, store, mock(SpriteManager.class), mock(ItemManager.class),
-			new OkHttpClient(), mock(SpawnMapMarker.class), mock(ClientThread.class), groupByDropTable,
+			new OkHttpClient(), mock(SpawnMapMarker.class), mock(ClientThread.class),
 			() ->
 			{
 			},
@@ -628,24 +623,21 @@ public class SourceResultViewTest
 	}
 
 
+	/**
+	 * One set of headings, not two. The drop table a row came from is still carried and still
+	 * names a group where the wiki gave no section, but there is no second way to read the list:
+	 * only 18% of rows belong to a named table, so the alternative was near-identical to this one.
+	 */
 	@Test
-	public void dropsCanGroupByTheirSharedDropTableInstead()
+	public void dropsAreGroupedByTheirWikiSection()
 	{
-		// default: grouped by the page's wiki section
-		List<String> bySection = labelTexts(build(loadedTestData().sourceById(963),
-			new TrackerStore(mock(ConfigManager.class), new Gson()), false));
-		assertTrue(bySection.contains("HERBS"));
-		assertFalse("the shared table is not the grouping by default",
-			bySection.contains("HERB DROP TABLE"));
-
-		List<String> byTable = labelTexts(build(loadedTestData().sourceById(963),
-			new TrackerStore(mock(ConfigManager.class), new Gson()), true));
-		assertTrue("grouping by drop table names the shared table",
-			byTable.contains("HERB DROP TABLE"));
-		assertFalse(byTable.contains("HERBS"));
-		// a drop belonging to no shared table keeps its section heading either way
-		assertTrue("uncategorised drops still fall back to their section",
-			byTable.contains("RARE DROP TABLE"));
+		List<String> headings = labelTexts(build(loadedTestData().sourceById(963),
+			new TrackerStore(mock(ConfigManager.class), new Gson())));
+		assertTrue(headings.contains("HERBS"));
+		assertFalse("the shared table does not head a group of its own", 
+			headings.contains("HERB DROP TABLE"));
+		assertTrue("a section the wiki did name still heads its group",
+			headings.contains("RARE DROP TABLE"));
 	}
 
 	// Attacks read left to right in the order the prayers sit in the prayer book, whatever order

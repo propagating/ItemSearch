@@ -68,17 +68,6 @@ public interface ItemSearchConfig extends Config
 	}
 
 	@ConfigItem(
-		keyName = "groupDropsByTable",
-		name = "Group drops by drop table",
-		description = "Group a source's drops by the shared drop table they come from "
-			+ "(herb, seed, rare) instead of by the wiki section they are listed under"
-	)
-	default boolean groupDropsByTable()
-	{
-		return false;
-	}
-
-	@ConfigItem(
 		keyName = "showDropsMenuEntry",
 		name = "Right-click \"Show drops\"",
 		description = "Add a Show drops option to the right-click menu of NPCs this plugin "
