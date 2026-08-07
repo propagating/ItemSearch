@@ -37,6 +37,7 @@ import net.runelite.api.events.GameStateChanged;
 import net.runelite.api.events.GameTick;
 import net.runelite.api.events.NpcDespawned;
 import net.runelite.api.events.NpcSpawned;
+import net.runelite.api.events.MenuOpened;
 import net.runelite.client.callback.ClientThread;
 import net.runelite.client.config.ConfigManager;
 import net.runelite.client.eventbus.Subscribe;
@@ -49,6 +50,7 @@ import net.runelite.client.plugins.PluginDescriptor;
 import com.itemsearch.data.BundledDataSource;
 import com.itemsearch.data.WikiRefreshService;
 import com.itemsearch.map.SpawnMapMarker;
+import com.itemsearch.menu.ShowDropsMenu;
 import com.itemsearch.tracker.KillTracker;
 import com.itemsearch.tracker.TrackerStore;
 import net.runelite.client.ui.ClientToolbar;
@@ -99,6 +101,7 @@ public class ItemSearchPlugin extends Plugin
 	private KillTracker killTracker;
 	private WikiRefreshService wikiRefreshService;
 	private SpawnMapMarker spawnMapMarker;
+	private ShowDropsMenu showDropsMenu;
 	private ItemSearchPanel panel;
 	private NavigationButton navButton;
 
@@ -133,6 +136,19 @@ public class ItemSearchPlugin extends Plugin
 
 		panel = new ItemSearchPanel(dataService, trackerStore, itemManager, okHttpClient,
 			wikiRefreshService, spawnMapMarker, clientThread, config, spriteManager);
+
+		// the click arrives on the client thread and both calls below touch Swing, so the
+		// whole handler crosses to the EDT once here rather than each callee guarding itself
+		showDropsMenu = new ShowDropsMenu(client, dataService, source ->
+			SwingUtilities.invokeLater(() ->
+			{
+				if (panel != null && navButton != null)
+				{
+					clientToolbar.openPanel(navButton);
+					panel.showSource(source);
+				}
+			}));
+		showDropsMenu.setEnabled(config.showDropsMenuEntry());
 
 		final BufferedImage icon = ImageUtil.loadImageResource(getClass(), "panel_icon.png");
 		navButton = NavigationButton.builder()
@@ -173,6 +189,7 @@ public class ItemSearchPlugin extends Plugin
 			navButton = null;
 		}
 		panel = null;
+		showDropsMenu = null;
 	}
 
 	@Subscribe
@@ -194,8 +211,22 @@ public class ItemSearchPlugin extends Plugin
 	}
 
 	@Subscribe
+	public void onMenuOpened(MenuOpened event)
+	{
+		if (showDropsMenu != null)
+		{
+			showDropsMenu.onMenuOpened(event);
+		}
+	}
+
+	@Subscribe
 	public void onConfigChanged(ConfigChanged event)
 	{
+		if (showDropsMenu != null && ItemSearchConfig.GROUP.equals(event.getGroup())
+			&& "showDropsMenuEntry".equals(event.getKey()))
+		{
+			showDropsMenu.setEnabled(Boolean.parseBoolean(event.getNewValue()));
+		}
 		if (trackerStore != null
 			&& ItemSearchConfig.GROUP.equals(event.getGroup())
 			&& "resetAll".equals(event.getKey())

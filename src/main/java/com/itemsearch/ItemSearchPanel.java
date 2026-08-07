@@ -33,6 +33,7 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 import javax.swing.Scrollable;
+import javax.swing.SwingUtilities;
 import javax.swing.Timer;
 import javax.swing.border.EmptyBorder;
 import javax.swing.event.DocumentEvent;
@@ -206,6 +207,12 @@ class ItemSearchPanel extends PluginPanel
 		content.add(resultsScroll, BorderLayout.CENTER);
 		content.revalidate();
 		content.repaint();
+	}
+
+	/** Opens a source's page from outside the panel — the in-game "Show drops" menu entry. EDT only. */
+	void showSource(SourceData source)
+	{
+		showNpc(source);
 	}
 
 	private void showNpc(SourceData npc)
