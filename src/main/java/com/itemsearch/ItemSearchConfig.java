@@ -54,6 +54,20 @@ public interface ItemSearchConfig extends Config
 	}
 
 	@ConfigItem(
+		keyName = "showBrowseImages",
+		name = "Show images while browsing",
+		description = "Fetch each monster's picture from the OSRS Wiki for the rows of the browse "
+			+ "list. Only the rows on screen are fetched, and each image is cached on disk "
+			+ "afterwards. Item rows always show their in-game icon, which needs no download.",
+		warning = "This feature submits your IP address to a 3rd-party server not controlled or "
+			+ "verified by RuneLite developers"
+	)
+	default boolean showBrowseImages()
+	{
+		return false;
+	}
+
+	@ConfigItem(
 		keyName = "groupDropsByTable",
 		name = "Group drops by drop table",
 		description = "Group a source's drops by the shared drop table they come from "

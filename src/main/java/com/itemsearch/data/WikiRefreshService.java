@@ -29,7 +29,14 @@ import com.google.gson.JsonObject;
 import java.io.IOException;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.LinkedHashSet;
+import java.util.List;
 import java.util.Map;
+import java.util.function.Consumer;
 import java.util.concurrent.ScheduledExecutorService;
 import lombok.extern.slf4j.Slf4j;
 import okhttp3.Call;
@@ -115,6 +122,135 @@ public class WikiRefreshService
 				log.debug("itemsearch: wiki refresh error", e);
 			}
 		});
+	}
+
+	/** Titles per request. The API caps a titles= list at 50 for unprivileged callers. */
+	private static final int TITLE_BATCH = 50;
+
+	/**
+	 * Image urls for many pages at once, handed back as page title -> url.
+	 *
+	 * <p>A browse list wants an icon per row, and one request per row would mean a hundred calls
+	 * to a third-party server to draw one screen. The API takes fifty titles at a time, so a
+	 * screenful costs one request. Titles the wiki redirects or normalises are mapped back to what
+	 * was asked for, since that is what the caller has a row for.
+	 */
+	public void imageUrlsFor(Collection<String> titles, Consumer<Map<String, String>> onUrls)
+	{
+		List<String> batch = new ArrayList<>(new LinkedHashSet<>(titles));
+		for (int i = 0; i < batch.size(); i += TITLE_BATCH)
+		{
+			List<String> slice = batch.subList(i, Math.min(i + TITLE_BATCH, batch.size()));
+			executor.submit(() -> requestImageUrls(slice, onUrls));
+		}
+	}
+
+	private void requestImageUrls(List<String> titles, Consumer<Map<String, String>> onUrls)
+	{
+		try
+		{
+			String url = API + "?action=query&format=json&prop=pageimages&piprop=original"
+				+ "&redirects=1&pilimit=" + TITLE_BATCH + "&titles="
+				+ URLEncoder.encode(String.join("|", titles), StandardCharsets.UTF_8.name());
+			httpClient.newCall(new Request.Builder().url(url).build()).enqueue(new Callback()
+			{
+				@Override
+				public void onFailure(Call call, IOException e)
+				{
+					log.debug("itemsearch: batch image fetch failed", e);
+				}
+
+				@Override
+				public void onResponse(Call call, Response response)
+				{
+					try (Response r = response)
+					{
+						if (r.body() == null)
+						{
+							return;
+						}
+						Map<String, String> urls = parseImageUrls(gson, r.body().string(), titles);
+						if (!urls.isEmpty())
+						{
+							onUrls.accept(urls);
+						}
+					}
+					catch (Exception e)
+					{
+						log.debug("itemsearch: batch image parse failed", e);
+					}
+				}
+			});
+		}
+		catch (Exception e)
+		{
+			log.debug("itemsearch: batch image request error", e);
+		}
+	}
+
+	/** Visible for testing: page title -> original image url, keyed by the REQUESTED title. */
+	public static Map<String, String> parseImageUrls(Gson gson, String json,
+		Collection<String> requested)
+	{
+		Map<String, String> out = new HashMap<>();
+		try
+		{
+			JsonObject query = gson.fromJson(json, JsonObject.class).getAsJsonObject("query");
+			// the wiki may answer a title with its redirect target or a normalised spelling;
+			// walk both back so the caller can look the result up by what it asked for
+			Map<String, List<String>> toOriginal = new HashMap<>();
+			for (String title : requested)
+			{
+				toOriginal.computeIfAbsent(title, k -> new ArrayList<>()).add(title);
+			}
+			remapTitles(query.getAsJsonArray("normalized"), toOriginal);
+			remapTitles(query.getAsJsonArray("redirects"), toOriginal);
+
+			JsonObject pages = query.getAsJsonObject("pages");
+			if (pages == null)
+			{
+				return out;
+			}
+			for (Map.Entry<String, com.google.gson.JsonElement> e : pages.entrySet())
+			{
+				JsonObject page = e.getValue().getAsJsonObject();
+				if (!page.has("original"))
+				{
+					continue;
+				}
+				String title = page.get("title").getAsString();
+				String source = page.getAsJsonObject("original").get("source").getAsString();
+				for (String original : toOriginal.getOrDefault(title,
+					Collections.singletonList(title)))
+				{
+					out.put(original, source);
+				}
+			}
+		}
+		catch (Exception e)
+		{
+			log.debug("itemsearch: could not parse batch image response", e);
+		}
+		return out;
+	}
+
+	private static void remapTitles(com.google.gson.JsonArray mappings,
+		Map<String, List<String>> toOriginal)
+	{
+		if (mappings == null)
+		{
+			return;
+		}
+		for (com.google.gson.JsonElement e : mappings)
+		{
+			JsonObject m = e.getAsJsonObject();
+			List<String> originals = toOriginal.remove(m.get("from").getAsString());
+			if (originals != null)
+			{
+				toOriginal.computeIfAbsent(m.get("to").getAsString(), k -> new ArrayList<>())
+					.addAll(originals);
+			}
+		}
 	}
 
 	public static String parseOriginalImageUrl(Gson gson, String json)

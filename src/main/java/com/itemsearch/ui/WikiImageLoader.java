@@ -27,6 +27,7 @@ package com.itemsearch.ui;
 import java.awt.Graphics2D;
 import java.awt.RenderingHints;
 import java.awt.image.BufferedImage;
+import java.io.File;
 import java.io.IOException;
 import java.util.concurrent.ConcurrentHashMap;
 import javax.imageio.ImageIO;
@@ -34,6 +35,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.SwingUtilities;
 import lombok.extern.slf4j.Slf4j;
+import net.runelite.client.RuneLite;
 import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.HttpUrl;
@@ -57,15 +59,34 @@ public final class WikiImageLoader
 
 	public static void loadInto(OkHttpClient httpClient, JLabel target, String url)
 	{
+		loadInto(httpClient, target, url, MAX_DIMENSION);
+	}
+
+	/**
+	 * @param maxDimension longest edge to scale to. A list row wants a small icon, and scaling
+	 *                     before caching keeps both the disk cache and the heap small — a full-size
+	 *                     wiki render is ~54 KB on disk and rather more once decoded.
+	 */
+	public static void loadInto(OkHttpClient httpClient, JLabel target, String url, int maxDimension)
+	{
 		if (url == null || url.trim().isEmpty())
 		{
 			return;
 		}
-		BufferedImage cached = CACHE.get(url);
+		String key = maxDimension + "|" + url;
+		BufferedImage cached = CACHE.get(key);
 		if (cached != null)
 		{
 			// Marshal to the EDT unconditionally so this utility is safe to call from any thread.
 			SwingUtilities.invokeLater(() -> target.setIcon(new ImageIcon(cached)));
+			return;
+		}
+		// disk next: an image the player has seen once should never be asked of the wiki again
+		BufferedImage onDisk = readFromDisk(key);
+		if (onDisk != null)
+		{
+			CACHE.put(key, onDisk);
+			SwingUtilities.invokeLater(() -> target.setIcon(new ImageIcon(onDisk)));
 			return;
 		}
 		HttpUrl parsed = HttpUrl.parse(url);
@@ -97,8 +118,9 @@ public final class WikiImageLoader
 					BufferedImage img = ImageIO.read(body.byteStream());
 					if (img != null)
 					{
-						BufferedImage scaled = scaleToFit(img);
-						CACHE.put(url, scaled);
+						BufferedImage scaled = scaleToFit(img, maxDimension);
+						CACHE.put(key, scaled);
+						writeToDisk(key, scaled);
 						SwingUtilities.invokeLater(() -> target.setIcon(new ImageIcon(scaled)));
 					}
 				}
@@ -110,15 +132,64 @@ public final class WikiImageLoader
 		});
 	}
 
-	private static BufferedImage scaleToFit(BufferedImage img)
+	/** Where fetched images live between sessions. Inside .runelite, as plugins must be. */
+	private static File cacheDir()
+	{
+		return new File(RuneLite.RUNELITE_DIR, "itemsearch" + File.separator + "wiki-images");
+	}
+
+	// one file per cached image, named by a hash so no wiki title can escape the directory
+	private static File cacheFile(String key)
+	{
+		return new File(cacheDir(), Integer.toHexString(key.hashCode()) + "-"
+			+ Integer.toHexString(key.length()) + ".png");
+	}
+
+	private static BufferedImage readFromDisk(String key)
+	{
+		File file = cacheFile(key);
+		if (!file.isFile())
+		{
+			return null;
+		}
+		try
+		{
+			return ImageIO.read(file);
+		}
+		catch (Exception e)
+		{
+			log.debug("itemsearch: unreadable cached image {}", file, e);
+			return null;
+		}
+	}
+
+	private static void writeToDisk(String key, BufferedImage image)
+	{
+		try
+		{
+			File dir = cacheDir();
+			if (!dir.isDirectory() && !dir.mkdirs())
+			{
+				return;
+			}
+			ImageIO.write(image, "png", cacheFile(key));
+		}
+		catch (Exception e)
+		{
+			// a cache that cannot be written is a slower plugin, not a broken one
+			log.debug("itemsearch: could not cache image for {}", key, e);
+		}
+	}
+
+	private static BufferedImage scaleToFit(BufferedImage img, int maxDimension)
 	{
 		int w = img.getWidth();
 		int h = img.getHeight();
-		if (w <= MAX_DIMENSION && h <= MAX_DIMENSION)
+		if (w <= maxDimension && h <= maxDimension)
 		{
 			return img;
 		}
-		double scale = Math.min((double) MAX_DIMENSION / w, (double) MAX_DIMENSION / h);
+		double scale = Math.min((double) maxDimension / w, (double) maxDimension / h);
 		int sw = Math.max(1, (int) Math.round(w * scale));
 		int sh = Math.max(1, (int) Math.round(h * scale));
 		BufferedImage out = new BufferedImage(sw, sh, BufferedImage.TYPE_INT_ARGB);

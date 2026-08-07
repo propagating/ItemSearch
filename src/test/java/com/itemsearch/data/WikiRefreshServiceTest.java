@@ -27,7 +27,10 @@ package com.itemsearch.data;
 import com.google.gson.Gson;
 import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
+import java.util.Arrays;
+import java.util.Map;
 import java.util.Scanner;
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 import org.junit.Test;
@@ -59,5 +62,47 @@ public class WikiRefreshServiceTest
 	{
 		assertNull(WikiRefreshService.parseOriginalImageUrl(new Gson(), "{garbage"));
 		assertNull(WikiRefreshService.parseOriginalImageUrl(new Gson(), "{\"query\":{\"pages\":{}}}"));
+	}
+
+	/**
+	 * A screenful of rows is one request, so the response carries many pages and each has to find
+	 * its way back to the row that asked for it.
+	 */
+	@Test
+	public void batchedImageUrlsComeBackKeyedByTheRequestedTitle()
+	{
+		String json = "{\"query\":{\"pages\":{"
+			+ "\"1\":{\"title\":\"Goblin\",\"original\":{\"source\":\"https://x/Goblin.png\"}},"
+			+ "\"2\":{\"title\":\"Cow\",\"original\":{\"source\":\"https://x/Cow.png\"}},"
+			+ "\"3\":{\"title\":\"Nothing\"}}}}";
+		Map<String, String> urls = WikiRefreshService.parseImageUrls(new Gson(), json,
+			Arrays.asList("Goblin", "Cow", "Nothing"));
+		assertEquals("https://x/Goblin.png", urls.get("Goblin"));
+		assertEquals("https://x/Cow.png", urls.get("Cow"));
+		assertNull("a page with no image contributes nothing", urls.get("Nothing"));
+	}
+
+	/**
+	 * Two rows can name pages that redirect to one another's — the Killerwatt versions both ask
+	 * about "Killerwatt". Both rows must get the image, not just whichever the wiki names last.
+	 */
+	@Test
+	public void severalRowsSharingOnePageEachGetTheImage()
+	{
+		String json = "{\"query\":{"
+			+ "\"redirects\":[{\"from\":\"Killerwatt (Idle)\",\"to\":\"Killerwatt\"}],"
+			+ "\"pages\":{\"1\":{\"title\":\"Killerwatt\","
+			+ "\"original\":{\"source\":\"https://x/Killerwatt.png\"}}}}}";
+		Map<String, String> urls = WikiRefreshService.parseImageUrls(new Gson(), json,
+			Arrays.asList("Killerwatt", "Killerwatt (Idle)"));
+		assertEquals("https://x/Killerwatt.png", urls.get("Killerwatt"));
+		assertEquals("https://x/Killerwatt.png", urls.get("Killerwatt (Idle)"));
+	}
+
+	@Test
+	public void aMalformedBatchIsEmptyRatherThanAnException()
+	{
+		assertTrue(WikiRefreshService.parseImageUrls(new Gson(), "{garbage",
+			Arrays.asList("Goblin")).isEmpty());
 	}
 }

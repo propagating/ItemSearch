@@ -26,13 +26,16 @@ package com.itemsearch;
 
 import java.awt.BorderLayout;
 import java.awt.Component;
+import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.Insets;
 import java.awt.Rectangle;
+import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
+import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -46,6 +49,7 @@ import javax.swing.event.DocumentListener;
 import net.runelite.client.callback.ClientThread;
 import net.runelite.client.game.ItemManager;
 import net.runelite.client.game.SpriteManager;
+import net.runelite.client.util.AsyncBufferedImage;
 import okhttp3.OkHttpClient;
 import com.itemsearch.data.DropDataService;
 import com.itemsearch.data.WikiRefreshService;
@@ -58,6 +62,7 @@ import com.itemsearch.tracker.TrackerStore;
 import com.itemsearch.ui.ItemResultView;
 import com.itemsearch.ui.SourceResultView;
 import com.itemsearch.ui.ResultRow;
+import com.itemsearch.ui.WikiImageLoader;
 import com.itemsearch.ui.ShopResultView;
 import net.runelite.client.ui.ColorScheme;
 import net.runelite.client.ui.PluginPanel;
@@ -142,6 +147,8 @@ class ItemSearchPanel extends PluginPanel
 
 		// same vertically-scrolling, top-anchored wrapper the detail views use
 		resultsScroll = verticalScroll(results);
+		// rows ask for their picture as they are scrolled to, not all at once when rendered
+		resultsScroll.getVerticalScrollBar().addAdjustmentListener(e -> loadVisibleRowImages());
 
 		debounce = new Timer(300, e -> rebuildResults());
 		debounce.setRepeats(false);
@@ -289,6 +296,9 @@ class ItemSearchPanel extends PluginPanel
 		}
 		results.revalidate();
 		results.repaint();
+		// deferred: rows have no bounds until this layout pass runs, and without bounds nothing
+		// can be judged visible
+		SwingUtilities.invokeLater(this::loadVisibleRowImages);
 	}
 
 	/**
@@ -337,11 +347,103 @@ class ItemSearchPanel extends PluginPanel
 		{
 			if (browseFilter.type == null || browseFilter.type == npc.getType())
 			{
-				rows.add(new ResultRow(badgeFor(npc.getType()), sourceLabel(npc),
-					() -> showNpc(npc)));
+				ResultRow row = new ResultRow(badgeFor(npc.getType()), sourceLabel(npc),
+					() -> showNpc(npc), config.showBrowseImages() ? placeholderIcon() : null);
+				row.putClientProperty(WIKI_TITLE, npc.wikiTitle());
+				rows.add(row);
 			}
 		}
 		return rows;
+	}
+
+	// marks a row as wanting a wiki image, and remembers which page to ask about
+	private static final String WIKI_TITLE = "itemsearch.wikiTitle";
+
+	// a transparent square so the row reserves its icon column before the image arrives, rather
+	// than every name jumping left as each one loads
+	private AsyncBufferedImage placeholderIcon()
+	{
+		return new AsyncBufferedImage(clientThread, 1, 1, BufferedImage.TYPE_INT_ARGB);
+	}
+
+	/**
+	 * Asks the wiki for the images of rows the player can actually see, and no others.
+	 *
+	 * <p>A page holds a hundred rows and a sidebar shows about fifteen. Fetching all hundred would
+	 * mean a hundred requests to a third-party server to draw one screen, so only what is on
+	 * screen is requested, in one batched call, and {@link WikiImageLoader} caches each image to
+	 * disk so it is never asked for twice.
+	 */
+	private void loadVisibleRowImages()
+	{
+		if (!config.showBrowseImages())
+		{
+			return;
+		}
+		Rectangle view = resultsScroll.getViewport().getViewRect();
+		List<String> wanted = new ArrayList<>();
+		List<JComponent> targets = new ArrayList<>();
+		for (Component c : results.getComponents())
+		{
+			if (!(c instanceof JComponent))
+			{
+				continue;
+			}
+			JComponent row = (JComponent) c;
+			String title = (String) row.getClientProperty(WIKI_TITLE);
+			if (title == null || Boolean.TRUE.equals(row.getClientProperty(IMAGE_ASKED)))
+			{
+				continue;
+			}
+			Rectangle bounds = SwingUtilities.convertRectangle(results, row.getBounds(), results);
+			if (!bounds.intersects(view))
+			{
+				continue;
+			}
+			row.putClientProperty(IMAGE_ASKED, Boolean.TRUE);
+			wanted.add(title);
+			targets.add(row);
+		}
+		if (wanted.isEmpty())
+		{
+			return;
+		}
+		wikiRefreshService.imageUrlsFor(wanted, urls -> SwingUtilities.invokeLater(() ->
+		{
+			for (int i = 0; i < targets.size(); i++)
+			{
+				String url = urls.get(wanted.get(i));
+				JLabel icon = iconLabelOf(targets.get(i));
+				if (url != null && icon != null)
+				{
+					WikiImageLoader.loadInto(okHttpClient, icon, url, BROWSE_ICON_SIZE);
+				}
+			}
+		}));
+	}
+
+	private static final String IMAGE_ASKED = "itemsearch.imageAsked";
+	private static final int BROWSE_ICON_SIZE = 32;
+
+	// the row's icon label is the first label it holds with no text
+	private static JLabel iconLabelOf(Container row)
+	{
+		for (Component c : row.getComponents())
+		{
+			if (c instanceof JLabel && ((JLabel) c).getText().isEmpty())
+			{
+				return (JLabel) c;
+			}
+			if (c instanceof Container)
+			{
+				JLabel found = iconLabelOf((Container) c);
+				if (found != null)
+				{
+					return found;
+				}
+			}
+		}
+		return null;
 	}
 
 	/**
