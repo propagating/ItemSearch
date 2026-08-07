@@ -473,17 +473,13 @@ public class SourceResultView extends JPanel
 		return lines.isEmpty() ? null : "<html>" + String.join("<br>", lines) + "</html>";
 	}
 
-	/** Beyond this many the slashes are longer than the column; the tooltip carries the rest. */
-	private static final int MAX_HIT_STEPS = 4;
-
 	/**
-	 * Headline max hit, every conditional value from lowest to highest: "0/5/35/50".
+	 * Headline max hit: the worst case, starred when gear or a potion can lower it.
 	 *
-	 * <p>A steel dragon's dragonfire hits 0 through insulated boots and an antifire, 50 through
-	 * neither, and two values in between. Showing only the extremes ("0 (50)") reads as a choice
-	 * between two outcomes when it is really a ladder you climb with what you wear and drink. Past
-	 * a handful of steps the ladder no longer fits, so it collapses to "50*" — the star meaning
-	 * the same thing the slashes did, that the number moves, hover to see how.
+	 * <p>A steel dragon's dragonfire hits 50 through nothing and 0 through insulated boots and an
+	 * antifire, with rungs in between. Listing every rung on the label ("0/5/35/50") crowds the
+	 * column as soon as there are more than two, so the label states the number you take if you
+	 * bring nothing and the star says it moves; the hover has the ladder.
 	 */
 	private static String maxHitText(Attack attack)
 	{
@@ -492,31 +488,19 @@ public class SourceResultView extends JPanel
 		{
 			return base;
 		}
-		// a combo variant can peak above the unprotected number, so the base sorts in with the
-		// rest rather than being pinned to either end
-		List<int[]> order = new ArrayList<>();
-		List<String> texts = new ArrayList<>();
-		order.add(new int[]{Math.max(attack.getMaxHit(), attack.getMaxHitMax()), 0});
-		texts.add(base);
+		// a combo variant can peak above the unprotected number, and the worst case is the point
+		int worst = Math.max(attack.getMaxHit(), attack.getMaxHitMax());
+		String text = base;
 		for (MaxHitVariant variant : attack.getVariants())
 		{
-			order.add(new int[]{Math.max(variant.getMaxHit(), variant.getMaxHitMax()), texts.size()});
-			texts.add(range(variant.getMaxHit(), variant.getMaxHitMax()));
-		}
-		order.sort((a, b) -> Integer.compare(a[0], b[0]));
-		List<String> steps = new ArrayList<>();
-		for (int[] entry : order)
-		{
-			String step = texts.get(entry[1]);
-			// two mitigations landing on the same number are one rung, not two
-			if (!steps.contains(step))
+			int peak = Math.max(variant.getMaxHit(), variant.getMaxHitMax());
+			if (peak > worst)
 			{
-				steps.add(step);
+				worst = peak;
+				text = range(variant.getMaxHit(), variant.getMaxHitMax());
 			}
 		}
-		return steps.size() > MAX_HIT_STEPS
-			? steps.get(steps.size() - 1) + "*"
-			: String.join("/", steps);
+		return text + "*";
 	}
 
 	/**

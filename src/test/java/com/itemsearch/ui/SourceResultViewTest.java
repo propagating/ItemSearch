@@ -446,11 +446,11 @@ public class SourceResultViewTest
 	}
 
 	/**
-	 * "8/12/15", not "8 (15)". The mitigations are a ladder you climb with what you wear and
-	 * drink, and showing only its ends reads as a choice between two outcomes.
+	 * "15*", not "8/12/15" and not "8 (15)". Every rung on the label crowds the column; the label
+	 * states what you take with nothing equipped and the star says the number moves.
 	 */
 	@Test
-	public void conditionalMaxHitShowsEveryStepLowestToHighest()
+	public void aConditionalMaxHitIsTheWorstCaseStarred()
 	{
 		Attack a = new Attack("magic", 15, 15, 4, 4, null, Arrays.asList(
 			new MaxHitVariant("Antifire", "CONSUMABLE", 12, 12),
@@ -458,8 +458,22 @@ public class SourceResultViewTest
 		CombatStats c = new CombatStats(1, 1, 1, 1, 1, 5, Collections.singletonList(a));
 		SourceResultView view = build(npc(9022, "Killerwatt", 55, c),
 			new TrackerStore(mock(ConfigManager.class), new Gson()));
-		assertEquals(1, countLabels(view, "8/12/15"));
+		assertEquals(1, countLabels(view, "15*"));
+		assertEquals(0, countLabels(view, "8/12/15"));
 		assertEquals(0, countLabels(view, "8 (15)"));
+	}
+
+	/** A combo variant can hit harder than the unprotected number; that is then the worst case. */
+	@Test
+	public void aVariantAboveTheBaseBecomesTheHeadline()
+	{
+		Attack a = new Attack("magic", 20, 20, 4, 4, null, Arrays.asList(
+			new MaxHitVariant("Insulated boots", "GEAR", 8, 8),
+			new MaxHitVariant("both at once (combo)", "GEAR", 35, 35)), null, null);
+		CombatStats c = new CombatStats(1, 1, 1, 1, 1, 5, Collections.singletonList(a));
+		SourceResultView view = build(npc(9023, "Comboer", 55, c),
+			new TrackerStore(mock(ConfigManager.class), new Gson()));
+		assertEquals(1, countLabels(view, "35*"));
 	}
 
 	// the attacks table is the card's only GridBagLayout panel
@@ -497,31 +511,17 @@ public class SourceResultViewTest
 		assertEquals(1, countLabels(table, "Max hit"));
 	}
 
-	/** Two mitigations that land on the same number are one rung of the ladder, not two. */
+	/** However many rungs there are, the label stays one number. */
 	@Test
-	public void conditionalMaxHitCollapsesDuplicateSteps()
-	{
-		Attack a = new Attack("magic", 15, 15, 4, 4, null, Arrays.asList(
-			new MaxHitVariant("Antifire", "CONSUMABLE", 8, 8),
-			new MaxHitVariant("Insulated boots", "GEAR", 8, 8)), null, null);
-		CombatStats c = new CombatStats(1, 1, 1, 1, 1, 5, Collections.singletonList(a));
-		SourceResultView view = build(npc(9022, "Killerwatt", 55, c),
-			new TrackerStore(mock(ConfigManager.class), new Gson()));
-		assertEquals(1, countLabels(view, "8/15"));
-	}
-
-	/** Past a handful of rungs the slashes outgrow the column, so the star stands in for them. */
-	@Test
-	public void aLongLadderCollapsesToAStarredHighest()
+	public void aLongLadderIsStillOneStarredNumber()
 	{
 		Attack a = new Attack("magic", 50, 50, 4, 4, null, Arrays.asList(
 			new MaxHitVariant("Insulated boots", "GEAR", 0, 0),
 			new MaxHitVariant("Antifire", "CONSUMABLE", 5, 5),
 			new MaxHitVariant("Super antifire", "CONSUMABLE", 20, 20),
-			new MaxHitVariant("Anti-dragon shield", "GEAR", 35, 35),
-			new MaxHitVariant("Elemental shield", "GEAR", 40, 40)), null, null);
+			new MaxHitVariant("Anti-dragon shield", "GEAR", 35, 35)), null, null);
 		CombatStats c = new CombatStats(1, 1, 1, 1, 1, 5, Collections.singletonList(a));
-		SourceResultView view = build(npc(9022, "Steel dragon", 246, c),
+		SourceResultView view = build(npc(9024, "Steel dragon", 246, c),
 			new TrackerStore(mock(ConfigManager.class), new Gson()));
 		assertEquals(1, countLabels(view, "50*"));
 	}
@@ -691,7 +691,7 @@ public class SourceResultViewTest
 		CombatStats c = new CombatStats(1, 1, 1, 1, 1, 5, Collections.singletonList(a));
 		List<String> text = labelTexts(build(npc(9032, "Killerwatt", 55, c),
 			new TrackerStore(mock(ConfigManager.class), new Gson())));
-		assertTrue("the headline still shows the conditional", text.contains("8/15"));
+		assertTrue("the headline still shows the conditional", text.contains("15*"));
 		assertFalse("no legend row below the table", text.stream()
 			.anyMatch(t -> t != null && t.contains("unprotected")));
 	}
