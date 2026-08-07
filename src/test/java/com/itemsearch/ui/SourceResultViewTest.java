@@ -206,6 +206,19 @@ public class SourceResultViewTest
 		return null;
 	}
 
+	private static int countLabels(Container root, String text)
+	{
+		int n = 0;
+		for (JLabel label : labels(root))
+		{
+			if (text.equals(label.getText()))
+			{
+				n++;
+			}
+		}
+		return n;
+	}
+
 	private static int countTooltips(Container root, String tip)
 	{
 		int n = 0;
@@ -429,7 +442,53 @@ public class SourceResultViewTest
 		SourceResultView view = build(npc(9022, "Killerwatt", 55, c),
 			new TrackerStore(mock(ConfigManager.class), new Gson()));
 		assertEquals("max hit number carries a variant breakdown tooltip", 1, countTooltips(view,
-			"<html>15 unprotected<br>12 with Antifire<br>8 with Insulated boots</html>"));
+			"<html>8 with Insulated boots<br>12 with Antifire<br>15 unprotected</html>"));
+	}
+
+	/**
+	 * "8/12/15", not "8 (15)". The mitigations are a ladder you climb with what you wear and
+	 * drink, and showing only its ends reads as a choice between two outcomes.
+	 */
+	@Test
+	public void conditionalMaxHitShowsEveryStepLowestToHighest()
+	{
+		Attack a = new Attack("magic", 15, 15, 4, 4, null, Arrays.asList(
+			new MaxHitVariant("Antifire", "CONSUMABLE", 12, 12),
+			new MaxHitVariant("Insulated boots", "GEAR", 8, 8)), null, null);
+		CombatStats c = new CombatStats(1, 1, 1, 1, 1, 5, Collections.singletonList(a));
+		SourceResultView view = build(npc(9022, "Killerwatt", 55, c),
+			new TrackerStore(mock(ConfigManager.class), new Gson()));
+		assertEquals(1, countLabels(view, "8/12/15"));
+		assertEquals(0, countLabels(view, "8 (15)"));
+	}
+
+	/** Two mitigations that land on the same number are one rung of the ladder, not two. */
+	@Test
+	public void conditionalMaxHitCollapsesDuplicateSteps()
+	{
+		Attack a = new Attack("magic", 15, 15, 4, 4, null, Arrays.asList(
+			new MaxHitVariant("Antifire", "CONSUMABLE", 8, 8),
+			new MaxHitVariant("Insulated boots", "GEAR", 8, 8)), null, null);
+		CombatStats c = new CombatStats(1, 1, 1, 1, 1, 5, Collections.singletonList(a));
+		SourceResultView view = build(npc(9022, "Killerwatt", 55, c),
+			new TrackerStore(mock(ConfigManager.class), new Gson()));
+		assertEquals(1, countLabels(view, "8/15"));
+	}
+
+	/** Past a handful of rungs the slashes outgrow the column, so the star stands in for them. */
+	@Test
+	public void aLongLadderCollapsesToAStarredHighest()
+	{
+		Attack a = new Attack("magic", 50, 50, 4, 4, null, Arrays.asList(
+			new MaxHitVariant("Insulated boots", "GEAR", 0, 0),
+			new MaxHitVariant("Antifire", "CONSUMABLE", 5, 5),
+			new MaxHitVariant("Super antifire", "CONSUMABLE", 20, 20),
+			new MaxHitVariant("Anti-dragon shield", "GEAR", 35, 35),
+			new MaxHitVariant("Elemental shield", "GEAR", 40, 40)), null, null);
+		CombatStats c = new CombatStats(1, 1, 1, 1, 1, 5, Collections.singletonList(a));
+		SourceResultView view = build(npc(9022, "Steel dragon", 246, c),
+			new TrackerStore(mock(ConfigManager.class), new Gson()));
+		assertEquals(1, countLabels(view, "50*"));
 	}
 
 	@Test
@@ -597,7 +656,7 @@ public class SourceResultViewTest
 		CombatStats c = new CombatStats(1, 1, 1, 1, 1, 5, Collections.singletonList(a));
 		List<String> text = labelTexts(build(npc(9032, "Killerwatt", 55, c),
 			new TrackerStore(mock(ConfigManager.class), new Gson())));
-		assertTrue("the headline still shows the conditional", text.contains("8 (15)"));
+		assertTrue("the headline still shows the conditional", text.contains("8/15"));
 		assertFalse("no legend row below the table", text.stream()
 			.anyMatch(t -> t != null && t.contains("unprotected")));
 	}
@@ -652,7 +711,7 @@ public class SourceResultViewTest
 		SourceResultView view = build(npc(9042, "Both", 55, c),
 			new TrackerStore(mock(ConfigManager.class), new Gson()));
 		assertEquals(1, countTooltips(view,
-			"<html>15 unprotected<br>8 with Insulated boots<br>May inflict poison</html>"));
+			"<html>8 with Insulated boots<br>15 unprotected<br>May inflict poison</html>"));
 	}
 
 	@Test

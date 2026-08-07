@@ -474,7 +474,18 @@ public class SourceResultView extends JPanel
 		return lines.isEmpty() ? null : "<html>" + String.join("<br>", lines) + "</html>";
 	}
 
-	// headline max hit: best mitigated case first, unmitigated base in parentheses
+	/** Beyond this many the slashes are longer than the column; the tooltip carries the rest. */
+	private static final int MAX_HIT_STEPS = 4;
+
+	/**
+	 * Headline max hit, every conditional value from lowest to highest: "0/5/35/50".
+	 *
+	 * <p>A steel dragon's dragonfire hits 0 through insulated boots and an antifire, 50 through
+	 * neither, and two values in between. Showing only the extremes ("0 (50)") reads as a choice
+	 * between two outcomes when it is really a ladder you climb with what you wear and drink. Past
+	 * a handful of steps the ladder no longer fits, so it collapses to "50*" — the star meaning
+	 * the same thing the slashes did, that the number moves, hover to see how.
+	 */
 	private static String maxHitText(Attack attack)
 	{
 		String base = range(attack.getMaxHit(), attack.getMaxHitMax());
@@ -482,11 +493,31 @@ public class SourceResultView extends JPanel
 		{
 			return base;
 		}
-		MaxHitVariant best = attack.getVariants().stream()
-			.min((a, b) -> Integer.compare(
-				Math.max(a.getMaxHit(), a.getMaxHitMax()), Math.max(b.getMaxHit(), b.getMaxHitMax())))
-			.get();
-		return range(best.getMaxHit(), best.getMaxHitMax()) + " (" + base + ")";
+		// a combo variant can peak above the unprotected number, so the base sorts in with the
+		// rest rather than being pinned to either end
+		List<int[]> order = new ArrayList<>();
+		List<String> texts = new ArrayList<>();
+		order.add(new int[]{Math.max(attack.getMaxHit(), attack.getMaxHitMax()), 0});
+		texts.add(base);
+		for (MaxHitVariant variant : attack.getVariants())
+		{
+			order.add(new int[]{Math.max(variant.getMaxHit(), variant.getMaxHitMax()), texts.size()});
+			texts.add(range(variant.getMaxHit(), variant.getMaxHitMax()));
+		}
+		order.sort((a, b) -> Integer.compare(a[0], b[0]));
+		List<String> steps = new ArrayList<>();
+		for (int[] entry : order)
+		{
+			String step = texts.get(entry[1]);
+			// two mitigations landing on the same number are one rung, not two
+			if (!steps.contains(step))
+			{
+				steps.add(step);
+			}
+		}
+		return steps.size() > MAX_HIT_STEPS
+			? steps.get(steps.size() - 1) + "*"
+			: String.join("/", steps);
 	}
 
 	/**
@@ -500,13 +531,14 @@ public class SourceResultView extends JPanel
 		List<String> lines = new ArrayList<>();
 		if (attack.getVariants() != null && !attack.getVariants().isEmpty())
 		{
-			lines.add(range(attack.getMaxHit(), attack.getMaxHitMax()) + " unprotected");
+			// lowest first, so the lines read in the same order as the slashes on the label
 			attack.getVariants().stream()
 				.sorted((a, b) -> Integer.compare(
-					Math.max(b.getMaxHit(), b.getMaxHitMax()),
-					Math.max(a.getMaxHit(), a.getMaxHitMax())))
+					Math.max(a.getMaxHit(), a.getMaxHitMax()),
+					Math.max(b.getMaxHit(), b.getMaxHitMax())))
 				.forEach(v -> lines.add(range(v.getMaxHit(), v.getMaxHitMax())
 					+ " with " + v.getLabel()));
+			lines.add(range(attack.getMaxHit(), attack.getMaxHitMax()) + " unprotected");
 		}
 		if (attack.getEffects() != null)
 		{
