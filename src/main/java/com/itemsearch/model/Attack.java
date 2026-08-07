@@ -42,4 +42,6 @@ public class Attack
 	String prayStyle;
 	// conditional max hits (gear/prayer/consumable mitigations); null/empty = unconditional
 	java.util.List<MaxHitVariant> variants;
+	// curator's free text about this attack, shown on hover over its prayer icon; null = none
+	String notes;
 }

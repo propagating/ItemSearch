@@ -382,7 +382,7 @@ public class SourceResultView extends JPanel
 
 		// one column per Attack, each with its own prayer icon, speed, and max hit.
 		int col = 1;
-		for (Attack attack : attacks)
+		for (Attack attack : inPrayerOrder(attacks))
 		{
 			if (attack == null)
 			{
@@ -395,10 +395,10 @@ public class SourceResultView extends JPanel
 			// prayStyle — the icon must show what to PRAY, with the roll explained on hover
 			String prayToken = attack.getPrayStyle() != null ? attack.getPrayStyle() : attack.getStyle();
 			JComponent icon = protectionCell(prayToken, spriteManager, itemManager);
-			if (attack.getPrayStyle() != null)
+			String hover = iconTooltip(attack);
+			if (hover != null)
 			{
-				icon.setToolTipText(capitalize(attack.getStyle())
-					+ " accuracy roll — prayed against as " + capitalize(attack.getPrayStyle()));
+				icon.setToolTipText(hover);
 			}
 			table.add(icon, gc);
 			gc.gridy = 1;
@@ -410,28 +410,68 @@ public class SourceResultView extends JPanel
 		}
 		box.add(table);
 
-		// one legend line per attack with conditional max hits: base first, then each
-		// mitigation descending, e.g. "Magic: 15 unprotected · 8 with Insulated boots"
-		for (Attack attack : attacks)
-		{
-			if (attack == null || attack.getVariants() == null || attack.getVariants().isEmpty())
-			{
-				continue;
-			}
-			StringBuilder legend = new StringBuilder(capitalize(attack.getStyle()))
-				.append(": ").append(range(attack.getMaxHit(), attack.getMaxHitMax()))
-				.append(" unprotected");
-			attack.getVariants().stream()
-				.sorted((a, b) -> Integer.compare(
-					Math.max(b.getMaxHit(), b.getMaxHitMax()), Math.max(a.getMaxHit(), a.getMaxHitMax())))
-				.forEach(v -> legend.append("  ·  ")
-					.append(range(v.getMaxHit(), v.getMaxHitMax()))
-					.append(" with ").append(v.getLabel()));
-			JLabel row = dim(legend.toString());
-			row.setAlignmentX(Component.LEFT_ALIGNMENT);
-			box.add(row);
-		}
 		return box;
+	}
+
+	/**
+	 * Attacks in the order the prayers sit in the prayer book — Magic, Ranged, Melee, then
+	 * anything with no prayer of its own — so the icon row always reads the same way whatever
+	 * order the curator entered them in. Ordering is by what the attack is prayed against, which
+	 * is what its icon shows: a magic-melee hybrid sorts with melee.
+	 */
+	private static List<Attack> inPrayerOrder(List<Attack> attacks)
+	{
+		List<Attack> ordered = new ArrayList<>();
+		for (Attack a : attacks)
+		{
+			if (a != null)
+			{
+				ordered.add(a);
+			}
+		}
+		// stable, so the curator's own order still breaks ties within one prayer
+		ordered.sort(Comparator.comparingInt(SourceResultView::prayerRank));
+		return ordered;
+	}
+
+	private static int prayerRank(Attack attack)
+	{
+		String token = attack.getPrayStyle() != null ? attack.getPrayStyle() : attack.getStyle();
+		String style = token == null ? "" : token.toLowerCase(Locale.ROOT);
+		if (style.contains("magic") || style.contains("mage"))
+		{
+			return 0;
+		}
+		if (style.contains("ranged") || style.contains("range"))
+		{
+			return 1;
+		}
+		if (style.contains("melee") || style.contains("stab")
+			|| style.contains("slash") || style.contains("crush"))
+		{
+			return 2;
+		}
+		return 3; // dragonfire, icy breath, typeless: no prayer of their own
+	}
+
+	/**
+	 * Hover text for an attack's prayer icon: the curator's notes when it has any, and the
+	 * accuracy/defence split for a hybrid. Notes used to occupy a row of their own beneath the
+	 * table, which crowded a card that is mostly numbers.
+	 */
+	private static String iconTooltip(Attack attack)
+	{
+		List<String> lines = new ArrayList<>();
+		if (attack.getPrayStyle() != null)
+		{
+			lines.add(capitalize(attack.getStyle()) + " accuracy roll — prayed against as "
+				+ capitalize(attack.getPrayStyle()));
+		}
+		if (attack.getNotes() != null && !attack.getNotes().trim().isEmpty())
+		{
+			lines.add(attack.getNotes().trim());
+		}
+		return lines.isEmpty() ? null : "<html>" + String.join("<br>", lines) + "</html>";
 	}
 
 	// headline max hit: best mitigated case first, unmitigated base in parentheses

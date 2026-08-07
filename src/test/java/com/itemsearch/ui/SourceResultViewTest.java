@@ -103,7 +103,7 @@ public class SourceResultViewTest
 		List<Attack> attacks = new ArrayList<>();
 		for (String t : attackTypes)
 		{
-			attacks.add(new Attack(t, 5, 5, 4, 4, null, null));
+			attacks.add(new Attack(t, 5, 5, 4, 4, null, null, null));
 		}
 		return new CombatStats(1, 1, 1, 1, 1, 5, attacks);
 	}
@@ -316,7 +316,7 @@ public class SourceResultViewTest
 	public void attackRangesRenderAsMinDashMax()
 	{
 		CombatStats c = new CombatStats(1, 1, 1, 1, 1, 5,
-			Collections.singletonList(new Attack("stab", 1, 3, 4, 6, null, null)));
+			Collections.singletonList(new Attack("stab", 1, 3, 4, 6, null, null, null)));
 		SourceResultView view = build(npc(9010, "Dwarf", 10, c),
 			new TrackerStore(mock(ConfigManager.class), new Gson()));
 		List<String> text = labelTexts(view);
@@ -408,37 +408,23 @@ public class SourceResultViewTest
 	public void hybridAttackPraysWithPrayStyleAndExplainsInTooltip()
 	{
 		CombatStats c = new CombatStats(1, 1, 1, 1, 1, 5, Collections.singletonList(
-			new Attack("magic", 15, 15, 4, 4, "ranged", null)));
+			new Attack("magic", 15, 15, 4, 4, "ranged", null, null)));
 		SourceResultView view = build(npc(9020, "Hybrid", 90, c),
 			new TrackerStore(mock(ConfigManager.class), new Gson()));
 		// the protection icon reflects the PRAY style (ranged), not the accuracy style
 		assertEquals(1, countTooltips(view, "Protect from Missiles"));
 		assertEquals(0, countTooltips(view, "Protect from Magic"));
-		assertEquals(1, countTooltips(view, "Magic accuracy roll — prayed against as Ranged"));
+		assertEquals(1, countTooltips(view,
+			"<html>Magic accuracy roll — prayed against as Ranged</html>"));
 	}
 
-	@Test
-	public void conditionalMaxHitsRenderBestFirstWithLegend()
-	{
-		Attack a = new Attack("magic", 15, 15, 4, 4, null, Collections.singletonList(
-			new MaxHitVariant("Insulated boots", "GEAR", 8, 8)));
-		CombatStats c = new CombatStats(1, 1, 1, 1, 1, 5, Collections.singletonList(a));
-		SourceResultView view = build(npc(9021, "Killerwatt", 55, c),
-			new TrackerStore(mock(ConfigManager.class), new Gson()));
-		List<String> text = labelTexts(view);
-		assertTrue("headline shows best-case with base in parens", text.contains("8 (15)"));
-		assertTrue("variant legend row shown", text.stream()
-			.anyMatch(t -> t != null && t.contains("8 with Insulated boots")));
-		assertTrue("unprotected base in legend", text.stream()
-			.anyMatch(t -> t != null && t.contains("15 unprotected")));
-	}
 
 	@Test
 	public void conditionalMaxHitNumberExplainsDifferenceInTooltip()
 	{
 		Attack a = new Attack("magic", 15, 15, 4, 4, null, Arrays.asList(
 			new MaxHitVariant("Insulated boots", "GEAR", 8, 8),
-			new MaxHitVariant("Antifire", "CONSUMABLE", 12, 12)));
+			new MaxHitVariant("Antifire", "CONSUMABLE", 12, 12)), null);
 		CombatStats c = new CombatStats(1, 1, 1, 1, 1, 5, Collections.singletonList(a));
 		SourceResultView view = build(npc(9022, "Killerwatt", 55, c),
 			new TrackerStore(mock(ConfigManager.class), new Gson()));
@@ -567,11 +553,70 @@ public class SourceResultViewTest
 			byTable.contains("RARE DROP TABLE"));
 	}
 
+	// Attacks read left to right in the order the prayers sit in the prayer book, whatever order
+	// the curator happened to enter them in.
+	@Test
+	public void attacksRenderInPrayerOrder()
+	{
+		CombatStats c = new CombatStats(1, 1, 1, 1, 1, 5, Arrays.asList(
+			new Attack("dragonfire", 50, 50, 4, 4, null, null, null),
+			new Attack("crush", 10, 10, 4, 4, null, null, null),
+			new Attack("ranged", 20, 20, 4, 4, null, null, null),
+			new Attack("magic", 30, 30, 4, 4, null, null, null)));
+		SourceResultView view = build(npc(9030, "Everything", 300, c),
+			new TrackerStore(mock(ConfigManager.class), new Gson()));
+
+		List<String> text = labelTexts(view);
+		int magic = text.indexOf("30");
+		int ranged = text.indexOf("20");
+		int melee = text.indexOf("10");
+		int special = text.indexOf("50");
+		assertTrue("magic first, got order " + text, magic < ranged);
+		assertTrue("ranged before melee", ranged < melee);
+		assertTrue("specials last", melee < special);
+	}
+
+	// a hybrid is prayed against as its prayStyle, so it sorts where its icon says it belongs
+	@Test
+	public void hybridsSortByWhatTheyArePrayedAgainst()
+	{
+		CombatStats c = new CombatStats(1, 1, 1, 1, 1, 5, Arrays.asList(
+			new Attack("magic", 40, 40, 4, 4, "melee", null, null),
+			new Attack("magic", 30, 30, 4, 4, null, null, null)));
+		List<String> text = labelTexts(build(npc(9031, "Bloodveld", 76, c),
+			new TrackerStore(mock(ConfigManager.class), new Gson())));
+		assertTrue("the pure magic attack comes before the magic-melee one",
+			text.indexOf("30") < text.indexOf("40"));
+	}
+
+	@Test
+	public void conditionalMaxHitsHaveNoLegendRowUnderTheTable()
+	{
+		Attack a = new Attack("magic", 15, 15, 4, 4, null, Collections.singletonList(
+			new MaxHitVariant("Insulated boots", "GEAR", 8, 8)), null);
+		CombatStats c = new CombatStats(1, 1, 1, 1, 1, 5, Collections.singletonList(a));
+		List<String> text = labelTexts(build(npc(9032, "Killerwatt", 55, c),
+			new TrackerStore(mock(ConfigManager.class), new Gson())));
+		assertTrue("the headline still shows the conditional", text.contains("8 (15)"));
+		assertFalse("no legend row below the table", text.stream()
+			.anyMatch(t -> t != null && t.contains("unprotected")));
+	}
+
+	@Test
+	public void curatorNotesShowOnHoverOverTheAttackIcon()
+	{
+		CombatStats c = new CombatStats(1, 1, 1, 1, 1, 5, Collections.singletonList(
+			new Attack("magic", 15, 15, 4, 4, null, null, "Only casts below 50% hitpoints")));
+		SourceResultView view = build(npc(9033, "Noted", 100, c),
+			new TrackerStore(mock(ConfigManager.class), new Gson()));
+		assertEquals(1, countTooltips(view, "<html>Only casts below 50% hitpoints</html>"));
+	}
+
 	@Test
 	public void unconditionalMaxHitNumberHasNoTooltip()
 	{
 		CombatStats c = new CombatStats(1, 1, 1, 1, 1, 5, Collections.singletonList(
-			new Attack("stab", 7, 7, 4, 4, null, null)));
+			new Attack("stab", 7, 7, 4, 4, null, null, null)));
 		SourceResultView view = build(npc(9023, "Plain", 20, c),
 			new TrackerStore(mock(ConfigManager.class), new Gson()));
 		assertEquals(0, countTooltips(view, "<html>7 unprotected</html>"));
