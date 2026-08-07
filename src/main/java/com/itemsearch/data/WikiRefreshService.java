@@ -26,7 +26,15 @@ package com.itemsearch.data;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
+import com.google.gson.reflect.TypeToken;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+import java.io.Reader;
+import java.io.Writer;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
@@ -36,10 +44,12 @@ import java.util.HashMap;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.TreeMap;
 import java.util.function.Consumer;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ScheduledExecutorService;
 import lombok.extern.slf4j.Slf4j;
+import net.runelite.client.RuneLite;
 import okhttp3.CacheControl;
 import okhttp3.Call;
 import okhttp3.Callback;
@@ -64,6 +74,9 @@ public class WikiRefreshService
 		this.gson = gson;
 		this.dataService = dataService;
 		this.executor = executor;
+		// off the calling thread: the panel asks for urls from the EDT, and reading this on
+		// demand there would be disk IO in the middle of a repaint
+		executor.submit(this::loadUrlsOnce);
 	}
 
 	public void refreshNpcImage(int npcId, String npcName)
@@ -166,15 +179,88 @@ public class WikiRefreshService
 		}
 	}
 
-	// title -> image url for this session. MISSING marks a page the wiki has no picture for, so
-	// it is asked about once rather than on every scroll.
+	// title -> image url. MISSING marks a page the wiki has no picture for, so it is asked about
+	// once rather than on every scroll. Persisted, because the images themselves are cached on
+	// disk and it would be absurd to go to the wiki on every launch only to learn where a picture
+	// we already hold came from.
 	private static final String MISSING = "";
 	private final Map<String, String> urlByTitle = new ConcurrentHashMap<>();
+	private volatile boolean urlsLoaded;
 
-	/** Visible for testing: seed the session memo, as a completed batch does. */
+	/** Visible for testing: seed the memo, as a completed batch does. */
 	void remember(String title, String url)
 	{
 		urlByTitle.put(title, url == null ? MISSING : url);
+	}
+
+	private static File urlCacheFile()
+	{
+		return new File(new File(RuneLite.RUNELITE_DIR, "itemsearch"), "wiki-image-urls.json");
+	}
+
+	/**
+	 * Reads the remembered urls once, on the executor. A lookup arriving before this finishes
+	 * simply asks the wiki, which is the behaviour without a memo at all — one wasted request,
+	 * not a wrong answer.
+	 */
+	private void loadUrlsOnce()
+	{
+		if (urlsLoaded)
+		{
+			return;
+		}
+		synchronized (this)
+		{
+			if (urlsLoaded)
+			{
+				return;
+			}
+			urlsLoaded = true;
+			File file = urlCacheFile();
+			if (!file.isFile())
+			{
+				return;
+			}
+			try (Reader reader = new InputStreamReader(
+				new FileInputStream(file), StandardCharsets.UTF_8))
+			{
+				Map<String, String> saved = gson.fromJson(reader,
+					new TypeToken<Map<String, String>>()
+					{
+					}.getType());
+				if (saved != null)
+				{
+					urlByTitle.putAll(saved);
+				}
+			}
+			catch (Exception e)
+			{
+				log.debug("itemsearch: could not read remembered image urls", e);
+			}
+		}
+	}
+
+	private void saveUrls()
+	{
+		File file = urlCacheFile();
+		try
+		{
+			File dir = file.getParentFile();
+			if (!dir.isDirectory() && !dir.mkdirs())
+			{
+				return;
+			}
+			try (Writer writer = new OutputStreamWriter(
+				new FileOutputStream(file), StandardCharsets.UTF_8))
+			{
+				gson.toJson(new TreeMap<>(urlByTitle), writer);
+			}
+		}
+		catch (Exception e)
+		{
+			// a memo that cannot be written costs one wiki lookup next launch, nothing more
+			log.debug("itemsearch: could not save remembered image urls", e);
+		}
 	}
 
 	private void requestImageUrls(List<String> titles, Consumer<Map<String, String>> onUrls)
@@ -214,6 +300,7 @@ public class WikiRefreshService
 							// remember the misses too, so a picture-less page is asked about once
 							urlByTitle.put(title, urls.getOrDefault(title, MISSING));
 						}
+						saveUrls();
 						if (!urls.isEmpty())
 						{
 							onUrls.accept(urls);

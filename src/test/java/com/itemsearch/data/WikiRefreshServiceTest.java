@@ -37,6 +37,7 @@ import java.util.Scanner;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.clearInvocations;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
@@ -119,6 +120,8 @@ public class WikiRefreshServiceTest
 		ScheduledExecutorService executor = mock(ScheduledExecutorService.class);
 		WikiRefreshService service = new WikiRefreshService(new OkHttpClient(), new Gson(),
 			mock(BundledDataSource.class), executor);
+		// the constructor schedules its own one-off read of the remembered urls; count from here
+		clearInvocations(executor);
 
 		List<Map<String, String>> handed = new ArrayList<>();
 		service.imageUrlsFor(Arrays.asList("Goblin"), handed::add);
