@@ -27,10 +27,20 @@ package com.itemsearch.data;
 import com.google.gson.Gson;
 import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 import java.util.Map;
+import java.util.concurrent.ScheduledExecutorService;
+import okhttp3.OkHttpClient;
 import java.util.Scanner;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.verifyNoMoreInteractions;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 import org.junit.Test;
@@ -97,6 +107,34 @@ public class WikiRefreshServiceTest
 			Arrays.asList("Killerwatt", "Killerwatt (Idle)"));
 		assertEquals("https://x/Killerwatt.png", urls.get("Killerwatt"));
 		assertEquals("https://x/Killerwatt.png", urls.get("Killerwatt (Idle)"));
+	}
+
+	/**
+	 * Scrolling fires this constantly, so a title already answered must never reach the network
+	 * again — including one the wiki has no picture for, which would otherwise be re-asked forever.
+	 */
+	@Test
+	public void titlesAlreadyAnsweredAreServedFromMemory()
+	{
+		ScheduledExecutorService executor = mock(ScheduledExecutorService.class);
+		WikiRefreshService service = new WikiRefreshService(new OkHttpClient(), new Gson(),
+			mock(BundledDataSource.class), executor);
+
+		List<Map<String, String>> handed = new ArrayList<>();
+		service.imageUrlsFor(Arrays.asList("Goblin"), handed::add);
+		// nothing is memoised yet, so it went to the executor and nothing came back inline
+		verify(executor, times(1)).submit(any(Runnable.class));
+		assertTrue(handed.isEmpty());
+
+		service.remember("Goblin", "https://x/Goblin.png");
+		service.remember("Faceless", "");
+
+		service.imageUrlsFor(Arrays.asList("Goblin", "Faceless"), handed::add);
+		verifyNoMoreInteractions(executor);
+		assertEquals(1, handed.size());
+		assertEquals("https://x/Goblin.png", handed.get(0).get("Goblin"));
+		assertFalse("a page with no picture is not handed back as a blank url",
+			handed.get(0).containsKey("Faceless"));
 	}
 
 	@Test

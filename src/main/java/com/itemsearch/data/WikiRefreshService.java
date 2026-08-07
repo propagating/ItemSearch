@@ -37,8 +37,10 @@ import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Consumer;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ScheduledExecutorService;
 import lombok.extern.slf4j.Slf4j;
+import okhttp3.CacheControl;
 import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.OkHttpClient;
@@ -137,12 +139,42 @@ public class WikiRefreshService
 	 */
 	public void imageUrlsFor(Collection<String> titles, Consumer<Map<String, String>> onUrls)
 	{
-		List<String> batch = new ArrayList<>(new LinkedHashSet<>(titles));
+		Map<String, String> known = new HashMap<>();
+		List<String> batch = new ArrayList<>();
+		for (String title : new LinkedHashSet<>(titles))
+		{
+			String cached = urlByTitle.get(title);
+			if (cached == null)
+			{
+				batch.add(title);
+			}
+			else if (!MISSING.equals(cached))
+			{
+				known.put(title, cached);
+			}
+			// else: already known to have no picture, so do not ask again
+		}
+		if (!known.isEmpty())
+		{
+			// answered without touching the network: scrolling back over rows already seen is free
+			onUrls.accept(known);
+		}
 		for (int i = 0; i < batch.size(); i += TITLE_BATCH)
 		{
 			List<String> slice = batch.subList(i, Math.min(i + TITLE_BATCH, batch.size()));
 			executor.submit(() -> requestImageUrls(slice, onUrls));
 		}
+	}
+
+	// title -> image url for this session. MISSING marks a page the wiki has no picture for, so
+	// it is asked about once rather than on every scroll.
+	private static final String MISSING = "";
+	private final Map<String, String> urlByTitle = new ConcurrentHashMap<>();
+
+	/** Visible for testing: seed the session memo, as a completed batch does. */
+	void remember(String title, String url)
+	{
+		urlByTitle.put(title, url == null ? MISSING : url);
 	}
 
 	private void requestImageUrls(List<String> titles, Consumer<Map<String, String>> onUrls)
@@ -152,7 +184,14 @@ public class WikiRefreshService
 			String url = API + "?action=query&format=json&prop=pageimages&piprop=original"
 				+ "&redirects=1&pilimit=" + TITLE_BATCH + "&titles="
 				+ URLEncoder.encode(String.join("|", titles), StandardCharsets.UTF_8.name());
-			httpClient.newCall(new Request.Builder().url(url).build()).enqueue(new Callback()
+			// no-store: OkHttp's shared disk cache cannot always rename its temp file on Windows
+			// and throws out of body.string() mid-read, losing the whole response. These answers
+			// are memoised below and the images they point at are cached by WikiImageLoader, so
+			// nothing is gained by letting OkHttp store them too.
+			Request request = new Request.Builder().url(url)
+				.cacheControl(new CacheControl.Builder().noStore().build())
+				.build();
+			httpClient.newCall(request).enqueue(new Callback()
 			{
 				@Override
 				public void onFailure(Call call, IOException e)
@@ -170,6 +209,11 @@ public class WikiRefreshService
 							return;
 						}
 						Map<String, String> urls = parseImageUrls(gson, r.body().string(), titles);
+						for (String title : titles)
+						{
+							// remember the misses too, so a picture-less page is asked about once
+							urlByTitle.put(title, urls.getOrDefault(title, MISSING));
+						}
 						if (!urls.isEmpty())
 						{
 							onUrls.accept(urls);

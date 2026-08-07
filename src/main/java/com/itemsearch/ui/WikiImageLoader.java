@@ -36,6 +36,7 @@ import javax.swing.JLabel;
 import javax.swing.SwingUtilities;
 import lombok.extern.slf4j.Slf4j;
 import net.runelite.client.RuneLite;
+import okhttp3.CacheControl;
 import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.HttpUrl;
@@ -95,7 +96,12 @@ public final class WikiImageLoader
 			log.debug("itemsearch: unparseable image url {}", url);
 			return;
 		}
-		Request request = new Request.Builder().url(parsed).build();
+		// no-store: this class keeps its own disk cache of the scaled image, and OkHttp's shared
+		// cache throws mid-read on Windows when it cannot rename its temp file — which loses the
+		// response entirely rather than merely failing to cache it
+		Request request = new Request.Builder().url(parsed)
+			.cacheControl(new CacheControl.Builder().noStore().build())
+			.build();
 		httpClient.newCall(request).enqueue(new Callback()
 		{
 			@Override
