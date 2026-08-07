@@ -27,6 +27,7 @@ package com.itemsearch;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.Rectangle;
+import java.util.ArrayList;
 import java.util.List;
 import javax.swing.BoxLayout;
 import javax.swing.JLabel;
@@ -74,8 +75,8 @@ class ItemSearchPanel extends PluginPanel
 	private final JScrollPane resultsScroll;
 	private final JPanel content = new JPanel(new BorderLayout());
 	private final JLabel hintLabel = new JLabel("Search for an NPC or item above.");
-	// rendering thousands of rows at once stalls the sidebar, so the browsable list grows on demand
-	private static final int BROWSE_PAGE = 100;
+	// rendering thousands of rows at once stalls the sidebar, so the list grows on demand
+	private static final int PAGE = 100;
 	private final Timer debounce;
 	// the item view currently on screen, if any, so its dry counters can update live on kills
 	private ItemResultView currentItemView;
@@ -86,8 +87,9 @@ class ItemSearchPanel extends PluginPanel
 	private final java.util.Deque<Runnable> history = new java.util.ArrayDeque<>();
 	// how to redraw whatever is on screen, so it can be pushed onto the history when leaving
 	private Runnable currentPage;
-	// how many rows the browsable (unsearched) list shows; "Show more" extends it
-	private int browseLimit = BROWSE_PAGE;
+	// how many rows the list shows; "Show more" extends it, a new query resets it
+	private int shownLimit = PAGE;
+	private String lastQuery = "";
 
 	ItemSearchPanel(DropDataService dataService, TrackerStore trackerStore, ItemManager itemManager,
 		OkHttpClient okHttpClient, WikiRefreshService wikiRefreshService, SpawnMapMarker spawnMapMarker,
@@ -184,67 +186,81 @@ class ItemSearchPanel extends PluginPanel
 		currentPage = null;
 		renderResults();
 
-		results.removeAll();
-		String q = search.getText();
-		if (q != null && !q.trim().isEmpty())
+		String q = search.getText() == null ? "" : search.getText().trim();
+		if (!q.equals(lastQuery))
 		{
-			for (SourceData npc : dataService.searchSources(q))
-			{
-				// a chest or gathering node has no combat level; "(lvl 0)" would be noise
-				String label = npc.getCombatLevel() > 0
-					? npc.getName() + " (lvl " + npc.getCombatLevel() + ")"
-					: npc.getName();
-				results.add(new ResultRow(badgeFor(npc.getType()), label, () -> showNpc(npc)));
-			}
-			for (ShopData shop : dataService.searchShops(q))
-			{
-				results.add(new ResultRow("SHOP", shop.getName(), () -> showShop(shop)));
-			}
-			for (ItemMatch item : dataService.searchItems(q))
-			{
-				results.add(new ResultRow("ITEM", item.getItemName(), () -> showItem(item)));
-			}
+			lastQuery = q;
+			shownLimit = PAGE; // a different query starts from the top again
 		}
-		else
+
+		results.removeAll();
+		List<ResultRow> rows = q.isEmpty() ? browseRows() : searchRows(q);
+		if (rows.isEmpty())
 		{
-			browse();
+			results.add(hintLabel); // nothing matched, or the data is still loading
+		}
+		int shown = Math.min(shownLimit, rows.size());
+		for (ResultRow row : rows.subList(0, shown))
+		{
+			results.add(row);
+		}
+		if (shown < rows.size())
+		{
+			results.add(new ResultRow("MORE", "Show more  (" + shown + " of " + rows.size() + ")",
+				() ->
+				{
+					shownLimit += PAGE;
+					rebuildResults();
+				}));
 		}
 		results.revalidate();
 		results.repaint();
 	}
 
 	/**
-	 * The page with nothing typed: a list worth scrolling rather than an instruction to search.
+	 * Rows for a query, every match, in the order they are offered.
 	 *
-	 * <p>Rendering all several thousand sources at once stalls the sidebar, so it starts at
-	 * {@value #BROWSE_PAGE} and grows when asked.
+	 * <p>They are built rather than added straight to the panel because a one-letter query
+	 * matches thousands of sources and items; rendering all of them froze the client, and going
+	 * Back froze it again re-laying out the same panel. Only the first {@value #PAGE} are shown.
 	 */
-	private void browse()
+	private List<ResultRow> searchRows(String q)
 	{
-		List<SourceData> all = dataService.allSources();
-		if (all.isEmpty())
+		List<ResultRow> rows = new ArrayList<>();
+		for (SourceData npc : dataService.searchSources(q))
 		{
-			results.add(hintLabel); // data still loading
-			return;
+			rows.add(new ResultRow(badgeFor(npc.getType()), sourceLabel(npc), () -> showNpc(npc)));
 		}
-		int shown = Math.min(browseLimit, all.size());
-		for (SourceData npc : all.subList(0, shown))
+		for (ShopData shop : dataService.searchShops(q))
 		{
-			String label = npc.getCombatLevel() > 0
-				? npc.getName() + " (lvl " + npc.getCombatLevel() + ")"
-				: npc.getName();
-			results.add(new ResultRow(badgeFor(npc.getType()), label, () -> showNpc(npc)));
+			rows.add(new ResultRow("SHOP", shop.getName(), () -> showShop(shop)));
 		}
-		if (shown < all.size())
+		for (ItemMatch item : dataService.searchItems(q))
 		{
-			results.add(new ResultRow("MORE",
-				"Show more  (" + shown + " of " + all.size() + ")", () ->
-				{
-					browseLimit += BROWSE_PAGE;
-					rebuildResults();
-				}));
+			rows.add(new ResultRow("ITEM", item.getItemName(), () -> showItem(item)));
 		}
+		return rows;
 	}
+
+	/** The page with nothing typed: a list worth scrolling rather than an instruction to search. */
+	private List<ResultRow> browseRows()
+	{
+		List<ResultRow> rows = new ArrayList<>();
+		for (SourceData npc : dataService.allSources())
+		{
+			rows.add(new ResultRow(badgeFor(npc.getType()), sourceLabel(npc), () -> showNpc(npc)));
+		}
+		return rows;
+	}
+
+	// a chest or gathering node has no combat level; "(lvl 0)" would be noise
+	private static String sourceLabel(SourceData npc)
+	{
+		return npc.getCombatLevel() > 0
+			? npc.getName() + " (lvl " + npc.getCombatLevel() + ")"
+			: npc.getName();
+	}
+
 
 	/**
 	 * Opens a page, remembering the one being left so Back can return to it.

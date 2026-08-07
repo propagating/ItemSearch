@@ -340,6 +340,42 @@ public class ItemSearchPanelTest
 		assertTrue("and shows the results", showing(panel, "Zulrah"));
 	}
 
+	/**
+	 * A one-letter query matches thousands of sources and items. Building a row for every one
+	 * froze the client, and Back froze it again by re-laying out the same panel.
+	 */
+	@Test
+	public void aBroadSearchIsCappedRatherThanBuildingEveryRow() throws Exception
+	{
+		ItemSearchPanel panel = newPanel(loadedTestData());
+		JTextField search = field(panel, "search", JTextField.class);
+		JPanel results = field(panel, "results", JPanel.class);
+
+		search.setText("o"); // matches most of the fixture
+		invokeRebuild(panel);
+
+		int cap = 100;
+		assertTrue("a broad search must not render every match, got "
+				+ results.getComponentCount(),
+			results.getComponentCount() <= cap + 1);
+	}
+
+	@Test
+	public void narrowingTheSearchStartsFromTheTopAgain() throws Exception
+	{
+		ItemSearchPanel panel = newPanel(loadedTestData());
+		JTextField search = field(panel, "search", JTextField.class);
+		JPanel results = field(panel, "results", JPanel.class);
+
+		search.setText("o");
+		invokeRebuild(panel);
+		search.setText("goblin");
+		invokeRebuild(panel);
+
+		assertTrue("a new query shows its own matches", showing(results, "Goblin"));
+		assertTrue("and only those", results.getComponentCount() < 10);
+	}
+
 	/** The empty search page is worth browsing rather than a bare instruction. */
 	@Test
 	public void theDefaultPageListsSourcesToBrowse() throws Exception
