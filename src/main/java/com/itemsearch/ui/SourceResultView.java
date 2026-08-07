@@ -178,9 +178,12 @@ public class SourceResultView extends JPanel
 		grouped.put(null, new ArrayList<>()); // reserve first position for the uncategorised group
 		for (DropSource d : sorted)
 		{
-			// a drop outside any shared table has no drop-table name, so it falls back to the
-			// wiki section under either setting rather than collapsing into one unnamed group
-			String key = byDropTable && d.getDropTable() != null ? d.getDropTable() : d.getCategory();
+			// Each mode falls back to the other rather than collapsing into one unnamed group:
+			// a drop outside any shared table has no table name, and a shared table pulled in
+			// without a heading introducing it has no wiki section.
+			String key = byDropTable
+				? (d.getDropTable() != null ? d.getDropTable() : d.getCategory())
+				: (d.getCategory() != null ? d.getCategory() : d.getDropTable());
 			grouped.computeIfAbsent(key, k -> new ArrayList<>()).add(d);
 		}
 		grouped.values().removeIf(List::isEmpty);
