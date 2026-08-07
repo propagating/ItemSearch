@@ -74,7 +74,7 @@ public class SpawnMapMarkerTest
 	private static SourceData npc(int id, String name, List<SpawnPoint> spawns)
 	{
 		return new SourceData(id, name, 42, null, Collections.emptyList(), spawns,
-			Collections.singletonList(id), null, SourceType.KILL, null, null, null);
+			Collections.singletonList(id), null, SourceType.KILL, null, null, null, null);
 	}
 
 	@Before

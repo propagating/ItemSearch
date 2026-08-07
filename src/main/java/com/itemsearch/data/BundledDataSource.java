@@ -99,12 +99,9 @@ public class BundledDataSource implements DropDataService
 				log.warn("itemsearch: bundled data not found at {}", resourcePath);
 				return;
 			}
-			Type listType = new TypeToken<List<SourceData>>()
-			{
-			}.getType();
-			List<SourceData> npcs = gson.fromJson(
-				new InputStreamReader(in, StandardCharsets.UTF_8), listType);
-			index(npcs == null ? Collections.emptyList() : npcs);
+			BundledData data = gson.fromJson(
+				new InputStreamReader(in, StandardCharsets.UTF_8), BundledData.class);
+			index(materialise(data));
 		}
 		catch (Exception e)
 		{
@@ -176,6 +173,69 @@ public class BundledDataSource implements DropDataService
 		}
 	}
 
+	/**
+	 * Sources with their drop lists resolved from the shared tables.
+	 *
+	 * <p>Most drop tables are shared — 47 monsters roll the same herb table, and every version of
+	 * a monster repeats its page's — so the file stores each once and sources reference them.
+	 * Resolving here keeps that off every view: a SourceData still just has a list of drops.
+	 * The lists are shared rather than copied, so the sharing saves heap as well as file size.
+	 */
+	private List<SourceData> materialise(BundledData data)
+	{
+		if (data == null || data.sources == null)
+		{
+			return Collections.emptyList();
+		}
+		List<List<DropSource>> tables = new ArrayList<>();
+		for (DropTable table : data.tables == null ? Collections.<DropTable>emptyList() : data.tables)
+		{
+			List<DropSource> rows = new ArrayList<>();
+			for (DropSource d : table.drops == null ? Collections.<DropSource>emptyList() : table.drops)
+			{
+				// the table names itself once instead of every row repeating it
+				rows.add(table.name == null ? d : new DropSource(d.getItemId(), d.getItemName(),
+					d.getRarity(), d.getQuantity(), d.isNoted(), d.isRarityKnown(),
+					d.getCategory(), table.name));
+			}
+			tables.add(Collections.unmodifiableList(rows));
+		}
+
+		List<SourceData> out = new ArrayList<>(data.sources.size());
+		for (SourceData source : data.sources)
+		{
+			List<DropSource> drops = new ArrayList<>();
+			for (Integer ref : source.getTables() == null
+				? Collections.<Integer>emptyList() : source.getTables())
+			{
+				if (ref != null && ref >= 0 && ref < tables.size())
+				{
+					drops.addAll(tables.get(ref));
+				}
+				else
+				{
+					log.warn("itemsearch: {} references drop table {}, which does not exist",
+						source.getName(), ref);
+				}
+			}
+			out.add(source.withDrops(drops));
+		}
+		return out;
+	}
+
+	/** The shape of the bundled file: tables stored once, sources referencing them by index. */
+	private static class BundledData
+	{
+		List<DropTable> tables;
+		List<SourceData> sources;
+	}
+
+	private static class DropTable
+	{
+		String name;
+		List<DropSource> drops;
+	}
+
 	public boolean isLoaded()
 	{
 		return loaded;
@@ -218,7 +278,7 @@ public class BundledDataSource implements DropDataService
 			SourceType type = npc.getType() == null ? SourceType.KILL : npc.getType();
 			npc = new SourceData(npc.getId(), npc.getName(), npc.getCombatLevel(),
 				npc.getWikiImageUrl(), drops, spawns, npcIds, npc.getCombat(),
-				type, npc.getX(), npc.getY(), npc.getPlane());
+				type, npc.getX(), npc.getY(), npc.getPlane(), npc.getTables());
 			allNpcs.add(npc);
 			for (Integer id : npcIds)
 			{
@@ -378,7 +438,7 @@ public class BundledDataSource implements DropDataService
 		}
 		SourceData updated = new SourceData(cur.getId(), cur.getName(), cur.getCombatLevel(),
 			wikiImageUrl, cur.getDrops(), cur.getSpawnPoints(), cur.getNpcIds(), cur.getCombat(),
-			cur.getType(), cur.getX(), cur.getY(), cur.getPlane());
+			cur.getType(), cur.getX(), cur.getY(), cur.getPlane(), cur.getTables());
 		// replace across every id that resolves to this entry, plus the search list, so a
 		// later reopen (search reads allNpcs) sees the fresh image too. replace(k,old,new)
 		// is a CAS: a racing overlay simply wins/loses a key without clobbering fields.

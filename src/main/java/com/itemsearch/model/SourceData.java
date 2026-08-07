@@ -49,4 +49,13 @@ public class SourceData
 	Integer x;
 	Integer y;
 	Integer plane;
+	// indexes into the bundled file's shared drop tables; resolved into drops at load time
+	java.util.List<Integer> tables;
+
+	/** A copy carrying the given drops, used once the shared tables have been resolved. */
+	public SourceData withDrops(List<DropSource> resolved)
+	{
+		return new SourceData(id, name, combatLevel, wikiImageUrl, resolved, spawnPoints,
+			npcIds, combat, type, x, y, plane, tables);
+	}
 }

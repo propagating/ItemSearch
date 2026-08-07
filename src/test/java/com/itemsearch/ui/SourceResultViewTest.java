@@ -95,7 +95,7 @@ public class SourceResultViewTest
 	private static SourceData npc(int id, String name, int level, CombatStats combat)
 	{
 		return new SourceData(id, name, level, null, Collections.emptyList(), Collections.emptyList(),
-			Collections.singletonList(id), combat, SourceType.KILL, null, null, null);
+			Collections.singletonList(id), combat, SourceType.KILL, null, null, null, null);
 	}
 
 	private static CombatStats combat(List<String> attackTypes)
