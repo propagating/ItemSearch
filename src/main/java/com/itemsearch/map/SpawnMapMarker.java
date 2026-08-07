@@ -101,7 +101,27 @@ public class SpawnMapMarker
 			worldMapPointManager.add(point);
 			shown.add(point);
 		}
-		SpawnPoint first = spawns.get(0);
+		// A monster that lives underground has its markers drawn on tiles the surface world map
+		// never shows, so from above ground they are invisible and from below they are redundant
+		// with standing there. The useful marker is the way in.
+		SpawnPoint entrance = npc.getEntrance();
+		if (entrance != null)
+		{
+			WorldMapPoint way = WorldMapPoint.builder()
+				.worldPoint(new WorldPoint(entrance.getX(), entrance.getY(), entrance.getPlane()))
+				.image(markerIcon)
+				.snapToEdge(true)
+				.jumpOnClick(true)
+				.name(npc.getName())
+				.tooltip(npc.getName() + " — entrance")
+				.build();
+			worldMapPointManager.add(way);
+			shown.add(way);
+		}
+
+		// pan to the entrance when there is one: it is the part of the trip the player has to
+		// make, and the spawn tiles are somewhere the map cannot show them yet
+		SpawnPoint first = entrance != null ? entrance : spawns.get(0);
 		WorldPoint target = new WorldPoint(first.getX(), first.getY(), first.getPlane());
 		clientThread.invokeLater(() ->
 		{

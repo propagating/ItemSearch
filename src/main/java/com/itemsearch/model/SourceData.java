@@ -55,6 +55,9 @@ public class SourceData
 	// A version split calls itself "Killerwatt (Attacking)", which is not a page anyone can
 	// fetch. Null whenever the name is the title, which is most sources.
 	String wikiPage;
+	// the surface tile you go in by, when this source's own tiles are somewhere the world map
+	// does not draw (underground). Null for anything reachable on foot above ground.
+	SpawnPoint entrance;
 
 	/**
 	 * The title to ask the wiki about. The display name is not always one: version splits and
@@ -69,6 +72,6 @@ public class SourceData
 	public SourceData withDrops(List<DropSource> resolved)
 	{
 		return new SourceData(id, name, combatLevel, wikiImageUrl, resolved, spawnPoints,
-			npcIds, combat, type, x, y, plane, tables, wikiPage);
+			npcIds, combat, type, x, y, plane, tables, wikiPage, entrance);
 	}
 }

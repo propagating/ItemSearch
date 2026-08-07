@@ -39,6 +39,7 @@ import com.itemsearch.model.SpawnPoint;
 import net.runelite.client.ui.overlay.worldmap.WorldMapPoint;
 import net.runelite.client.ui.overlay.worldmap.WorldMapPointManager;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import org.junit.Before;
 import org.junit.Test;
@@ -50,6 +51,7 @@ import static org.mockito.Mockito.doAnswer;
 import static org.mockito.Mockito.lenient;
 import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.atLeastOnce;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import org.mockito.junit.MockitoJUnitRunner;
@@ -73,8 +75,14 @@ public class SpawnMapMarkerTest
 
 	private static SourceData npc(int id, String name, List<SpawnPoint> spawns)
 	{
+		return npc(id, name, spawns, null);
+	}
+
+	private static SourceData npc(int id, String name, List<SpawnPoint> spawns, SpawnPoint entrance)
+	{
 		return new SourceData(id, name, 42, null, Collections.emptyList(), spawns,
-			Collections.singletonList(id), null, SourceType.KILL, null, null, null, null, null);
+			Collections.singletonList(id), null, SourceType.KILL, null, null, null, null, null,
+			entrance);
 	}
 
 	@Before
@@ -210,5 +218,46 @@ public class SpawnMapMarkerTest
 		marker.showSpawns(npc(1, "Zulrah", Collections.emptyList()));
 		verify(worldMapPointManager, never()).add(any());
 		verify(worldMap, never()).setWorldMapPositionTarget(any());
+	}
+
+	/**
+	 * A steel dragon's tiles are at y 9435, which the surface world map never draws — so its
+	 * markers are invisible from above ground and pointless from inside the dungeon. The marker
+	 * worth having is the rope, and the map should open there.
+	 */
+	@Test
+	public void anUndergroundMonsterIsMarkedAtItsEntrance()
+	{
+		marker.showSpawns(npc(274, "Steel dragon",
+			Collections.singletonList(new SpawnPoint(2702, 9447, 0)),
+			new SpawnPoint(2760, 3061, 0)));
+
+		ArgumentCaptor<WorldMapPoint> points = ArgumentCaptor.forClass(WorldMapPoint.class);
+		verify(worldMapPointManager, atLeastOnce()).add(points.capture());
+		assertTrue("the entrance is marked",
+			points.getAllValues().stream().anyMatch(
+				p -> p.getWorldPoint().getX() == 2760 && p.getWorldPoint().getY() == 3061));
+		assertTrue("and says what it is",
+			points.getAllValues().stream().anyMatch(
+				p -> p.getTooltip() != null && p.getTooltip().endsWith("entrance")));
+
+		ArgumentCaptor<WorldPoint> target = ArgumentCaptor.forClass(WorldPoint.class);
+		verify(worldMap).setWorldMapPositionTarget(target.capture());
+		assertEquals("the map opens on the way in, not on tiles it cannot draw",
+			3061, target.getValue().getY());
+	}
+
+	/** An above-ground monster has no entrance to mark; its own tiles are the answer. */
+	@Test
+	public void aSurfaceMonsterIsMarkedWhereItStands()
+	{
+		marker.showSpawns(npc(3031, "Goblin",
+			Collections.singletonList(new SpawnPoint(3250, 3250, 0))));
+
+		ArgumentCaptor<WorldMapPoint> points = ArgumentCaptor.forClass(WorldMapPoint.class);
+		verify(worldMapPointManager, atLeastOnce()).add(points.capture());
+		assertEquals(1, points.getAllValues().size());
+		assertFalse(points.getAllValues().stream().anyMatch(
+			p -> p.getTooltip() != null && p.getTooltip().endsWith("entrance")));
 	}
 }
