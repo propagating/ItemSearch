@@ -68,6 +68,19 @@ public interface ItemSearchConfig extends Config
 	}
 
 	@ConfigItem(
+		keyName = "allowSpawnEditing",
+		name = "Record spawn locations yourself",
+		description = "Adds buttons to a monster's page for recording where you are standing as "
+			+ "one of its spawn tiles, or as the way into its dungeon. Useful for the monsters "
+			+ "the shipped data cannot place. Kept on your machine and layered over the shipped "
+			+ "tiles rather than replacing them."
+	)
+	default boolean allowSpawnEditing()
+	{
+		return false;
+	}
+
+	@ConfigItem(
 		keyName = "showDropsMenuEntry",
 		name = "Right-click \"Show drops\"",
 		description = "Add a Show drops option to the right-click menu of NPCs this plugin "

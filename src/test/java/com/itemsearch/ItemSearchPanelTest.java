@@ -38,6 +38,7 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 import net.runelite.client.callback.ClientThread;
+import net.runelite.client.config.ConfigManager;
 import net.runelite.client.game.ItemManager;
 import net.runelite.client.game.SpriteManager;
 import net.runelite.client.util.AsyncBufferedImage;
@@ -45,6 +46,8 @@ import okhttp3.OkHttpClient;
 import com.itemsearch.data.BundledDataSource;
 import com.itemsearch.data.WikiRefreshService;
 import com.itemsearch.map.SpawnMapMarker;
+import com.itemsearch.map.SpawnRecorder;
+import com.itemsearch.tracker.SpawnStore;
 import com.itemsearch.tracker.TrackerStore;
 import org.junit.Test;
 import static org.junit.Assert.assertEquals;
@@ -74,7 +77,9 @@ public class ItemSearchPanelTest
 			mock(SpawnMapMarker.class),
 			mock(ClientThread.class),
 			mock(ItemSearchConfig.class),
-			mock(SpriteManager.class));
+			mock(SpriteManager.class),
+			new SpawnStore(mock(ConfigManager.class), new Gson()),
+			mock(SpawnRecorder.class));
 	}
 
 	private BundledDataSource loadedTestData()

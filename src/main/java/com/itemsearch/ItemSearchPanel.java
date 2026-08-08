@@ -54,10 +54,12 @@ import okhttp3.OkHttpClient;
 import com.itemsearch.data.DropDataService;
 import com.itemsearch.data.WikiRefreshService;
 import com.itemsearch.map.SpawnMapMarker;
+import com.itemsearch.map.SpawnRecorder;
 import com.itemsearch.model.ItemMatch;
 import com.itemsearch.model.SourceData;
 import com.itemsearch.model.SourceType;
 import com.itemsearch.model.ShopData;
+import com.itemsearch.tracker.SpawnStore;
 import com.itemsearch.tracker.TrackerStore;
 import com.itemsearch.ui.ItemResultView;
 import com.itemsearch.ui.SourceResultView;
@@ -77,6 +79,8 @@ class ItemSearchPanel extends PluginPanel
 	private final ClientThread clientThread;
 	private final ItemSearchConfig config;
 	private final SpriteManager spriteManager;
+	private final SpawnStore spawnStore;
+	private final SpawnRecorder spawnRecorder;
 	private final OkHttpClient okHttpClient;
 
 	private final JTextField search = new JTextField();
@@ -129,9 +133,11 @@ class ItemSearchPanel extends PluginPanel
 	ItemSearchPanel(DropDataService dataService, TrackerStore trackerStore, ItemManager itemManager,
 		OkHttpClient okHttpClient, WikiRefreshService wikiRefreshService, SpawnMapMarker spawnMapMarker,
 		ClientThread clientThread, ItemSearchConfig config,
-		SpriteManager spriteManager)
+		SpriteManager spriteManager, SpawnStore spawnStore, SpawnRecorder spawnRecorder)
 	{
 		super(false);
+		this.spawnStore = spawnStore;
+		this.spawnRecorder = spawnRecorder;
 		this.okHttpClient = okHttpClient;
 		this.dataService = dataService;
 		this.trackerStore = trackerStore;
@@ -564,12 +570,13 @@ class ItemSearchPanel extends PluginPanel
 	{
 		currentItemView = null;
 		SourceResultView view = new SourceResultView(npc, trackerStore, spriteManager, itemManager, okHttpClient,
-			spawnMapMarker, clientThread, this::back, this::showItem);
+			spawnMapMarker, clientThread, spawnStore, spawnRecorder, config.allowSpawnEditing(),
+			this::back, this::showItem);
 		currentNpcView = view;
 		showDetail(view);
 		if (config.autoMarkSpawns())
 		{
-			spawnMapMarker.showSpawns(npc);
+			spawnMapMarker.showSpawns(SourceResultView.withRecorded(npc, spawnStore));
 		}
 		// fetch a fresher wiki image and push it into the view we just opened. By page title,
 		// not display name — "Killerwatt (Attacking)" is a name we made up when splitting

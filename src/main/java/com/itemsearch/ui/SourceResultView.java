@@ -66,6 +66,9 @@ import com.itemsearch.model.ItemMatch;
 import com.itemsearch.model.MaxHitVariant;
 import com.itemsearch.model.SourceData;
 import com.itemsearch.model.SourceType;
+import com.itemsearch.model.SpawnPoint;
+import com.itemsearch.map.SpawnRecorder;
+import com.itemsearch.tracker.SpawnStore;
 import com.itemsearch.tracker.TrackerStore;
 import net.runelite.client.ui.ColorScheme;
 import net.runelite.client.util.AsyncBufferedImage;
@@ -86,9 +89,13 @@ public class SourceResultView extends JPanel
 
 	public SourceResultView(SourceData npc, TrackerStore store, SpriteManager spriteManager, ItemManager itemManager,
 		OkHttpClient okHttpClient, SpawnMapMarker mapMarker,
-		ClientThread clientThread,
+		ClientThread clientThread, SpawnStore spawnStore, SpawnRecorder spawnRecorder,
+		boolean allowSpawnEditing,
 		Runnable onBack, Consumer<ItemMatch> onItemSelected)
 	{
+		this.spawnStore = spawnStore;
+		this.spawnRecorder = spawnRecorder;
+		this.allowSpawnEditing = allowSpawnEditing;
 		this.okHttpClient = okHttpClient;
 		this.npcId = npc.getId();
 		this.killable = !npc.getNpcIds().isEmpty();
@@ -321,6 +328,109 @@ public class SourceResultView extends JPanel
 			default:
 				return "";
 		}
+	}
+
+	/**
+	 * Buttons for writing down where a monster actually is.
+	 *
+	 * <p>The shipped data cannot place everything — its spawn dump stops at npc id 11151, and the
+	 * wiki has no map of a good many places. Someone standing in front of the monster knows better
+	 * than either, so this lets them say so. What they record layers over the shipped tiles.
+	 */
+	private JPanel buildRecordingBox(SourceData npc, SpawnMapMarker mapMarker)
+	{
+		JPanel box = new JPanel();
+		box.setLayout(new BoxLayout(box, BoxLayout.Y_AXIS));
+		box.setOpaque(false);
+		box.setAlignmentX(Component.LEFT_ALIGNMENT);
+		box.setBorder(BorderFactory.createEmptyBorder(6, 0, 0, 0));
+
+		recordedLabel = new JLabel();
+		recordedLabel.setForeground(ColorScheme.LIGHT_GRAY_COLOR);
+		recordedLabel.setAlignmentX(Component.LEFT_ALIGNMENT);
+		box.add(recordedLabel);
+		refreshRecorded();
+
+		JPanel grid = new JPanel(new GridLayout(0, 2, 4, 4));
+		grid.setOpaque(false);
+		grid.setAlignmentX(Component.LEFT_ALIGNMENT);
+
+		grid.add(recordButton("+ Spawn here", "Record where you are standing as a spawn tile",
+			done -> spawnRecorder.recordSpawn(npcId, done), npc, mapMarker));
+		grid.add(recordButton("+ Entrance", "Record where you are standing as the way into this "
+				+ "monster's dungeon — stand at the surface entrance",
+			done -> spawnRecorder.recordEntrance(npcId, done), npc, mapMarker));
+		grid.add(recordButton("− Last spawn", "Remove the tile you recorded most recently",
+			done ->
+			{
+				spawnStore.removeLastSpawn(npcId);
+				done.accept("Removed the last tile");
+			}, npc, mapMarker));
+		grid.add(recordButton("− All spawns", "Remove every tile you recorded for this monster; "
+				+ "the shipped ones are untouched",
+			done ->
+			{
+				spawnStore.clearSpawns(npcId);
+				spawnStore.setEntrance(npcId, null);
+				done.accept("Removed your tiles");
+			}, npc, mapMarker));
+
+		box.add(grid);
+		return box;
+	}
+
+	private JButton recordButton(String text, String tooltip, Consumer<Consumer<String>> action,
+		SourceData npc, SpawnMapMarker mapMarker)
+	{
+		JButton button = new JButton(text);
+		button.setFocusPainted(false);
+		button.setToolTipText(tooltip);
+		button.addActionListener(e -> action.accept(message ->
+		{
+			// back on the EDT by now: say what happened, and redraw the markers so the change
+			// is visible on the map rather than only on the next reopen
+			refreshRecorded();
+			recordedLabel.setText(message);
+			mapMarker.showSpawns(withRecorded(npc, spawnStore));
+		}));
+		return button;
+	}
+
+	private void refreshRecorded()
+	{
+		if (recordedLabel == null)
+		{
+			return;
+		}
+		int tiles = spawnStore == null ? 0 : spawnStore.spawnsFor(npcId).size();
+		boolean entrance = spawnStore != null && spawnStore.entranceFor(npcId) != null;
+		if (tiles == 0 && !entrance)
+		{
+			recordedLabel.setText("Nothing recorded by you yet");
+			return;
+		}
+		recordedLabel.setText("You recorded " + tiles + " tile" + (tiles == 1 ? "" : "s")
+			+ (entrance ? " and an entrance" : ""));
+	}
+
+	/**
+	 * The source as the map should show it: shipped tiles plus whatever the player recorded, and
+	 * their entrance in preference to the one worked out for them.
+	 */
+	public static SourceData withRecorded(SourceData npc, SpawnStore store)
+	{
+		if (store == null || !store.hasAnything(npc.getId()))
+		{
+			return npc;
+		}
+		List<SpawnPoint> spawns = new ArrayList<>(npc.getSpawnPoints());
+		spawns.addAll(store.spawnsFor(npc.getId()));
+		SpawnPoint entrance = store.entranceFor(npc.getId());
+		return new SourceData(npc.getId(), npc.getName(), npc.getCombatLevel(),
+			npc.getWikiImageUrl(), npc.getDrops(), spawns, npc.getNpcIds(), npc.getCombat(),
+			npc.getType(), npc.getX(), npc.getY(), npc.getPlane(), npc.getTables(),
+			npc.getWikiPage(), entrance != null ? entrance : npc.getEntrance(),
+			npc.getLocationName());
 	}
 
 	private JPanel buildStatsBox(CombatStats c)
@@ -664,6 +774,12 @@ public class SourceResultView extends JPanel
 		return cell;
 	}
 
+	private final SpawnStore spawnStore;
+	private final SpawnRecorder spawnRecorder;
+	private final boolean allowSpawnEditing;
+	// redrawn in place as tiles are added and taken back, so the count stays honest
+	private JLabel recordedLabel;
+
 	private JPanel buildActionsBox(SourceData npc, TrackerStore store, SpawnMapMarker mapMarker)
 	{
 		JPanel box = card();
@@ -673,7 +789,9 @@ public class SourceResultView extends JPanel
 		grid.setOpaque(false);
 		grid.setAlignmentX(Component.LEFT_ALIGNMENT);
 
-		if (!npc.getSpawnPoints().isEmpty())
+		boolean mappable = !npc.getSpawnPoints().isEmpty()
+			|| (spawnStore != null && spawnStore.hasAnything(npcId));
+		if (mappable)
 		{
 			JButton map = new JButton("Map");
 			map.setFocusPainted(false);
@@ -687,7 +805,7 @@ public class SourceResultView extends JPanel
 				applyToggle(map, now, "Hide spawn markers", "Show spawn locations on the map");
 				if (now)
 				{
-					mapMarker.showSpawns(npc);
+					mapMarker.showSpawns(withRecorded(npc, spawnStore));
 				}
 				else
 				{
@@ -716,6 +834,11 @@ public class SourceResultView extends JPanel
 				refresh(store);
 			}));
 		}
+		if (allowSpawnEditing && spawnRecorder != null)
+		{
+			box.add(buildRecordingBox(npc, mapMarker));
+		}
+
 		grid.add(resetButton("↺ Drops", "Reset drop counters", () ->
 		{
 			store.resetNpcDrops(npcId);

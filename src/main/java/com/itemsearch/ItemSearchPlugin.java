@@ -50,8 +50,10 @@ import net.runelite.client.plugins.PluginDescriptor;
 import com.itemsearch.data.BundledDataSource;
 import com.itemsearch.data.WikiRefreshService;
 import com.itemsearch.map.SpawnMapMarker;
+import com.itemsearch.map.SpawnRecorder;
 import com.itemsearch.menu.ShowDropsMenu;
 import com.itemsearch.tracker.KillTracker;
+import com.itemsearch.tracker.SpawnStore;
 import com.itemsearch.tracker.TrackerStore;
 import net.runelite.client.ui.ClientToolbar;
 import net.runelite.client.ui.NavigationButton;
@@ -101,6 +103,8 @@ public class ItemSearchPlugin extends Plugin
 	private KillTracker killTracker;
 	private WikiRefreshService wikiRefreshService;
 	private SpawnMapMarker spawnMapMarker;
+	private SpawnStore spawnStore;
+	private SpawnRecorder spawnRecorder;
 	private ShowDropsMenu showDropsMenu;
 	private ItemSearchPanel panel;
 	private NavigationButton navButton;
@@ -133,9 +137,13 @@ public class ItemSearchPlugin extends Plugin
 			markerIcon = null;
 		}
 		spawnMapMarker = new SpawnMapMarker(client, clientThread, worldMapPointManager, markerIcon);
+		spawnStore = new SpawnStore(configManager, gson);
+		spawnStore.load();
+		spawnRecorder = new SpawnRecorder(client, clientThread, spawnStore);
 
 		panel = new ItemSearchPanel(dataService, trackerStore, itemManager, okHttpClient,
-			wikiRefreshService, spawnMapMarker, clientThread, config, spriteManager);
+			wikiRefreshService, spawnMapMarker, clientThread, config, spriteManager,
+			spawnStore, spawnRecorder);
 
 		// the click arrives on the client thread and both calls below touch Swing, so the
 		// whole handler crosses to the EDT once here rather than each callee guarding itself

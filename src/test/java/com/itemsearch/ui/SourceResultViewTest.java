@@ -44,17 +44,21 @@ import net.runelite.client.game.SpriteManager;
 import okhttp3.OkHttpClient;
 import com.itemsearch.data.BundledDataSource;
 import com.itemsearch.map.SpawnMapMarker;
+import com.itemsearch.map.SpawnRecorder;
 import com.itemsearch.model.Attack;
 import com.itemsearch.model.CombatStats;
 import com.itemsearch.model.MaxHitVariant;
 import com.itemsearch.model.SourceData;
 import com.itemsearch.model.SourceType;
+import com.itemsearch.model.SpawnPoint;
+import com.itemsearch.tracker.SpawnStore;
 import com.itemsearch.tracker.TrackerStore;
 import net.runelite.client.ui.ColorScheme;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertSame;
 import static org.junit.Assert.assertTrue;
 import org.junit.Test;
 import static org.mockito.Mockito.mock;
@@ -79,6 +83,7 @@ public class SourceResultViewTest
 	{
 		return new SourceResultView(npc, store, mock(SpriteManager.class), mock(ItemManager.class),
 			new OkHttpClient(), mock(SpawnMapMarker.class), mock(ClientThread.class),
+			new SpawnStore(mock(ConfigManager.class), new Gson()), mock(SpawnRecorder.class), false,
 			() ->
 			{
 			},
@@ -155,6 +160,75 @@ public class SourceResultViewTest
 		assertEquals("+30% from Water spells",
 			SourceResultView.weaknessText(new CombatStats(1, 1, 1, 1, 1, 5,
 				Collections.emptyList(), null, "Water", 30)));
+	}
+
+	/**
+	 * What the player records layers over the shipped tiles rather than replacing them: the
+	 * shipped ones are usually right, and the player is adding the ones nobody had.
+	 */
+	@Test
+	public void recordedTilesAreAddedToTheShippedOnes()
+	{
+		SpawnStore store = new SpawnStore(mock(ConfigManager.class), new Gson());
+		store.addSpawn(3031, new SpawnPoint(1000, 1001, 0));
+		SourceData shipped = new SourceData(3031, "Goblin", 2, null, Collections.emptyList(),
+			Collections.singletonList(new SpawnPoint(3250, 3250, 0)),
+			Collections.singletonList(3031), null, SourceType.KILL, null, null, null, null, null,
+			null, null);
+
+		SourceData merged = SourceResultView.withRecorded(shipped, store);
+		assertEquals(2, merged.getSpawnPoints().size());
+		assertEquals("the shipped tile comes first", 3250, merged.getSpawnPoints().get(0).getX());
+		assertEquals(1000, merged.getSpawnPoints().get(1).getX());
+	}
+
+	/** A recorded entrance is the player correcting one that was worked out, so it wins. */
+	@Test
+	public void aRecordedEntranceOverridesTheDerivedOne()
+	{
+		SpawnStore store = new SpawnStore(mock(ConfigManager.class), new Gson());
+		store.setEntrance(3031, new SpawnPoint(2760, 3061, 0));
+		SourceData shipped = new SourceData(3031, "Goblin", 2, null, Collections.emptyList(),
+			Collections.singletonList(new SpawnPoint(3250, 9250, 0)),
+			Collections.singletonList(3031), null, SourceType.KILL, null, null, null, null, null,
+			new SpawnPoint(1, 1, 0), null);
+
+		assertEquals(2760, SourceResultView.withRecorded(shipped, store).getEntrance().getX());
+	}
+
+	@Test
+	public void aMonsterNobodyHasEditedIsHandedBackUntouched()
+	{
+		SpawnStore store = new SpawnStore(mock(ConfigManager.class), new Gson());
+		SourceData shipped = npc(3031, "Goblin", 2, null);
+		assertSame(shipped, SourceResultView.withRecorded(shipped, store));
+		assertSame(shipped, SourceResultView.withRecorded(shipped, null));
+	}
+
+	/** The buttons only exist when the player has asked for them. */
+	@Test
+	public void theRecordingButtonsAreOffUnlessEnabled()
+	{
+		SourceData npc = new SourceData(3031, "Goblin", 2, null, Collections.emptyList(),
+			Collections.singletonList(new SpawnPoint(3250, 3250, 0)),
+			Collections.singletonList(3031), null, SourceType.KILL, null, null, null, null, null,
+			null, null);
+		TrackerStore tracker = new TrackerStore(mock(ConfigManager.class), new Gson());
+		assertNull(button(build(npc, tracker), "+ Spawn here"));
+
+		SourceResultView on = new SourceResultView(npc, tracker, mock(SpriteManager.class),
+			mock(ItemManager.class), new OkHttpClient(), mock(SpawnMapMarker.class),
+			mock(ClientThread.class), new SpawnStore(mock(ConfigManager.class), new Gson()),
+			mock(SpawnRecorder.class), true, () ->
+		{
+		}, item ->
+		{
+		});
+		assertNotNull(button(on, "+ Spawn here"));
+		assertNotNull(button(on, "+ Entrance"));
+		assertNotNull(button(on, "− Last spawn"));
+		assertNotNull(button(on, "− All spawns"));
+		assertTrue(labelTexts(on).contains("Nothing recorded by you yet"));
 	}
 
 	private static CombatStats combat(List<String> attackTypes)
