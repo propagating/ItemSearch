@@ -81,6 +81,19 @@ public interface ItemSearchConfig extends Config
 	}
 
 	@ConfigItem(
+		keyName = "exportSpawns",
+		name = "Export recorded spawns",
+		description = "Write everything you have recorded to "
+			+ ".runelite/itemsearch/spawn-export.json, in the shape the data generator's curator "
+			+ "reads, so it can be folded into the shipped data. Turning this on performs the "
+			+ "export and turns itself back off."
+	)
+	default boolean exportSpawns()
+	{
+		return false;
+	}
+
+	@ConfigItem(
 		keyName = "showDropsMenuEntry",
 		name = "Right-click \"Show drops\"",
 		description = "Add a Show drops option to the right-click menu of NPCs this plugin "

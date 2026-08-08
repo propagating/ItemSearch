@@ -116,6 +116,12 @@ public class SpawnStore
 		return recorded == null ? null : recorded.entrance;
 	}
 
+	/** Every monster the player has recorded something for, for export. */
+	public synchronized List<Integer> editedNpcIds()
+	{
+		return new ArrayList<>(byNpc.keySet());
+	}
+
 	public synchronized boolean hasAnything(int npcId)
 	{
 		return !spawnsFor(npcId).isEmpty() || entranceFor(npcId) != null;

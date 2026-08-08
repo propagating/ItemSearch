@@ -27,6 +27,7 @@ package com.itemsearch;
 import com.google.gson.Gson;
 import com.google.inject.Provides;
 import java.awt.image.BufferedImage;
+import java.io.File;
 import java.util.concurrent.ScheduledExecutorService;
 import javax.inject.Inject;
 import javax.swing.SwingUtilities;
@@ -47,12 +48,14 @@ import net.runelite.client.game.ItemManager;
 import net.runelite.client.game.SpriteManager;
 import net.runelite.client.plugins.Plugin;
 import net.runelite.client.plugins.PluginDescriptor;
+import net.runelite.client.RuneLite;
 import com.itemsearch.data.BundledDataSource;
 import com.itemsearch.data.WikiRefreshService;
 import com.itemsearch.map.SpawnMapMarker;
 import com.itemsearch.map.SpawnRecorder;
 import com.itemsearch.menu.ShowDropsMenu;
 import com.itemsearch.tracker.KillTracker;
+import com.itemsearch.tracker.SpawnExport;
 import com.itemsearch.tracker.SpawnStore;
 import com.itemsearch.tracker.TrackerStore;
 import net.runelite.client.ui.ClientToolbar;
@@ -218,6 +221,25 @@ public class ItemSearchPlugin extends Plugin
 		});
 	}
 
+	/** Writes the recorded spawns out where the curator can pick them up. Off the EDT. */
+	private void exportRecordedSpawns()
+	{
+		executor.execute(() ->
+		{
+			File out = new File(new File(RuneLite.RUNELITE_DIR, "itemsearch"),
+				SpawnExport.FILE_NAME);
+			try
+			{
+				int monsters = SpawnExport.write(gson, spawnStore, out);
+				log.info("itemsearch: exported spawns for {} monster(s) to {}", monsters, out);
+			}
+			catch (Exception e)
+			{
+				log.warn("itemsearch: could not export recorded spawns to {}", out, e);
+			}
+		});
+	}
+
 	@Subscribe
 	public void onGameTick(GameTick event)
 	{
@@ -245,6 +267,16 @@ public class ItemSearchPlugin extends Plugin
 			&& "showDropsMenuEntry".equals(event.getKey()))
 		{
 			showDropsMenu.setEnabled(Boolean.parseBoolean(event.getNewValue()));
+		}
+		if (spawnStore != null
+			&& ItemSearchConfig.GROUP.equals(event.getGroup())
+			&& "exportSpawns".equals(event.getKey())
+			&& Boolean.parseBoolean(event.getNewValue()))
+		{
+			exportRecordedSpawns();
+			// a one-shot action rather than a setting: leave it on and it would fire again on
+			// every restart, so it puts itself back
+			configManager.setConfiguration(ItemSearchConfig.GROUP, "exportSpawns", false);
 		}
 		if (trackerStore != null
 			&& ItemSearchConfig.GROUP.equals(event.getGroup())
