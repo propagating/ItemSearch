@@ -59,10 +59,26 @@ public final class SpawnExport
 	 */
 	public static int write(Gson gson, SpawnStore store, File out) throws IOException
 	{
+		return write(gson, store, out, null);
+	}
+
+	/**
+	 * @param names npc id -> monster name, so a reviewer merging someone else's file can tell at a
+	 *              glance that 13463 is an Elite Black Knight. Null when no lookup is available.
+	 */
+	public static int write(Gson gson, SpawnStore store, File out,
+		Map<Integer, String> names) throws IOException
+	{
 		Map<String, List<SpawnPoint>> spawns = new TreeMap<>(SpawnExport::byNumber);
 		Map<String, SpawnPoint> entrances = new TreeMap<>(SpawnExport::byNumber);
+		Map<String, String> monsters = new TreeMap<>(SpawnExport::byNumber);
 		for (Integer npcId : store.editedNpcIds())
 		{
+			String name = names == null ? null : names.get(npcId);
+			if (name != null)
+			{
+				monsters.put(String.valueOf(npcId), name);
+			}
 			List<SpawnPoint> tiles = store.spawnsFor(npcId);
 			if (!tiles.isEmpty())
 			{
@@ -76,6 +92,11 @@ public final class SpawnExport
 		}
 
 		Map<String, Object> root = new LinkedHashMap<>();
+		// says what the file is, so someone handed one can tell it apart from anything else and a
+		// later format change can be recognised rather than guessed at
+		root.put("format", "itemsearch-spawn-export");
+		root.put("version", 1);
+		root.put("names", monsters);
 		root.put("spawns", spawns);
 		root.put("entrances", entrances);
 

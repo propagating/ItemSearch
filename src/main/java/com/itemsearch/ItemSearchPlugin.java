@@ -51,6 +51,7 @@ import net.runelite.client.plugins.PluginDescriptor;
 import net.runelite.client.RuneLite;
 import com.itemsearch.data.BundledDataSource;
 import com.itemsearch.data.WikiRefreshService;
+import com.itemsearch.model.SourceData;
 import com.itemsearch.map.SpawnMapMarker;
 import com.itemsearch.map.SpawnRecorder;
 import com.itemsearch.menu.ShowDropsMenu;
@@ -230,7 +231,17 @@ public class ItemSearchPlugin extends Plugin
 				SpawnExport.FILE_NAME);
 			try
 			{
-				int monsters = SpawnExport.write(gson, spawnStore, out);
+				// names make a contributed file reviewable by eye rather than by cross-reference
+				java.util.Map<Integer, String> names = new java.util.HashMap<>();
+				for (Integer npcId : spawnStore.editedNpcIds())
+				{
+					SourceData source = dataService.sourceById(npcId);
+					if (source != null)
+					{
+						names.put(npcId, source.getName());
+					}
+				}
+				int monsters = SpawnExport.write(gson, spawnStore, out, names);
 				log.info("itemsearch: exported spawns for {} monster(s) to {}", monsters, out);
 			}
 			catch (Exception e)
