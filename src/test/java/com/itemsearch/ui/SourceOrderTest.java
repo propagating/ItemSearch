@@ -39,7 +39,7 @@ public class SourceOrderTest
 	private static DropSource src(int itemId)
 	{
 		// DropSource(itemId, itemName, rarity, quantity, noted, rarityKnown, category, dropTable)
-		return new DropSource(itemId, "item" + itemId, 0.5, 1, false, true, null, null);
+		return new DropSource(itemId, "item" + itemId, 0.5, 1, 0, false, true, null, null, 0, null);
 	}
 
 	@Test

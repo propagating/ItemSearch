@@ -119,6 +119,28 @@
           "rarityKnown": true
         }
       ]
+    },
+    {
+      "drops": [
+        {
+          "itemId": 23083,
+          "itemName": "Brimstone key",
+          "rarity": 0.0,
+          "quantity": 1,
+          "noted": false,
+          "rarityKnown": false,
+          "category": "Tertiary",
+          "condition": "KONAR_TASK"
+        },
+        {
+          "itemId": 526,
+          "itemName": "Bones",
+          "rarity": 1.0,
+          "quantity": 1,
+          "noted": false,
+          "rarityKnown": true
+        }
+      ]
     }
   ],
   "sources": [
@@ -243,6 +265,19 @@
       "spawnPoints": [],
       "tables": [
         6
+      ]
+    },
+    {
+      "id": 2,
+      "name": "Aberrant spectre",
+      "type": "KILL",
+      "combatLevel": 96,
+      "npcIds": [
+        2
+      ],
+      "spawnPoints": [],
+      "tables": [
+        7
       ]
     }
   ]

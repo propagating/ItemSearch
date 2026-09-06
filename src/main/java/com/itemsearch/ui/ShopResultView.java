@@ -49,7 +49,7 @@ import net.runelite.client.util.AsyncBufferedImage;
 public class ShopResultView extends JPanel
 {
 	public ShopResultView(ShopData shop, ItemManager itemManager, Runnable onBack,
-		Consumer<ShopItem> onItemSelected, Consumer<ShopData> onMarkMap)
+		Consumer<ShopItem> onItemSelected, Consumer<ShopData> onMarkMap, Runnable onClearMap)
 	{
 		setLayout(new BorderLayout(0, 6));
 
@@ -73,9 +73,9 @@ public class ShopResultView extends JPanel
 
 		if (shop.getX() != null && shop.getY() != null)
 		{
-			JButton mark = new JButton("Show on map");
+			// the same control a monster gets: a shop is somewhere to walk to in the same way
+			JButton mark = MapToggle.create(() -> onMarkMap.accept(shop), () -> onClearMap.run());
 			mark.setAlignmentX(Component.LEFT_ALIGNMENT);
-			mark.addActionListener(e -> onMarkMap.accept(shop));
 			body.add(Box.createVerticalStrut(4));
 			body.add(mark);
 		}

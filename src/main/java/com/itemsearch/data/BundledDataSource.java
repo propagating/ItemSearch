@@ -195,8 +195,8 @@ public class BundledDataSource implements DropDataService
 			{
 				// the table names itself once instead of every row repeating it
 				rows.add(table.name == null ? d : new DropSource(d.getItemId(), d.getItemName(),
-					d.getRarity(), d.getQuantity(), d.isNoted(), d.isRarityKnown(),
-					d.getCategory(), table.name));
+					d.getRarity(), d.getQuantity(), d.getQuantityMax(), d.isNoted(), d.isRarityKnown(),
+					d.getCategory(), table.name, d.getMergedLines(), d.getCondition()));
 			}
 			tables.add(Collections.unmodifiableList(rows));
 		}

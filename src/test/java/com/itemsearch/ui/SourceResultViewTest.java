@@ -47,6 +47,7 @@ import com.itemsearch.map.SpawnMapMarker;
 import com.itemsearch.map.SpawnRecorder;
 import com.itemsearch.model.Attack;
 import com.itemsearch.model.CombatStats;
+import com.itemsearch.model.DropSource;
 import com.itemsearch.model.MaxHitVariant;
 import com.itemsearch.model.SourceData;
 import com.itemsearch.model.SourceType;
@@ -119,6 +120,95 @@ public class SourceResultViewTest
 			Collections.singletonList(id), combat, SourceType.KILL, null, null, null, null, null, null, null);
 	}
 
+	private static DropSource drop(int itemId, String name, double rarity, int quantity,
+		String category)
+	{
+		return new DropSource(itemId, name, rarity, quantity, 0, false, true, category, null, 0, null);
+	}
+
+	/**
+	 * A drop table lists coins five times over, at a different stack size each. The game hands over
+	 * a stack with no word on which line produced it, and the tracker keys on the item — so five
+	 * rows sharing one counter all claimed the drop the moment any of them landed.
+	 */
+	@Test
+	public void linesSharingAnItemBecomeOneRow()
+	{
+		List<DropSource> merged = SourceResultView.mergeByItem(Arrays.asList(
+			drop(COINS, "Coins", 0.2265625, 44, "Coins"),
+			drop(COINS, "Coins", 0.1953125, 132, "Coins"),
+			drop(COINS, "Coins", 0.0078125, 440, "Coins"),
+			drop(BRONZE_DAGGER, "Bronze dagger", 0.5, 1, "Weapons")));
+
+		assertEquals(2, merged.size());
+		DropSource coins = merged.get(0);
+		assertEquals(COINS, coins.getItemId());
+		// mutually exclusive lines on one table: the chance of some coins is the sum
+		assertEquals(0.4296875, coins.getRarity(), 1e-9);
+		assertEquals(44, coins.getQuantity());
+		assertEquals(440, coins.getQuantityMax());
+		assertEquals(3, coins.getMergedLines());
+		// a line that shares its item with nobody is left exactly as it was
+		assertEquals(BRONZE_DAGGER, merged.get(1).getItemId());
+		assertEquals(0, merged.get(1).getMergedLines());
+		assertEquals(0, merged.get(1).getQuantityMax());
+	}
+
+	/** Combined chance cannot exceed certainty however the wiki's numbers round. */
+	@Test
+	public void mergedRarityIsCappedAtCertain()
+	{
+		List<DropSource> merged = SourceResultView.mergeByItem(Arrays.asList(
+			drop(COINS, "Coins", 0.8, 10, "Coins"),
+			drop(COINS, "Coins", 0.6, 20, "Coins")));
+
+		assertEquals(1.0, merged.get(0).getRarity(), 1e-9);
+	}
+
+	/**
+	 * An adamant bar is both a guaranteed drop and a table roll on the same monster. Summing a
+	 * known rarity with an unknown one would invent a number, so the merged row says it does not
+	 * know rather than understating it.
+	 */
+	@Test
+	public void mergingAnUnknownRarityLeavesTheResultUnknown()
+	{
+		List<DropSource> merged = SourceResultView.mergeByItem(Arrays.asList(
+			new DropSource(2361, "Adamant bar", 1.0, 1, 0, false, true, "100%", null, 0, null),
+			new DropSource(2361, "Adamant bar", 0.0, 3, 0, false, false, "Materials", null, 0, null)));
+
+		assertEquals(1, merged.size());
+		assertFalse(merged.get(0).isRarityKnown());
+		assertEquals(1, merged.get(0).getQuantity());
+		assertEquals(3, merged.get(0).getQuantityMax());
+	}
+
+	/** The merged row keeps the first line's group, so grouping still has somewhere to put it. */
+	@Test
+	public void aMergedRowKeepsTheFirstLinesGroup()
+	{
+		List<DropSource> merged = SourceResultView.mergeByItem(Arrays.asList(
+			drop(COINS, "Coins", 0.25, 44, "Coins"),
+			drop(COINS, "Coins", 0.25, 88, "Rare drop table")));
+
+		assertEquals(1, merged.size());
+		assertEquals("Coins", merged.get(0).getCategory());
+	}
+
+	/** The stack range is what the merged row has to say instead of five separate sizes. */
+	@Test
+	public void aMergedRowNamesItsStackRange()
+	{
+		assertEquals("Coins (44-440)", SourceResultView.dropLabel(
+			new DropSource(COINS, "Coins", 0.4, 44, 440, false, true, "Coins", null, 3, null)));
+		// merged lines that all drop the same stack size have no range to show
+		assertEquals("Coins", SourceResultView.dropLabel(
+			new DropSource(COINS, "Coins", 0.4, 44, 44, false, true, "Coins", null, 2, null)));
+		// an unmerged line reads exactly as before
+		assertEquals("Bronze dagger", SourceResultView.dropLabel(
+			drop(BRONZE_DAGGER, "Bronze dagger", 0.5, 1, null)));
+	}
+
 	/**
 	 * The wiki publishes defence bonuses, so the plugin has to say the useful half out loud: what
 	 * to bring. A steel dragon defends stab at 0 and slash at 70, and takes half again from Earth.
@@ -130,15 +220,40 @@ public class SourceResultViewTest
 			Collections.singletonList("STAB"), "Earth", 50);
 		SourceResultView view = build(npc(9060, "Steel dragon", 246, c),
 			new TrackerStore(mock(ConfigManager.class), new Gson()));
-		assertTrue(labelTexts(view).contains("Weak to: Stab  ·  +50% from Earth spells"));
+		assertTrue(labelTexts(view).contains("Weak to: Stab"));
 	}
 
-	/** Vorkath defends stab and ranged equally badly; both are worth bringing. */
+	/**
+	 * A style weakness and an elemental one are two separate things to bring, and joined onto one
+	 * line they overran the sidebar and were cut off mid-word. A JLabel never wraps, so the split
+	 * has to happen here rather than being left to the layout.
+	 */
 	@Test
-	public void severalEquallyWeakStylesAreAllNamed()
+	public void styleAndElementalWeaknessesGetALineEach()
 	{
-		assertEquals("Stab, Ranged  ·  +40% from Fire spells",
-			SourceResultView.weaknessText(new CombatStats(1, 1, 1, 1, 1, 5, Collections.emptyList(),
+		assertEquals(Arrays.asList("Weak to: Stab", "+50% from Earth spells"),
+			SourceResultView.weaknessLines(new CombatStats(1, 1, 1, 1, 1, 5, Collections.emptyList(),
+				Collections.singletonList("STAB"), "Earth", 50)));
+	}
+
+	/** Both lines reach the panel, not just the first. */
+	@Test
+	public void bothWeaknessLinesAreRendered()
+	{
+		CombatStats c = new CombatStats(1, 1, 1, 1, 1, 5, Collections.emptyList(),
+			Arrays.asList("STAB", "RANGED"), "Fire", 40);
+		SourceResultView view = build(npc(9062, "Vorkath", 732, c),
+			new TrackerStore(mock(ConfigManager.class), new Gson()));
+		assertTrue(labelTexts(view).contains("Weak to: Stab, Ranged"));
+		assertTrue(labelTexts(view).contains("+40% from Fire spells"));
+	}
+
+	/** Vorkath defends stab and ranged equally badly; both are worth bringing, and both fit one line. */
+	@Test
+	public void severalEquallyWeakStylesShareOneLine()
+	{
+		assertEquals(Arrays.asList("Weak to: Stab, Ranged", "+40% from Fire spells"),
+			SourceResultView.weaknessLines(new CombatStats(1, 1, 1, 1, 1, 5, Collections.emptyList(),
 				Arrays.asList("STAB", "RANGED"), "Fire", 40)));
 	}
 
@@ -147,18 +262,18 @@ public class SourceResultViewTest
 	public void aMonsterWithNoStatedWeaknessSaysNothing()
 	{
 		CombatStats c = new CombatStats(1, 1, 1, 1, 1, 5, Collections.emptyList(), null, null, null);
-		assertNull(SourceResultView.weaknessText(c));
+		assertTrue(SourceResultView.weaknessLines(c).isEmpty());
 		SourceResultView view = build(npc(9061, "Even", 50, c),
 			new TrackerStore(mock(ConfigManager.class), new Gson()));
 		assertFalse(labelTexts(view).stream().anyMatch(s -> s != null && s.startsWith("Weak to")));
 	}
 
-	/** An elemental weakness alone still reads properly. */
+	/** An elemental weakness alone still reads properly, and keeps the lead-in for itself. */
 	@Test
 	public void anElementalWeaknessAloneIsEnough()
 	{
-		assertEquals("+30% from Water spells",
-			SourceResultView.weaknessText(new CombatStats(1, 1, 1, 1, 1, 5,
+		assertEquals(Collections.singletonList("Weak to: +30% from Water spells"),
+			SourceResultView.weaknessLines(new CombatStats(1, 1, 1, 1, 1, 5,
 				Collections.emptyList(), null, "Water", 30)));
 	}
 

@@ -55,6 +55,7 @@ import com.itemsearch.model.SourceData;
 import com.itemsearch.map.SpawnMapMarker;
 import com.itemsearch.map.SpawnRecorder;
 import com.itemsearch.menu.ShowDropsMenu;
+import com.itemsearch.tracker.DropConditions;
 import com.itemsearch.tracker.KillTracker;
 import com.itemsearch.tracker.SpawnExport;
 import com.itemsearch.tracker.SpawnStore;
@@ -128,7 +129,8 @@ public class ItemSearchPlugin extends Plugin
 
 		trackerStore = new TrackerStore(configManager, gson);
 		trackerStore.load();
-		killTracker = new KillTracker(dataService, trackerStore, itemManager);
+		killTracker = new KillTracker(dataService, trackerStore, itemManager,
+			new DropConditions(client));
 
 		BufferedImage markerIcon;
 		try

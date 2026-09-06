@@ -31,6 +31,7 @@ import java.awt.event.MouseListener;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.atomic.AtomicReference;
 import javax.swing.JButton;
 import javax.swing.JLabel;
@@ -64,32 +65,60 @@ public class ShopResultViewTest
 
 	private static ShopResultView view(ShopData shop, AtomicReference<ShopData> marked)
 	{
+		return view(shop, marked, new AtomicInteger());
+	}
+
+	private static ShopResultView view(ShopData shop, AtomicReference<ShopData> marked,
+		AtomicInteger cleared)
+	{
 		return new ShopResultView(shop, mock(ItemManager.class), () ->
 		{
 		}, i ->
 		{
-		}, marked::set);
+		}, marked::set, cleared::incrementAndGet);
 	}
 
+	private static JButton mapButton(ShopResultView v)
+	{
+		return collect(v, JButton.class).stream()
+			.filter(b -> "Map".equals(b.getText()))
+			.findFirst().orElse(null);
+	}
+
+	/**
+	 * A shop is somewhere to walk to in the same way a monster is, so it carries the same control:
+	 * the word "Map", and a press that marks the world map.
+	 */
 	@Test
-	public void showOnMapButtonFiresCallbackWhenCoordsPresent()
+	public void mapButtonFiresCallbackWhenCoordsPresent()
 	{
 		AtomicReference<ShopData> marked = new AtomicReference<>();
 		ShopResultView v = view(shop(), marked);
-		JButton button = collect(v, JButton.class).stream()
-			.filter(b -> "Show on map".equals(b.getText()))
-			.findFirst().orElse(null);
-		assertNotNull("a Show on map button must render when the shop has coordinates", button);
+		JButton button = mapButton(v);
+		assertNotNull("a Map button must render when the shop has coordinates", button);
 		button.doClick();
 		assertEquals("Zaff's Superior Staffs", marked.get().getName());
+	}
+
+	/** Pressing it again takes the markers back off, as it does for a monster. */
+	@Test
+	public void mapButtonTogglesTheMarkersBackOff()
+	{
+		AtomicInteger cleared = new AtomicInteger();
+		ShopResultView v = view(shop(), new AtomicReference<>(), cleared);
+		JButton button = mapButton(v);
+
+		button.doClick();
+		assertEquals("first press marks, it does not clear", 0, cleared.get());
+		button.doClick();
+		assertEquals("second press clears", 1, cleared.get());
 	}
 
 	@Test
 	public void noMapButtonWithoutCoordinates()
 	{
 		ShopResultView v = view(shopWithoutCoords(), new AtomicReference<>());
-		assertTrue("no Show on map button expected without coordinates",
-			collect(v, JButton.class).stream().noneMatch(b -> "Show on map".equals(b.getText())));
+		assertNull("no Map button expected without coordinates", mapButton(v));
 	}
 
 	private static <T> List<T> collect(Container root, Class<T> type)
@@ -130,6 +159,8 @@ public class ShopResultViewTest
 		{
 		}, m ->
 		{
+		}, () ->
+		{
 		});
 		assertNotNull(labelWithText(view, "Staff of air"));
 		assertNotNull(labelWithText(view, "Mystery box"));
@@ -144,6 +175,8 @@ public class ShopResultViewTest
 		}, i ->
 		{
 		}, m ->
+		{
+		}, () ->
 		{
 		});
 		JLabel name = labelWithText(view, "Staff of water");
@@ -160,6 +193,8 @@ public class ShopResultViewTest
 		ShopResultView view = new ShopResultView(shop(), mock(ItemManager.class), () ->
 		{
 		}, clicked::set, m ->
+		{
+		}, () ->
 		{
 		});
 
@@ -179,6 +214,8 @@ public class ShopResultViewTest
 		ShopResultView view = new ShopResultView(shop(), mock(ItemManager.class), () ->
 		{
 		}, clicked::set, m ->
+		{
+		}, () ->
 		{
 		});
 

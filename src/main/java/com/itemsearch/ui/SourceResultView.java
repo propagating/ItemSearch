@@ -173,7 +173,7 @@ public class SourceResultView extends JPanel
 	 */
 	static Map<String, List<DropSource>> groupDrops(List<DropSource> drops)
 	{
-		List<DropSource> sorted = new ArrayList<>(drops);
+		List<DropSource> sorted = new ArrayList<>(mergeByItem(drops));
 		sorted.sort(Comparator
 			.comparing(DropSource::isRarityKnown).reversed()
 			.thenComparing(Comparator.comparingDouble(DropSource::getRarity).reversed()));
@@ -189,6 +189,78 @@ public class SourceResultView extends JPanel
 		}
 		grouped.values().removeIf(List::isEmpty);
 		return grouped;
+	}
+
+	/**
+	 * Drop lines collapsed so that each item appears once.
+	 *
+	 * <p>A drop table lists coins five times over at five stack sizes, and the loot event hands
+	 * over a stack without saying which line produced it. Drops are therefore tracked per item,
+	 * which left five rows reading one counter: any coin drop at all made every coin row claim it.
+	 * One row per item is the only shape the tracking underneath can honestly describe.
+	 *
+	 * <p>Lines on one table are mutually exclusive — a roll picks a line — so the chance of the
+	 * item at all is the sum of theirs, capped at certain. A merged row that swallowed a rarity
+	 * nobody knows reports itself unknown rather than quietly understating.
+	 */
+	static List<DropSource> mergeByItem(List<DropSource> drops)
+	{
+		// first appearance decides position and group, so the merged row lands where the reader
+		// already expects to find the item
+		Map<Integer, List<DropSource>> byItem = new LinkedHashMap<>();
+		for (DropSource d : drops)
+		{
+			byItem.computeIfAbsent(d.getItemId(), k -> new ArrayList<>()).add(d);
+		}
+
+		List<DropSource> merged = new ArrayList<>();
+		for (List<DropSource> lines : byItem.values())
+		{
+			if (lines.size() == 1)
+			{
+				merged.add(lines.get(0));
+				continue;
+			}
+			DropSource first = lines.get(0);
+			double rarity = 0;
+			boolean rarityKnown = true;
+			int low = Integer.MAX_VALUE;
+			int high = 0;
+			// one unconditional line makes the row always live: the item can arrive without the
+			// condition, so gating the merged row on it would stop counting kills that do count
+			String condition = first.getCondition();
+			for (DropSource d : lines)
+			{
+				rarity += d.getRarity();
+				rarityKnown &= d.isRarityKnown();
+				low = Math.min(low, d.getQuantity());
+				high = Math.max(high, Math.max(d.getQuantity(), d.getQuantityMax()));
+				if (d.getCondition() == null)
+				{
+					condition = null;
+				}
+			}
+			merged.add(new DropSource(first.getItemId(), first.getItemName(),
+				Math.min(rarity, 1.0), low, high, first.isNoted(), rarityKnown,
+				first.getCategory(), first.getDropTable(), lines.size(), condition));
+		}
+		return merged;
+	}
+
+	/**
+	 * The row's name, carrying the stack range when it stands for several lines: "Coins (44-440)".
+	 *
+	 * <p>Only merged rows say a quantity. An ordinary line's stack size is not shown anywhere, and
+	 * a merged one has to explain why five coin entries became one.
+	 */
+	static String dropLabel(DropSource d)
+	{
+		if (d.getMergedLines() <= 0 || d.getQuantityMax() <= d.getQuantity())
+		{
+			return d.getItemName();
+		}
+		return d.getItemName() + " (" + Format.tally(d.getQuantity())
+			+ "-" + Format.tally(d.getQuantityMax()) + ")";
 	}
 
 	private JPanel buildDropRow(int ownerId, DropSource d, TrackerStore store, ItemManager itemManager,
@@ -210,7 +282,15 @@ public class SourceResultView extends JPanel
 		JPanel textCol = new JPanel();
 		textCol.setLayout(new BoxLayout(textCol, BoxLayout.Y_AXIS));
 		textCol.setOpaque(false);
-		textCol.add(new JLabel(d.getItemName()));
+		JLabel name = new JLabel(dropLabel(d));
+		if (d.getMergedLines() > 0)
+		{
+			// the row is not what the wiki printed, so it says so rather than looking like a
+			// single table line whose rarity happens to be generous
+			name.setToolTipText(d.getMergedLines() + " drop-table lines combined — the game does "
+				+ "not say which one produced a stack");
+		}
+		textCol.add(name);
 
 		JLabel stat = new JLabel(statLine(ownerId, d, store));
 		stat.setForeground(ColorScheme.LIGHT_GRAY_COLOR);
@@ -451,11 +531,10 @@ public class SourceResultView extends JPanel
 		grid.setMaximumSize(new Dimension(Integer.MAX_VALUE, grid.getPreferredSize().height));
 		box.add(grid);
 
-		String weakness = weaknessText(c);
-		if (weakness != null)
+		// what to bring, which is the question these stats are usually being read to answer
+		for (String line : weaknessLines(c))
 		{
-			// what to bring, which is the question these stats are usually being read to answer
-			JLabel label = new JLabel("Weak to: " + weakness);
+			JLabel label = new JLabel(line);
 			label.setForeground(ColorScheme.PROGRESS_COMPLETE_COLOR);
 			label.setAlignmentX(Component.LEFT_ALIGNMENT);
 			label.setToolTipText("Lowest defence bonus, from the wiki's own numbers");
@@ -465,14 +544,19 @@ public class SourceResultView extends JPanel
 	}
 
 	/**
-	 * "Stab  ·  +50% from Earth spells", or null when there is nothing useful to say.
+	 * The weakness as lines to render — {@code ["Weak to: Stab", "+50% from Earth spells"]} — or
+	 * empty when there is nothing useful to say.
 	 *
 	 * <p>The wiki publishes defence bonuses rather than weaknesses, so the styles named here are
 	 * the ones it defends worst against; a monster that defends everything alike names none.
+	 *
+	 * <p>A style weakness and an elemental one get a line each. Joined onto one line they overran
+	 * the sidebar and were cut off mid-word: a JLabel does not wrap, and the card cannot widen
+	 * beyond the panel, so nothing downstream would have saved the text.
 	 */
-	static String weaknessText(CombatStats c)
+	static List<String> weaknessLines(CombatStats c)
 	{
-		List<String> parts = new ArrayList<>();
+		List<String> lines = new ArrayList<>();
 		if (c.getWeakTo() != null && !c.getWeakTo().isEmpty())
 		{
 			List<String> styles = new ArrayList<>();
@@ -480,15 +564,22 @@ public class SourceResultView extends JPanel
 			{
 				styles.add(capitalize(style.toLowerCase(Locale.ROOT)));
 			}
-			parts.add(String.join(", ", styles));
+			lines.add(String.join(", ", styles));
 		}
 		if (c.getElementalWeakness() != null && !c.getElementalWeakness().trim().isEmpty())
 		{
 			Integer percent = c.getElementalWeaknessPercent();
-			parts.add((percent != null ? "+" + percent + "% from " : "")
+			lines.add((percent != null ? "+" + percent + "% from " : "")
 				+ c.getElementalWeakness().trim() + " spells");
 		}
-		return parts.isEmpty() ? null : String.join("  ·  ", parts);
+		if (lines.isEmpty())
+		{
+			return lines;
+		}
+		// the lead-in belongs to the first line whatever that line turns out to be, so a monster
+		// with only an elemental weakness still reads as a weakness rather than a stray number
+		lines.set(0, "Weak to: " + lines.get(0));
+		return lines;
 	}
 
 	private JPanel buildAttacksBox(CombatStats c, SpriteManager spriteManager, ItemManager itemManager)
@@ -793,26 +884,10 @@ public class SourceResultView extends JPanel
 			|| (spawnStore != null && spawnStore.hasAnything(npcId));
 		if (mappable)
 		{
-			JButton map = new JButton("Map");
-			map.setFocusPainted(false);
 			// local shown-state: SpawnMapMarker is shared, so the button tracks its own toggle
-			boolean[] shown = {false};
-			applyToggle(map, false, "Hide spawn markers", "Show spawn locations on the map");
-			map.addActionListener(e ->
-			{
-				boolean now = !shown[0];
-				shown[0] = now;
-				applyToggle(map, now, "Hide spawn markers", "Show spawn locations on the map");
-				if (now)
-				{
-					mapMarker.showSpawns(withRecorded(npc, spawnStore));
-				}
-				else
-				{
-					mapMarker.clear();
-				}
-			});
-			grid.add(map);
+			grid.add(MapToggle.create(
+				() -> mapMarker.showSpawns(withRecorded(npc, spawnStore)),
+				mapMarker::clear));
 		}
 		else if (npc.getLocationName() != null && !npc.getLocationName().trim().isEmpty())
 		{
@@ -943,24 +1018,11 @@ public class SourceResultView extends JPanel
 		JButton button = new JButton(text);
 		button.setFocusPainted(false);
 		button.setToolTipText(tooltip);
-		setStateBorder(button, ColorScheme.MEDIUM_GRAY_COLOR);
+		MapToggle.setStateBorder(button, ColorScheme.MEDIUM_GRAY_COLOR);
 		button.addActionListener(e -> action.run());
 		return button;
 	}
 
-	// A toggle button's on/off state, shown as a green (on) or orange (off) border + tooltip.
-	private static void applyToggle(JButton button, boolean on, String onTip, String offTip)
-	{
-		setStateBorder(button, on ? ColorScheme.PROGRESS_COMPLETE_COLOR : ColorScheme.BRAND_ORANGE);
-		button.setToolTipText(on ? onTip : offTip);
-	}
-
-	private static void setStateBorder(JButton button, Color color)
-	{
-		button.setBorder(BorderFactory.createCompoundBorder(
-			BorderFactory.createLineBorder(color),
-			BorderFactory.createEmptyBorder(3, 6, 3, 6)));
-	}
 
 	// captures one drop's stat label so kills can refresh it in place
 	private static final class DropRow

@@ -52,6 +52,9 @@ public class KillTrackerTest
 	@Mock
 	private ItemManager itemManager;
 
+	@Mock
+	private DropConditions conditions;
+
 	private KillTracker tracker;
 
 	@Before
@@ -63,7 +66,52 @@ public class KillTrackerTest
 		BundledDataSource ds = new BundledDataSource(new Gson(),
 			"/com/itemsearch/sources-test.json");
 		ds.load();
-		tracker = new KillTracker(ds, store, itemManager);
+		tracker = new KillTracker(ds, store, itemManager, conditions);
+	}
+
+	/**
+	 * A brimstone key is on the table only while Konar assigned the task, so an off-task kill was
+	 * never a chance at one and must not count against its dry streak. Everything else the monster
+	 * drops still counts — the gate is per drop, not per kill.
+	 */
+	@Test
+	public void anOffTaskKillIsNotDryForAConditionalDrop()
+	{
+		when(conditions.isMet("KONAR_TASK")).thenReturn(false);
+
+		tracker.onKill(2, new HashSet<>(Collections.singletonList(526)));
+
+		verify(store).recordKill(2, new HashSet<>(Collections.singletonList(526)),
+			new HashSet<>(Collections.singletonList(526)));
+	}
+
+	/** On task, the key is in the pool and a kill without it is a genuine dry kill. */
+	@Test
+	public void anOnTaskKillIsDryForAConditionalDrop()
+	{
+		when(conditions.isMet("KONAR_TASK")).thenReturn(true);
+
+		tracker.onKill(2, new HashSet<>(Collections.singletonList(526)));
+
+		verify(store).recordKill(2, new HashSet<>(Collections.singletonList(526)),
+			new HashSet<>(Arrays.asList(526, 23083)));
+	}
+
+	/**
+	 * The drop landing is better evidence than the varp it was judged by: if a key arrives while we
+	 * believe the player is off task, the belief is what was wrong, and the drop still counts.
+	 */
+	@Test
+	public void aConditionalDropThatLandsCountsWhateverWeBelieved()
+	{
+		// lenient: the point of the test is that a landed drop short-circuits before the condition
+		// is ever consulted, so this stub is expected to go unused
+		lenient().when(conditions.isMet("KONAR_TASK")).thenReturn(false);
+
+		tracker.onKill(2, new HashSet<>(Arrays.asList(526, 23083)));
+
+		verify(store).recordKill(2, new HashSet<>(Arrays.asList(526, 23083)),
+			new HashSet<>(Arrays.asList(526, 23083)));
 	}
 
 	@Test
@@ -85,7 +133,7 @@ public class KillTrackerTest
 		BundledDataSource multi = new BundledDataSource(new Gson(),
 			"/com/itemsearch/sources-test.json");
 		multi.load();
-		KillTracker t = new KillTracker(multi, store, itemManager);
+		KillTracker t = new KillTracker(multi, store, itemManager, conditions);
 
 		t.onKill(7002, new HashSet<>(Collections.singletonList(995)));
 
@@ -102,7 +150,7 @@ public class KillTrackerTest
 		BundledDataSource multi = new BundledDataSource(new Gson(),
 			"/com/itemsearch/sources-test.json");
 		multi.load();
-		KillTracker t = new KillTracker(multi, store, itemManager);
+		KillTracker t = new KillTracker(multi, store, itemManager, conditions);
 
 		NPC beast = org.mockito.Mockito.mock(NPC.class);
 		when(beast.getId()).thenReturn(88888);

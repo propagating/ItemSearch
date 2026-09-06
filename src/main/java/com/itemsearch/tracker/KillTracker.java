@@ -43,12 +43,15 @@ public class KillTracker
 	private final DropDataService dataService;
 	private final TrackerStore store;
 	private final ItemManager itemManager;
+	private final DropConditions conditions;
 
-	public KillTracker(DropDataService dataService, TrackerStore store, ItemManager itemManager)
+	public KillTracker(DropDataService dataService, TrackerStore store, ItemManager itemManager,
+		DropConditions conditions)
 	{
 		this.dataService = dataService;
 		this.store = store;
 		this.itemManager = itemManager;
+		this.conditions = conditions;
 	}
 
 	public void onKill(int npcId, Set<Integer> droppedItemIds)
@@ -93,6 +96,15 @@ public class KillTracker
 		Set<Integer> possible = new HashSet<>();
 		for (DropSource d : npc.getDrops())
 		{
+			// a drop that was not on the table for this kill is not a dry kill for it. An item
+			// that actually dropped is always counted whatever we believe about the condition:
+			// the drop itself is better evidence than the varp we read it from.
+			if (d.getCondition() != null
+				&& !droppedItemIds.contains(d.getItemId())
+				&& !conditions.isMet(d.getCondition()))
+			{
+				continue;
+			}
 			possible.add(d.getItemId());
 		}
 		store.recordKill(npc.getId(), droppedItemIds, possible);

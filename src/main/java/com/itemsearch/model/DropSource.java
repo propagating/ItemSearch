@@ -33,6 +33,9 @@ public class DropSource
 	String itemName;
 	double rarity;      // probability per kill, e.g. 1/128 = 0.0078125
 	int quantity;
+	// largest stack of a merged row, 0 when the line was not merged. A drop table can list one
+	// item at several stack sizes; those rows collapse into one and the pair becomes a range.
+	int quantityMax;
 	boolean noted;
 	boolean rarityKnown; // false -> rarity is meaningless, exclude from math
 	// the wiki drop-table subsection this line came from ("Rare drop table"); null when the
@@ -41,4 +44,11 @@ public class DropSource
 	// the wiki's shared drop table this line came from ("Herb drop table"); null when the drop
 	// belongs to the source's own table rather than a shared one
 	String dropTable;
+	// how many table lines this row stands for, 0 when it stands only for itself. Drops are
+	// tracked per item, and the game does not say which line produced a stack, so lines sharing
+	// an item have to share a row as well as a counter.
+	int mergedLines;
+	// what has to be true before this drop is on the table ("KONAR_TASK"); null when it always is.
+	// A kill that could never have produced the drop is not a dry kill for it.
+	String condition;
 }
