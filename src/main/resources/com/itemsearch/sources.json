@@ -249631,17 +249631,28 @@
         "attacks": [
           {
             "style": "magic",
-            "maxHit": 8,
-            "maxHitMax": 8,
-            "speed": 4,
-            "speedMax": 4
-          },
-          {
-            "style": "without nose peg",
             "maxHit": 14,
             "maxHitMax": 14,
             "speed": 4,
-            "speedMax": 4
+            "speedMax": 4,
+            "variants": [
+              {
+                "label": "Nose Peg",
+                "kind": "GEAR",
+                "maxHit": 8,
+                "maxHitMax": 8
+              },
+              {
+                "label": "Slayer Helmet",
+                "kind": "GEAR",
+                "maxHit": 8,
+                "maxHitMax": 8
+              }
+            ],
+            "notes": "Damages through prayer and drains stats if not using a Nose Peg/Slayer Helmet",
+            "effects": [
+              "DRAIN_STATS"
+            ]
           }
         ],
         "weakTo": [
@@ -250230,16 +250241,14 @@
             "maxHitMax": 66,
             "speed": 7,
             "speedMax": 7,
-            "effects": [
-              "POISON"
-            ]
-          },
-          {
-            "style": "with explosion",
-            "maxHit": 96,
-            "maxHitMax": 96,
-            "speed": 7,
-            "speedMax": 7,
+            "variants": [
+              {
+                "label": "With explosion",
+                "kind": "GEAR",
+                "maxHit": 96,
+                "maxHitMax": 96
+              }
+            ],
             "effects": [
               "POISON"
             ]
@@ -257883,14 +257892,15 @@
             "maxHit": 2,
             "maxHitMax": 2,
             "speed": 4,
-            "speedMax": 4
-          },
-          {
-            "style": "without earmuffs",
-            "maxHit": 6,
-            "maxHitMax": 6,
-            "speed": 4,
-            "speedMax": 4
+            "speedMax": 4,
+            "variants": [
+              {
+                "label": "Without earmuffs",
+                "kind": "GEAR",
+                "maxHit": 6,
+                "maxHitMax": 6
+              }
+            ]
           }
         ],
         "weakTo": [
@@ -281219,14 +281229,15 @@
             "maxHit": 8,
             "maxHitMax": 8,
             "speed": 4,
-            "speedMax": 4
-          },
-          {
-            "style": "without nose peg",
-            "maxHit": 14,
-            "maxHitMax": 14,
-            "speed": 4,
-            "speedMax": 4
+            "speedMax": 4,
+            "variants": [
+              {
+                "label": "Without nose peg",
+                "kind": "GEAR",
+                "maxHit": 14,
+                "maxHitMax": 14
+              }
+            ]
           }
         ],
         "weakTo": [
@@ -288605,17 +288616,18 @@
         "attacks": [
           {
             "style": "stab",
-            "maxHit": 0,
-            "maxHitMax": 0,
+            "maxHit": 4,
+            "maxHitMax": 4,
             "speed": 4,
-            "speedMax": 4
-          },
-          {
-            "style": "without slayer gloves",
-            "maxHit": 12,
-            "maxHitMax": 12,
-            "speed": 4,
-            "speedMax": 4
+            "speedMax": 4,
+            "variants": [
+              {
+                "label": "Without slayer gloves",
+                "kind": "GEAR",
+                "maxHit": 1,
+                "maxHitMax": 12
+              }
+            ]
           }
         ],
         "weakTo": [
@@ -353336,21 +353348,21 @@
         "attacks": [
           {
             "style": "crush",
-            "maxHit": 0,
-            "maxHitMax": 0,
+            "maxHit": 6,
+            "maxHitMax": 6,
             "speed": 5,
             "speedMax": 5
           },
           {
             "style": "ranged",
-            "maxHit": 0,
-            "maxHitMax": 0,
+            "maxHit": 6,
+            "maxHitMax": 6,
             "speed": 5,
             "speedMax": 5
           },
           {
             "style": "without reinforced goggles",
-            "maxHit": 30,
+            "maxHit": 20,
             "maxHitMax": 30,
             "speed": 5,
             "speedMax": 5
@@ -368788,14 +368800,15 @@
             "maxHit": 23,
             "maxHitMax": 23,
             "speed": 5,
-            "speedMax": 5
-          },
-          {
-            "style": "protect from melee",
-            "maxHit": 15,
-            "maxHitMax": 15,
-            "speed": 5,
-            "speedMax": 5
+            "speedMax": 5,
+            "variants": [
+              {
+                "label": "Protect from melee",
+                "kind": "PRAYER",
+                "maxHit": 15,
+                "maxHitMax": 15
+              }
+            ]
           }
         ],
         "weakTo": [
@@ -370367,14 +370380,15 @@
             "maxHit": 4,
             "maxHitMax": 4,
             "speed": 4,
-            "speedMax": 4
-          },
-          {
-            "style": "without spiny helmet",
-            "maxHit": 18,
-            "maxHitMax": 18,
-            "speed": 4,
-            "speedMax": 4
+            "speedMax": 4,
+            "variants": [
+              {
+                "label": "Without spiny helmet",
+                "kind": "GEAR",
+                "maxHit": 18,
+                "maxHitMax": 18
+              }
+            ]
           }
         ]
       },
