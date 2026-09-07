@@ -252515,13 +252515,6 @@
           },
           {
             "style": "icy breath",
-            "maxHit": 0,
-            "maxHitMax": 0,
-            "speed": 5,
-            "speedMax": 5
-          },
-          {
-            "style": "icy breath",
             "maxHit": 44,
             "maxHitMax": 44,
             "speed": 5,
@@ -282314,8 +282307,8 @@
           {
             "style": "ranged",
             "prayStyle": "melee",
-            "maxHit": 0,
-            "maxHitMax": 0,
+            "maxHit": 15,
+            "maxHitMax": 15,
             "speed": 4,
             "speedMax": 4
           },
@@ -323840,8 +323833,8 @@
           {
             "style": "magic",
             "prayStyle": "ranged",
-            "maxHit": 0,
-            "maxHitMax": 0,
+            "maxHit": 18,
+            "maxHitMax": 18,
             "speed": 4,
             "speedMax": 4
           },
@@ -347404,13 +347397,6 @@
           },
           {
             "style": "icy breath",
-            "maxHit": 0,
-            "maxHitMax": 0,
-            "speed": 6,
-            "speedMax": 6
-          },
-          {
-            "style": "icy breath",
             "maxHit": 50,
             "maxHitMax": 50,
             "speed": 6,
@@ -355682,13 +355668,6 @@
           },
           {
             "style": "icy breath",
-            "maxHit": 0,
-            "maxHitMax": 0,
-            "speed": 6,
-            "speedMax": 6
-          },
-          {
-            "style": "icy breath",
             "maxHit": 50,
             "maxHitMax": 50,
             "speed": 6,
@@ -358078,13 +358057,6 @@
           },
           {
             "style": "typeless",
-            "maxHit": 0,
-            "maxHitMax": 0,
-            "speed": 6,
-            "speedMax": 6
-          },
-          {
-            "style": "icy breath",
             "maxHit": 0,
             "maxHitMax": 0,
             "speed": 6,
