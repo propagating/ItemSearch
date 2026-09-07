@@ -268999,7 +268999,7 @@
             "speedMax": 4
           },
           {
-            "style": "magic",
+            "style": "ranged",
             "maxHit": 11,
             "maxHitMax": 11,
             "speed": 4,
@@ -269007,10 +269007,7 @@
           }
         ],
         "weakTo": [
-          "STAB",
-          "SLASH",
-          "CRUSH",
-          "RANGED"
+          "CRUSH"
         ]
       },
       "type": "KILL"
@@ -269169,7 +269166,7 @@
           }
         ],
         "weakTo": [
-          "RANGED"
+          "CRUSH"
         ]
       },
       "type": "KILL"
@@ -298009,55 +298006,12 @@
         "magicLevel": 0,
         "rangedLevel": 0,
         "hitpoints": 0,
-        "attacks": [
-          {
-            "style": "magic",
-            "maxHit": 49,
-            "maxHitMax": 49,
-            "speed": 5,
-            "speedMax": 5
-          }
-        ],
-        "weakTo": [
-          "RANGED"
-        ]
+        "attacks": []
       },
       "type": "KILL"
     },
     {
       "id": -1027,
-      "npcIds": [],
-      "name": "Dagannoth Kings (Echo) (Rex)",
-      "wikiPage": "Dagannoth Kings (Echo)",
-      "combatLevel": 454,
-      "spawnPoints": [],
-      "tables": [
-        671
-      ],
-      "combat": {
-        "attackLevel": 0,
-        "strengthLevel": 0,
-        "defenceLevel": 0,
-        "magicLevel": 0,
-        "rangedLevel": 0,
-        "hitpoints": 0,
-        "attacks": [
-          {
-            "style": "slash",
-            "maxHit": 48,
-            "maxHitMax": 48,
-            "speed": 5,
-            "speedMax": 5
-          }
-        ],
-        "weakTo": [
-          "RANGED"
-        ]
-      },
-      "type": "KILL"
-    },
-    {
-      "id": -1028,
       "npcIds": [],
       "name": "Dagannoth Kings (Echo) (Supreme)",
       "wikiPage": "Dagannoth Kings (Echo)",
@@ -298073,18 +298027,7 @@
         "magicLevel": 0,
         "rangedLevel": 0,
         "hitpoints": 0,
-        "attacks": [
-          {
-            "style": "ranged",
-            "maxHit": 26,
-            "maxHitMax": 26,
-            "speed": 5,
-            "speedMax": 5
-          }
-        ],
-        "weakTo": [
-          "RANGED"
-        ]
+        "attacks": []
       },
       "type": "KILL"
     },
@@ -300727,7 +300670,7 @@
       "type": "KILL"
     },
     {
-      "id": -1029,
+      "id": -1028,
       "npcIds": [],
       "name": "Deadman Mode",
       "combatLevel": 0,
@@ -300762,7 +300705,7 @@
       "type": "REWARD"
     },
     {
-      "id": -1030,
+      "id": -1029,
       "npcIds": [],
       "name": "Deadman: Apocalypse/Global loot table",
       "combatLevel": 0,
@@ -300773,7 +300716,7 @@
       "type": "GATHER"
     },
     {
-      "id": -1031,
+      "id": -1030,
       "npcIds": [],
       "name": "Deadman: Reborn drop table",
       "combatLevel": 0,
@@ -300894,7 +300837,7 @@
       "type": "KILL"
     },
     {
-      "id": -1032,
+      "id": -1031,
       "npcIds": [],
       "name": "Deep sea kraken",
       "combatLevel": 155,
@@ -300923,7 +300866,7 @@
       "type": "KILL"
     },
     {
-      "id": -1033,
+      "id": -1032,
       "npcIds": [],
       "name": "Demon of Balance",
       "combatLevel": 202,
@@ -300954,7 +300897,7 @@
       "type": "KILL"
     },
     {
-      "id": -1034,
+      "id": -1033,
       "npcIds": [],
       "name": "Demon of Darkness",
       "combatLevel": 202,
@@ -300985,7 +300928,7 @@
       "type": "KILL"
     },
     {
-      "id": -1035,
+      "id": -1034,
       "npcIds": [],
       "name": "Demon of Light",
       "combatLevel": 202,
@@ -301546,7 +301489,7 @@
       "type": "KILL"
     },
     {
-      "id": -1036,
+      "id": -1035,
       "npcIds": [],
       "name": "Desert devil",
       "combatLevel": 0,
@@ -302786,7 +302729,7 @@
       "type": "KILL"
     },
     {
-      "id": -1037,
+      "id": -1036,
       "npcIds": [],
       "name": "Disk of Returning (2013 Rare Drops)",
       "combatLevel": 0,
@@ -303413,7 +303356,7 @@
       "type": "GATHER"
     },
     {
-      "id": -1038,
+      "id": -1037,
       "npcIds": [],
       "name": "Drift net fishing",
       "combatLevel": 0,
@@ -303434,7 +303377,7 @@
       "plane": 0
     },
     {
-      "id": -1039,
+      "id": -1038,
       "npcIds": [],
       "name": "Drill Demon",
       "combatLevel": 0,
@@ -303510,7 +303453,7 @@
       "type": "KILL"
     },
     {
-      "id": -1040,
+      "id": -1039,
       "npcIds": [],
       "name": "Drop table",
       "combatLevel": 0,
@@ -303938,7 +303881,7 @@
       "type": "KILL"
     },
     {
-      "id": -1041,
+      "id": -1040,
       "npcIds": [],
       "name": "Durial321",
       "combatLevel": 115,
@@ -304016,7 +303959,7 @@
       "type": "KILL"
     },
     {
-      "id": -1042,
+      "id": -1041,
       "npcIds": [],
       "name": "Dusk (Echo)",
       "combatLevel": 656,
@@ -304039,7 +303982,9 @@
             "speed": 6,
             "speedMax": 6
           }
-        ]
+        ],
+        "elementalWeakness": "Earth",
+        "elementalWeaknessPercent": 40
       },
       "type": "KILL"
     },
@@ -305654,7 +305599,7 @@
       "type": "KILL"
     },
     {
-      "id": -1043,
+      "id": -1042,
       "npcIds": [],
       "name": "Easter egg (2013 April Fools)",
       "combatLevel": 0,
@@ -305665,7 +305610,7 @@
       "type": "REWARD"
     },
     {
-      "id": -1044,
+      "id": -1043,
       "npcIds": [],
       "name": "Easter egg (2013 Rare Drops)",
       "combatLevel": 0,
@@ -305690,7 +305635,7 @@
       "type": "GATHER"
     },
     {
-      "id": -1045,
+      "id": -1044,
       "npcIds": [],
       "name": "Easter ring (2013 Rare Drops)",
       "combatLevel": 0,
@@ -306046,14 +305991,7 @@
             "speedMax": 4
           },
           {
-            "style": "magic",
-            "maxHit": 0,
-            "maxHitMax": 0,
-            "speed": 4,
-            "speedMax": 4
-          },
-          {
-            "style": "bleed",
+            "style": "magic (bleed)",
             "maxHit": 0,
             "maxHitMax": 0,
             "speed": 4,
@@ -306117,7 +306055,7 @@
       "type": "REWARD"
     },
     {
-      "id": -1046,
+      "id": -1045,
       "npcIds": [],
       "name": "Elf (Thieving)",
       "combatLevel": 0,
@@ -306361,8 +306299,8 @@
         "attacks": [
           {
             "style": "magic",
-            "maxHit": 16,
-            "maxHitMax": 16,
+            "maxHit": 0,
+            "maxHitMax": 0,
             "speed": 5,
             "speedMax": 5
           }
@@ -306864,7 +306802,7 @@
       "type": "REWARD"
     },
     {
-      "id": -1047,
+      "id": -1046,
       "npcIds": [],
       "name": "Enchantment Ritual",
       "combatLevel": 0,
@@ -307674,7 +307612,7 @@
       "type": "KILL"
     },
     {
-      "id": -1048,
+      "id": -1047,
       "npcIds": [],
       "name": "Evil twin",
       "combatLevel": 0,
@@ -307994,7 +307932,7 @@
       "type": "GATHER"
     },
     {
-      "id": -1049,
+      "id": -1048,
       "npcIds": [],
       "name": "Famished shark",
       "combatLevel": 16,
@@ -308502,7 +308440,7 @@
       "type": "REWARD"
     },
     {
-      "id": -1050,
+      "id": -1049,
       "npcIds": [],
       "name": "Feldip weasel",
       "combatLevel": 0,
@@ -308679,8 +308617,8 @@
         "attacks": [
           {
             "style": "slash",
-            "maxHit": 9,
-            "maxHitMax": 9,
+            "maxHit": 8,
+            "maxHitMax": 8,
             "speed": 4,
             "speedMax": 4
           }
@@ -308818,8 +308756,8 @@
         "attacks": [
           {
             "style": "slash",
-            "maxHit": 13,
-            "maxHitMax": 13,
+            "maxHit": 9,
+            "maxHitMax": 9,
             "speed": 4,
             "speedMax": 4
           }
@@ -309257,8 +309195,8 @@
         "attacks": [
           {
             "style": "slash",
-            "maxHit": 6,
-            "maxHitMax": 6,
+            "maxHit": 7,
+            "maxHitMax": 7,
             "speed": 4,
             "speedMax": 4
           }
@@ -309395,9 +309333,9 @@
         "hitpoints": 50,
         "attacks": [
           {
-            "style": "stab",
-            "maxHit": 8,
-            "maxHitMax": 8,
+            "style": "slash",
+            "maxHit": 6,
+            "maxHitMax": 6,
             "speed": 4,
             "speedMax": 4
           }
@@ -309504,7 +309442,7 @@
         "hitpoints": 60,
         "attacks": [
           {
-            "style": "slash",
+            "style": "stab",
             "maxHit": 8,
             "maxHitMax": 8,
             "speed": 4,
@@ -310476,7 +310414,7 @@
       "type": "GATHER"
     },
     {
-      "id": -1051,
+      "id": -1050,
       "npcIds": [],
       "name": "Fishing spot (2022 Birthday event)",
       "combatLevel": 0,
@@ -311997,7 +311935,7 @@
       "type": "KILL"
     },
     {
-      "id": -1052,
+      "id": -1051,
       "npcIds": [],
       "name": "Fishing Trawler",
       "combatLevel": 0,
@@ -312780,7 +312718,7 @@
       "type": "REWARD"
     },
     {
-      "id": -1053,
+      "id": -1052,
       "npcIds": [],
       "name": "Flowering Tree (Forestry event)",
       "combatLevel": 0,
@@ -313472,7 +313410,7 @@
       "type": "PICKPOCKET"
     },
     {
-      "id": -1054,
+      "id": -1053,
       "npcIds": [],
       "name": "Fremennik citizen",
       "combatLevel": 0,
@@ -313777,7 +313715,7 @@
       "type": "KILL"
     },
     {
-      "id": -1055,
+      "id": -1054,
       "npcIds": [],
       "name": "Friendly Ent (Forestry event)",
       "combatLevel": 0,
@@ -314894,7 +314832,7 @@
       "type": "KILL"
     },
     {
-      "id": -1056,
+      "id": -1055,
       "npcIds": [],
       "name": "Gem drop table",
       "combatLevel": 0,
@@ -315003,7 +314941,7 @@
       "type": "KILL"
     },
     {
-      "id": -1057,
+      "id": -1056,
       "npcIds": [],
       "name": "General Danknuck",
       "combatLevel": 90,
@@ -317257,8 +317195,8 @@
         "attacks": [
           {
             "style": "stab",
-            "maxHit": 2,
-            "maxHitMax": 2,
+            "maxHit": 1,
+            "maxHitMax": 1,
             "speed": 4,
             "speedMax": 4
           }
@@ -319310,7 +319248,7 @@
       "type": "KILL"
     },
     {
-      "id": -1058,
+      "id": -1057,
       "npcIds": [],
       "name": "Gnome Restaurant",
       "combatLevel": 0,
@@ -321215,7 +321153,7 @@
       "type": "KILL"
     },
     {
-      "id": -1059,
+      "id": -1058,
       "npcIds": [],
       "name": "Goblin lieutenant (Red (Level 50))",
       "wikiPage": "Goblin lieutenant",
@@ -321244,7 +321182,7 @@
       "type": "KILL"
     },
     {
-      "id": -1060,
+      "id": -1059,
       "npcIds": [],
       "name": "Goblin lieutenant (Red (Level 75))",
       "wikiPage": "Goblin lieutenant",
@@ -321273,7 +321211,7 @@
       "type": "KILL"
     },
     {
-      "id": -1061,
+      "id": -1060,
       "npcIds": [],
       "name": "Goblin raider",
       "combatLevel": 0,
@@ -321301,7 +321239,7 @@
       "type": "KILL"
     },
     {
-      "id": -1062,
+      "id": -1061,
       "npcIds": [],
       "name": "God Wars Dungeon-variant rare drop table",
       "combatLevel": 0,
@@ -321603,7 +321541,7 @@
       "type": "KILL"
     },
     {
-      "id": -1063,
+      "id": -1062,
       "npcIds": [],
       "name": "Golem crafting",
       "combatLevel": 0,
@@ -322162,7 +322100,7 @@
       "type": "REWARD"
     },
     {
-      "id": -1064,
+      "id": -1063,
       "npcIds": [],
       "name": "Grasslegs",
       "combatLevel": 0,
@@ -322245,7 +322183,7 @@
       "type": "KILL"
     },
     {
-      "id": -1065,
+      "id": -1064,
       "npcIds": [],
       "name": "Gravedigger",
       "combatLevel": 0,
@@ -323321,7 +323259,7 @@
       "type": "KILL"
     },
     {
-      "id": -1066,
+      "id": -1065,
       "npcIds": [],
       "name": "Green Guard",
       "combatLevel": 19,
@@ -323349,7 +323287,7 @@
       "type": "KILL"
     },
     {
-      "id": -1067,
+      "id": -1066,
       "npcIds": [],
       "name": "Green h'ween Mask (2013 Rare Drops)",
       "combatLevel": 0,
@@ -323360,7 +323298,7 @@
       "type": "REWARD"
     },
     {
-      "id": -1068,
+      "id": -1067,
       "npcIds": [],
       "name": "Green partyhat (2013 April Fools)",
       "combatLevel": 0,
@@ -323371,7 +323309,7 @@
       "type": "REWARD"
     },
     {
-      "id": -1069,
+      "id": -1068,
       "npcIds": [],
       "name": "Green partyhat (2013 Rare Drops)",
       "combatLevel": 0,
@@ -323816,7 +323754,7 @@
       "type": "KILL"
     },
     {
-      "id": -1070,
+      "id": -1069,
       "npcIds": [],
       "name": "Grotesque Guardians",
       "combatLevel": 0,
@@ -323827,7 +323765,7 @@
       "type": "GATHER"
     },
     {
-      "id": -1071,
+      "id": -1070,
       "npcIds": [],
       "name": "Grotesque Guardians (Echo) (Dawn)",
       "wikiPage": "Grotesque Guardians (Echo)",
@@ -323843,21 +323781,12 @@
         "magicLevel": 0,
         "rangedLevel": 0,
         "hitpoints": 0,
-        "attacks": [
-          {
-            "style": "slash",
-            "maxHit": 0,
-            "maxHitMax": 0,
-            "speed": 6,
-            "speedMax": 6
-          }
-        ],
-        "elementalWeakness": "Earth"
+        "attacks": []
       },
       "type": "KILL"
     },
     {
-      "id": -1072,
+      "id": -1071,
       "npcIds": [],
       "name": "Grotesque Guardians (Echo) (Definitely Not Dusk)",
       "wikiPage": "Grotesque Guardians (Echo)",
@@ -323873,21 +323802,12 @@
         "magicLevel": 0,
         "rangedLevel": 0,
         "hitpoints": 0,
-        "attacks": [
-          {
-            "style": "slash",
-            "maxHit": 0,
-            "maxHitMax": 0,
-            "speed": 6,
-            "speedMax": 6
-          }
-        ],
-        "elementalWeakness": "Earth"
+        "attacks": []
       },
       "type": "KILL"
     },
     {
-      "id": -1073,
+      "id": -1072,
       "npcIds": [],
       "name": "Grotesque Guardians (Echo) (Dusk)",
       "wikiPage": "Grotesque Guardians (Echo)",
@@ -323903,16 +323823,7 @@
         "magicLevel": 0,
         "rangedLevel": 0,
         "hitpoints": 0,
-        "attacks": [
-          {
-            "style": "slash",
-            "maxHit": 0,
-            "maxHitMax": 0,
-            "speed": 6,
-            "speedMax": 6
-          }
-        ],
-        "elementalWeakness": "Earth"
+        "attacks": []
       },
       "type": "KILL"
     },
@@ -327433,7 +327344,7 @@
       "type": "GATHER"
     },
     {
-      "id": -1074,
+      "id": -1073,
       "npcIds": [],
       "name": "Half full wine jug (2013 Rare Drops)",
       "combatLevel": 0,
@@ -327734,7 +327645,7 @@
       "type": "GATHER"
     },
     {
-      "id": -1075,
+      "id": -1074,
       "npcIds": [],
       "name": "Hats & scarves (2013 Rare Drops)",
       "combatLevel": 0,
@@ -329041,7 +328952,7 @@
       "type": "KILL"
     },
     {
-      "id": -1076,
+      "id": -1075,
       "npcIds": [],
       "name": "Hespori (Echo)",
       "combatLevel": 426,
@@ -329087,7 +328998,7 @@
       "type": "KILL"
     },
     {
-      "id": -1077,
+      "id": -1076,
       "npcIds": [],
       "name": "High Priest (2013 Goblin Invasion)",
       "combatLevel": 0,
@@ -333552,7 +333463,7 @@
       "type": "PICKPOCKET"
     },
     {
-      "id": -1078,
+      "id": -1077,
       "npcIds": [],
       "name": "Jack lantern mask (2013 Rare Drops)",
       "combatLevel": 0,
@@ -334184,7 +334095,7 @@
       "type": "PICKPOCKET"
     },
     {
-      "id": -1079,
+      "id": -1078,
       "npcIds": [],
       "name": "Jekyll and Hyde",
       "combatLevel": 0,
@@ -336466,7 +336377,7 @@
       "type": "KILL"
     },
     {
-      "id": -1080,
+      "id": -1079,
       "npcIds": [],
       "name": "Karamjan tiger shark",
       "combatLevel": 25,
@@ -336646,7 +336557,7 @@
       "type": "REWARD"
     },
     {
-      "id": -1081,
+      "id": -1080,
       "npcIds": [],
       "name": "Kharazi monodon",
       "combatLevel": 64,
@@ -337761,7 +337672,7 @@
       "type": "KILL"
     },
     {
-      "id": -1082,
+      "id": -1081,
       "npcIds": [],
       "name": "King Black Dragon (Echo)",
       "combatLevel": 414,
@@ -338190,7 +338101,7 @@
       "type": "KILL"
     },
     {
-      "id": -1083,
+      "id": -1082,
       "npcIds": [],
       "name": "King Scorpion (Realm of Memories)",
       "combatLevel": 0,
@@ -338222,7 +338133,7 @@
       "type": "KILL"
     },
     {
-      "id": -1084,
+      "id": -1083,
       "npcIds": [],
       "name": "King Snagwort",
       "combatLevel": 0,
@@ -338255,7 +338166,7 @@
       "type": "REWARD"
     },
     {
-      "id": -1085,
+      "id": -1084,
       "npcIds": [],
       "name": "Kiss the frog",
       "combatLevel": 0,
@@ -344413,7 +344324,7 @@
       "type": "GATHER"
     },
     {
-      "id": -1086,
+      "id": -1085,
       "npcIds": [],
       "name": "Marionette set (2013 Rare Drops)",
       "combatLevel": 0,
@@ -344766,7 +344677,7 @@
       "type": "GATHER"
     },
     {
-      "id": -1087,
+      "id": -1086,
       "npcIds": [],
       "name": "Maze",
       "combatLevel": 0,
@@ -345239,7 +345150,7 @@
       "type": "KILL"
     },
     {
-      "id": -1088,
+      "id": -1087,
       "npcIds": [],
       "name": "Mime (Random Event)",
       "combatLevel": 0,
@@ -345330,7 +345241,7 @@
       "type": "REWARD"
     },
     {
-      "id": -1089,
+      "id": -1088,
       "npcIds": [],
       "name": "Mining",
       "combatLevel": 0,
@@ -352717,7 +352628,7 @@
       "type": "GATHER"
     },
     {
-      "id": -1090,
+      "id": -1089,
       "npcIds": [],
       "name": "Ogre monodon",
       "combatLevel": 79,
@@ -352753,7 +352664,7 @@
       "type": "KILL"
     },
     {
-      "id": -1091,
+      "id": -1090,
       "npcIds": [],
       "name": "Ogre monodon",
       "combatLevel": 79,
@@ -354314,7 +354225,7 @@
       "type": "KILL"
     },
     {
-      "id": -1092,
+      "id": -1091,
       "npcIds": [],
       "name": "Painted Goblin",
       "combatLevel": 11,
@@ -356239,7 +356150,7 @@
       "type": "KILL"
     },
     {
-      "id": -1093,
+      "id": -1092,
       "npcIds": [],
       "name": "Pheasant Control",
       "combatLevel": 0,
@@ -356521,7 +356432,7 @@
       "type": "GATHER"
     },
     {
-      "id": -1094,
+      "id": -1093,
       "npcIds": [],
       "name": "Pile of Rock (Big Cats & WWF)",
       "combatLevel": 0,
@@ -356549,7 +356460,7 @@
       "type": "GATHER"
     },
     {
-      "id": -1095,
+      "id": -1094,
       "npcIds": [],
       "name": "Pillory",
       "combatLevel": 0,
@@ -356560,7 +356471,7 @@
       "type": "REWARD"
     },
     {
-      "id": -1096,
+      "id": -1095,
       "npcIds": [],
       "name": "Pinball",
       "combatLevel": 0,
@@ -357455,7 +357366,7 @@
       "type": "GATHER"
     },
     {
-      "id": -1097,
+      "id": -1096,
       "npcIds": [],
       "name": "Poachers (Forestry event)",
       "combatLevel": 0,
@@ -357936,7 +357847,7 @@
       "type": "KILL"
     },
     {
-      "id": -1098,
+      "id": -1097,
       "npcIds": [],
       "name": "Polar kebbit",
       "combatLevel": 0,
@@ -358698,7 +358609,7 @@
       "type": "KILL"
     },
     {
-      "id": -1099,
+      "id": -1098,
       "npcIds": [],
       "name": "Pumpkin (2013 Rare Drops)",
       "combatLevel": 0,
@@ -358709,7 +358620,7 @@
       "type": "REWARD"
     },
     {
-      "id": -1100,
+      "id": -1099,
       "npcIds": [],
       "name": "Purple partyhat (2013 April Fools)",
       "combatLevel": 0,
@@ -358720,7 +358631,7 @@
       "type": "REWARD"
     },
     {
-      "id": -1101,
+      "id": -1100,
       "npcIds": [],
       "name": "Purple partyhat (2013 Rare Drops)",
       "combatLevel": 0,
@@ -359867,7 +359778,7 @@
       "type": "KILL"
     },
     {
-      "id": -1102,
+      "id": -1101,
       "npcIds": [],
       "name": "Rare drop table",
       "combatLevel": 0,
@@ -359887,7 +359798,7 @@
       "plane": 0
     },
     {
-      "id": -1103,
+      "id": -1102,
       "npcIds": [],
       "name": "Rare drop table",
       "combatLevel": 0,
@@ -360107,7 +360018,7 @@
       "type": "REWARD"
     },
     {
-      "id": -1104,
+      "id": -1103,
       "npcIds": [],
       "name": "Razor-backed kebbit",
       "combatLevel": 0,
@@ -360478,7 +360389,7 @@
       "type": "REWARD"
     },
     {
-      "id": -1105,
+      "id": -1104,
       "npcIds": [],
       "name": "Red h'ween Mask (2013 Rare Drops)",
       "combatLevel": 0,
@@ -360489,7 +360400,7 @@
       "type": "REWARD"
     },
     {
-      "id": -1106,
+      "id": -1105,
       "npcIds": [],
       "name": "Red partyhat (2013 April Fools)",
       "combatLevel": 0,
@@ -360500,7 +360411,7 @@
       "type": "REWARD"
     },
     {
-      "id": -1107,
+      "id": -1106,
       "npcIds": [],
       "name": "Red partyhat (2013 Rare Drops)",
       "combatLevel": 0,
@@ -360726,7 +360637,7 @@
       "type": "GATHER"
     },
     {
-      "id": -1108,
+      "id": -1107,
       "npcIds": [],
       "name": "Reindeer hat (2013 Rare Drops)",
       "combatLevel": 0,
@@ -361786,7 +361697,7 @@
       "type": "REWARD"
     },
     {
-      "id": -1109,
+      "id": -1108,
       "npcIds": [],
       "name": "Rising roots",
       "combatLevel": 0,
@@ -363931,7 +363842,7 @@
       "type": "KILL"
     },
     {
-      "id": -1110,
+      "id": -1109,
       "npcIds": [],
       "name": "Rubber chicken (2013 Rare Drops)",
       "combatLevel": 0,
@@ -365027,7 +364938,7 @@
       "type": "REWARD"
     },
     {
-      "id": -1111,
+      "id": -1110,
       "npcIds": [],
       "name": "Santa hat (2013 Rare Drops)",
       "combatLevel": 0,
@@ -365730,7 +365641,7 @@
       "type": "KILL"
     },
     {
-      "id": -1112,
+      "id": -1111,
       "npcIds": [],
       "name": "Scavenger runt",
       "combatLevel": 0,
@@ -366103,7 +366014,9 @@
         ],
         "weakTo": [
           "MAGIC"
-        ]
+        ],
+        "elementalWeakness": "Fire",
+        "elementalWeaknessPercent": 35
       },
       "type": "KILL"
     },
@@ -366699,7 +366612,7 @@
       "type": "KILL"
     },
     {
-      "id": -1113,
+      "id": -1112,
       "npcIds": [],
       "name": "Scorpion (Realm of Memories)",
       "combatLevel": 0,
@@ -366954,7 +366867,7 @@
       "type": "KILL"
     },
     {
-      "id": -1114,
+      "id": -1113,
       "npcIds": [],
       "name": "Scythe (2013 Rare Drops)",
       "combatLevel": 0,
@@ -366965,7 +366878,7 @@
       "type": "REWARD"
     },
     {
-      "id": -1115,
+      "id": -1114,
       "npcIds": [],
       "name": "Sea hawk",
       "combatLevel": 59,
@@ -367000,7 +366913,7 @@
       "type": "KILL"
     },
     {
-      "id": -1116,
+      "id": -1115,
       "npcIds": [],
       "name": "Sea monodon",
       "combatLevel": 196,
@@ -368774,7 +368687,7 @@
       "type": "KILL"
     },
     {
-      "id": -1117,
+      "id": -1116,
       "npcIds": [],
       "name": "Shark (Sailing alpha)",
       "combatLevel": 57,
@@ -372733,7 +372646,7 @@
       "type": "KILL"
     },
     {
-      "id": -1118,
+      "id": -1117,
       "npcIds": [],
       "name": "Skeleton outfit (2013 Rare Drops)",
       "combatLevel": 0,
@@ -373650,7 +373563,7 @@
       "type": "KILL"
     },
     {
-      "id": -1119,
+      "id": -1118,
       "npcIds": [],
       "name": "Snailneck",
       "combatLevel": 0,
@@ -374587,7 +374500,7 @@
       "type": "KILL"
     },
     {
-      "id": -1120,
+      "id": -1119,
       "npcIds": [],
       "name": "Sol Heredit (Echo)",
       "combatLevel": 1953,
@@ -375224,7 +375137,7 @@
       "type": "KILL"
     },
     {
-      "id": -1121,
+      "id": -1120,
       "npcIds": [],
       "name": "Sorceress's Garden",
       "combatLevel": 0,
@@ -375244,7 +375157,7 @@
       "plane": 0
     },
     {
-      "id": -1122,
+      "id": -1121,
       "npcIds": [],
       "name": "Sorceress's Garden/Autumn",
       "combatLevel": 0,
@@ -375255,7 +375168,7 @@
       "type": "REWARD"
     },
     {
-      "id": -1123,
+      "id": -1122,
       "npcIds": [],
       "name": "Sorceress's Garden/Spring",
       "combatLevel": 0,
@@ -375266,7 +375179,7 @@
       "type": "REWARD"
     },
     {
-      "id": -1124,
+      "id": -1123,
       "npcIds": [],
       "name": "Sorceress's Garden/Summer",
       "combatLevel": 0,
@@ -375286,7 +375199,7 @@
       "plane": 0
     },
     {
-      "id": -1125,
+      "id": -1124,
       "npcIds": [],
       "name": "Sorceress's Garden/Winter",
       "combatLevel": 0,
@@ -379098,7 +379011,7 @@
       "type": "KILL"
     },
     {
-      "id": -1126,
+      "id": -1125,
       "npcIds": [],
       "name": "Struggling sapling (Forestry event)",
       "combatLevel": 0,
@@ -379576,7 +379489,7 @@
       "type": "GATHER"
     },
     {
-      "id": -1127,
+      "id": -1126,
       "npcIds": [],
       "name": "Superior slayer monster",
       "combatLevel": 0,
@@ -379787,7 +379700,7 @@
       "type": "KILL"
     },
     {
-      "id": -1128,
+      "id": -1127,
       "npcIds": [],
       "name": "Surprise Exam",
       "combatLevel": 0,
@@ -381552,7 +381465,7 @@
       "type": "KILL"
     },
     {
-      "id": -1129,
+      "id": -1128,
       "npcIds": [],
       "name": "The Gauntlet",
       "combatLevel": 0,
@@ -382292,7 +382205,7 @@
       "type": "KILL"
     },
     {
-      "id": -1130,
+      "id": -1129,
       "npcIds": [],
       "name": "Theatre of Blood/Hard Mode",
       "combatLevel": 0,
@@ -382382,7 +382295,7 @@
       "type": "KILL"
     },
     {
-      "id": -1131,
+      "id": -1130,
       "npcIds": [],
       "name": "Thermonuclear smoke devil (Echo)",
       "combatLevel": 602,
@@ -389081,7 +388994,7 @@
       "type": "REWARD"
     },
     {
-      "id": -1132,
+      "id": -1131,
       "npcIds": [],
       "name": "Unusual Chicken",
       "combatLevel": 1,
@@ -391884,7 +391797,7 @@
       "type": "KILL"
     },
     {
-      "id": -1133,
+      "id": -1132,
       "npcIds": [],
       "name": "Void Knights' Reward Options",
       "combatLevel": 0,
@@ -392145,7 +392058,7 @@
       "type": "KILL"
     },
     {
-      "id": -1134,
+      "id": -1133,
       "npcIds": [],
       "name": "Vyre",
       "combatLevel": 0,
@@ -393327,7 +393240,7 @@
       "type": "KILL"
     },
     {
-      "id": -1135,
+      "id": -1134,
       "npcIds": [],
       "name": "War ship (2013 Rare Drops)",
       "combatLevel": 0,
@@ -395056,7 +394969,7 @@
       "type": "GATHER"
     },
     {
-      "id": -1136,
+      "id": -1135,
       "npcIds": [],
       "name": "White partyhat (2013 April Fools)",
       "combatLevel": 0,
@@ -395067,7 +394980,7 @@
       "type": "REWARD"
     },
     {
-      "id": -1137,
+      "id": -1136,
       "npcIds": [],
       "name": "White partyhat (2013 Rare Drops)",
       "combatLevel": 0,
@@ -395078,7 +394991,7 @@
       "type": "REWARD"
     },
     {
-      "id": -1138,
+      "id": -1137,
       "npcIds": [],
       "name": "White rabbit",
       "combatLevel": 0,
@@ -395510,7 +395423,7 @@
       "type": "KILL"
     },
     {
-      "id": -1139,
+      "id": -1138,
       "npcIds": [],
       "name": "Wild dog (Last Man Standing)",
       "combatLevel": 63,
@@ -395942,7 +395855,7 @@
       "type": "REWARD"
     },
     {
-      "id": -1140,
+      "id": -1139,
       "npcIds": [],
       "name": "Wintumber tree (2013 Rare Drops)",
       "combatLevel": 0,
@@ -395969,7 +395882,7 @@
       "type": "GATHER"
     },
     {
-      "id": -1141,
+      "id": -1140,
       "npcIds": [],
       "name": "Wise Old Man tasks",
       "combatLevel": 0,
@@ -398295,7 +398208,7 @@
       "type": "GATHER"
     },
     {
-      "id": -1142,
+      "id": -1141,
       "npcIds": [],
       "name": "Yellow partyhat (2013 April Fools)",
       "combatLevel": 0,
@@ -398306,7 +398219,7 @@
       "type": "REWARD"
     },
     {
-      "id": -1143,
+      "id": -1142,
       "npcIds": [],
       "name": "Yellow partyhat (2013 Rare Drops)",
       "combatLevel": 0,
@@ -398377,7 +398290,7 @@
       "type": "GATHER"
     },
     {
-      "id": -1144,
+      "id": -1143,
       "npcIds": [],
       "name": "Yo-yo (2013 Rare Drops)",
       "combatLevel": 0,
@@ -401551,7 +401464,7 @@
       "type": "KILL"
     },
     {
-      "id": -1145,
+      "id": -1144,
       "npcIds": [],
       "name": "Zombie head (2013 Rare Drops)",
       "combatLevel": 0,
