@@ -168,7 +168,7 @@ public class ItemSearchPlugin extends Plugin
 		navButton = NavigationButton.builder()
 			.tooltip("Item Search")
 			.icon(icon)
-			.priority(7)
+			.priority(99)
 			.panel(panel)
 			.build();
 		clientToolbar.addNavigation(navButton);
