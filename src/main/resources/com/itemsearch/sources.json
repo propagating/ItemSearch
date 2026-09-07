@@ -249635,6 +249635,13 @@
             "maxHitMax": 8,
             "speed": 4,
             "speedMax": 4
+          },
+          {
+            "style": "without nose peg",
+            "maxHit": 14,
+            "maxHitMax": 14,
+            "speed": 4,
+            "speedMax": 4
           }
         ],
         "weakTo": [
@@ -250226,6 +250233,16 @@
             "effects": [
               "POISON"
             ]
+          },
+          {
+            "style": "with explosion",
+            "maxHit": 96,
+            "maxHitMax": 96,
+            "speed": 7,
+            "speedMax": 7,
+            "effects": [
+              "POISON"
+            ]
           }
         ],
         "weakTo": [
@@ -250497,6 +250514,13 @@
             "style": "metallic dragonfire",
             "maxHit": 50,
             "maxHitMax": 50,
+            "speed": 4,
+            "speedMax": 4
+          },
+          {
+            "style": "poison special",
+            "maxHit": 25,
+            "maxHitMax": 25,
             "speed": 4,
             "speedMax": 4
           }
@@ -252491,8 +252515,22 @@
           },
           {
             "style": "icy breath",
+            "maxHit": 0,
+            "maxHitMax": 0,
+            "speed": 5,
+            "speedMax": 5
+          },
+          {
+            "style": "icy breath",
             "maxHit": 44,
             "maxHitMax": 44,
+            "speed": 5,
+            "speedMax": 5
+          },
+          {
+            "style": "icy breath with elemental shield equipped",
+            "maxHit": 10,
+            "maxHitMax": 10,
             "speed": 5,
             "speedMax": 5
           }
@@ -257853,6 +257891,13 @@
             "maxHitMax": 2,
             "speed": 4,
             "speedMax": 4
+          },
+          {
+            "style": "without earmuffs",
+            "maxHit": 6,
+            "maxHitMax": 6,
+            "speed": 4,
+            "speedMax": 4
           }
         ],
         "weakTo": [
@@ -259030,13 +259075,20 @@
         "attacks": [
           {
             "style": "magic",
-            "maxHit": 74,
-            "maxHitMax": 74,
+            "maxHit": 28,
+            "maxHitMax": 28,
             "speed": 4,
             "speedMax": 4
           },
           {
             "style": "melee",
+            "maxHit": 28,
+            "maxHitMax": 28,
+            "speed": 4,
+            "speedMax": 4
+          },
+          {
+            "style": "special attack",
             "maxHit": 74,
             "maxHitMax": 74,
             "speed": 4,
@@ -262592,8 +262644,15 @@
         "attacks": [
           {
             "style": "stab",
-            "maxHit": 0,
-            "maxHitMax": 0,
+            "maxHit": 21,
+            "maxHitMax": 21,
+            "speed": 5,
+            "speedMax": 5
+          },
+          {
+            "style": "shriek",
+            "maxHit": 40,
+            "maxHitMax": 40,
             "speed": 5,
             "speedMax": 5
           }
@@ -264251,6 +264310,13 @@
             "maxHitMax": 26,
             "speed": 7,
             "speedMax": 7
+          },
+          {
+            "style": "wall",
+            "maxHit": 12,
+            "maxHitMax": 12,
+            "speed": 7,
+            "speedMax": 7
           }
         ],
         "weakTo": [
@@ -265141,15 +265207,15 @@
         "attacks": [
           {
             "style": "slash",
-            "maxHit": 0,
-            "maxHitMax": 0,
+            "maxHit": 29,
+            "maxHitMax": 29,
             "speed": 4,
             "speedMax": 4
           },
           {
             "style": "magic",
-            "maxHit": 0,
-            "maxHitMax": 0,
+            "maxHit": 29,
+            "maxHitMax": 29,
             "speed": 4,
             "speedMax": 4
           },
@@ -265208,15 +265274,15 @@
         "attacks": [
           {
             "style": "slash",
-            "maxHit": 0,
-            "maxHitMax": 0,
+            "maxHit": 21,
+            "maxHitMax": 21,
             "speed": 4,
             "speedMax": 4
           },
           {
             "style": "magic",
-            "maxHit": 0,
-            "maxHitMax": 0,
+            "maxHit": 21,
+            "maxHitMax": 21,
             "speed": 4,
             "speedMax": 4
           },
@@ -265328,15 +265394,15 @@
         "attacks": [
           {
             "style": "stab",
-            "maxHit": 0,
-            "maxHitMax": 0,
+            "maxHit": 18,
+            "maxHitMax": 18,
             "speed": 4,
             "speedMax": 4
           },
           {
             "style": "magic",
-            "maxHit": 0,
-            "maxHitMax": 0,
+            "maxHit": 18,
+            "maxHitMax": 18,
             "speed": 4,
             "speedMax": 4
           },
@@ -265400,15 +265466,15 @@
         "attacks": [
           {
             "style": "slash",
-            "maxHit": 0,
-            "maxHitMax": 0,
+            "maxHit": 22,
+            "maxHitMax": 22,
             "speed": 4,
             "speedMax": 4
           },
           {
             "style": "magic",
-            "maxHit": 0,
-            "maxHitMax": 0,
+            "maxHit": 22,
+            "maxHitMax": 22,
             "speed": 4,
             "speedMax": 4
           },
@@ -265458,6 +265524,13 @@
             "style": "crush",
             "maxHit": 3,
             "maxHitMax": 3,
+            "speed": 5,
+            "speedMax": 5
+          },
+          {
+            "style": "special",
+            "maxHit": 19,
+            "maxHitMax": 19,
             "speed": 5,
             "speedMax": 5
           }
@@ -266259,6 +266332,13 @@
             "style": "ranged",
             "maxHit": 31,
             "maxHitMax": 31,
+            "speed": 4,
+            "speedMax": 4
+          },
+          {
+            "style": "special",
+            "maxHit": 50,
+            "maxHitMax": 50,
             "speed": 4,
             "speedMax": 4
           }
@@ -269256,11 +269336,12 @@
             "speedMax": 4
           },
           {
-            "style": "melee (crush?)",
+            "style": "melee",
             "maxHit": 28,
             "maxHitMax": 28,
             "speed": 4,
-            "speedMax": 4
+            "speedMax": 4,
+            "notes": "crush?"
           }
         ],
         "elementalWeakness": "Air",
@@ -272515,6 +272596,13 @@
             "maxHitMax": 65,
             "speed": 4,
             "speedMax": 4
+          },
+          {
+            "style": "stomp",
+            "maxHit": 51,
+            "maxHitMax": 51,
+            "speed": 4,
+            "speedMax": 4
           }
         ],
         "weakTo": [
@@ -274545,15 +274633,22 @@
         "attacks": [
           {
             "style": "ranged",
-            "maxHit": 0,
-            "maxHitMax": 0,
+            "maxHit": 14,
+            "maxHitMax": 14,
             "speed": 3,
             "speedMax": 3
           },
           {
             "style": "crush",
-            "maxHit": 0,
-            "maxHitMax": 0,
+            "maxHit": 14,
+            "maxHitMax": 14,
+            "speed": 3,
+            "speedMax": 3
+          },
+          {
+            "style": "special",
+            "maxHit": 24,
+            "maxHitMax": 24,
             "speed": 3,
             "speedMax": 3
           }
@@ -279910,11 +280005,12 @@
         "hitpoints": 60,
         "attacks": [
           {
-            "style": "slash (100% prayer penetration)",
+            "style": "slash",
             "maxHit": 2,
             "maxHitMax": 2,
             "speed": 4,
-            "speedMax": 4
+            "speedMax": 4,
+            "notes": "100% prayer penetration"
           }
         ],
         "weakTo": [
@@ -280036,6 +280132,13 @@
             "style": "crush",
             "maxHit": 43,
             "maxHitMax": 43,
+            "speed": 5,
+            "speedMax": 5
+          },
+          {
+            "style": "special",
+            "maxHit": 56,
+            "maxHitMax": 56,
             "speed": 5,
             "speedMax": 5
           }
@@ -280450,6 +280553,20 @@
             "style": "crush",
             "maxHit": 25,
             "maxHitMax": 25,
+            "speed": 3,
+            "speedMax": 3
+          },
+          {
+            "style": "special direct hit",
+            "maxHit": 56,
+            "maxHitMax": 56,
+            "speed": 3,
+            "speedMax": 3
+          },
+          {
+            "style": "special indirect hit",
+            "maxHit": 18,
+            "maxHitMax": 18,
             "speed": 3,
             "speedMax": 3
           }
@@ -281110,6 +281227,13 @@
             "maxHitMax": 8,
             "speed": 4,
             "speedMax": 4
+          },
+          {
+            "style": "without nose peg",
+            "maxHit": 14,
+            "maxHitMax": 14,
+            "speed": 4,
+            "speedMax": 4
           }
         ],
         "weakTo": [
@@ -281141,8 +281265,15 @@
         "attacks": [
           {
             "style": "slash",
-            "maxHit": 0,
-            "maxHitMax": 0,
+            "maxHit": 29,
+            "maxHitMax": 29,
+            "speed": 7,
+            "speedMax": 7
+          },
+          {
+            "style": "at 1 hitpoints",
+            "maxHit": 57,
+            "maxHitMax": 57,
             "speed": 7,
             "speedMax": 7
           }
@@ -282183,8 +282314,8 @@
           {
             "style": "ranged",
             "prayStyle": "melee",
-            "maxHit": 15,
-            "maxHitMax": 15,
+            "maxHit": 0,
+            "maxHitMax": 0,
             "speed": 4,
             "speedMax": 4
           },
@@ -282294,8 +282425,18 @@
         "attacks": [
           {
             "style": "crush",
-            "maxHit": 0,
-            "maxHitMax": 0,
+            "maxHit": 31,
+            "maxHitMax": 31,
+            "speed": 4,
+            "speedMax": 4,
+            "effects": [
+              "VENOM"
+            ]
+          },
+          {
+            "style": "special attack",
+            "maxHit": 50,
+            "maxHitMax": 50,
             "speed": 4,
             "speedMax": 4,
             "effects": [
@@ -282747,6 +282888,13 @@
             "style": "crush",
             "maxHit": 56,
             "maxHitMax": 56,
+            "speed": 5,
+            "speedMax": 5
+          },
+          {
+            "style": "gaze",
+            "maxHit": 101,
+            "maxHitMax": 101,
             "speed": 5,
             "speedMax": 5
           }
@@ -284667,8 +284815,15 @@
         "attacks": [
           {
             "style": "magic",
-            "maxHit": 0,
-            "maxHitMax": 0,
+            "maxHit": 34,
+            "maxHitMax": 34,
+            "speed": 5,
+            "speedMax": 5
+          },
+          {
+            "style": "special attack",
+            "maxHit": 50,
+            "maxHitMax": 50,
             "speed": 5,
             "speedMax": 5
           }
@@ -284806,9 +284961,17 @@
             "speedMax": 4
           },
           {
-            "style": "magic (bleed)",
+            "style": "magic",
             "maxHit": 0,
             "maxHitMax": 0,
+            "speed": 4,
+            "speedMax": 4,
+            "notes": "bleed"
+          },
+          {
+            "style": "special attack",
+            "maxHit": 5,
+            "maxHitMax": 5,
             "speed": 4,
             "speedMax": 4
           }
@@ -284844,6 +285007,13 @@
             "style": "crush",
             "maxHit": 26,
             "maxHitMax": 26,
+            "speed": 7,
+            "speedMax": 7
+          },
+          {
+            "style": "wall",
+            "maxHit": 12,
+            "maxHitMax": 12,
             "speed": 7,
             "speedMax": 7
           }
@@ -285068,6 +285238,27 @@
             "style": "magic",
             "maxHit": 0,
             "maxHitMax": 0,
+            "speed": 5,
+            "speedMax": 5
+          },
+          {
+            "style": "fire blast",
+            "maxHit": 16,
+            "maxHitMax": 16,
+            "speed": 5,
+            "speedMax": 5
+          },
+          {
+            "style": "fire wave",
+            "maxHit": 20,
+            "maxHitMax": 20,
+            "speed": 5,
+            "speedMax": 5
+          },
+          {
+            "style": "wind strike",
+            "maxHit": 2,
+            "maxHitMax": 2,
             "speed": 5,
             "speedMax": 5
           }
@@ -285517,6 +285708,13 @@
         "attacks": [
           {
             "style": "slash",
+            "maxHit": 18,
+            "maxHitMax": 18,
+            "speed": 4,
+            "speedMax": 4
+          },
+          {
+            "style": "charge",
             "maxHit": 30,
             "maxHitMax": 30,
             "speed": 4,
@@ -286623,6 +286821,13 @@
             "maxHitMax": 0,
             "speed": 4,
             "speedMax": 4
+          },
+          {
+            "style": "approx",
+            "maxHit": 11,
+            "maxHitMax": 11,
+            "speed": 4,
+            "speedMax": 4
           }
         ],
         "weakTo": [
@@ -286764,6 +286969,13 @@
             "style": "magic",
             "maxHit": 37,
             "maxHitMax": 37,
+            "speed": 4,
+            "speedMax": 4
+          },
+          {
+            "style": "without ice gloves",
+            "maxHit": 40,
+            "maxHitMax": 40,
             "speed": 4,
             "speedMax": 4
           }
@@ -288402,6 +288614,13 @@
             "style": "stab",
             "maxHit": 0,
             "maxHitMax": 0,
+            "speed": 4,
+            "speedMax": 4
+          },
+          {
+            "style": "without slayer gloves",
+            "maxHit": 12,
+            "maxHitMax": 12,
             "speed": 4,
             "speedMax": 4
           }
@@ -300258,11 +300477,12 @@
         "hitpoints": 128,
         "attacks": [
           {
-            "style": "crush (100% prayer penetration)",
+            "style": "crush",
             "maxHit": 14,
             "maxHitMax": 14,
             "speed": 4,
-            "speedMax": 4
+            "speedMax": 4,
+            "notes": "100% prayer penetration"
           }
         ]
       },
@@ -300346,11 +300566,12 @@
         "hitpoints": 112,
         "attacks": [
           {
-            "style": "crush (100% prayer penetration)",
+            "style": "crush",
             "maxHit": 14,
             "maxHitMax": 14,
             "speed": 4,
-            "speedMax": 4
+            "speedMax": 4,
+            "notes": "100% prayer penetration"
           }
         ]
       },
@@ -302299,8 +302520,15 @@
         "attacks": [
           {
             "style": "crush",
-            "maxHit": 0,
-            "maxHitMax": 0,
+            "maxHit": 8,
+            "maxHitMax": 8,
+            "speed": 5,
+            "speedMax": 5
+          },
+          {
+            "style": "special",
+            "maxHit": 20,
+            "maxHitMax": 20,
             "speed": 5,
             "speedMax": 5
           }
@@ -305043,13 +305271,20 @@
           {
             "style": "ranged",
             "prayStyle": "melee",
-            "maxHit": 39,
-            "maxHitMax": 39,
+            "maxHit": 0,
+            "maxHitMax": 0,
             "speed": 4,
             "speedMax": 4
           },
           {
             "style": "ranged",
+            "maxHit": 0,
+            "maxHitMax": 0,
+            "speed": 4,
+            "speedMax": 4
+          },
+          {
+            "style": "spec",
             "maxHit": 39,
             "maxHitMax": 39,
             "speed": 4,
@@ -306278,6 +306513,13 @@
             "maxHitMax": 10,
             "speed": 4,
             "speedMax": 4
+          },
+          {
+            "style": "special attack",
+            "maxHit": 16,
+            "maxHitMax": 16,
+            "speed": 4,
+            "speedMax": 4
           }
         ],
         "weakTo": [
@@ -307268,6 +307510,16 @@
             "style": "magic",
             "maxHit": 14,
             "maxHitMax": 14,
+            "speed": 6,
+            "speedMax": 6,
+            "effects": [
+              "POISON"
+            ]
+          },
+          {
+            "style": "special",
+            "maxHit": 40,
+            "maxHitMax": 40,
             "speed": 6,
             "speedMax": 6,
             "effects": [
@@ -312779,6 +313031,13 @@
             "maxHitMax": 0,
             "speed": 0,
             "speedMax": 0
+          },
+          {
+            "style": "does not attack",
+            "maxHit": 0,
+            "maxHitMax": 0,
+            "speed": 0,
+            "speedMax": 0
           }
         ]
       },
@@ -313642,6 +313901,16 @@
             "style": "magic",
             "maxHit": 30,
             "maxHitMax": 30,
+            "speed": 6,
+            "speedMax": 6,
+            "effects": [
+              "POISON"
+            ]
+          },
+          {
+            "style": "special attack",
+            "maxHit": 49,
+            "maxHitMax": 49,
             "speed": 6,
             "speedMax": 6,
             "effects": [
@@ -316107,6 +316376,20 @@
             "maxHitMax": 0,
             "speed": 5,
             "speedMax": 5
+          },
+          {
+            "style": "regular hit",
+            "maxHit": 6,
+            "maxHitMax": 6,
+            "speed": 5,
+            "speedMax": 5
+          },
+          {
+            "style": "pickpocket failure",
+            "maxHit": 3,
+            "maxHitMax": 3,
+            "speed": 5,
+            "speedMax": 5
           }
         ],
         "weakTo": [
@@ -316458,11 +316741,12 @@
         "hitpoints": 255,
         "attacks": [
           {
-            "style": "magic (100% prayer penetration)",
+            "style": "magic",
             "maxHit": 28,
             "maxHitMax": 28,
             "speed": 4,
-            "speedMax": 4
+            "speedMax": 4,
+            "notes": "100% prayer penetration"
           }
         ],
         "weakTo": [
@@ -316505,11 +316789,12 @@
         "hitpoints": 0,
         "attacks": [
           {
-            "style": "magic (100% prayer penetration)",
+            "style": "magic",
             "maxHit": 28,
             "maxHitMax": 28,
             "speed": 4,
-            "speedMax": 4
+            "speedMax": 4,
+            "notes": "100% prayer penetration"
           }
         ],
         "weakTo": [
@@ -318799,6 +319084,16 @@
             "effects": [
               "POISON"
             ]
+          },
+          {
+            "style": "unconfirmed",
+            "maxHit": 65,
+            "maxHitMax": 65,
+            "speed": 4,
+            "speedMax": 4,
+            "effects": [
+              "POISON"
+            ]
           }
         ],
         "weakTo": [
@@ -319674,6 +319969,13 @@
             "maxHitMax": 0,
             "speed": 6,
             "speedMax": 6
+          },
+          {
+            "style": "icy breath with elemental shield",
+            "maxHit": 10,
+            "maxHitMax": 10,
+            "speed": 6,
+            "speedMax": 6
           }
         ],
         "weakTo": [
@@ -320410,8 +320712,8 @@
         "attacks": [
           {
             "style": "ranged",
-            "maxHit": 0,
-            "maxHitMax": 0,
+            "maxHit": 46,
+            "maxHitMax": 46,
             "speed": 0,
             "speedMax": 0,
             "effects": [
@@ -320420,8 +320722,8 @@
           },
           {
             "style": "magic",
-            "maxHit": 0,
-            "maxHitMax": 0,
+            "maxHit": 46,
+            "maxHitMax": 46,
             "speed": 0,
             "speedMax": 0,
             "effects": [
@@ -320430,8 +320732,8 @@
           },
           {
             "style": "melee",
-            "maxHit": 0,
-            "maxHitMax": 0,
+            "maxHit": 55,
+            "maxHitMax": 55,
             "speed": 0,
             "speedMax": 0,
             "effects": [
@@ -321982,11 +322284,12 @@
             "speedMax": 4
           },
           {
-            "style": "magic (special)",
+            "style": "magic",
             "maxHit": 0,
             "maxHitMax": 0,
             "speed": 4,
-            "speedMax": 4
+            "speedMax": 4,
+            "notes": "special"
           }
         ],
         "weakTo": [
@@ -322399,11 +322702,12 @@
             "speedMax": 4
           },
           {
-            "style": "magic (bleed)",
+            "style": "magic",
             "maxHit": 8,
             "maxHitMax": 8,
             "speed": 4,
-            "speedMax": 4
+            "speedMax": 4,
+            "notes": "bleed"
           }
         ],
         "weakTo": [
@@ -323536,8 +323840,8 @@
           {
             "style": "magic",
             "prayStyle": "ranged",
-            "maxHit": 18,
-            "maxHitMax": 18,
+            "maxHit": 0,
+            "maxHitMax": 0,
             "speed": 4,
             "speedMax": 4
           },
@@ -327608,6 +327912,13 @@
             "maxHitMax": 34,
             "speed": 4,
             "speedMax": 4
+          },
+          {
+            "style": "stomp",
+            "maxHit": 106,
+            "maxHitMax": 106,
+            "speed": 4,
+            "speedMax": 4
           }
         ],
         "weakTo": [
@@ -327657,6 +327968,13 @@
             "style": "magic",
             "maxHit": 23,
             "maxHitMax": 23,
+            "speed": 4,
+            "speedMax": 4
+          },
+          {
+            "style": "stomp",
+            "maxHit": 72,
+            "maxHitMax": 72,
             "speed": 4,
             "speedMax": 4
           }
@@ -328914,6 +329232,56 @@
             "style": "crush",
             "maxHit": 27,
             "maxHitMax": 27,
+            "speed": 4,
+            "speedMax": 4,
+            "effects": [
+              "POISON"
+            ]
+          },
+          {
+            "style": "smoke dash",
+            "maxHit": 50,
+            "maxHitMax": 50,
+            "speed": 4,
+            "speedMax": 4,
+            "effects": [
+              "POISON"
+            ]
+          },
+          {
+            "style": "shadow smash",
+            "maxHit": 50,
+            "maxHitMax": 50,
+            "speed": 4,
+            "speedMax": 4,
+            "effects": [
+              "POISON"
+            ]
+          },
+          {
+            "style": "blood sacrifice",
+            "maxHit": 80,
+            "maxHitMax": 80,
+            "speed": 4,
+            "speedMax": 4,
+            "effects": [
+              "POISON"
+            ]
+          },
+          {
+            "style": "containment",
+            "maxHit": 60,
+            "maxHitMax": 60,
+            "speed": 4,
+            "speedMax": 4,
+            "effects": [
+              "POISON"
+            ]
+          },
+          {
+            "style": "ice prison",
+            "maxHit": 75,
+            "maxHitMax": 75,
             "speed": 4,
             "speedMax": 4,
             "effects": [
@@ -332805,6 +333173,16 @@
             "effects": [
               "POISON"
             ]
+          },
+          {
+            "style": "does not attack",
+            "maxHit": 0,
+            "maxHitMax": 0,
+            "speed": 0,
+            "speedMax": 0,
+            "effects": [
+              "POISON"
+            ]
           }
         ]
       },
@@ -333590,6 +333968,51 @@
       "type": "KILL"
     },
     {
+      "id": 12080,
+      "npcIds": [
+        12080
+      ],
+      "name": "Phantom Muspah (Post-shield)",
+      "wikiPage": "Phantom Muspah",
+      "combatLevel": 741,
+      "spawnPoints": [],
+      "locationName": "Ghorrock Dungeon",
+      "tables": [
+        1366,
+        1367
+      ],
+      "combat": {
+        "attackLevel": 0,
+        "strengthLevel": 0,
+        "defenceLevel": 0,
+        "magicLevel": 0,
+        "rangedLevel": 0,
+        "hitpoints": 0,
+        "attacks": [
+          {
+            "style": "ranged",
+            "maxHit": 72,
+            "maxHitMax": 72,
+            "speed": 5,
+            "speedMax": 5
+          },
+          {
+            "style": "magic",
+            "maxHit": 79,
+            "maxHitMax": 79,
+            "speed": 5,
+            "speedMax": 5
+          }
+        ],
+        "weakTo": [
+          "RANGED"
+        ],
+        "elementalWeakness": "Air",
+        "elementalWeaknessPercent": 65
+      },
+      "type": "KILL"
+    },
+    {
       "id": 12077,
       "npcIds": [
         12077
@@ -333637,8 +334060,7 @@
     {
       "id": 12079,
       "npcIds": [
-        12079,
-        12080
+        12079
       ],
       "name": "Phantom Muspah (Shielded)",
       "wikiPage": "Phantom Muspah",
@@ -333668,6 +334090,13 @@
             "style": "magic",
             "maxHit": 79,
             "maxHitMax": 79,
+            "speed": 5,
+            "speedMax": 5
+          },
+          {
+            "style": "shockwave",
+            "maxHit": 80,
+            "maxHitMax": 80,
             "speed": 5,
             "speedMax": 5
           }
@@ -333706,6 +334135,13 @@
             "style": "typeless",
             "maxHit": 0,
             "maxHitMax": 0,
+            "speed": 5,
+            "speedMax": 5
+          },
+          {
+            "style": "lightning cloud",
+            "maxHit": 20,
+            "maxHitMax": 20,
             "speed": 5,
             "speedMax": 5
           }
@@ -333849,15 +334285,22 @@
           },
           {
             "style": "ranged",
-            "maxHit": 0,
-            "maxHitMax": 0,
+            "maxHit": 80,
+            "maxHitMax": 80,
             "speed": 6,
             "speedMax": 6
           },
           {
             "style": "magic",
-            "maxHit": 0,
-            "maxHitMax": 0,
+            "maxHit": 80,
+            "maxHitMax": 80,
+            "speed": 6,
+            "speedMax": 6
+          },
+          {
+            "style": "dash",
+            "maxHit": 85,
+            "maxHitMax": 85,
             "speed": 6,
             "speedMax": 6
           }
@@ -346065,6 +346508,20 @@
             "maxHitMax": 22,
             "speed": 5,
             "speedMax": 5
+          },
+          {
+            "style": "whirlwinds",
+            "maxHit": 64,
+            "maxHitMax": 64,
+            "speed": 5,
+            "speedMax": 5
+          },
+          {
+            "style": "knockback",
+            "maxHit": 30,
+            "maxHitMax": 30,
+            "speed": 5,
+            "speedMax": 5
           }
         ],
         "weakTo": [
@@ -346942,6 +347399,13 @@
             "style": "slash",
             "maxHit": 13,
             "maxHitMax": 13,
+            "speed": 6,
+            "speedMax": 6
+          },
+          {
+            "style": "icy breath",
+            "maxHit": 0,
+            "maxHitMax": 0,
             "speed": 6,
             "speedMax": 6
           },
@@ -352897,6 +353361,13 @@
             "maxHitMax": 0,
             "speed": 5,
             "speedMax": 5
+          },
+          {
+            "style": "without reinforced goggles",
+            "maxHit": 30,
+            "maxHitMax": 30,
+            "speed": 5,
+            "speedMax": 5
           }
         ],
         "weakTo": [
@@ -355117,6 +355588,13 @@
             "maxHitMax": 20,
             "speed": 5,
             "speedMax": 5
+          },
+          {
+            "style": "special",
+            "maxHit": 40,
+            "maxHitMax": 40,
+            "speed": 5,
+            "speedMax": 5
           }
         ]
       },
@@ -355199,6 +355677,13 @@
             "style": "ranged",
             "maxHit": 8,
             "maxHitMax": 8,
+            "speed": 6,
+            "speedMax": 6
+          },
+          {
+            "style": "icy breath",
+            "maxHit": 0,
+            "maxHitMax": 0,
             "speed": 6,
             "speedMax": 6
           },
@@ -357600,6 +358085,13 @@
           },
           {
             "style": "icy breath",
+            "maxHit": 0,
+            "maxHitMax": 0,
+            "speed": 6,
+            "speedMax": 6
+          },
+          {
+            "style": "icy breath",
             "maxHit": 55,
             "maxHitMax": 55,
             "speed": 6,
@@ -359128,8 +359620,8 @@
           },
           {
             "style": "ranged",
-            "maxHit": 0,
-            "maxHitMax": 0,
+            "maxHit": 39,
+            "maxHitMax": 39,
             "speed": 6,
             "speedMax": 6
           },
@@ -359387,11 +359879,13 @@
         "hitpoints": 240,
         "attacks": [
           {
-            "style": "magical ranged (100% prayer penetration)",
+            "style": "magic",
+            "prayStyle": "ranged",
             "maxHit": 8,
             "maxHitMax": 8,
             "speed": 2,
-            "speedMax": 2
+            "speedMax": 2,
+            "notes": "100% prayer penetration"
           }
         ],
         "weakTo": [
@@ -362725,6 +363219,13 @@
             "style": "crush",
             "maxHit": 0,
             "maxHitMax": 0,
+            "speed": 6,
+            "speedMax": 6
+          },
+          {
+            "style": "approx",
+            "maxHit": 13,
+            "maxHitMax": 13,
             "speed": 6,
             "speedMax": 6
           }
@@ -368316,6 +368817,13 @@
             "maxHitMax": 23,
             "speed": 5,
             "speedMax": 5
+          },
+          {
+            "style": "protect from melee",
+            "maxHit": 15,
+            "maxHitMax": 15,
+            "speed": 5,
+            "speedMax": 5
           }
         ],
         "weakTo": [
@@ -369886,6 +370394,13 @@
             "style": "crush",
             "maxHit": 4,
             "maxHitMax": 4,
+            "speed": 4,
+            "speedMax": 4
+          },
+          {
+            "style": "without spiny helmet",
+            "maxHit": 18,
+            "maxHitMax": 18,
             "speed": 4,
             "speedMax": 4
           }
@@ -374841,11 +375356,12 @@
         "hitpoints": 0,
         "attacks": [
           {
-            "style": "melee (slash)",
+            "style": "melee",
             "maxHit": 0,
             "maxHitMax": 0,
             "speed": 8,
             "speedMax": 8,
+            "notes": "slash",
             "effects": [
               "POISON"
             ]
@@ -374864,6 +375380,36 @@
             "style": "magic",
             "maxHit": 0,
             "maxHitMax": 0,
+            "speed": 7,
+            "speedMax": 7,
+            "effects": [
+              "POISON"
+            ]
+          },
+          {
+            "style": "auto-attacks",
+            "maxHit": 46,
+            "maxHitMax": 46,
+            "speed": 7,
+            "speedMax": 7,
+            "effects": [
+              "POISON"
+            ]
+          },
+          {
+            "style": "meteor strike",
+            "maxHit": 162,
+            "maxHitMax": 162,
+            "speed": 7,
+            "speedMax": 7,
+            "effects": [
+              "POISON"
+            ]
+          },
+          {
+            "style": "shadow stomp",
+            "maxHit": 80,
+            "maxHitMax": 80,
             "speed": 7,
             "speedMax": 7,
             "effects": [
