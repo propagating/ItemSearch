@@ -1007,4 +1007,29 @@ public class SourceResultViewTest
 		assertEquals(0, countTooltips(view, "<html>7 unprotected</html>"));
 	}
 
+	/**
+	 * The fourth action beside the map and reset buttons: the monster's wiki page, by page
+	 * title rather than display name, since a version split's name is not a page.
+	 */
+	@Test
+	public void theActionsOfferTheWikiPageByItsTitle()
+	{
+		SourceData split = new SourceData(469, "Killerwatt (Attacking)", 55, null,
+			Collections.emptyList(), Collections.emptyList(), Collections.singletonList(469), null,
+			SourceType.KILL, null, null, null, null, "Killerwatt", null, null);
+		SourceResultView view = build(split, new TrackerStore(mock(ConfigManager.class), new Gson()));
+		JButton wiki = button(view, "Wiki");
+		assertNotNull(wiki);
+		assertEquals("https://oldschool.runescape.wiki/w/Killerwatt", wiki.getToolTipText());
+	}
+
+	@Test
+	public void theWikiLinkEscapesTheTitle()
+	{
+		SourceData npc = npc(2042, "Zulrah's scale thing", 20, combat(Collections.singletonList("magic")));
+		SourceResultView view = build(npc, new TrackerStore(mock(ConfigManager.class), new Gson()));
+		assertEquals("https://oldschool.runescape.wiki/w/Zulrah%27s_scale_thing",
+			button(view, "Wiki").getToolTipText());
+	}
+
 }

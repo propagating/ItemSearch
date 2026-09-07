@@ -47,6 +47,9 @@ import java.util.function.Consumer;
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 import javax.swing.JButton;
 import javax.swing.JComponent;
 import javax.swing.JLabel;
@@ -72,6 +75,7 @@ import com.itemsearch.tracker.SpawnStore;
 import com.itemsearch.tracker.TrackerStore;
 import net.runelite.client.ui.ColorScheme;
 import net.runelite.client.util.AsyncBufferedImage;
+import net.runelite.client.util.LinkBrowser;
 
 public class SourceResultView extends JPanel
 {
@@ -921,6 +925,11 @@ public class SourceResultView extends JPanel
 			refresh(store);
 		}));
 
+		// by page title, not display name: "Killerwatt (Attacking)" is a name the generator made
+		// up when it split the page's versions, and the wiki has no such page
+		String wikiUrl = wikiUrl(npc.wikiTitle());
+		grid.add(resetButton("Wiki", wikiUrl, () -> LinkBrowser.browse(wikiUrl)));
+
 		grid.setMaximumSize(new Dimension(Integer.MAX_VALUE, grid.getPreferredSize().height));
 		box.add(grid);
 		return box;
@@ -1013,6 +1022,21 @@ public class SourceResultView extends JPanel
 	}
 
 	// An action button (reset kills/drops): reset glyph + word, neutral border, no state.
+	// the page for a title, the way the wiki links to itself: spaces as underscores, the rest
+	// percent-encoded, so an apostrophe or a bracket in a name still lands on the page
+	static String wikiUrl(String title)
+	{
+		try
+		{
+			return "https://oldschool.runescape.wiki/w/"
+				+ URLEncoder.encode(title.replace(' ', '_'), StandardCharsets.UTF_8.name());
+		}
+		catch (UnsupportedEncodingException e)
+		{
+			throw new IllegalStateException(e); // UTF-8 is always present
+		}
+	}
+
 	private static JButton resetButton(String text, String tooltip, Runnable action)
 	{
 		JButton button = new JButton(text);

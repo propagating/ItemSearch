@@ -113,18 +113,60 @@ public class ItemResultView extends JPanel
 			}
 		}
 
-		for (SourceOrder.Entry entry : SourceOrder.order(rawSources, owners,
+		List<SourceOrder.Entry> ordered = SourceOrder.order(rawSources, owners,
 			id ->
 			{
 				SourceData n = data.sourceById(id);
 				return n != null ? n.getName() : null;
-			}))
+			});
+
+		// a page at a time. Coins has thousands of sources, and the cost is not only building
+		// them: when the player opens one, removing the page beside the game canvas makes AWT
+		// recompute clip shapes for every sibling of every removed component, quadratic in the
+		// sibling count, and that froze the sidebar for seconds
+		JPanel sources = new JPanel();
+		sources.setLayout(new BoxLayout(sources, BoxLayout.Y_AXIS));
+		sources.setOpaque(false);
+		sources.setAlignmentX(Component.LEFT_ALIGNMENT);
+		body.add(sources);
+		JButton more = new JButton();
+		more.setFocusPainted(false);
+		more.setAlignmentX(Component.LEFT_ALIGNMENT);
+		Runnable[] showNext = new Runnable[1];
+		int[] shown = {0};
+		showNext[0] = () ->
 		{
-			body.add(buildSourceBox(entry.source, data, store, item.getItemId(), entry.npcId, onNpcSelected));
+			int end = Math.min(shown[0] + PAGE, ordered.size());
+			for (SourceOrder.Entry entry : ordered.subList(shown[0], end))
+			{
+				sources.add(buildSourceBox(entry.source, data, store, item.getItemId(), entry.npcId,
+					onNpcSelected));
+			}
+			shown[0] = end;
+			int left = ordered.size() - shown[0];
+			if (left > 0)
+			{
+				more.setText("Show " + Math.min(PAGE, left) + " more");
+			}
+			else
+			{
+				body.remove(more);
+			}
+			body.revalidate();
+			body.repaint();
+		};
+		more.addActionListener(e -> showNext[0].run());
+		if (ordered.size() > PAGE)
+		{
+			body.add(more);
 		}
+		showNext[0].run();
 
 		add(body, BorderLayout.CENTER);
 	}
+
+	// source cards shown before the player asks for more
+	static final int PAGE = 40;
 
 	private JPanel buildShopBox(ShopEntry entry, Consumer<ShopData> onShopSelected)
 	{

@@ -50,6 +50,10 @@ import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 import org.junit.Test;
 import static org.mockito.Mockito.mock;
+import javax.swing.JButton;
+import static org.mockito.Mockito.when;
+import com.itemsearch.data.DropDataService;
+import com.itemsearch.model.DropSource;
 
 public class ItemResultViewTest
 {
@@ -494,5 +498,65 @@ public class ItemResultViewTest
 		assertTrue("kill sources still show their combat level",
 			text.stream().anyMatch(t -> t != null && t.startsWith("Lvl 2  ·  ")));
 		assertTrue("kill sources keep the dry counter", text.contains("Kills since drop"));
+	}
+
+	/**
+	 * Coins has thousands of sources. Building them all is slow, and tearing them all down when
+	 * the player opens one of them is slower still: AWT recomputes clip shapes for every sibling of
+	 * every removed component beside the game canvas, which is quadratic in the sibling count and
+	 * froze the sidebar for seconds. A page at a time keeps both bounded.
+	 */
+	@Test
+	public void aLongSourceListIsShownAPageAtATime()
+	{
+		DropDataService data = mock(DropDataService.class);
+		List<DropSource> many = new ArrayList<>();
+		for (int i = 0; i < 100; i++)
+		{
+			many.add(new DropSource(BRONZE_DAGGER, "Bronze dagger", 0.5, 1, 0, false, true, null, null, 0, null));
+		}
+		when(data.sourcesForItem(BRONZE_DAGGER)).thenReturn(many);
+		when(data.shopsForItem(BRONZE_DAGGER)).thenReturn(Collections.emptyList());
+		ItemResultView view = new ItemResultView(new ItemMatch(BRONZE_DAGGER, "Bronze dagger"), data,
+			new TrackerStore(mock(ConfigManager.class), new Gson()), mock(ItemManager.class),
+			() ->
+			{
+			},
+			s ->
+			{
+			},
+			s ->
+			{
+			});
+
+		assertEquals(40, cards(view));
+		JButton more = showMore(view);
+		assertEquals("Show 40 more", more.getText());
+		more.doClick();
+		assertEquals(80, cards(view));
+		assertEquals("Show 20 more", more.getText());
+		more.doClick();
+		assertEquals(100, cards(view));
+		assertNull("nothing left to show", showMore(view));
+	}
+
+	@Test
+	public void aShortSourceListHasNoPaging()
+	{
+		ItemResultView view = build(loadedTestData(),
+			new TrackerStore(mock(ConfigManager.class), new Gson()), new AtomicReference<>());
+		assertNull(showMore(view));
+	}
+
+	// every source card carries exactly one text area, its name
+	private static int cards(ItemResultView view)
+	{
+		return collect(view, JTextArea.class).size();
+	}
+
+	private static JButton showMore(ItemResultView view)
+	{
+		return collect(view, JButton.class).stream()
+			.filter(b -> b.getText().startsWith("Show ")).findFirst().orElse(null);
 	}
 }
