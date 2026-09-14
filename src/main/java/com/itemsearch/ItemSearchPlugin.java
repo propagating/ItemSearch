@@ -34,6 +34,7 @@ import javax.swing.SwingUtilities;
 import lombok.extern.slf4j.Slf4j;
 import net.runelite.api.Client;
 import net.runelite.api.GameState;
+import net.runelite.api.events.ChatMessage;
 import net.runelite.api.events.GameStateChanged;
 import net.runelite.api.events.GameTick;
 import net.runelite.api.events.NpcDespawned;
@@ -44,6 +45,8 @@ import net.runelite.client.config.ConfigManager;
 import net.runelite.client.eventbus.Subscribe;
 import net.runelite.client.events.ConfigChanged;
 import net.runelite.client.events.NpcLootReceived;
+import net.runelite.client.events.ServerNpcLoot;
+import net.runelite.client.plugins.loottracker.LootReceived;
 import net.runelite.client.game.ItemManager;
 import net.runelite.client.game.SpriteManager;
 import net.runelite.client.plugins.Plugin;
@@ -213,8 +216,55 @@ public class ItemSearchPlugin extends Plugin
 		{
 			killTracker.onNpcLootReceived(event);
 		}
-		// the store was just updated on this thread; push the new dry counts into the open
-		// item view (if any) on the EDT
+		refreshTrackingViews();
+	}
+
+	/** Loot the server reports directly, for monsters whose drops never touch the ground. */
+	@Subscribe
+	public void onServerNpcLoot(ServerNpcLoot event)
+	{
+		if (event.getComposition() != null)
+		{
+			log.debug("itemsearch: server loot from {} ({}): {} item(s)",
+				event.getComposition().getName(), event.getComposition().getId(),
+				event.getItems().size());
+		}
+		if (killTracker != null)
+		{
+			killTracker.onServerNpcLoot(event);
+		}
+		refreshTrackingViews();
+	}
+
+	/**
+	 * Loot the Loot Tracker plugin attributed to a chest, an activity, or a pickpocket. Only
+	 * arrives while that plugin is on, which it is by default.
+	 */
+	@Subscribe
+	public void onLootReceived(LootReceived event)
+	{
+		if (killTracker != null)
+		{
+			killTracker.onLootReceived(event);
+		}
+		refreshTrackingViews();
+	}
+
+	/** Game messages that carry a running total, such as how many golems the player has finished. */
+	@Subscribe
+	public void onChatMessage(ChatMessage event)
+	{
+		if (killTracker != null)
+		{
+			killTracker.onChatMessage(event);
+			refreshTrackingViews();
+		}
+	}
+
+	// the store was just updated on this thread; push the new dry counts into the open
+	// item view (if any) on the EDT
+	private void refreshTrackingViews()
+	{
 		SwingUtilities.invokeLater(() ->
 		{
 			if (panel != null)
@@ -298,6 +348,16 @@ public class ItemSearchPlugin extends Plugin
 		{
 			trackerStore.clear(); // empties in-memory counters and persists the reset
 			configManager.setConfiguration(ItemSearchConfig.GROUP, "resetAll", false);
+		}
+		// the counters changed under us: another client on this profile, or the profile synced
+		// down from the RuneLite account. Our own saves announce themselves the same way and
+		// are recognised as ours.
+		if (trackerStore != null
+			&& ItemSearchConfig.GROUP.equals(event.getGroup())
+			&& "data".equals(event.getKey())
+			&& trackerStore.absorbExternalChanges())
+		{
+			refreshTrackingViews();
 		}
 	}
 

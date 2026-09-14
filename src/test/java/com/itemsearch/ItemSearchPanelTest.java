@@ -212,9 +212,17 @@ public class ItemSearchPanelTest
 
 		search.setText("lunar chest");
 		invokeRebuild(panel);
-		assertEquals("CHEST", badgeForResultNamed(results, "Lunar Chest"));
+		assertEquals("CONTAINER", badgeForResultNamed(results, "Lunar Chest"));
 		// a chest has no combat level; "(lvl 0)" would be noise
 		assertEquals("Lunar Chest", labelTextContaining(results, "Lunar Chest"));
+
+		search.setText("golem");
+		invokeRebuild(panel);
+		assertEquals("ACTIVITY", badgeForResultNamed(results, "Golem crafting"));
+
+		search.setText("sacred eel");
+		invokeRebuild(panel);
+		assertEquals("PROCESS", badgeForResultNamed(results, "Sacred eel"));
 
 		search.setText("master farmer");
 		invokeRebuild(panel);
@@ -321,6 +329,37 @@ public class ItemSearchPanelTest
 			}
 		}
 		return out;
+	}
+
+	/**
+	 * Master Farmer keeps a seed stall in the test data and can be robbed. Whichever door the
+	 * player comes in by, the shop or the pickpocket entry, they land on the same page.
+	 */
+	@Test
+	public void aShopkeeperWhoCanBeRobbedHasOnePageFromEitherDoor() throws Exception
+	{
+		BundledDataSource ds = loadedTestData();
+		ItemSearchPanel panel = newPanel(ds);
+
+		panel.showShopForTest(ds.shopOwnedBy("Master Farmer"));
+		assertTrue("the shop opens the NPC's page", showing(panel, "PURCHASABLE"));
+		assertTrue(showing(panel, "STEALABLE @ 38 THIEVING"));
+		assertNotNull(field(panel, "currentNpcView", Object.class));
+
+		backButton(panel).doClick();
+		panel.showSource(ds.sourceById(3257));
+		assertTrue("the pickpocket entry opens the same page", showing(panel, "PURCHASABLE"));
+	}
+
+	@Test
+	public void aShopWithNoRobbableOwnerKeepsTheShopPage() throws Exception
+	{
+		BundledDataSource ds = loadedTestData();
+		ItemSearchPanel panel = newPanel(ds);
+		panel.showShopForTest(ds.searchShops("zaff").get(0));
+		assertTrue(showing(panel, "Zaff's Superior Staffs"));
+		assertFalse(showing(panel, "PURCHASABLE"));
+		assertNull(field(panel, "currentNpcView", Object.class));
 	}
 
 	/** Back should retrace the path taken, not jump to search from wherever you are. */
@@ -436,9 +475,17 @@ public class ItemSearchPanelTest
 		assertTrue("the NPC filter keeps monsters", showing(results, "Goblin"));
 		assertFalse("and drops everything that is not one", showing(results, "Lunar Chest"));
 
-		clickFilter(panel, "Chests");
+		clickFilter(panel, "Containers");
 		assertTrue(showing(results, "Lunar Chest"));
 		assertFalse(showing(results, "Goblin"));
+
+		clickFilter(panel, "Activities");
+		assertTrue("something the player takes part in is its own kind", showing(results, "Golem crafting"));
+		assertFalse(showing(results, "Lunar Chest"));
+
+		clickFilter(panel, "Processing");
+		assertTrue("something broken down into other things is its own kind", showing(results, "Sacred eel"));
+		assertFalse(showing(results, "Golem crafting"));
 
 		clickFilter(panel, "All");
 		assertTrue(showing(results, "Goblin"));

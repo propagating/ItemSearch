@@ -124,6 +124,11 @@ public class BundledSourceDataTest
         SourceData farmer = named("Master Farmer (pickpocket)");
         assertNotNull("pickpocketing must be in the data", farmer);
         assertEquals(SourceType.PICKPOCKET, farmer.getType());
+
+        SourceData golems = named("Golem crafting");
+        assertNotNull("activities must be in the data", golems);
+        assertEquals("earned by taking part, not opened or gathered",
+            SourceType.ACTIVITY, golems.getType());
     }
 
     @Test

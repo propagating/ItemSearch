@@ -92,7 +92,7 @@ public class ShowDropsMenuTest
 		menu.onMenuOpened(npcMenu(GOBLIN, "Goblin", 2));
 
 		verify(client).createMenuEntry(anyInt());
-		verify(created).setOption("Show drops");
+		verify(created).setOption("Show information");
 		// a RuneLite-type entry is handled entirely in the client; nothing reaches the server
 		verify(created).setType(MenuAction.RUNELITE);
 	}

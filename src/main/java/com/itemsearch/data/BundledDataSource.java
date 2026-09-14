@@ -38,6 +38,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.stream.Collectors;
@@ -77,6 +78,14 @@ public class BundledDataSource implements DropDataService
 	private final Map<Integer, List<Integer>> itemOwners = new ConcurrentHashMap<>();
 	private final Map<Integer, List<ShopEntry>> shopsByItemId = new ConcurrentHashMap<>();
 	private final List<ShopData> allShops = new CopyOnWriteArrayList<>();
+	// lower-cased owner name -> the shop they run
+	private final Map<String, ShopData> shopsByOwner = new ConcurrentHashMap<>();
+
+	@Override
+	public ShopData shopOwnedBy(String npcName)
+	{
+		return npcName == null ? null : shopsByOwner.get(npcName.trim().toLowerCase(Locale.ROOT));
+	}
 
 	public BundledDataSource(Gson gson, String resourcePath)
 	{
@@ -99,9 +108,7 @@ public class BundledDataSource implements DropDataService
 				log.warn("itemsearch: bundled data not found at {}", resourcePath);
 				return;
 			}
-			BundledData data = gson.fromJson(
-				new InputStreamReader(in, StandardCharsets.UTF_8), BundledData.class);
-			index(materialise(data));
+			loadFrom(new InputStreamReader(in, StandardCharsets.UTF_8));
 		}
 		catch (Exception e)
 		{
@@ -111,6 +118,19 @@ public class BundledDataSource implements DropDataService
 		{
 			loaded = true;
 		}
+	}
+
+	/** Loads the sources file from any reader. Visible for testing with data built in place. */
+	void loadFrom(java.io.Reader reader)
+	{
+		BundledData data = gson.fromJson(reader, BundledData.class);
+		index(materialise(data));
+		examines.clear();
+		if (data != null && data.examines != null)
+		{
+			examines.putAll(data.examines);
+		}
+		loaded = true;
 		loadShops();
 	}
 
@@ -118,6 +138,7 @@ public class BundledDataSource implements DropDataService
 	{
 		shopsByItemId.clear();
 		allShops.clear();
+		shopsByOwner.clear();
 		if (shopsResourcePath == null)
 		{
 			return;
@@ -156,9 +177,14 @@ public class BundledDataSource implements DropDataService
 				: shop.getItems().stream()
 					.filter(i -> i != null && i.getItemName() != null)
 					.collect(Collectors.toList());
-			ShopData normalized = new ShopData(shop.getName(), shop.getLocation(),
+			ShopData normalized = new ShopData(shop.getName(), shop.getLocation(), shop.getOwner(),
 				shop.getCurrency(), shop.getX(), shop.getY(), shop.getPlane(), shop.getMapId(), items);
 			allShops.add(normalized);
+			if (shop.getOwner() != null && !shop.getOwner().trim().isEmpty())
+			{
+				// the first shop an owner runs is the one their page shows
+				shopsByOwner.putIfAbsent(shop.getOwner().trim().toLowerCase(Locale.ROOT), normalized);
+			}
 			for (ShopItem item : items)
 			{
 				if (item.getItemId() < 0)
@@ -228,6 +254,15 @@ public class BundledDataSource implements DropDataService
 	{
 		List<DropTable> tables;
 		List<SourceData> sources;
+		Map<Integer, String> examines;
+	}
+
+	private final Map<Integer, String> examines = new ConcurrentHashMap<>();
+
+	@Override
+	public String examineFor(int itemId)
+	{
+		return examines.get(itemId);
 	}
 
 	private static class DropTable
@@ -245,6 +280,8 @@ public class BundledDataSource implements DropDataService
 	{
 		byNpcId.clear();
 		allNpcs.clear();
+		pickpocketIds.clear();
+		pickpocketNames.clear();
 		byNameLevel.clear();
 		byName.clear();
 		byItemId.clear();
@@ -278,8 +315,15 @@ public class BundledDataSource implements DropDataService
 			SourceType type = npc.getType() == null ? SourceType.KILL : npc.getType();
 			npc = new SourceData(npc.getId(), npc.getName(), npc.getCombatLevel(),
 				npc.getWikiImageUrl(), drops, spawns, npcIds, npc.getCombat(),
-				type, npc.getX(), npc.getY(), npc.getPlane(), npc.getTables(), npc.getWikiPage(), npc.getEntrance(), npc.getLocationName());
+				type, npc.getX(), npc.getY(), npc.getPlane(), npc.getTables(), npc.getWikiPage(),
+				npc.getEntrance(), npc.getLocationName(), npc.getPhases(), npc.getThievingLevel(),
+				npc.getThievingXp());
 			allNpcs.add(npc);
+			if (type == SourceType.PICKPOCKET)
+			{
+				pickpocketIds.addAll(npcIds);
+				pickpocketNames.add(pickpocketBaseName(npc.getName()));
+			}
 			for (Integer id : npcIds)
 			{
 				byNpcId.put(id, npc);
@@ -306,6 +350,25 @@ public class BundledDataSource implements DropDataService
 	public SourceData sourceById(int npcId)
 	{
 		return byNpcId.get(npcId);
+	}
+
+	// the NPCs with a pickpocket source, by id and by the page name a pickpocket source is named for
+	private final Set<Integer> pickpocketIds = ConcurrentHashMap.newKeySet();
+	private final Set<String> pickpocketNames = ConcurrentHashMap.newKeySet();
+
+	@Override
+	public boolean canBePickpocketed(int npcId, String name)
+	{
+		return pickpocketIds.contains(npcId)
+			|| (name != null && pickpocketNames.contains(name.toLowerCase(Locale.ROOT)));
+	}
+
+	// "Master Farmer (pickpocket)" is the pickpocket source of Master Farmer
+	private static String pickpocketBaseName(String sourceName)
+	{
+		String lower = sourceName.toLowerCase(Locale.ROOT);
+		String suffix = " (pickpocket)";
+		return lower.endsWith(suffix) ? lower.substring(0, lower.length() - suffix.length()) : lower;
 	}
 
 	private static String nameLevelKey(String name, int combatLevel)
@@ -457,7 +520,9 @@ public class BundledDataSource implements DropDataService
 		}
 		SourceData updated = new SourceData(cur.getId(), cur.getName(), cur.getCombatLevel(),
 			wikiImageUrl, cur.getDrops(), cur.getSpawnPoints(), cur.getNpcIds(), cur.getCombat(),
-			cur.getType(), cur.getX(), cur.getY(), cur.getPlane(), cur.getTables(), cur.getWikiPage(), cur.getEntrance(), cur.getLocationName());
+			cur.getType(), cur.getX(), cur.getY(), cur.getPlane(), cur.getTables(), cur.getWikiPage(),
+			cur.getEntrance(), cur.getLocationName(), cur.getPhases(), cur.getThievingLevel(),
+			cur.getThievingXp());
 		// replace across every id that resolves to this entry, plus the search list, so a
 		// later reopen (search reads allNpcs) sees the fresh image too. replace(k,old,new)
 		// is a CAS: a racing overlay simply wins/loses a key without clobbering fields.

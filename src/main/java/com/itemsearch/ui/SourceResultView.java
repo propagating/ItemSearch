@@ -67,6 +67,9 @@ import com.itemsearch.model.CombatStats;
 import com.itemsearch.model.DropSource;
 import com.itemsearch.model.ItemMatch;
 import com.itemsearch.model.MaxHitVariant;
+import com.itemsearch.model.Phase;
+import com.itemsearch.model.ShopData;
+import com.itemsearch.model.ShopItem;
 import com.itemsearch.model.SourceData;
 import com.itemsearch.model.SourceType;
 import com.itemsearch.model.SpawnPoint;
@@ -84,12 +87,27 @@ public class SourceResultView extends JPanel
 	// per-drop stat lines ("Got: N · Dry: X%"), captured so kills can refresh them in place
 	private final List<DropRow> dropRows = new ArrayList<>();
 	private final int npcId;
+	private final SourceType type;
 	// whether anything can be killed here: chests and gathering nodes carry no npc ids, so
 	// kill counts and dry streaks are meaningless for them
 	private final boolean killable;
 	// the kill-count value label, captured so it updates live on kills without a rebuild.
 	// null for sources that are not killable, where no such row is rendered.
 	private JLabel killsValue;
+	// the wiki versions this monster stands for, when it has several worth showing: Zulrah's
+	// three forms, Killerwatt's two poses. Null for the rest, which render one image and one
+	// combat block as they always did.
+	private final List<Phase> phases;
+	private int phase;
+	private JLabel phaseName;
+	// the Stats and Attacks cards sit in these, so a phase switch can swap the card without
+	// moving anything else on the page
+	private final JPanel statsSlot = slot();
+	private final JPanel attacksSlot = slot();
+	private final SpriteManager spriteManager;
+	private final ItemManager itemManager;
+	// what the picture was last asked to show
+	private String shownImageUrl;
 
 	public SourceResultView(SourceData npc, TrackerStore store, SpriteManager spriteManager, ItemManager itemManager,
 		OkHttpClient okHttpClient, SpawnMapMarker mapMarker,
@@ -97,12 +115,31 @@ public class SourceResultView extends JPanel
 		boolean allowSpawnEditing,
 		Runnable onBack, Consumer<ItemMatch> onItemSelected)
 	{
+		this(npc, null, store, spriteManager, itemManager, okHttpClient, mapMarker, clientThread,
+			spawnStore, spawnRecorder, allowSpawnEditing, onBack, onItemSelected);
+	}
+
+	/**
+	 * @param shop the shop this NPC keeps, when they keep one as well as being robbed; its stock
+	 *             is shown above the loot so the NPC has one page. Null for everyone else.
+	 */
+	public SourceResultView(SourceData npc, ShopData shop, TrackerStore store, SpriteManager spriteManager,
+		ItemManager itemManager, OkHttpClient okHttpClient, SpawnMapMarker mapMarker,
+		ClientThread clientThread, SpawnStore spawnStore, SpawnRecorder spawnRecorder,
+		boolean allowSpawnEditing,
+		Runnable onBack, Consumer<ItemMatch> onItemSelected)
+	{
+		this.shop = shop;
 		this.spawnStore = spawnStore;
 		this.spawnRecorder = spawnRecorder;
 		this.allowSpawnEditing = allowSpawnEditing;
 		this.okHttpClient = okHttpClient;
+		this.spriteManager = spriteManager;
+		this.itemManager = itemManager;
 		this.npcId = npc.getId();
+		this.type = npc.getType();
 		this.killable = !npc.getNpcIds().isEmpty();
+		this.phases = npc.getPhases() != null && npc.getPhases().size() >= 2 ? npc.getPhases() : null;
 		setLayout(new BorderLayout(0, 6));
 
 		JButton back = new JButton("< Back");
@@ -117,14 +154,26 @@ public class SourceResultView extends JPanel
 
 		// only something you fight has stats to fight against; a chest that happens to carry
 		// stale combat data must not render a prayer table
-		CombatStats c = npc.getCombat();
+		CombatStats c = phases != null ? phases.get(0).getCombat() : npc.getCombat();
 		if (c != null && npc.getType() == SourceType.KILL)
 		{
-			body.add(buildStatsBox(c));
-			body.add(buildAttacksBox(c, spriteManager, itemManager));
+			statsSlot.add(buildStatsBox(c));
+			body.add(statsSlot);
+			attacksSlot.add(buildAttacksBox(c, spriteManager, itemManager));
+			body.add(attacksSlot);
 		}
 
 		body.add(buildActionsBox(npc, store, mapMarker));
+
+		if (shop != null)
+		{
+			body.add(buildShopBox(shop, itemManager, onItemSelected));
+		}
+		// what robbing this NPC takes and pays, above what it can yield
+		if (npc.getType() == SourceType.PICKPOCKET && npc.getThievingLevel() != null)
+		{
+			body.add(groupHeading(stealableHeading(npc.getThievingLevel(), npc.getThievingXp())));
+		}
 
 		// wiki drop tables are split into meaningful subsections ("Rare drop table", "100%");
 		// keep those groupings, with anything uncategorised leading as before
@@ -142,6 +191,44 @@ public class SourceResultView extends JPanel
 		}
 
 		add(body, BorderLayout.CENTER);
+	}
+
+	// the shop this NPC keeps, or null
+	private final ShopData shop;
+
+	/** "Stealable @ 38 Thieving · 43 xp", with the xp left off when the table gave none. */
+	static String stealableHeading(int level, Double xp)
+	{
+		String heading = "Stealable @ " + level + " Thieving";
+		if (xp != null && xp > 0)
+		{
+			heading += " · " + xpText(xp) + " xp";
+		}
+		return heading;
+	}
+
+	private static String xpText(double xp)
+	{
+		return xp == Math.rint(xp) ? String.valueOf((long) xp) : String.format(Locale.ROOT, "%.1f", xp);
+	}
+
+	/** The shop's stock, headed Purchasable, drawn with the same rows as a shop page. */
+	private static JPanel buildShopBox(ShopData shop, ItemManager itemManager,
+		Consumer<ItemMatch> onItemSelected)
+	{
+		JPanel box = card();
+		box.add(section("Purchasable"));
+		String currency = shop.getCurrency() == null ? "Coins" : shop.getCurrency();
+		JLabel where = new JLabel((shop.getLocation() != null ? shop.getLocation() + "  ·  " : "") + currency);
+		where.setForeground(ColorScheme.LIGHT_GRAY_COLOR);
+		where.setAlignmentX(Component.LEFT_ALIGNMENT);
+		box.add(where);
+		for (ShopItem item : shop.getItems())
+		{
+			box.add(ShopRows.row(shop, item, itemManager,
+				line -> onItemSelected.accept(new ItemMatch(line.getItemId(), line.getItemName()))));
+		}
+		return box;
 	}
 
 	/**
@@ -286,13 +373,18 @@ public class SourceResultView extends JPanel
 		JPanel textCol = new JPanel();
 		textCol.setLayout(new BoxLayout(textCol, BoxLayout.Y_AXIS));
 		textCol.setOpaque(false);
-		JLabel name = new JLabel(dropLabel(d));
+		// a processed item's yield is the point of the row: seven scales from an eel
+		String label = dropLabel(d);
+		if (type == SourceType.PROCESS && d.getMergedLines() <= 0 && d.getQuantity() > 1)
+		{
+			label += "  ×" + Format.tally(d.getQuantity());
+		}
+		JLabel name = new JLabel(label);
 		if (d.getMergedLines() > 0)
 		{
 			// the row is not what the wiki printed, so it says so rather than looking like a
 			// single table line whose rarity happens to be generous
-			name.setToolTipText(d.getMergedLines() + " drop-table lines combined — the game does "
-				+ "not say which one produced a stack");
+			name.setToolTipText(d.getMergedLines() + " drop-table lines combined into one row");
 		}
 		textCol.add(name);
 
@@ -358,13 +450,89 @@ public class SourceResultView extends JPanel
 	private JPanel buildImageBox(SourceData npc)
 	{
 		JPanel box = card();
-		WikiImageLoader.loadInto(okHttpClient, image, npc.getWikiImageUrl());
+		showImage(phases != null ? phases.get(0).getImage() : npc.getWikiImageUrl());
 		JPanel center = new JPanel(new FlowLayout(FlowLayout.CENTER, 0, 0));
 		center.setOpaque(false);
 		center.setAlignmentX(Component.LEFT_ALIGNMENT);
 		center.add(image);
 		box.add(center);
+		if (phases != null)
+		{
+			JPanel switcher = new JPanel(new FlowLayout(FlowLayout.CENTER, 6, 0));
+			switcher.setOpaque(false);
+			switcher.setAlignmentX(Component.LEFT_ALIGNMENT);
+			switcher.add(arrow("◀", -1));
+			phaseName = new JLabel(phases.get(0).getLabel());
+			phaseName.setForeground(ColorScheme.LIGHT_GRAY_COLOR);
+			switcher.add(phaseName);
+			switcher.add(arrow("▶", 1));
+			box.add(switcher);
+		}
 		return box;
+	}
+
+	private JButton arrow(String glyph, int step)
+	{
+		JButton button = new JButton(glyph);
+		button.setFocusPainted(false);
+		button.setMargin(new Insets(0, 4, 0, 4));
+		button.setToolTipText(step < 0 ? "Previous phase" : "Next phase");
+		button.addActionListener(e -> showPhase(phase + step));
+		return button;
+	}
+
+	/** Shows one phase: its picture, its name, its stats, and its attacks, wrapping at either end. */
+	private void showPhase(int index)
+	{
+		phase = Math.floorMod(index, phases.size());
+		Phase p = phases.get(phase);
+		phaseName.setText(p.getLabel());
+		showImage(p.getImage());
+		refill(statsSlot, buildStatsBox(p.getCombat()));
+		refill(attacksSlot, buildAttacksBox(p.getCombat(), spriteManager, itemManager));
+	}
+
+	private void showImage(String url)
+	{
+		shownImageUrl = url;
+		if (url == null)
+		{
+			image.setIcon(null); // a phase without a picture shows none, not the last one's
+			return;
+		}
+		WikiImageLoader.loadInto(okHttpClient, image, url);
+	}
+
+	/** Visible for testing: the url the picture was last asked to show. */
+	String shownImageUrl()
+	{
+		return shownImageUrl;
+	}
+
+	private static void refill(JPanel slot, JPanel card)
+	{
+		slot.removeAll();
+		slot.add(card);
+		slot.revalidate();
+		slot.repaint();
+	}
+
+	// A full-width holder for one card, so the card can be replaced in place. Sized like a card
+	// so the body's BoxLayout treats it the same way.
+	private static JPanel slot()
+	{
+		JPanel slot = new JPanel()
+		{
+			@Override
+			public Dimension getMaximumSize()
+			{
+				return new Dimension(Integer.MAX_VALUE, getPreferredSize().height);
+			}
+		};
+		slot.setLayout(new BoxLayout(slot, BoxLayout.Y_AXIS));
+		slot.setOpaque(false);
+		slot.setAlignmentX(Component.CENTER_ALIGNMENT);
+		return slot;
 	}
 
 	private JPanel buildNameBox(SourceData npc, TrackerStore store)
@@ -377,25 +545,29 @@ public class SourceResultView extends JPanel
 		box.add(name);
 
 		// a chest or node has no combat level; name what it is instead
-		JLabel level = new JLabel(npc.getType() == SourceType.KILL
-			? "Level " + npc.getCombatLevel() : typeLabel(npc.getType()));
+		String kind = npc.getType() == SourceType.KILL
+			? "Level " + npc.getCombatLevel() : typeLabel(npc.getType());
+		if (shop != null)
+		{
+			kind += "  ·  Shopkeeper";
+		}
+		JLabel level = new JLabel(kind);
 		level.setForeground(ColorScheme.LIGHT_GRAY_COLOR);
 		level.setAlignmentX(Component.LEFT_ALIGNMENT);
 		box.add(level);
 
-		if (killable)
-		{
-			JPanel killsRow = new JPanel(new FlowLayout(FlowLayout.LEFT, 0, 0));
-			killsRow.setOpaque(false);
-			killsRow.setAlignmentX(Component.LEFT_ALIGNMENT);
-			JLabel killsLabel = new JLabel("Kills:");
-			killsLabel.setForeground(ColorScheme.LIGHT_GRAY_COLOR);
-			killsValue = new JLabel(Format.tally(store.getNpcKills(npcId)));
-			killsRow.add(killsLabel);
-			killsRow.add(new JLabel(" "));
-			killsRow.add(killsValue);
-			box.add(killsRow);
-		}
+		// what has been counted here: kills of a monster, or attempts at a chest, an activity, or
+		// a pocket, which the Loot Tracker reports one at a time
+		JPanel killsRow = new JPanel(new FlowLayout(FlowLayout.LEFT, 0, 0));
+		killsRow.setOpaque(false);
+		killsRow.setAlignmentX(Component.LEFT_ALIGNMENT);
+		JLabel killsLabel = new JLabel(killable ? "Kills:" : "Attempts:");
+		killsLabel.setForeground(ColorScheme.LIGHT_GRAY_COLOR);
+		killsValue = new JLabel(Format.tally(store.getNpcKills(npcId)));
+		killsRow.add(killsLabel);
+		killsRow.add(new JLabel(" "));
+		killsRow.add(killsValue);
+		box.add(killsRow);
 		return box;
 	}
 
@@ -404,11 +576,15 @@ public class SourceResultView extends JPanel
 		switch (type)
 		{
 			case REWARD:
-				return "Reward chest";
+				return "Container";
 			case PICKPOCKET:
 				return "Pickpocketing";
 			case GATHER:
 				return "Gathering node";
+			case ACTIVITY:
+				return "Activity";
+			case PROCESS:
+				return "Processing";
 			default:
 				return "";
 		}
@@ -439,24 +615,24 @@ public class SourceResultView extends JPanel
 		grid.setOpaque(false);
 		grid.setAlignmentX(Component.LEFT_ALIGNMENT);
 
-		grid.add(recordButton("+ Spawn here", "Record where you are standing as a spawn tile",
+		grid.add(recordButton("+ Spawn here", "Save your current tile as a spawn point",
 			done -> spawnRecorder.recordSpawn(npcId, done), npc, mapMarker));
-		grid.add(recordButton("+ Entrance", "Record where you are standing as the way into this "
-				+ "monster's dungeon — stand at the surface entrance",
+		grid.add(recordButton("+ Entrance", "Save your current tile as the dungeon entrance "
+				+ "(stand outside, at the surface entrance)",
 			done -> spawnRecorder.recordEntrance(npcId, done), npc, mapMarker));
-		grid.add(recordButton("− Last spawn", "Remove the tile you recorded most recently",
+		grid.add(recordButton("− Last spawn", "Remove the last tile you saved",
 			done ->
 			{
 				spawnStore.removeLastSpawn(npcId);
 				done.accept("Removed the last tile");
 			}, npc, mapMarker));
-		grid.add(recordButton("− All spawns", "Remove every tile you recorded for this monster; "
-				+ "the shipped ones are untouched",
+		grid.add(recordButton("− All spawns", "Remove all tiles you saved for this monster "
+				+ "(built-in spawns are kept)",
 			done ->
 			{
 				spawnStore.clearSpawns(npcId);
 				spawnStore.setEntrance(npcId, null);
-				done.accept("Removed your tiles");
+				done.accept("Removed all your tiles");
 			}, npc, mapMarker));
 
 		box.add(grid);
@@ -490,10 +666,10 @@ public class SourceResultView extends JPanel
 		boolean entrance = spawnStore != null && spawnStore.entranceFor(npcId) != null;
 		if (tiles == 0 && !entrance)
 		{
-			recordedLabel.setText("Nothing recorded by you yet");
+			recordedLabel.setText("No tiles saved yet");
 			return;
 		}
-		recordedLabel.setText("You recorded " + tiles + " tile" + (tiles == 1 ? "" : "s")
+		recordedLabel.setText("Saved " + tiles + " tile" + (tiles == 1 ? "" : "s")
 			+ (entrance ? " and an entrance" : ""));
 	}
 
@@ -514,7 +690,7 @@ public class SourceResultView extends JPanel
 			npc.getWikiImageUrl(), npc.getDrops(), spawns, npc.getNpcIds(), npc.getCombat(),
 			npc.getType(), npc.getX(), npc.getY(), npc.getPlane(), npc.getTables(),
 			npc.getWikiPage(), entrance != null ? entrance : npc.getEntrance(),
-			npc.getLocationName());
+			npc.getLocationName(), npc.getPhases());
 	}
 
 	private JPanel buildStatsBox(CombatStats c)
@@ -541,8 +717,22 @@ public class SourceResultView extends JPanel
 			JLabel label = new JLabel(line);
 			label.setForeground(ColorScheme.PROGRESS_COMPLETE_COLOR);
 			label.setAlignmentX(Component.LEFT_ALIGNMENT);
-			label.setToolTipText("Lowest defence bonus, from the wiki's own numbers");
+			label.setToolTipText("Based on the wiki's defence bonuses");
 			box.add(label);
+		}
+		// and what not to bother bringing: poison, venom, a cannon, thralls
+		if (c.getStatuses() != null && !c.getStatuses().isEmpty())
+		{
+			JPanel statuses = new JPanel(new GridLayout(0, 2, 8, 0));
+			statuses.setOpaque(false);
+			statuses.setAlignmentX(Component.LEFT_ALIGNMENT);
+			statuses.setBorder(BorderFactory.createEmptyBorder(4, 0, 0, 0));
+			for (Map.Entry<String, String> status : c.getStatuses().entrySet())
+			{
+				statuses.add(Cards.statCell(status.getKey(), status.getValue()));
+			}
+			statuses.setMaximumSize(new Dimension(Integer.MAX_VALUE, statuses.getPreferredSize().height));
+			box.add(statuses);
 		}
 		return box;
 	}
@@ -699,7 +889,7 @@ public class SourceResultView extends JPanel
 		List<String> lines = new ArrayList<>();
 		if (attack.getPrayStyle() != null)
 		{
-			lines.add(capitalize(attack.getStyle()) + " accuracy roll — prayed against as "
+			lines.add(capitalize(attack.getStyle()) + " attack, blocked by Protect from "
 				+ capitalize(attack.getPrayStyle()));
 		}
 		if (attack.getNotes() != null && !attack.getNotes().trim().isEmpty())
@@ -893,6 +1083,11 @@ public class SourceResultView extends JPanel
 				() -> mapMarker.showSpawns(withRecorded(npc, spawnStore)),
 				mapMarker::clear));
 		}
+		else if (shop != null && shop.getX() != null && shop.getY() != null)
+		{
+			// no tiles of their own, but the shop they keep is somewhere on the map
+			grid.add(MapToggle.create(() -> mapMarker.showShop(shop), mapMarker::clear));
+		}
 		else if (npc.getLocationName() != null && !npc.getLocationName().trim().isEmpty())
 		{
 			// No tiles the map can use — the wiki has no map of this place, so its coordinates are
@@ -900,19 +1095,17 @@ public class SourceResultView extends JPanel
 			JLabel where = new JLabel("Found in: " + npc.getLocationName().trim());
 			where.setForeground(ColorScheme.LIGHT_GRAY_COLOR);
 			where.setAlignmentX(Component.LEFT_ALIGNMENT);
-			where.setToolTipText("The wiki has no map of this place, so it cannot be marked");
+			where.setToolTipText("The wiki has no map coordinates for this location");
 			box.add(where);
 		}
 
-		if (killable)
+		grid.add(resetButton(killable ? "↺ Kills" : "↺ Attempts",
+			killable ? "Reset kill count" : "Reset attempt count", () ->
 		{
-			grid.add(resetButton("↺ Kills", "Reset kill count", () ->
-			{
-				store.resetNpcKills(npcId);
-				store.save();
-				refresh(store);
-			}));
-		}
+			store.resetNpcKills(npcId);
+			store.save();
+			refresh(store);
+		}));
 		if (allowSpawnEditing && spawnRecorder != null)
 		{
 			box.add(buildRecordingBox(npc, mapMarker));
@@ -1005,10 +1198,16 @@ public class SourceResultView extends JPanel
 
 	/**
 	 * Loads a freshly fetched wiki image into this view. Safe to call from any thread
-	 * (the underlying loader marshals to the EDT).
+	 * (the underlying loader marshals to the EDT). A view showing phases keeps the phase's own
+	 * picture: the page image is whichever form the wiki chose to lead with, not the one selected.
 	 */
 	public void updateImage(String url)
 	{
+		if (phases != null)
+		{
+			return;
+		}
+		shownImageUrl = url;
 		WikiImageLoader.loadInto(okHttpClient, image, url);
 	}
 

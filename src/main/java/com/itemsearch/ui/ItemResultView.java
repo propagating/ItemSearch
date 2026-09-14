@@ -29,6 +29,7 @@ import java.awt.Component;
 import java.awt.Cursor;
 import java.awt.Dimension;
 import java.awt.Font;
+import java.awt.GridLayout;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
@@ -40,10 +41,14 @@ import javax.swing.BorderFactory;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
+import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
+import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
+import net.runelite.client.callback.ClientThread;
+import net.runelite.client.game.ItemEquipmentStats;
 import net.runelite.client.game.ItemManager;
 import com.itemsearch.data.BundledDataSource;
 import com.itemsearch.data.DropDataService;
@@ -70,6 +75,17 @@ public class ItemResultView extends JPanel
 		ItemManager itemManager, Runnable onBack, Consumer<SourceData> onNpcSelected,
 		Consumer<ShopData> onShopSelected)
 	{
+		this(item, data, store, itemManager, null, onBack, onNpcSelected, onShopSelected);
+	}
+
+	/**
+	 * @param clientThread where the item's composition is read; null shows the page without its
+	 *                     Facts and Equipment cards
+	 */
+	public ItemResultView(ItemMatch item, DropDataService data, TrackerStore store,
+		ItemManager itemManager, ClientThread clientThread, Runnable onBack,
+		Consumer<SourceData> onNpcSelected, Consumer<ShopData> onShopSelected)
+	{
 		setLayout(new BorderLayout(0, 6));
 
 		JButton back = new JButton("< Back");
@@ -86,9 +102,38 @@ public class ItemResultView extends JPanel
 		header.add(icon, BorderLayout.WEST);
 		header.add(new JLabel(item.getItemName()), BorderLayout.CENTER);
 
+		// every child of the body is a full-width, centre-aligned row: a Y_AXIS BoxLayout offsets
+		// and shrinks any child whose alignment differs from its siblings, and the cards below
+		// are full width, so everything else has to be too
 		JPanel body = new JPanel();
 		body.setLayout(new BoxLayout(body, BoxLayout.Y_AXIS));
-		body.add(header);
+		body.add(fullWidth(header));
+
+		String examine = data.examineFor(item.getItemId());
+		if (examine != null)
+		{
+			JTextArea line = wrapLabel(examine);
+			line.setForeground(ColorScheme.LIGHT_GRAY_COLOR);
+			line.setBorder(BorderFactory.createEmptyBorder(0, 0, 4, 0));
+			body.add(fullWidth(line));
+		}
+
+		// what the item is worth and what it does when worn, read off the client thread and
+		// filled in when it arrives, so opening an item never waits on the game
+		body.add(factsSlot);
+		body.add(equipmentSlot);
+		if (clientThread != null)
+		{
+			int id = item.getItemId();
+			clientThread.invoke(() ->
+			{
+				ItemFacts facts = ItemFacts.read(itemManager, id);
+				if (facts != null)
+				{
+					SwingUtilities.invokeLater(() -> showFacts(facts));
+				}
+			});
+		}
 
 		List<DropSource> rawSources = data.sourcesForItem(item.getItemId());
 		List<Integer> owners = data instanceof BundledDataSource
@@ -101,7 +146,7 @@ public class ItemResultView extends JPanel
 		if (!shopEntries.isEmpty())
 		{
 			body.add(Box.createVerticalStrut(6));
-			body.add(section("Buy from"));
+			body.add(fullWidth(section("Buy from")));
 			for (ShopEntry entry : shopEntries)
 			{
 				body.add(buildShopBox(entry, onShopSelected));
@@ -109,7 +154,7 @@ public class ItemResultView extends JPanel
 			if (!rawSources.isEmpty())
 			{
 				body.add(Box.createVerticalStrut(6));
-				body.add(section("Obtained from"));
+				body.add(fullWidth(section("Obtained from")));
 			}
 		}
 
@@ -124,14 +169,11 @@ public class ItemResultView extends JPanel
 		// them: when the player opens one, removing the page beside the game canvas makes AWT
 		// recompute clip shapes for every sibling of every removed component, quadratic in the
 		// sibling count, and that froze the sidebar for seconds
-		JPanel sources = new JPanel();
-		sources.setLayout(new BoxLayout(sources, BoxLayout.Y_AXIS));
-		sources.setOpaque(false);
-		sources.setAlignmentX(Component.LEFT_ALIGNMENT);
+		JPanel sources = Cards.slot();
 		body.add(sources);
 		JButton more = new JButton();
 		more.setFocusPainted(false);
-		more.setAlignmentX(Component.LEFT_ALIGNMENT);
+		more.setAlignmentX(Component.CENTER_ALIGNMENT);
 		Runnable[] showNext = new Runnable[1];
 		int[] shown = {0};
 		showNext[0] = () ->
@@ -168,17 +210,180 @@ public class ItemResultView extends JPanel
 	// source cards shown before the player asks for more
 	static final int PAGE = 40;
 
+	// a body row that spans the sidebar, so it lines up with the cards beside it
+	private static JPanel fullWidth(JComponent content)
+	{
+		JPanel row = new JPanel(new BorderLayout())
+		{
+			@Override
+			public Dimension getMaximumSize()
+			{
+				return new Dimension(Integer.MAX_VALUE, getPreferredSize().height);
+			}
+		};
+		row.setOpaque(false);
+		row.setAlignmentX(Component.CENTER_ALIGNMENT);
+		row.add(content, BorderLayout.CENTER);
+		return row;
+	}
+
+	private final JPanel factsSlot = Cards.slot();
+	private final JPanel equipmentSlot = Cards.slot();
+
+	private void showFacts(ItemFacts f)
+	{
+		JPanel facts = Cards.card();
+		facts.add(Cards.section("Facts"));
+		JPanel grid = new JPanel(new GridLayout(0, 2, 8, 0));
+		grid.setOpaque(false);
+		grid.setAlignmentX(Component.LEFT_ALIGNMENT);
+		grid.add(Cards.statCell("Value", Format.tally(f.value)));
+		grid.add(Cards.statCell("Weight", weightText(f.weight)));
+		grid.add(Cards.statCell("Low alch", Format.tally(f.lowAlch)));
+		grid.add(Cards.statCell("High alch", Format.tally(f.highAlch)));
+		JPanel store = Cards.statCell("Vendor", Format.tally(f.lowAlch));
+		store.setToolTipText("What a general store pays for the first one you sell; "
+			+ "a shop that already has some pays less");
+		grid.add(store);
+		if (f.geTradeable)
+		{
+			grid.add(Cards.statCell("GE", f.gePrice > 0 ? Format.tally(f.gePrice) : "—"));
+			grid.add(Cards.statCell("Buy limit", f.geLimit > 0 ? Format.tally(f.geLimit) : "—"));
+		}
+		grid.setMaximumSize(new Dimension(Integer.MAX_VALUE, grid.getPreferredSize().height));
+		facts.add(grid);
+
+		List<String> flags = new ArrayList<>();
+		if (f.members)
+		{
+			flags.add("Members");
+		}
+		if (f.tradeable)
+		{
+			flags.add("Tradeable");
+		}
+		if (f.stackable)
+		{
+			flags.add("Stackable");
+		}
+		if (!flags.isEmpty())
+		{
+			JLabel line = new JLabel(String.join("  ·  ", flags));
+			line.setForeground(ColorScheme.LIGHT_GRAY_COLOR);
+			line.setAlignmentX(Component.LEFT_ALIGNMENT);
+			facts.add(line);
+		}
+		Cards.refill(factsSlot, facts);
+
+		if (f.equipment != null)
+		{
+			Cards.refill(equipmentSlot, equipmentCard(f.equipment));
+		}
+	}
+
+	private static JPanel equipmentCard(ItemEquipmentStats e)
+	{
+		JPanel card = Cards.card();
+		card.add(Cards.section("Equipment"));
+		JPanel grid = new JPanel(new GridLayout(0, 2, 8, 0));
+		grid.setOpaque(false);
+		grid.setAlignmentX(Component.LEFT_ALIGNMENT);
+		grid.add(Cards.statCell("Slot", slotName(e.getSlot()) + (e.isTwoHanded() ? " (two-handed)" : "")));
+		grid.add(Cards.statCell("Speed", e.getAspeed() > 0 ? Format.tally(e.getAspeed()) : "—"));
+		grid.setMaximumSize(new Dimension(Integer.MAX_VALUE, grid.getPreferredSize().height));
+		card.add(grid);
+
+		card.add(dim("Attack bonuses"));
+		card.add(bonuses(e.getAstab(), e.getAslash(), e.getAcrush(), e.getAmagic(), e.getArange()));
+		card.add(dim("Defence bonuses"));
+		card.add(bonuses(e.getDstab(), e.getDslash(), e.getDcrush(), e.getDmagic(), e.getDrange()));
+		card.add(dim("Other bonuses"));
+		// one column: "Ranged strength" and "Magic damage" are too long to share a row
+		JPanel other = new JPanel(new GridLayout(0, 1, 8, 0));
+		other.setOpaque(false);
+		other.setAlignmentX(Component.LEFT_ALIGNMENT);
+		other.add(Cards.statCell("Strength", signed(e.getStr())));
+		other.add(Cards.statCell("Ranged strength", signed(e.getRstr())));
+		other.add(Cards.statCell("Magic damage", signed(Math.round(e.getMdmg())) + "%"));
+		other.add(Cards.statCell("Prayer", signed(e.getPrayer())));
+		other.setMaximumSize(new Dimension(Integer.MAX_VALUE, other.getPreferredSize().height));
+		card.add(other);
+		return card;
+	}
+
+	// the five styles in the order the game's equipment screen lists them
+	private static JPanel bonuses(int stab, int slash, int crush, int magic, int range)
+	{
+		JPanel grid = new JPanel(new GridLayout(0, 2, 8, 0));
+		grid.setOpaque(false);
+		grid.setAlignmentX(Component.LEFT_ALIGNMENT);
+		grid.add(Cards.statCell("Stab", signed(stab)));
+		grid.add(Cards.statCell("Magic", signed(magic)));
+		grid.add(Cards.statCell("Slash", signed(slash)));
+		grid.add(Cards.statCell("Ranged", signed(range)));
+		grid.add(Cards.statCell("Crush", signed(crush)));
+		grid.setMaximumSize(new Dimension(Integer.MAX_VALUE, grid.getPreferredSize().height));
+		return grid;
+	}
+
+	private static JLabel dim(String text)
+	{
+		JLabel label = new JLabel(text);
+		label.setForeground(ColorScheme.LIGHT_GRAY_COLOR);
+		label.setAlignmentX(Component.LEFT_ALIGNMENT);
+		label.setBorder(BorderFactory.createEmptyBorder(4, 0, 0, 0));
+		return label;
+	}
+
+	static String signed(long n)
+	{
+		return n > 0 ? "+" + n : String.valueOf(n);
+	}
+
+	static String weightText(double kg)
+	{
+		return String.format(Locale.ROOT, "%.1f kg", kg);
+	}
+
+	// the equipment screen's slot indexes
+	static String slotName(int slot)
+	{
+		switch (slot)
+		{
+			case 0:
+				return "Head";
+			case 1:
+				return "Cape";
+			case 2:
+				return "Neck";
+			case 3:
+				return "Weapon";
+			case 4:
+				return "Body";
+			case 5:
+				return "Shield";
+			case 7:
+				return "Legs";
+			case 9:
+				return "Hands";
+			case 10:
+				return "Feet";
+			case 12:
+				return "Ring";
+			case 13:
+				return "Ammo";
+			default:
+				return "Slot " + slot;
+		}
+	}
+
 	private JPanel buildShopBox(ShopEntry entry, Consumer<ShopData> onShopSelected)
 	{
 		ShopData shop = entry.getShop();
 		ShopItem line = entry.getItem();
 
-		JPanel box = new JPanel();
-		box.setLayout(new BoxLayout(box, BoxLayout.Y_AXIS));
-		box.setBorder(BorderFactory.createCompoundBorder(
-			BorderFactory.createLineBorder(ColorScheme.MEDIUM_GRAY_COLOR),
-			BorderFactory.createEmptyBorder(6, 8, 6, 8)));
-		box.setBackground(ColorScheme.DARKER_GRAY_COLOR);
+		// the same full-width card as the Facts box above it
+		JPanel box = Cards.card();
 
 		JTextArea name = wrapLabel(shop.getName());
 		name.setFont(name.getFont().deriveFont(Font.BOLD));
@@ -226,12 +431,8 @@ public class ItemResultView extends JPanel
 		// a synthetic chest/node id is negative but real, so only the lookup decides ownership
 		SourceData owner = data.sourceById(npcId);
 
-		JPanel box = new JPanel();
-		box.setLayout(new BoxLayout(box, BoxLayout.Y_AXIS));
-		box.setBorder(BorderFactory.createCompoundBorder(
-			BorderFactory.createLineBorder(ColorScheme.MEDIUM_GRAY_COLOR),
-			BorderFactory.createEmptyBorder(6, 8, 6, 8)));
-		box.setBackground(ColorScheme.DARKER_GRAY_COLOR);
+		// the same full-width card as the Facts box above it
+		JPanel box = Cards.card();
 
 		JTextArea name = wrapLabel(owner != null ? owner.getName() : "Unknown");
 		name.setFont(name.getFont().deriveFont(Font.BOLD));
@@ -264,13 +465,13 @@ public class ItemResultView extends JPanel
 		// the scanning stats until the player opens it for the confidence bands
 		double p = src.getRarity();
 		box.add(statRow("Expected", expected(DropStats.expectedKills(p))));
-		// the dry streak counts kills, so it only means anything where something is killed:
-		// chests and gathering nodes have no npc ids and never accumulate one
-		boolean killable = owner != null && !owner.getNpcIds().isEmpty();
-		if (killable)
+		// the dry streak counts kills of a monster, or attempts at a chest, an activity, or a
+		// pocket, which the Loot Tracker reports one at a time
+		if (owner != null)
 		{
+			boolean killable = !owner.getNpcIds().isEmpty();
 			JLabel sinceValue = new JLabel(count(store.getDry(npcId, itemId)));
-			box.add(statRow("Kills since drop", sinceValue));
+			box.add(statRow(killable ? "Kills since drop" : "Attempts since drop", sinceValue));
 			dryRows.add(new DryRow(npcId, itemId, sinceValue));
 		}
 		addExpander(box, itemId, npcId, p, store);
@@ -353,6 +554,10 @@ public class ItemResultView extends JPanel
 				return "Pickpocket  ·  ";
 			case GATHER:
 				return "Gather  ·  ";
+			case ACTIVITY:
+				return "Activity  ·  ";
+			case PROCESS:
+				return "Process  ·  ";
 			default:
 				return "Lvl " + owner.getCombatLevel() + "  ·  ";
 		}

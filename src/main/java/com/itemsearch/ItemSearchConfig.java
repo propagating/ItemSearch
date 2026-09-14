@@ -95,8 +95,8 @@ public interface ItemSearchConfig extends Config
 
 	@ConfigItem(
 		keyName = "showDropsMenuEntry",
-		name = "Right-click \"Show drops\"",
-		description = "Add a Show drops option to the right-click menu of NPCs this plugin "
+		name = "Right-click \"Show information\"",
+		description = "Add a Show information option to the right-click menu of NPCs this plugin "
 			+ "has drop data for, opening their page in the sidebar"
 	)
 	default boolean showDropsMenuEntry()

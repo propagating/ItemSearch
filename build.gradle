@@ -49,6 +49,23 @@ tasks.register('run', JavaExec) {
 	args "--developer-mode", "--debug"
 }
 
+// puts the built jar where a normal RuneLite client sideloads plugins from
+tasks.register('sideload', Copy) {
+	from tasks.named('jar')
+	into new File(System.getProperty('user.home'), '.runelite/sideloaded-plugins')
+}
+
+// a plain developer client that loads every plugin from the sideload folder, this one included.
+// Unlike 'run' it does not also load this plugin from the classpath, so nothing loads twice:
+//   gradlew sideload runClient
+tasks.register('runClient', JavaExec) {
+	classpath = sourceSets.test.runtimeClasspath
+	mainClass = 'net.runelite.client.RuneLite'
+
+	jvmArgs "-ea"
+	args "--developer-mode", "--debug"
+}
+
 tasks.register('shadowJar', Jar) {
 	dependsOn configurations.testRuntimeClasspath
 	manifest {

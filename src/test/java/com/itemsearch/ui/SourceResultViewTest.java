@@ -49,6 +49,9 @@ import com.itemsearch.model.Attack;
 import com.itemsearch.model.CombatStats;
 import com.itemsearch.model.DropSource;
 import com.itemsearch.model.MaxHitVariant;
+import com.itemsearch.model.Phase;
+import com.itemsearch.model.ShopData;
+import com.itemsearch.model.ShopItem;
 import com.itemsearch.model.SourceData;
 import com.itemsearch.model.SourceType;
 import com.itemsearch.model.SpawnPoint;
@@ -98,7 +101,7 @@ public class SourceResultViewTest
 	{
 		return new SourceData(id, name, level, null, Collections.emptyList(), Collections.emptyList(),
 			Collections.singletonList(id), combat, SourceType.KILL, null, null, null, null, null,
-			null, locationName);
+			null, locationName, null);
 	}
 
 	/**
@@ -117,7 +120,8 @@ public class SourceResultViewTest
 	private static SourceData npc(int id, String name, int level, CombatStats combat)
 	{
 		return new SourceData(id, name, level, null, Collections.emptyList(), Collections.emptyList(),
-			Collections.singletonList(id), combat, SourceType.KILL, null, null, null, null, null, null, null);
+			Collections.singletonList(id), combat, SourceType.KILL, null, null, null, null, null, null, null,
+			null);
 	}
 
 	private static DropSource drop(int itemId, String name, double rarity, int quantity,
@@ -289,7 +293,7 @@ public class SourceResultViewTest
 		SourceData shipped = new SourceData(3031, "Goblin", 2, null, Collections.emptyList(),
 			Collections.singletonList(new SpawnPoint(3250, 3250, 0)),
 			Collections.singletonList(3031), null, SourceType.KILL, null, null, null, null, null,
-			null, null);
+			null, null, null);
 
 		SourceData merged = SourceResultView.withRecorded(shipped, store);
 		assertEquals(2, merged.getSpawnPoints().size());
@@ -306,7 +310,7 @@ public class SourceResultViewTest
 		SourceData shipped = new SourceData(3031, "Goblin", 2, null, Collections.emptyList(),
 			Collections.singletonList(new SpawnPoint(3250, 9250, 0)),
 			Collections.singletonList(3031), null, SourceType.KILL, null, null, null, null, null,
-			new SpawnPoint(1, 1, 0), null);
+			new SpawnPoint(1, 1, 0), null, null);
 
 		assertEquals(2760, SourceResultView.withRecorded(shipped, store).getEntrance().getX());
 	}
@@ -327,7 +331,7 @@ public class SourceResultViewTest
 		SourceData npc = new SourceData(3031, "Goblin", 2, null, Collections.emptyList(),
 			Collections.singletonList(new SpawnPoint(3250, 3250, 0)),
 			Collections.singletonList(3031), null, SourceType.KILL, null, null, null, null, null,
-			null, null);
+			null, null, null);
 		TrackerStore tracker = new TrackerStore(mock(ConfigManager.class), new Gson());
 		assertNull(button(build(npc, tracker), "+ Spawn here"));
 
@@ -343,7 +347,163 @@ public class SourceResultViewTest
 		assertNotNull(button(on, "+ Entrance"));
 		assertNotNull(button(on, "− Last spawn"));
 		assertNotNull(button(on, "− All spawns"));
-		assertTrue(labelTexts(on).contains("Nothing recorded by you yet"));
+		assertTrue(labelTexts(on).contains("No tiles saved yet"));
+	}
+
+	private static SourceData phased(List<Phase> phases)
+	{
+		return new SourceData(2042, "Zulrah", 725, null, Collections.emptyList(),
+			Collections.emptyList(), Arrays.asList(2042, 2043), phases.get(0).getCombat(),
+			SourceType.KILL, null, null, null, null, null, null, null, phases);
+	}
+
+	private static Phase phase(String label, int strength, String attack)
+	{
+		return new Phase(label, "https://x/" + label + ".png", new CombatStats(1, strength, 1, 1, 1,
+			5, Collections.singletonList(new Attack(attack, 5, 5, 4, 4, null, null, null, null)),
+			null, null, null));
+	}
+
+	@Test
+	public void aSourceWithoutPhasesHasNoSwitcher()
+	{
+		SourceResultView view = build(npc(GOBLIN, "Goblin", 2, combat(Collections.singletonList("stab"))),
+			new TrackerStore(mock(ConfigManager.class), new Gson()));
+		assertNull(button(view, "◀"));
+		assertNull(button(view, "▶"));
+	}
+
+	/**
+	 * Zulrah's forms differ in picture, defence, and attack. The page describes one form at a
+	 * time, and the arrows move every part of it together, wrapping at either end.
+	 */
+	@Test
+	public void switchingPhasesMovesTheNameStatsAndAttacksTogether()
+	{
+		SourceResultView view = build(phased(Arrays.asList(
+			phase("Serpentine", 10, "ranged"), phase("Magma", 20, "melee"))),
+			new TrackerStore(mock(ConfigManager.class), new Gson()));
+		assertTrue(labelTexts(view).contains("Serpentine"));
+		assertTrue(labelTexts(view).contains("10"));
+		assertEquals(1, countTooltips(view, "Protect from Missiles"));
+		assertEquals("https://x/Serpentine.png", view.shownImageUrl());
+
+		button(view, "▶").doClick();
+		assertTrue(labelTexts(view).contains("Magma"));
+		assertFalse(labelTexts(view).contains("Serpentine"));
+		assertTrue(labelTexts(view).contains("20"));
+		assertFalse(labelTexts(view).contains("10"));
+		assertEquals(0, countTooltips(view, "Protect from Missiles"));
+		assertEquals(1, countTooltips(view, "Protect from Melee"));
+		assertEquals("https://x/Magma.png", view.shownImageUrl());
+
+		button(view, "▶").doClick();
+		assertTrue("wraps forward", labelTexts(view).contains("Serpentine"));
+		button(view, "◀").doClick();
+		assertTrue("wraps backward", labelTexts(view).contains("Magma"));
+	}
+
+	/** The page's own picture is whichever form the wiki leads with, not the one selected. */
+	@Test
+	public void theLiveImageRefreshDoesNotOverrideAPhasesPicture()
+	{
+		SourceResultView view = build(phased(Arrays.asList(
+			phase("Serpentine", 10, "ranged"), phase("Magma", 20, "melee"))),
+			new TrackerStore(mock(ConfigManager.class), new Gson()));
+		view.updateImage("https://x/page.png");
+		assertEquals("https://x/Serpentine.png", view.shownImageUrl());
+
+		SourceResultView plain = build(npc(GOBLIN, "Goblin", 2, null),
+			new TrackerStore(mock(ConfigManager.class), new Gson()));
+		plain.updateImage("https://x/page.png");
+		assertEquals("https://x/page.png", plain.shownImageUrl());
+	}
+
+	private static SourceData pickpocket(Integer level, Double xp)
+	{
+		return new SourceData(3257, "Master Farmer (pickpocket)", 0, null,
+			Collections.singletonList(drop(5318, "Potato seed", 0.2, 1, null)),
+			Collections.emptyList(), Collections.singletonList(3257), null, SourceType.PICKPOCKET,
+			null, null, null, null, "Master Farmer", null, null, null, level, xp);
+	}
+
+	private static ShopData seedStall()
+	{
+		return new ShopData("Martin's Seed Stall", "Draynor Village", "Master Farmer", "Coins",
+			3080, 3250, 0, null, Collections.singletonList(new ShopItem(5318, "Potato seed", 10, 4, 30)));
+	}
+
+	private SourceResultView buildWithShop(SourceData npc, ShopData shop)
+	{
+		return new SourceResultView(npc, shop, new TrackerStore(mock(ConfigManager.class), new Gson()),
+			mock(SpriteManager.class), mock(ItemManager.class), new OkHttpClient(),
+			mock(SpawnMapMarker.class), mock(ClientThread.class),
+			new SpawnStore(mock(ConfigManager.class), new Gson()), mock(SpawnRecorder.class), false,
+			() ->
+			{
+			}, item ->
+			{
+			});
+	}
+
+	/** Robbing an NPC has a price of entry, and the page says it before listing what it pays. */
+	@Test
+	public void aPickpocketPageSaysWhatItTakesAndWhatItPays()
+	{
+		List<String> text = labelTexts(build(pickpocket(38, 43.0),
+			new TrackerStore(mock(ConfigManager.class), new Gson())));
+		assertTrue(text.contains("STEALABLE @ 38 THIEVING · 43 XP"));
+
+		assertEquals("Stealable @ 40 Thieving · 46.8 xp", SourceResultView.stealableHeading(40, 46.8));
+		assertEquals("Stealable @ 1 Thieving", SourceResultView.stealableHeading(1, null));
+
+		List<String> unknown = labelTexts(build(pickpocket(null, null),
+			new TrackerStore(mock(ConfigManager.class), new Gson())));
+		assertFalse(unknown.stream().anyMatch(s -> s != null && s.startsWith("STEALABLE")));
+	}
+
+	/**
+	 * Martin the Master Gardener sells seeds and can be robbed of them. One NPC, one page: the
+	 * shop's stock under Purchasable, the loot under Stealable, and the name card saying both.
+	 */
+	@Test
+	public void aShopkeeperWhoCanBeRobbedShowsBothOnOnePage()
+	{
+		SourceResultView view = buildWithShop(pickpocket(38, 43.0), seedStall());
+		List<String> text = labelTexts(view);
+		assertTrue(text.contains("PURCHASABLE"));
+		assertTrue(text.contains("Draynor Village  ·  Coins"));
+		assertTrue("the shop's stock rows", text.contains("Potato seed"));
+		assertTrue(text.contains("STEALABLE @ 38 THIEVING · 43 XP"));
+		assertTrue(text.contains("Pickpocketing  ·  Shopkeeper"));
+		assertNotNull("no tiles of their own, but the shop is on the map", button(view, "Map"));
+
+		List<String> alone = labelTexts(build(pickpocket(38, 43.0),
+			new TrackerStore(mock(ConfigManager.class), new Gson())));
+		assertFalse(alone.contains("PURCHASABLE"));
+		assertTrue(alone.contains("Pickpocketing"));
+	}
+
+	/** Whether to bring poison, a cannon, or thralls is answered on the Stats card, in one vocabulary. */
+	@Test
+	public void theStatsCardSaysWhatTheMonsterShrugsOff()
+	{
+		java.util.Map<String, String> statuses = new java.util.LinkedHashMap<>();
+		statuses.put("Poison", "Immune");
+		statuses.put("Venom", "Immune");
+		statuses.put("Cannon", "Susceptible");
+		statuses.put("Freeze", "50% resistant");
+		CombatStats c = new CombatStats(1, 1, 1, 1, 1, 500, Collections.singletonList(
+			new Attack("ranged", 41, 41, 4, 4, null, null, null, null)), null, null, null, statuses);
+		List<String> text = labelTexts(build(npc(2042, "Zulrah", 725, c),
+			new TrackerStore(mock(ConfigManager.class), new Gson())));
+		assertTrue(text.contains("Poison") && text.contains("Immune"));
+		assertTrue(text.contains("Cannon") && text.contains("Susceptible"));
+		assertTrue(text.contains("Freeze") && text.contains("50% resistant"));
+
+		List<String> silent = labelTexts(build(npc(9001, "Goblin", 2, combat(Collections.singletonList("stab"))),
+			new TrackerStore(mock(ConfigManager.class), new Gson())));
+		assertFalse("a page that says nothing shows nothing", silent.contains("Poison"));
 	}
 
 	private static CombatStats combat(List<String> attackTypes)
@@ -675,8 +835,8 @@ public class SourceResultViewTest
 		// the protection icon reflects the PRAY style (ranged), not the accuracy style, and
 		// hovering it says both what to pray and why — one tooltip, since Swing only shows the
 		// innermost one and the icon has its own
-		assertEquals(1, countTooltips(view, "<html>Protect from Missiles<br>Magic accuracy roll "
-			+ "— prayed against as Ranged</html>"));
+		assertEquals(1, countTooltips(view, "<html>Protect from Missiles<br>Magic attack, "
+			+ "blocked by Protect from Ranged</html>"));
 		assertEquals(0, countTooltips(view, "Protect from Magic"));
 	}
 
@@ -782,11 +942,13 @@ public class SourceResultViewTest
 			new TrackerStore(mock(ConfigManager.class), new Gson()));
 		List<String> text = labelTexts(view);
 
-		assertTrue("the type stands in for a combat level", text.contains("Reward chest"));
+		assertTrue("the type stands in for a combat level", text.contains("Container"));
 		assertFalse("a chest has no combat stats", text.contains("Attack"));
 		assertFalse("a chest has no attack styles", text.contains("Max hit"));
 		assertFalse("nothing is killed at a chest", text.contains("Kills:"));
 		assertNull("no kill counter to reset", button(view, "↺ Kills"));
+		assertTrue("but each opening is an attempt", text.contains("Attempts:"));
+		assertNotNull(button(view, "↺ Attempts"));
 		// the chest's wiki coordinates come through as a spawn point, so it is still mappable
 		assertNotNull("a chest must still be locatable on the map", button(view, "Map"));
 	}
@@ -1016,7 +1178,7 @@ public class SourceResultViewTest
 	{
 		SourceData split = new SourceData(469, "Killerwatt (Attacking)", 55, null,
 			Collections.emptyList(), Collections.emptyList(), Collections.singletonList(469), null,
-			SourceType.KILL, null, null, null, null, "Killerwatt", null, null);
+			SourceType.KILL, null, null, null, null, "Killerwatt", null, null, null);
 		SourceResultView view = build(split, new TrackerStore(mock(ConfigManager.class), new Gson()));
 		JButton wiki = button(view, "Wiki");
 		assertNotNull(wiki);

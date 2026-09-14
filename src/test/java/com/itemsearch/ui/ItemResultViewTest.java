@@ -37,8 +37,14 @@ import java.util.concurrent.atomic.AtomicReference;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
+import net.runelite.api.ItemComposition;
+import net.runelite.client.callback.ClientThread;
 import net.runelite.client.config.ConfigManager;
+import net.runelite.client.game.ItemEquipmentStats;
 import net.runelite.client.game.ItemManager;
+import net.runelite.client.game.ItemStats;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.doAnswer;
 import com.itemsearch.data.BundledDataSource;
 import com.itemsearch.model.ItemMatch;
 import com.itemsearch.model.SourceData;
@@ -89,6 +95,158 @@ public class ItemResultViewTest
 			s ->
 			{
 			});
+	}
+
+	private static List<String> labelTexts(Container root)
+	{
+		List<String> out = new ArrayList<>();
+		for (JLabel l : collect(root, JLabel.class))
+		{
+			out.add(l.getText());
+		}
+		return out;
+	}
+
+	private static ClientThread immediate()
+	{
+		ClientThread ct = mock(ClientThread.class);
+		doAnswer(inv ->
+		{
+			((Runnable) inv.getArgument(0)).run();
+			return null;
+		}).when(ct).invoke(any(Runnable.class));
+		return ct;
+	}
+
+	// a bronze dagger as the client describes it: value 10, tradeable, 0.453 kg, a weapon
+	private static ItemManager dagger(boolean equipable)
+	{
+		ItemManager im = mock(ItemManager.class);
+		ItemComposition c = mock(ItemComposition.class);
+		when(c.getPrice()).thenReturn(10);
+		when(c.getHaPrice()).thenReturn(6);
+		when(c.isMembers()).thenReturn(false);
+		when(c.isTradeable()).thenReturn(true);
+		when(c.isGeTradeable()).thenReturn(true);
+		when(c.isStackable()).thenReturn(false);
+		when(im.getItemComposition(BRONZE_DAGGER)).thenReturn(c);
+		when(im.getItemPrice(BRONZE_DAGGER)).thenReturn(37);
+		ItemEquipmentStats eq = ItemEquipmentStats.builder().slot(3).astab(4).aslash(2).acrush(-4)
+			.amagic(1).arange(0).dstab(0).dslash(1).dcrush(0).dmagic(1).drange(0).str(3).rstr(0)
+			.mdmg(0).prayer(0).aspeed(4).isTwoHanded(false).build();
+		when(im.getItemStats(BRONZE_DAGGER)).thenReturn(new ItemStats(equipable, 0.453, 125,
+			equipable ? eq : null));
+		return im;
+	}
+
+	private ItemResultView factsView(ItemManager im, ClientThread clientThread)
+	{
+		ItemResultView view = new ItemResultView(new ItemMatch(BRONZE_DAGGER, "Bronze dagger"),
+			loadedTestData(), new TrackerStore(mock(ConfigManager.class), new Gson()), im, clientThread,
+			() ->
+			{
+			}, s ->
+			{
+			}, s ->
+			{
+			});
+		// the facts are filled in on the event thread once the client thread has read them
+		try
+		{
+			javax.swing.SwingUtilities.invokeAndWait(() ->
+			{
+			});
+		}
+		catch (Exception e)
+		{
+			throw new AssertionError(e);
+		}
+		return view;
+	}
+
+	/**
+	 * An item page had a name and two lists. A monster page says what the thing is; the item
+	 * page now says what the item is worth, in every sense the game prices it.
+	 */
+	@Test
+	public void theFactsCardShowsWhatTheItemIsWorth()
+	{
+		List<String> text = labelTexts(factsView(dagger(true), immediate()));
+		assertTrue(text.contains("FACTS"));
+		assertTrue(text.contains("Value") && text.contains("10"));
+		assertTrue(text.contains("Low alch") && text.contains("4"));
+		assertTrue(text.contains("High alch") && text.contains("6"));
+		assertTrue(text.contains("Vendor"));
+		assertTrue(text.contains("GE") && text.contains("37"));
+		assertTrue(text.contains("Buy limit") && text.contains("125"));
+		assertTrue(text.contains("Weight") && text.contains("0.5 kg"));
+		assertTrue(text.contains("Tradeable"));
+		assertFalse("the flags line names only what is true", text.contains("Members"));
+	}
+
+	@Test
+	public void theEquipmentCardAppearsOnlyForWearableItems()
+	{
+		List<String> worn = labelTexts(factsView(dagger(true), immediate()));
+		assertTrue(worn.contains("EQUIPMENT"));
+		assertTrue(worn.contains("Weapon"));
+		assertTrue(worn.contains("Stab") && worn.contains("+4"));
+		assertTrue(worn.contains("Crush") && worn.contains("-4"));
+		assertTrue(worn.contains("Speed"));
+		assertTrue(worn.contains("Strength") && worn.contains("+3"));
+		assertFalse(labelTexts(factsView(dagger(false), immediate())).contains("EQUIPMENT"));
+	}
+
+	@Test
+	public void anExchangeUntradeableItemShowsNoExchangeRows()
+	{
+		ItemManager im = dagger(false);
+		when(im.getItemComposition(BRONZE_DAGGER).isGeTradeable()).thenReturn(false);
+		List<String> text = labelTexts(factsView(im, immediate()));
+		assertTrue(text.contains("Value"));
+		assertFalse(text.contains("GE"));
+		assertFalse(text.contains("Buy limit"));
+	}
+
+	@Test
+	public void theExamineLineSitsUnderTheNameWhenTheDataHasOne()
+	{
+		DropDataService data = mock(DropDataService.class);
+		when(data.sourcesForItem(BRONZE_DAGGER)).thenReturn(Collections.emptyList());
+		when(data.shopsForItem(BRONZE_DAGGER)).thenReturn(Collections.emptyList());
+		when(data.examineFor(BRONZE_DAGGER)).thenReturn("A dagger made of bronze.");
+		ItemResultView view = new ItemResultView(new ItemMatch(BRONZE_DAGGER, "Bronze dagger"), data,
+			new TrackerStore(mock(ConfigManager.class), new Gson()), mock(ItemManager.class),
+			() ->
+			{
+			}, s ->
+			{
+			}, s ->
+			{
+			});
+		assertTrue(collect(view, JTextArea.class).stream()
+			.anyMatch(a -> "A dagger made of bronze.".equals(a.getText())));
+
+		when(data.examineFor(BRONZE_DAGGER)).thenReturn(null);
+		ItemResultView plain = new ItemResultView(new ItemMatch(BRONZE_DAGGER, "Bronze dagger"), data,
+			new TrackerStore(mock(ConfigManager.class), new Gson()), mock(ItemManager.class),
+			() ->
+			{
+			}, s ->
+			{
+			}, s ->
+			{
+			});
+		assertTrue(collect(plain, JTextArea.class).isEmpty());
+	}
+
+	/** The read happens on the client thread; until it runs the page is complete without it. */
+	@Test
+	public void aClientThreadThatNeverRunsLeavesThePageUsable()
+	{
+		List<String> text = labelTexts(factsView(dagger(true), mock(ClientThread.class)));
+		assertFalse(text.contains("FACTS"));
+		assertTrue(text.contains("Bronze dagger"));
 	}
 
 	private static <T> List<T> collect(Container root, Class<T> type)
@@ -416,6 +574,8 @@ public class ItemResultViewTest
 		assertTrue("expected-attempts stat still applies to a chest", text.contains("Expected"));
 		assertFalse("nothing is killed for a chest reward",
 			text.contains("Kills since drop"));
+		assertTrue("but each opening the Loot Tracker reports is an attempt",
+			text.contains("Attempts since drop"));
 	}
 
 	@Test

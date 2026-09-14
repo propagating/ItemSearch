@@ -26,13 +26,8 @@ package com.itemsearch.ui;
 
 import java.awt.BorderLayout;
 import java.awt.Component;
-import java.awt.Cursor;
-import java.awt.Dimension;
 import java.awt.Font;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 import java.util.function.Consumer;
-import javax.swing.BorderFactory;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
@@ -44,7 +39,6 @@ import net.runelite.client.game.ItemManager;
 import com.itemsearch.model.ShopData;
 import com.itemsearch.model.ShopItem;
 import net.runelite.client.ui.ColorScheme;
-import net.runelite.client.util.AsyncBufferedImage;
 
 public class ShopResultView extends JPanel
 {
@@ -83,96 +77,10 @@ public class ShopResultView extends JPanel
 
 		for (ShopItem item : shop.getItems())
 		{
-			body.add(buildRow(shop, item, itemManager, onItemSelected));
+			body.add(ShopRows.row(shop, item, itemManager, onItemSelected));
 		}
 
 		add(body, BorderLayout.CENTER);
-	}
-
-	private JPanel buildRow(ShopData shop, ShopItem item, ItemManager itemManager,
-		Consumer<ShopItem> onItemSelected)
-	{
-		// stock 0 lines stay visible (the shop's full catalog) but are dimmed: they
-		// are not currently a way to purchase the item
-		boolean stocked = item.getStock() == null || item.getStock() != 0;
-
-		JPanel row = new JPanel(new BorderLayout(6, 0));
-		row.setBackground(ColorScheme.DARKER_GRAY_COLOR);
-		row.setAlignmentX(Component.LEFT_ALIGNMENT);
-		row.setBorder(BorderFactory.createEmptyBorder(3, 4, 3, 4));
-		if (item.getItemId() >= 0)
-		{
-			// the whole row is a click target (Swing events don't bubble from unlistened
-			// children like the icon), with hover feedback to advertise it
-			row.setCursor(new Cursor(Cursor.HAND_CURSOR));
-			row.addMouseListener(new MouseAdapter()
-			{
-				@Override
-				public void mousePressed(MouseEvent e)
-				{
-					onItemSelected.accept(item);
-				}
-
-				@Override
-				public void mouseEntered(MouseEvent e)
-				{
-					row.setBackground(ColorScheme.DARK_GRAY_HOVER_COLOR);
-				}
-
-				@Override
-				public void mouseExited(MouseEvent e)
-				{
-					row.setBackground(ColorScheme.DARKER_GRAY_COLOR);
-				}
-			});
-		}
-
-		if (item.getItemId() >= 0)
-		{
-			JLabel icon = new JLabel();
-			AsyncBufferedImage img = itemManager.getImage(item.getItemId());
-			if (img != null)
-			{
-				img.addTo(icon);
-			}
-			row.add(icon, BorderLayout.WEST);
-		}
-
-		JLabel name = new JLabel(item.getItemName());
-		if (stocked && item.getItemId() >= 0)
-		{
-			name.setForeground(ColorScheme.BRAND_ORANGE);
-		}
-		if (item.getItemId() >= 0)
-		{
-			name.setCursor(new Cursor(Cursor.HAND_CURSOR));
-			name.addMouseListener(new MouseAdapter()
-			{
-				@Override
-				public void mousePressed(MouseEvent e)
-				{
-					onItemSelected.accept(item);
-				}
-			});
-		}
-		row.add(name, BorderLayout.CENTER);
-
-		String value = Format.priceText(item.getSellPrice(), shop.getCurrency())
-			+ "  ·  " + Format.stockText(item.getStock());
-		if (!stocked)
-		{
-			value += "  ·  not stocked";
-		}
-		JLabel valueLabel = new JLabel(value);
-		valueLabel.setForeground(stocked ? ColorScheme.LIGHT_GRAY_COLOR : ColorScheme.MEDIUM_GRAY_COLOR);
-		if (!stocked)
-		{
-			name.setForeground(ColorScheme.MEDIUM_GRAY_COLOR);
-		}
-		row.add(valueLabel, BorderLayout.EAST);
-
-		row.setMaximumSize(new Dimension(Integer.MAX_VALUE, row.getPreferredSize().height));
-		return row;
 	}
 
 	// same re-wrapping label used by the other detail views (see ItemResultView.wrapLabel)

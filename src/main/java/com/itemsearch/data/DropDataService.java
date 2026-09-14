@@ -42,7 +42,17 @@ public interface DropDataService
 	 */
 	SourceData sourceByNameAndLevel(String name, int combatLevel);
 
+	/**
+	 * Whether the NPC can be pickpocketed, by the id the game reports or, failing that, by name.
+	 * Loot the server reports for such an NPC cannot be told from a pickpocket, so a kill
+	 * tracker must not count it.
+	 */
+	boolean canBePickpocketed(int npcId, String name);
+
 	List<DropSource> sourcesForItem(int itemId);
+
+	/** The wiki's examine text for the item, or null when the data has none. */
+	String examineFor(int itemId);
 
 	List<SourceData> searchSources(String query);
 
@@ -62,4 +72,7 @@ public interface DropDataService
 	List<ShopEntry> shopsForItem(int itemId);
 
 	List<ShopData> searchShops(String query);
+
+	/** The shop this NPC runs, matched on the wiki's named owner case-insensitively, or null. */
+	ShopData shopOwnedBy(String npcName);
 }

@@ -30,5 +30,11 @@ public enum SourceType
 	KILL,
 	REWARD,
 	PICKPOCKET,
-	GATHER
+	GATHER,
+	// something the player takes part in and is rewarded for: Golem crafting, a minigame, a
+	// random event
+	ACTIVITY,
+	// an item broken down into others: a sacred eel cut into Zulrah's scales, a leaping
+	// sturgeon into caviar, a tanzanite fang dismantled into scales
+	PROCESS
 }

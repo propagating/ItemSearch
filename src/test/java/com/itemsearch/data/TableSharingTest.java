@@ -27,8 +27,10 @@ package com.itemsearch.data;
 import com.google.gson.Gson;
 import com.itemsearch.model.DropSource;
 import com.itemsearch.model.SourceData;
+import java.util.Arrays;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -75,12 +77,24 @@ public class TableSharingTest
 	@Test
 	public void versionsOfOneMonsterShareTheirDropTable()
 	{
-		SourceData idle = named("Killerwatt (Idle)");
-		SourceData attacking = named("Killerwatt (Attacking)");
-		assertNotNull(idle);
-		assertNotNull(attacking);
-		assertEquals("both versions drop the page's table", idle.getDrops(), attacking.getDrops());
-		assertTrue(idle.getDrops().size() > 0);
+		SourceData low = named("Ankou (Level 75)");
+		SourceData high = named("Ankou (Level 82)");
+		assertNotNull(low);
+		assertNotNull(high);
+		assertEquals("both versions drop the page's table", low.getDrops(), high.getDrops());
+		assertTrue(low.getDrops().size() > 0);
+	}
+
+	/** Killerwatt's Idle and Attacking ids are one level 55 monster, so they are one source. */
+	@Test
+	public void versionsAtOneLevelAreOneSource()
+	{
+		SourceData killerwatt = named("Killerwatt");
+		assertNotNull(killerwatt);
+		assertNull(named("Killerwatt (Idle)"));
+		assertNull(named("Killerwatt (Attacking)"));
+		assertTrue(killerwatt.getNpcIds().containsAll(Arrays.asList(469, 470)));
+		assertTrue(killerwatt.getDrops().size() > 0);
 	}
 
 	@Test

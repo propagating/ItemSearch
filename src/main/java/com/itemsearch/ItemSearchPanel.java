@@ -115,9 +115,11 @@ class ItemSearchPanel extends PluginPanel
 	{
 		ALL("All", null),
 		NPC("NPCs", SourceType.KILL),
-		CHEST("Chests", SourceType.REWARD),
+		CONTAINER("Containers", SourceType.REWARD),
 		STEAL("Steal", SourceType.PICKPOCKET),
 		NODE("Nodes", SourceType.GATHER),
+		ACTIVITY("Activities", SourceType.ACTIVITY),
+		PROCESS("Processing", SourceType.PROCESS),
 		ITEM("Items", null);
 
 		private final String label;
@@ -252,11 +254,15 @@ class ItemSearchPanel extends PluginPanel
 		switch (type)
 		{
 			case REWARD:
-				return "CHEST";
+				return "CONTAINER";
 			case PICKPOCKET:
 				return "STEAL";
 			case GATHER:
 				return "NODE";
+			case ACTIVITY:
+				return "ACTIVITY";
+			case PROCESS:
+				return "PROCESS";
 			default:
 				return "NPC";
 		}
@@ -549,7 +555,7 @@ class ItemSearchPanel extends PluginPanel
 		content.repaint();
 	}
 
-	/** Opens a source's page from outside the panel — the in-game "Show drops" menu entry. EDT only. */
+	/** Opens a source's page from outside the panel — the in-game "Show information" menu entry. EDT only. */
 	void showSource(SourceData source)
 	{
 		showNpc(source);
@@ -561,6 +567,12 @@ class ItemSearchPanel extends PluginPanel
 		showItem(item);
 	}
 
+	/** Opens a shop's page the way a Buy from card does. Package-visible for tests. */
+	void showShopForTest(ShopData shop)
+	{
+		showShop(shop);
+	}
+
 	private void showNpc(SourceData npc)
 	{
 		go(() -> renderNpc(npc));
@@ -568,10 +580,28 @@ class ItemSearchPanel extends PluginPanel
 
 	private void renderNpc(SourceData npc)
 	{
+		// someone you can rob who also keeps a shop gets one page for both. The NPC's name is
+		// the page title; older data without one carries it in the display name's prefix.
+		ShopData shop = null;
+		if (npc.getType() == SourceType.PICKPOCKET)
+		{
+			String suffix = " (pickpocket)";
+			String owner = npc.wikiTitle();
+			if (owner.endsWith(suffix))
+			{
+				owner = owner.substring(0, owner.length() - suffix.length());
+			}
+			shop = dataService.shopOwnedBy(owner);
+		}
+		renderNpc(npc, shop);
+	}
+
+	private void renderNpc(SourceData npc, ShopData shop)
+	{
 		currentItemView = null;
-		SourceResultView view = new SourceResultView(npc, trackerStore, spriteManager, itemManager, okHttpClient,
-			spawnMapMarker, clientThread, spawnStore, spawnRecorder, config.allowSpawnEditing(),
-			this::back, this::showItem);
+		SourceResultView view = new SourceResultView(npc, shop, trackerStore, spriteManager, itemManager,
+			okHttpClient, spawnMapMarker, clientThread, spawnStore, spawnRecorder,
+			config.allowSpawnEditing(), this::back, this::showItem);
 		currentNpcView = view;
 		showDetail(view);
 		if (config.autoMarkSpawns())
@@ -591,6 +621,16 @@ class ItemSearchPanel extends PluginPanel
 
 	private void renderShop(ShopData shop)
 	{
+		// a shop run by someone the player can rob is that NPC's page, robbing included
+		if (shop.getOwner() != null)
+		{
+			SourceData thief = dataService.sourceByNameAndLevel(shop.getOwner() + " (pickpocket)", 0);
+			if (thief != null && thief.getType() == SourceType.PICKPOCKET)
+			{
+				renderNpc(thief, shop);
+				return;
+			}
+		}
 		currentItemView = null;
 		currentNpcView = null;
 		ShopResultView view = new ShopResultView(shop, itemManager, this::back, line ->
@@ -607,8 +647,8 @@ class ItemSearchPanel extends PluginPanel
 	private void renderItem(ItemMatch item)
 	{
 		currentNpcView = null;
-		currentItemView = new ItemResultView(item, dataService, trackerStore, itemManager, this::back,
-			this::showNpc, this::showShop);
+		currentItemView = new ItemResultView(item, dataService, trackerStore, itemManager, clientThread,
+			this::back, this::showNpc, this::showShop);
 		showDetail(currentItemView);
 	}
 

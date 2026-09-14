@@ -255,10 +255,38 @@
       ]
     },
     {
+      "id": -1002,
+      "name": "Sacred eel",
+      "type": "PROCESS",
+      "combatLevel": 0,
+      "npcIds": [],
+      "spawnPoints": [],
+      "tables": [
+        6
+      ]
+    },
+    {
+      "id": -1001,
+      "name": "Golem crafting",
+      "type": "ACTIVITY",
+      "combatLevel": 0,
+      "npcIds": [],
+      "spawnPoints": [],
+      "tables": [
+        6
+      ],
+      "x": 185,
+      "y": 100,
+      "plane": 0
+    },
+    {
       "id": 3257,
       "name": "Master Farmer (pickpocket)",
+      "wikiPage": "Master Farmer",
       "type": "PICKPOCKET",
       "combatLevel": 0,
+      "thievingLevel": 38,
+      "thievingXp": 43,
       "npcIds": [
         3257
       ],

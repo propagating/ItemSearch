@@ -34,7 +34,7 @@ import com.itemsearch.data.DropDataService;
 import com.itemsearch.model.SourceData;
 
 /**
- * Adds a "Show drops" option to the right-click menu of any NPC this plugin has data for,
+ * Adds a "Show information" option to the right-click menu of any NPC this plugin has data for,
  * opening that NPC's page in the sidebar.
  *
  * <p>The entry is {@link MenuAction#RUNELITE}: clicking it runs a callback in the client and
@@ -44,7 +44,7 @@ import com.itemsearch.model.SourceData;
  */
 public class ShowDropsMenu
 {
-	private static final String OPTION = "Show drops";
+	private static final String OPTION = "Show information";
 
 	private final Client client;
 	private final DropDataService data;

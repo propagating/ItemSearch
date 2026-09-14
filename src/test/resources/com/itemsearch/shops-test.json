@@ -45,5 +45,23 @@
     "x": 3203,
     "y": 3434,
     "plane": 0
+  },
+  {
+    "name": "Martin's Seed Stall",
+    "location": "Draynor Village",
+    "owner": "Master Farmer",
+    "currency": "Coins",
+    "items": [
+      {
+        "itemId": 5318,
+        "itemName": "Potato seed",
+        "stock": 10,
+        "sellPrice": 4,
+        "restockSeconds": 30
+      }
+    ],
+    "x": 3080,
+    "y": 3250,
+    "plane": 0
   }
 ]

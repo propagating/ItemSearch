@@ -1,6 +1,7 @@
 [
   {
     "name": "'Squawking' Steve Beanie",
+    "owner": "'Squawking' Steve Beanie",
     "currency": "Coins",
     "items": [
       {
@@ -92,6 +93,7 @@
   {
     "name": "Aaron's Archery Appendages",
     "location": "Ranging Guild",
+    "owner": "Armour salesman",
     "currency": "Coins",
     "x": 2666,
     "y": 3440,
@@ -158,22 +160,7 @@
   {
     "name": "Aaron's Archery Appendages (2)",
     "location": "Ranging Guild",
-    "currency": "Coins",
-    "x": 2666,
-    "y": 3440,
-    "plane": 0,
-    "items": [
-      {
-        "itemId": -1,
-        "itemName": "Ranging cape",
-        "stock": 1,
-        "restockSeconds": 1
-      }
-    ]
-  },
-  {
-    "name": "Aaron's Archery Appendages (3)",
-    "location": "Ranging Guild",
+    "owner": "Armour salesman",
     "currency": "Coins",
     "x": 2666,
     "y": 3440,
@@ -181,6 +168,24 @@
     "items": [
       {
         "itemId": 9756,
+        "itemName": "Ranging cape",
+        "stock": 1,
+        "sellPrice": 99000,
+        "restockSeconds": 1
+      }
+    ]
+  },
+  {
+    "name": "Aaron's Archery Appendages (3)",
+    "location": "Ranging Guild",
+    "owner": "Armour salesman",
+    "currency": "Coins",
+    "x": 2666,
+    "y": 3440,
+    "plane": 0,
+    "items": [
+      {
+        "itemId": 9757,
         "itemName": "Ranging cape(t)",
         "stock": 1,
         "sellPrice": 99000,
@@ -191,6 +196,7 @@
   {
     "name": "Aemad's Adventuring Supplies",
     "location": "East Ardougne",
+    "owner": "Aemad",
     "currency": "Coins",
     "x": 2614,
     "y": 3293,
@@ -278,6 +284,7 @@
   {
     "name": "Aemad's Adventuring Supplies (2)",
     "location": "East Ardougne",
+    "owner": "Aemad",
     "currency": "Coins",
     "x": 2614,
     "y": 3293,
@@ -302,6 +309,7 @@
   {
     "name": "Agelus' Farm Shop",
     "location": "Ortus Farm",
+    "owner": "Agelus",
     "currency": "Coins",
     "x": 1593,
     "y": 3106,
@@ -346,6 +354,7 @@
         "itemId": 5331,
         "itemName": "Watering can",
         "stock": 10,
+        "sellPrice": 8,
         "restockSeconds": 3
       },
       {
@@ -479,6 +488,7 @@
   {
     "name": "Agility Arena Store",
     "location": "Brimhaven",
+    "owner": "Pirate Jackie the Fruit",
     "currency": "Brimhaven voucher",
     "items": [
       {
@@ -516,6 +526,7 @@
   {
     "name": "Agility Arena Store (2)",
     "location": "Brimhaven",
+    "owner": "Pirate Jackie the Fruit",
     "currency": "Agility arena ticket",
     "items": [
       {
@@ -529,6 +540,7 @@
   {
     "name": "Agmundi Quality Clothes",
     "location": "Keldagrim",
+    "owner": "Agmundi",
     "currency": "Coins",
     "x": 2868,
     "y": 10209,
@@ -609,16 +621,17 @@
   },
   {
     "name": "Ajjat",
+    "owner": "Ajjat",
     "currency": "Coins",
     "items": [
       {
-        "itemId": -1,
+        "itemId": 9747,
         "itemName": "Attack cape",
         "stock": -1,
         "sellPrice": 99000
       },
       {
-        "itemId": 9747,
+        "itemId": 9748,
         "itemName": "Attack cape(t)",
         "stock": -1,
         "sellPrice": 99000
@@ -628,6 +641,7 @@
   {
     "name": "Ak-Haranu's Exotic Shop",
     "location": "Port Phasmatys docks",
+    "owner": "Ak-Haranu",
     "currency": "Coins",
     "items": [
       {
@@ -642,6 +656,7 @@
   {
     "name": "Al Kharid General Store",
     "location": "Al Kharid",
+    "owner": "Shop keeper",
     "currency": "Coins",
     "x": 3315,
     "y": 3182,
@@ -742,6 +757,7 @@
   },
   {
     "name": "Alain",
+    "owner": "Alain",
     "currency": "Coins",
     "items": [
       {
@@ -790,6 +806,7 @@
   },
   {
     "name": "Alan (Farming Guild)",
+    "owner": "Alan (Farming Guild)",
     "currency": "Coins",
     "items": [
       {
@@ -839,6 +856,7 @@
   {
     "name": "Aleck's Hunter Emporium",
     "location": "Yanille",
+    "owner": "Aleck",
     "currency": "Coins",
     "x": 2567,
     "y": 3082,
@@ -932,6 +950,7 @@
   },
   {
     "name": "Alexandra",
+    "owner": "Alexandra",
     "currency": "Coins",
     "items": [
       {
@@ -980,6 +999,7 @@
   },
   {
     "name": "Ali the Carter",
+    "owner": "Ali the Carter",
     "currency": "Coins",
     "items": [
       {
@@ -992,6 +1012,7 @@
   },
   {
     "name": "Ali the Kebab seller",
+    "owner": "Ali the Kebab seller",
     "currency": "Coins",
     "x": 3354,
     "y": 2975,
@@ -1020,6 +1041,7 @@
   {
     "name": "Ali's Discount Wares",
     "location": "Al Kharid",
+    "owner": "Ali Morrisane",
     "currency": "Coins",
     "items": [
       {
@@ -1044,9 +1066,10 @@
         "restockSeconds": 15
       },
       {
-        "itemId": -1,
+        "itemId": 1825,
         "itemName": "Waterskin(3)",
         "stock": 10,
+        "sellPrice": 27,
         "restockSeconds": 180
       },
       {
@@ -1131,6 +1154,7 @@
   {
     "name": "Ali's Discount Wares (2)",
     "location": "Al Kharid",
+    "owner": "Ali Morrisane",
     "currency": "Coins",
     "items": [
       {
@@ -1173,6 +1197,7 @@
   {
     "name": "Ali's Discount Wares (3)",
     "location": "Al Kharid",
+    "owner": "Ali Morrisane",
     "currency": "Coins",
     "items": [
       {
@@ -1215,6 +1240,7 @@
   {
     "name": "Ali's Discount Wares (4)",
     "location": "Al Kharid",
+    "owner": "Ali Morrisane",
     "currency": "Coins",
     "items": [
       {
@@ -1278,6 +1304,7 @@
   {
     "name": "Ali's Discount Wares (5)",
     "location": "Al Kharid",
+    "owner": "Ali Morrisane",
     "currency": "Coins",
     "items": [
       {
@@ -1362,6 +1389,7 @@
   {
     "name": "Ali's Discount Wares (6)",
     "location": "Al Kharid",
+    "owner": "Ali Morrisane",
     "currency": "Coins",
     "items": [
       {
@@ -1404,6 +1432,7 @@
   {
     "name": "Ali's Discount Wares (7)",
     "location": "Al Kharid",
+    "owner": "Ali Morrisane",
     "currency": "Coins",
     "items": [
       {
@@ -1467,6 +1496,7 @@
   {
     "name": "Alice's Farming shop",
     "location": "Alice's farm",
+    "owner": "Alice",
     "currency": "Coins",
     "x": 3628,
     "y": 3526,
@@ -1511,6 +1541,7 @@
         "itemId": 5331,
         "itemName": "Watering can",
         "stock": 500,
+        "sellPrice": 8,
         "restockSeconds": 6
       },
       {
@@ -1693,6 +1724,7 @@
   {
     "name": "Allanna's Farming Shop",
     "location": "Farming Guild",
+    "owner": "Allanna",
     "currency": "Coins",
     "x": 1250,
     "y": 3735,
@@ -1737,6 +1769,7 @@
         "itemId": 5331,
         "itemName": "Watering can",
         "stock": 30,
+        "sellPrice": 8,
         "restockSeconds": 3
       },
       {
@@ -1828,6 +1861,7 @@
   {
     "name": "Alry the Angler's Angling Accessories",
     "location": "Molch lake",
+    "owner": "Alry the Angler",
     "currency": "Molch pearl",
     "items": [
       {
@@ -1871,12 +1905,19 @@
         "itemName": "Angler boots",
         "stock": 1000,
         "restockSeconds": 1
+      },
+      {
+        "itemId": -1,
+        "itemName": "Shark lure pack",
+        "stock": 10000,
+        "restockSeconds": 1
       }
     ]
   },
   {
     "name": "Alry the Angler's Angling Accessories (2)",
     "location": "Molch lake",
+    "owner": "Alry the Angler",
     "currency": "Molch pearl",
     "items": [
       {
@@ -1889,16 +1930,17 @@
   },
   {
     "name": "Alwyn",
+    "owner": "Alwyn",
     "currency": "Coins",
     "items": [
       {
-        "itemId": -1,
+        "itemId": 9789,
         "itemName": "Construct. cape",
         "stock": -1,
         "sellPrice": 99000
       },
       {
-        "itemId": 9789,
+        "itemId": 9790,
         "itemName": "Construct. cape(t)",
         "stock": -1,
         "sellPrice": 99000
@@ -1908,6 +1950,7 @@
   {
     "name": "Amelia's Seed Shop",
     "location": "Farming Guild",
+    "owner": "Amelia",
     "currency": "Coins",
     "x": 1246,
     "y": 3740,
@@ -2030,6 +2073,7 @@
   {
     "name": "Amlodd's Magical Supplies",
     "location": "Prifddinas",
+    "owner": "Efa",
     "currency": "Coins",
     "items": [
       {
@@ -2163,6 +2207,7 @@
   {
     "name": "Aneirin's Armour",
     "location": "Prifddinas",
+    "owner": "Aneirin",
     "currency": "Coins",
     "x": 3250,
     "y": 6062,
@@ -2257,6 +2302,7 @@
   },
   {
     "name": "Anwen",
+    "owner": "Anwen",
     "currency": "Coins",
     "items": [
       {
@@ -2266,19 +2312,8 @@
     ]
   },
   {
-    "name": "Apprentice Felix",
-    "currency": "Abyssal pearls",
-    "items": [
-      {
-        "itemId": 26822,
-        "itemName": "Abyssal lantern",
-        "stock": -1,
-        "sellPrice": 1500
-      }
-    ]
-  },
-  {
     "name": "Archery ticket",
+    "owner": "Archery ticket",
     "currency": "Archery ticket",
     "items": [
       {
@@ -2322,6 +2357,7 @@
   {
     "name": "Arcuani's Archery Supplies",
     "location": "Tal Teklan",
+    "owner": "Arcuani",
     "currency": "Coins",
     "x": 1210,
     "y": 3096,
@@ -2430,6 +2466,7 @@
   {
     "name": "Arcuani's Archery Supplies (2)",
     "location": "Tal Teklan",
+    "owner": "Arcuani",
     "currency": "Coins",
     "x": 1210,
     "y": 3096,
@@ -2453,6 +2490,7 @@
         "itemId": 865,
         "itemName": "Steel knife",
         "stock": 800,
+        "sellPrice": 11,
         "restockSeconds": 0
       }
     ]
@@ -2460,6 +2498,7 @@
   {
     "name": "Ardougne Baker's Stall",
     "location": "East Ardougne",
+    "owner": "Baker",
     "currency": "Coins",
     "x": 2656,
     "y": 3310,
@@ -2476,12 +2515,14 @@
         "itemId": 1891,
         "itemName": "Cake",
         "stock": 3,
+        "sellPrice": 50,
         "restockSeconds": 600
       },
       {
-        "itemId": 1897,
+        "itemId": 1901,
         "itemName": "Chocolate slice",
         "stock": 6,
+        "sellPrice": 30,
         "restockSeconds": 240
       },
       {
@@ -2496,6 +2537,7 @@
   {
     "name": "Ardougne Baker's Stall (2)",
     "location": "East Ardougne",
+    "owner": "Baker",
     "currency": "Coins",
     "x": 2656,
     "y": 3310,
@@ -2512,12 +2554,14 @@
         "itemId": 1891,
         "itemName": "Cake",
         "stock": 3,
+        "sellPrice": 50,
         "restockSeconds": 480
       },
       {
-        "itemId": 1897,
+        "itemId": 1901,
         "itemName": "Chocolate slice",
         "stock": 8,
+        "sellPrice": 30,
         "restockSeconds": 120
       },
       {
@@ -2532,6 +2576,7 @@
   {
     "name": "Ardougne Fur Stall",
     "location": "East Ardougne",
+    "owner": "Fur Trader",
     "currency": "Coins",
     "items": [
       {
@@ -2623,6 +2668,7 @@
   {
     "name": "Ardougne Gem Stall",
     "location": "East Ardougne",
+    "owner": "Gem merchant",
     "currency": "Coins",
     "items": [
       {
@@ -2658,6 +2704,7 @@
   {
     "name": "Ardougne Silver Stall",
     "location": "East Ardougne",
+    "owner": "Silver merchant",
     "currency": "Coins",
     "items": [
       {
@@ -2686,6 +2733,7 @@
   {
     "name": "Ardougne Spice Stall",
     "location": "East Ardougne",
+    "owner": "Spice seller",
     "currency": "Coins",
     "items": [
       {
@@ -2713,6 +2761,7 @@
   },
   {
     "name": "Argo",
+    "owner": "Argo",
     "currency": "Coins",
     "items": [
       {
@@ -2762,6 +2811,7 @@
   {
     "name": "Arhein's General Goods",
     "location": "Catherby",
+    "owner": "Arhein",
     "currency": "Coins",
     "items": [
       {
@@ -2846,6 +2896,7 @@
   {
     "name": "Armour Shop (Jatizso)",
     "location": "Jatizso",
+    "owner": "Raum Urda-Stein",
     "currency": "Coins",
     "x": 2393,
     "y": 3799,
@@ -2912,6 +2963,7 @@
   {
     "name": "Armour store",
     "location": "Blast Furnace in Keldagrim",
+    "owner": "Jorzik",
     "currency": "Coins",
     "x": 1939,
     "y": 4968,
@@ -3091,6 +3143,7 @@
   {
     "name": "Armoury",
     "location": "Combat Training Camp",
+    "owner": "Shop keeper (Combat Training Camp)",
     "currency": "Coins",
     "x": 2513,
     "y": 3386,
@@ -3241,6 +3294,7 @@
   {
     "name": "Arnold's Eclectic Supplies",
     "location": "Piscatoris Fishing Colony",
+    "owner": "Arnold Lydspor",
     "currency": "Coins",
     "items": [
       {
@@ -3332,6 +3386,7 @@
   {
     "name": "Artima's Crafting Supplies",
     "location": "Civitas illa Fortis",
+    "owner": "Artima",
     "currency": "Coins",
     "x": 1764,
     "y": 3104,
@@ -3426,6 +3481,7 @@
   {
     "name": "Atlazora's Rest",
     "location": "Outer Fortis",
+    "owner": "Bartender",
     "currency": "Coins",
     "x": 1720,
     "y": 3076,
@@ -3490,6 +3546,7 @@
   },
   {
     "name": "Aub",
+    "owner": "Aub",
     "currency": "Coins",
     "items": [
       {
@@ -3539,6 +3596,7 @@
   {
     "name": "Auburn Pub",
     "location": "Auburnvale",
+    "owner": "Bartender",
     "currency": "Coins",
     "x": 1395,
     "y": 3354,
@@ -3609,6 +3667,7 @@
   {
     "name": "Auburnvale General Store",
     "location": "Auburnvale",
+    "owner": "Shopkeeper",
     "currency": "Coins",
     "x": 1377,
     "y": 3347,
@@ -3724,6 +3783,7 @@
   {
     "name": "Aubury's Rune Shop",
     "location": "Varrock",
+    "owner": "Aubury",
     "currency": "Coins",
     "x": 3250,
     "y": 3403,
@@ -3832,22 +3892,7 @@
   {
     "name": "Aubury's Rune Shop (2)",
     "location": "Varrock",
-    "currency": "Coins",
-    "x": 3250,
-    "y": 3403,
-    "plane": 0,
-    "items": [
-      {
-        "itemId": -1,
-        "itemName": "Runecraft cape",
-        "stock": 1,
-        "restockSeconds": 1
-      }
-    ]
-  },
-  {
-    "name": "Aubury's Rune Shop (3)",
-    "location": "Varrock",
+    "owner": "Aubury",
     "currency": "Coins",
     "x": 3250,
     "y": 3403,
@@ -3855,6 +3900,24 @@
     "items": [
       {
         "itemId": 9765,
+        "itemName": "Runecraft cape",
+        "stock": 1,
+        "sellPrice": 99000,
+        "restockSeconds": 1
+      }
+    ]
+  },
+  {
+    "name": "Aubury's Rune Shop (3)",
+    "location": "Varrock",
+    "owner": "Aubury",
+    "currency": "Coins",
+    "x": 3250,
+    "y": 3403,
+    "plane": 0,
+    "items": [
+      {
+        "itemId": 9766,
         "itemName": "Runecraft cape(t)",
         "stock": 1,
         "sellPrice": 99000,
@@ -3864,6 +3927,7 @@
   },
   {
     "name": "Aurel",
+    "owner": "Aurel",
     "currency": "Coins",
     "x": 3515,
     "y": 3241,
@@ -3880,6 +3944,7 @@
   {
     "name": "Aurel's Supplies",
     "location": "Burgh de Rott",
+    "owner": "Aurel",
     "currency": "Coins",
     "x": 3515,
     "y": 3241,
@@ -3918,6 +3983,7 @@
   {
     "name": "Authentic Throwing Weapons",
     "location": "Ranging Guild",
+    "owner": "Tribal Weapon Salesman",
     "currency": "Coins",
     "items": [
       {
@@ -4008,6 +4074,7 @@
   },
   {
     "name": "Ava",
+    "owner": "Ava",
     "currency": "Coins",
     "items": [
       {
@@ -4020,6 +4087,7 @@
   },
   {
     "name": "Ava (2)",
+    "owner": "Ava",
     "currency": "Coins",
     "items": [
       {
@@ -4033,6 +4101,7 @@
   {
     "name": "Ava's Odds and Ends",
     "location": "Draynor Manor",
+    "owner": "Ava",
     "currency": "Coins",
     "items": [
       {
@@ -4081,6 +4150,7 @@
   },
   {
     "name": "Ayesha",
+    "owner": "Ayesha",
     "currency": "Coins",
     "items": [
       {
@@ -4130,6 +4200,7 @@
   {
     "name": "Baba Yaga's Magic Shop",
     "location": "Lunar Isle",
+    "owner": "Baba Yaga",
     "currency": "Coins",
     "items": [
       {
@@ -4319,6 +4390,7 @@
   {
     "name": "Baba Yaga's Magic Shop (2)",
     "location": "Lunar Isle",
+    "owner": "Baba Yaga",
     "currency": "Coins",
     "items": [
       {
@@ -4494,6 +4566,7 @@
   {
     "name": "Bandit Bargains",
     "location": "Bandit Camp",
+    "owner": "Bandit shopkeeper",
     "currency": "Coins",
     "x": 3176,
     "y": 2991,
@@ -4503,12 +4576,14 @@
         "itemId": 1823,
         "itemName": "Waterskin(4)",
         "stock": 5,
+        "sellPrice": 30,
         "restockSeconds": 60
       },
       {
         "itemId": 1831,
         "itemName": "Waterskin(0)",
         "stock": 5,
+        "sellPrice": 15,
         "restockSeconds": 60
       },
       {
@@ -4600,6 +4675,7 @@
   {
     "name": "Bandit Duty Free",
     "location": "Wilderness Bandit Camp",
+    "owner": "Noterazzo",
     "currency": "Coins",
     "items": [
       {
@@ -4662,6 +4738,7 @@
   },
   {
     "name": "Baraek",
+    "owner": "Baraek",
     "currency": "Coins",
     "x": 3217,
     "y": 3435,
@@ -4684,6 +4761,7 @@
   },
   {
     "name": "Baraek (2)",
+    "owner": "Baraek",
     "currency": "Coins",
     "x": 3217,
     "y": 3435,
@@ -4706,6 +4784,7 @@
   },
   {
     "name": "Bardur",
+    "owner": "Bardur",
     "currency": "Coins",
     "x": 1850,
     "y": 4392,
@@ -4722,6 +4801,7 @@
   },
   {
     "name": "Bardur (2)",
+    "owner": "Bardur",
     "currency": "Coins",
     "x": 1850,
     "y": 4392,
@@ -4739,6 +4819,7 @@
   {
     "name": "Barkers' Haberdashery",
     "location": "Canifis",
+    "owner": "Barker",
     "currency": "Coins",
     "x": 3497,
     "y": 3508,
@@ -4958,6 +5039,7 @@
   },
   {
     "name": "Barmaid",
+    "owner": "Barmaid",
     "currency": "Coins",
     "items": [
       {
@@ -4976,6 +5058,7 @@
   },
   {
     "name": "Barman (Blurberry Bar)",
+    "owner": "Barman (Blurberry Bar)",
     "currency": "Coins",
     "items": [
       {
@@ -5000,6 +5083,7 @@
   },
   {
     "name": "Bartender (The Warrens)",
+    "owner": "Bartender (The Warrens)",
     "currency": "Coins",
     "items": [
       {
@@ -5013,6 +5097,7 @@
   {
     "name": "Battle Runes",
     "location": "Wilderness",
+    "owner": "Mage of Zamorak",
     "currency": "Coins",
     "items": [
       {
@@ -5118,6 +5203,7 @@
   {
     "name": "Battle Runes (2)",
     "location": "Wilderness",
+    "owner": "Mage of Zamorak",
     "currency": "Coins",
     "items": [
       {
@@ -5223,18 +5309,21 @@
   {
     "name": "Bedabin Village Bartering",
     "location": "Bedabin Camp",
+    "owner": "Bedabin Nomad",
     "currency": "Coins",
     "items": [
       {
         "itemId": 1823,
         "itemName": "Waterskin(4)",
         "stock": 5,
+        "sellPrice": 36,
         "restockSeconds": 60
       },
       {
         "itemId": 1831,
         "itemName": "Waterskin(0)",
         "stock": 5,
+        "sellPrice": 18,
         "restockSeconds": 60
       },
       {
@@ -5276,6 +5365,7 @@
   },
   {
     "name": "Benny",
+    "owner": "Benny",
     "currency": "Coins",
     "items": [
       {
@@ -5288,6 +5378,7 @@
   },
   {
     "name": "Betty",
+    "owner": "Betty",
     "currency": "Coins",
     "x": 3013,
     "y": 3259,
@@ -5304,6 +5395,7 @@
   {
     "name": "Betty's Magic Emporium",
     "location": "Port Sarim",
+    "owner": "Betty",
     "currency": "Coins",
     "x": 3014,
     "y": 3259,
@@ -5439,6 +5531,7 @@
   },
   {
     "name": "Blackjack seller",
+    "owner": "Blackjack seller",
     "currency": "Coins",
     "items": [
       {
@@ -5452,6 +5545,7 @@
   {
     "name": "Blades by Urbi",
     "location": "Sophanem",
+    "owner": "Urbi",
     "currency": "Coins",
     "items": [
       {
@@ -5507,6 +5601,7 @@
         "itemId": 1215,
         "itemName": "Dragon dagger",
         "stock": 0,
+        "sellPrice": 45000,
         "restockSeconds": 60
       },
       {
@@ -5535,6 +5630,7 @@
   {
     "name": "Blair's Armour",
     "location": "Shayzien",
+    "owner": "Blair",
     "currency": "Coins",
     "x": 1561,
     "y": 3572,
@@ -5628,6 +5724,7 @@
   },
   {
     "name": "Blandebir",
+    "owner": "Blandebir",
     "currency": "Coins",
     "items": [
       {
@@ -5641,6 +5738,7 @@
   {
     "name": "Blue Moon Inn",
     "location": "Varrock",
+    "owner": "Bartender",
     "currency": "Coins",
     "x": 3216,
     "y": 3397,
@@ -5656,6 +5754,7 @@
   },
   {
     "name": "Blurberry Bar",
+    "owner": "Barman",
     "currency": "Coins",
     "x": 2482,
     "y": 3488,
@@ -5715,6 +5814,7 @@
   {
     "name": "Bob's Brilliant Axes",
     "location": "Lumbridge",
+    "owner": "Bob",
     "currency": "Coins",
     "x": 3228,
     "y": 3206,
@@ -5773,7 +5873,8 @@
   },
   {
     "name": "Bolkoy's Village Shop",
-    "location": "Tree Gnome Village, {{FloorNumber",
+    "location": "Tree Gnome Village, {{FloorNumber|uk=1}}",
+    "owner": "Bolkoy",
     "currency": "Coins",
     "items": [
       {
@@ -5864,6 +5965,7 @@
   },
   {
     "name": "Bolongo",
+    "owner": "Bolongo",
     "currency": "Coins",
     "items": [
       {
@@ -5913,106 +6015,107 @@
   {
     "name": "Bounty Hunter Store",
     "location": "Daimon's Crater",
+    "owner": "Emblem Trader",
     "currency": "Points",
     "items": [
       {
-        "itemId": 27831,
+        "itemId": 27925,
         "itemName": "Vesta's chainbody (bh)(inactive)",
         "stock": -1,
         "sellPrice": 600
       },
       {
-        "itemId": 27832,
+        "itemId": 27928,
         "itemName": "Vesta's plateskirt (bh)(inactive)",
         "stock": -1,
         "sellPrice": 550
       },
       {
-        "itemId": 27833,
+        "itemId": 27931,
         "itemName": "Statius's full helm (bh)(inactive)",
         "stock": -1,
         "sellPrice": 400
       },
       {
-        "itemId": 27834,
+        "itemId": 27934,
         "itemName": "Statius's platebody (bh)(inactive)",
         "stock": -1,
         "sellPrice": 600
       },
       {
-        "itemId": 27835,
+        "itemId": 27937,
         "itemName": "Statius's platelegs (bh)(inactive)",
         "stock": -1,
         "sellPrice": 500
       },
       {
-        "itemId": 27836,
+        "itemId": 27940,
         "itemName": "Morrigan's coif (bh)(inactive)",
         "stock": -1,
         "sellPrice": 400
       },
       {
-        "itemId": 27837,
+        "itemId": 27943,
         "itemName": "Morrigan's leather body (bh)(inactive)",
         "stock": -1,
         "sellPrice": 600
       },
       {
-        "itemId": 27838,
+        "itemId": 27946,
         "itemName": "Morrigan's leather chaps (bh)(inactive)",
         "stock": -1,
         "sellPrice": 500
       },
       {
-        "itemId": 27839,
+        "itemId": 27949,
         "itemName": "Zuriel's hood (bh)(inactive)",
         "stock": -1,
         "sellPrice": 300
       },
       {
-        "itemId": 27840,
+        "itemId": 27952,
         "itemName": "Zuriel's robe top (bh)(inactive)",
         "stock": -1,
         "sellPrice": 500
       },
       {
-        "itemId": 27841,
+        "itemId": 27955,
         "itemName": "Zuriel's robe bottom (bh)(inactive)",
         "stock": -1,
         "sellPrice": 400
       },
       {
-        "itemId": 27900,
+        "itemId": 27902,
         "itemName": "Vesta's spear (bh)(inactive)",
         "stock": -1,
         "sellPrice": 300
       },
       {
-        "itemId": 27904,
+        "itemId": 27906,
         "itemName": "Vesta's longsword (bh)(inactive)",
         "stock": -1,
         "sellPrice": 650
       },
       {
-        "itemId": 27908,
+        "itemId": 27910,
         "itemName": "Statius's warhammer (bh)(inactive)",
         "stock": -1,
         "sellPrice": 450
       },
       {
-        "itemId": 27912,
+        "itemId": 27914,
         "itemName": "Morrigan's throwing axe (bh)(inactive)",
         "stock": -1,
         "sellPrice": 300
       },
       {
-        "itemId": 27916,
+        "itemId": 27918,
         "itemName": "Morrigan's javelin (bh)(inactive)",
         "stock": -1,
         "sellPrice": 550
       },
       {
-        "itemId": 27920,
+        "itemId": 27922,
         "itemName": "Zuriel's staff (bh)(inactive)",
         "stock": -1,
         "sellPrice": 300
@@ -6096,7 +6199,7 @@
         "sellPrice": 2
       },
       {
-        "itemId": 24605,
+        "itemId": 24598,
         "itemName": "Blighted super restore(4)",
         "stock": -1,
         "sellPrice": 2
@@ -6112,6 +6215,7 @@
   {
     "name": "Branwen's Farming Shop",
     "location": "Prifddinas",
+    "owner": "Branwen",
     "currency": "Coins",
     "x": 3294,
     "y": 6091,
@@ -6157,6 +6261,7 @@
         "itemId": 5331,
         "itemName": "Watering can",
         "stock": 500,
+        "sellPrice": 8,
         "restockSeconds": 6
       },
       {
@@ -6241,6 +6346,7 @@
   {
     "name": "Brian's Archery Supplies",
     "location": "Rimmington",
+    "owner": "Brian",
     "currency": "Coins",
     "x": 2957,
     "y": 3204,
@@ -6314,6 +6420,7 @@
   {
     "name": "Brian's Battleaxe Bazaar",
     "location": "Port Sarim",
+    "owner": "Brian",
     "currency": "Coins",
     "x": 3027,
     "y": 3249,
@@ -6366,6 +6473,7 @@
   {
     "name": "Briget's Weapons",
     "location": "Shayzien",
+    "owner": "Briget",
     "currency": "Coins",
     "x": 1567,
     "y": 3545,
@@ -6634,6 +6742,7 @@
   },
   {
     "name": "Brimhaven Agility Arena",
+    "owner": "Brimhaven Agility Arena",
     "currency": "Brimhaven voucher",
     "x": 2809,
     "y": 3194,
@@ -6673,16 +6782,17 @@
   },
   {
     "name": "Brother Jered",
+    "owner": "Brother Jered",
     "currency": "Coins",
     "items": [
       {
-        "itemId": -1,
+        "itemId": 9759,
         "itemName": "Prayer cape",
         "stock": -1,
         "sellPrice": 99000
       },
       {
-        "itemId": 9759,
+        "itemId": 9760,
         "itemName": "Prayer cape(t)",
         "stock": -1,
         "sellPrice": 99000
@@ -6692,6 +6802,7 @@
   {
     "name": "Burthorpe Supplies",
     "location": "Burthorpe",
+    "owner": "Wistan",
     "currency": "Coins",
     "items": [
       {
@@ -6776,6 +6887,7 @@
   {
     "name": "Cam Torum Blacksmith",
     "location": "Cam Torum",
+    "owner": "Blacksmith",
     "currency": "Coins",
     "x": 1449,
     "y": 9584,
@@ -6927,6 +7039,7 @@
   {
     "name": "Cam Torum General Store",
     "location": "Cam Torum",
+    "owner": "Shopkeeeper",
     "currency": "Coins",
     "x": 1426,
     "y": 9556,
@@ -7063,6 +7176,7 @@
   },
   {
     "name": "Candle seller",
+    "owner": "Candle seller",
     "currency": "Coins",
     "x": 3170,
     "y": 3176,
@@ -7079,6 +7193,7 @@
   {
     "name": "Candle Shop",
     "location": "Catherby",
+    "owner": "Candle maker",
     "currency": "Coins",
     "x": 2796,
     "y": 3442,
@@ -7095,16 +7210,17 @@
   },
   {
     "name": "Cap'n Izzy No-Beard",
+    "owner": "Cap'n Izzy No-Beard",
     "currency": "Coins",
     "items": [
       {
-        "itemId": -1,
+        "itemId": 9771,
         "itemName": "Agility cape",
         "stock": -1,
         "sellPrice": 99000
       },
       {
-        "itemId": 9771,
+        "itemId": 9772,
         "itemName": "Agility cape(t)",
         "stock": -1,
         "sellPrice": 99000
@@ -7114,6 +7230,7 @@
   {
     "name": "Carefree Crafting Stall",
     "location": "Keldagrim",
+    "owner": "Nolar",
     "currency": "Coins",
     "x": 2887,
     "y": 10207,
@@ -7166,6 +7283,7 @@
   },
   {
     "name": "Cart conductor",
+    "owner": "Cart conductor",
     "currency": "Coins",
     "x": 2919,
     "y": 10180,
@@ -7173,13 +7291,13 @@
     "mapId": 10,
     "items": [
       {
-        "itemId": -1,
+        "itemId": 5020,
         "itemName": "Minecart ticket (Keldagrim to Ice Mountain)",
         "stock": -1,
         "sellPrice": 150
       },
       {
-        "itemId": -1,
+        "itemId": 5020,
         "itemName": "Minecart ticket (Keldagrim to White Wolf Mountain)",
         "stock": -1,
         "sellPrice": 100
@@ -7188,6 +7306,7 @@
   },
   {
     "name": "Cart conductor (2)",
+    "owner": "Cart conductor",
     "currency": "Coins",
     "x": 2919,
     "y": 10180,
@@ -7195,13 +7314,13 @@
     "mapId": 10,
     "items": [
       {
-        "itemId": -1,
+        "itemId": 5020,
         "itemName": "Minecart ticket (Keldagrim to Ice Mountain)",
         "stock": -1,
         "sellPrice": 75
       },
       {
-        "itemId": -1,
+        "itemId": 5020,
         "itemName": "Minecart ticket (Keldagrim to White Wolf Mountain)",
         "stock": -1,
         "sellPrice": 50
@@ -7210,6 +7329,7 @@
   },
   {
     "name": "Cart conductor (Dwarven Mine)",
+    "owner": "Cart conductor (Dwarven Mine)",
     "currency": "Coins",
     "x": 2996,
     "y": 9837,
@@ -7226,6 +7346,7 @@
   },
   {
     "name": "Cart conductor (Dwarven Mine) (2)",
+    "owner": "Cart conductor (Dwarven Mine)",
     "currency": "Coins",
     "x": 2996,
     "y": 9837,
@@ -7242,6 +7363,7 @@
   },
   {
     "name": "Cart conductor (White Wolf Mountain)",
+    "owner": "Cart conductor (White Wolf Mountain)",
     "currency": "Coins",
     "x": 2875,
     "y": 9873,
@@ -7258,6 +7380,7 @@
   },
   {
     "name": "Cart conductor (White Wolf Mountain) (2)",
+    "owner": "Cart conductor (White Wolf Mountain)",
     "currency": "Coins",
     "x": 2875,
     "y": 9873,
@@ -7275,6 +7398,7 @@
   {
     "name": "Cassie's Shield Shop",
     "location": "Falador",
+    "owner": "Cassie",
     "currency": "Coins",
     "x": 2972,
     "y": 3387,
@@ -7340,27 +7464,28 @@
   },
   {
     "name": "Chest (Theatre of Blood)",
+    "owner": "Chest (Theatre of Blood)",
     "currency": "Points",
     "items": [
       {
-        "itemId": 12631,
+        "itemId": 12625,
         "itemName": "Stamina potion(4)",
         "stock": -1
       },
       {
-        "itemId": 143,
+        "itemId": 2434,
         "itemName": "Prayer potion(4)",
         "stock": -1,
         "sellPrice": 2
       },
       {
-        "itemId": 6691,
+        "itemId": 6685,
         "itemName": "Saradomin brew(4)",
         "stock": -1,
         "sellPrice": 3
       },
       {
-        "itemId": 3030,
+        "itemId": 3024,
         "itemName": "Super restore(4)",
         "stock": -1,
         "sellPrice": 3
@@ -7408,6 +7533,7 @@
   },
   {
     "name": "Chet",
+    "owner": "Chet",
     "currency": "Coins",
     "items": [
       {
@@ -7456,6 +7582,7 @@
   },
   {
     "name": "Civilian",
+    "owner": "Civilian",
     "currency": "death runes",
     "x": 2468,
     "y": 3304,
@@ -7482,6 +7609,7 @@
   },
   {
     "name": "Civilian (2)",
+    "owner": "Civilian",
     "currency": "death runes",
     "x": 2468,
     "y": 3304,
@@ -7509,6 +7637,7 @@
   {
     "name": "Cobado's Groceries",
     "location": "Civitas illa Fortis",
+    "owner": "Cobado",
     "currency": "Coins",
     "x": 1703,
     "y": 3120,
@@ -7687,6 +7816,7 @@
   {
     "name": "Conara's Jewels",
     "location": "Cam Torum",
+    "owner": "Conara",
     "currency": "Coins",
     "items": [
       {
@@ -7904,6 +8034,7 @@
   {
     "name": "Contraband yak produce",
     "location": "Jatizso",
+    "owner": "Vanligga Gastfrihet",
     "currency": "Coins",
     "x": 2404,
     "y": 3816,
@@ -7941,6 +8072,7 @@
   },
   {
     "name": "Cook (Blue Moon Inn)",
+    "owner": "Cook (Blue Moon Inn)",
     "currency": "Coins",
     "items": [
       {
@@ -7954,6 +8086,7 @@
   {
     "name": "Crossbow Shop (Dwarven Mine)",
     "location": "Dwarven Mines",
+    "owner": "Hura",
     "currency": "Coins",
     "x": 3004,
     "y": 9799,
@@ -8098,6 +8231,7 @@
   {
     "name": "Crossbow Shop (Keldagrim)",
     "location": "Keldagrim Palace",
+    "owner": "Hirko",
     "currency": "Coins",
     "x": 2887,
     "y": 10203,
@@ -8242,6 +8376,7 @@
   {
     "name": "Crossbow Shop (White Wolf Mountain)",
     "location": "White Wolf Mountain",
+    "owner": "Holoy",
     "currency": "Coins",
     "x": 2865,
     "y": 9871,
@@ -8386,6 +8521,7 @@
   {
     "name": "Culinaromancer's Chest",
     "location": "Lumbridge Castle basement",
+    "owner": "None",
     "currency": "Coins",
     "x": 3219,
     "y": 9623,
@@ -8544,6 +8680,7 @@
   {
     "name": "Culinaromancer's Chest (10)",
     "location": "Lumbridge Castle basement",
+    "owner": "None",
     "currency": "Coins",
     "x": 3219,
     "y": 9623,
@@ -8702,6 +8839,7 @@
   {
     "name": "Culinaromancer's Chest (11)",
     "location": "Lumbridge Castle basement",
+    "owner": "None",
     "currency": "Coins",
     "x": 3219,
     "y": 9623,
@@ -8860,6 +8998,7 @@
   {
     "name": "Culinaromancer's Chest (12)",
     "location": "Lumbridge Castle basement",
+    "owner": "None",
     "currency": "Coins",
     "x": 3219,
     "y": 9623,
@@ -9011,6 +9150,7 @@
   {
     "name": "Culinaromancer's Chest (13)",
     "location": "Lumbridge Castle basement",
+    "owner": "None",
     "currency": "Coins",
     "x": 3219,
     "y": 9623,
@@ -9162,6 +9302,7 @@
   {
     "name": "Culinaromancer's Chest (14)",
     "location": "Lumbridge Castle basement",
+    "owner": "None",
     "currency": "Coins",
     "x": 3219,
     "y": 9623,
@@ -9187,6 +9328,7 @@
   {
     "name": "Culinaromancer's Chest (15)",
     "location": "Lumbridge Castle basement",
+    "owner": "None",
     "currency": "Coins",
     "x": 3219,
     "y": 9623,
@@ -9226,6 +9368,7 @@
   {
     "name": "Culinaromancer's Chest (16)",
     "location": "Lumbridge Castle basement",
+    "owner": "None",
     "currency": "Coins",
     "x": 3219,
     "y": 9623,
@@ -9279,6 +9422,7 @@
   {
     "name": "Culinaromancer's Chest (17)",
     "location": "Lumbridge Castle basement",
+    "owner": "None",
     "currency": "Coins",
     "x": 3219,
     "y": 9623,
@@ -9346,6 +9490,7 @@
   {
     "name": "Culinaromancer's Chest (18)",
     "location": "Lumbridge Castle basement",
+    "owner": "None",
     "currency": "Coins",
     "x": 3219,
     "y": 9623,
@@ -9427,6 +9572,7 @@
   {
     "name": "Culinaromancer's Chest (19)",
     "location": "Lumbridge Castle basement",
+    "owner": "None",
     "currency": "Coins",
     "x": 3219,
     "y": 9623,
@@ -9522,6 +9668,7 @@
   {
     "name": "Culinaromancer's Chest (2)",
     "location": "Lumbridge Castle basement",
+    "owner": "None",
     "currency": "Coins",
     "x": 3219,
     "y": 9623,
@@ -9680,6 +9827,7 @@
   {
     "name": "Culinaromancer's Chest (20)",
     "location": "Lumbridge Castle basement",
+    "owner": "None",
     "currency": "Coins",
     "x": 3219,
     "y": 9623,
@@ -9789,6 +9937,7 @@
   {
     "name": "Culinaromancer's Chest (21)",
     "location": "Lumbridge Castle basement",
+    "owner": "None",
     "currency": "Coins",
     "x": 3219,
     "y": 9623,
@@ -9912,6 +10061,7 @@
   {
     "name": "Culinaromancer's Chest (22)",
     "location": "Lumbridge Castle basement",
+    "owner": "None",
     "currency": "Coins",
     "x": 3219,
     "y": 9623,
@@ -10049,6 +10199,7 @@
   {
     "name": "Culinaromancer's Chest (3)",
     "location": "Lumbridge Castle basement",
+    "owner": "None",
     "currency": "Coins",
     "x": 3219,
     "y": 9623,
@@ -10207,6 +10358,7 @@
   {
     "name": "Culinaromancer's Chest (4)",
     "location": "Lumbridge Castle basement",
+    "owner": "None",
     "currency": "Coins",
     "x": 3219,
     "y": 9623,
@@ -10365,6 +10517,7 @@
   {
     "name": "Culinaromancer's Chest (5)",
     "location": "Lumbridge Castle basement",
+    "owner": "None",
     "currency": "Coins",
     "x": 3219,
     "y": 9623,
@@ -10523,6 +10676,7 @@
   {
     "name": "Culinaromancer's Chest (6)",
     "location": "Lumbridge Castle basement",
+    "owner": "None",
     "currency": "Coins",
     "x": 3219,
     "y": 9623,
@@ -10681,6 +10835,7 @@
   {
     "name": "Culinaromancer's Chest (7)",
     "location": "Lumbridge Castle basement",
+    "owner": "None",
     "currency": "Coins",
     "x": 3219,
     "y": 9623,
@@ -10839,6 +10994,7 @@
   {
     "name": "Culinaromancer's Chest (8)",
     "location": "Lumbridge Castle basement",
+    "owner": "None",
     "currency": "Coins",
     "x": 3219,
     "y": 9623,
@@ -10997,6 +11153,7 @@
   {
     "name": "Culinaromancer's Chest (9)",
     "location": "Lumbridge Castle basement",
+    "owner": "None",
     "currency": "Coins",
     "x": 3219,
     "y": 9623,
@@ -11155,6 +11312,7 @@
   {
     "name": "Daga's Scimitar Smithy",
     "location": "Ape Atoll",
+    "owner": "Daga",
     "currency": "Coins",
     "items": [
       {
@@ -11197,6 +11355,7 @@
   {
     "name": "Daga's Scimitar Smithy (2)",
     "location": "Ape Atoll",
+    "owner": "Daga",
     "currency": "Coins",
     "items": [
       {
@@ -11239,6 +11398,7 @@
   {
     "name": "Dal's General Ogre Supplies",
     "location": "Gu'Tanoth",
+    "owner": "Dal",
     "currency": "Coins",
     "items": [
       {
@@ -11309,6 +11469,7 @@
   {
     "name": "Dancing Donkey Inn",
     "location": "Varrock",
+    "owner": "Bartender",
     "currency": "Coins",
     "x": 3266,
     "y": 3395,
@@ -11324,6 +11485,7 @@
   },
   {
     "name": "Dantaera",
+    "owner": "Dantaera",
     "currency": "Coins",
     "items": [
       {
@@ -11373,6 +11535,7 @@
   {
     "name": "Dargaud's Bow and Arrows",
     "location": "Ranging Guild",
+    "owner": "Bow and Arrow salesman",
     "currency": "Coins",
     "x": 2672,
     "y": 3434,
@@ -11572,6 +11735,7 @@
   {
     "name": "Darkmeyer General Store",
     "location": "Darkmeyer",
+    "owner": "Drasdan Ranor",
     "currency": "Coins",
     "x": 3641,
     "y": 3336,
@@ -11673,6 +11837,7 @@
   {
     "name": "Darkmeyer Lantern Shop",
     "location": "Darkmeyer",
+    "owner": "Grinka Krast",
     "currency": "Coins",
     "x": 3645,
     "y": 3359,
@@ -11725,6 +11890,7 @@
   {
     "name": "Darkmeyer Meat Shop",
     "location": "Darkmeyer",
+    "owner": "Lenyig Karna",
     "currency": "Coins",
     "x": 3620,
     "y": 3387,
@@ -11770,6 +11936,7 @@
   {
     "name": "Darkmeyer Seamstress",
     "location": "Darkmeyer",
+    "owner": "Varrian Sobak",
     "currency": "Coins",
     "items": [
       {
@@ -12001,6 +12168,7 @@
   {
     "name": "Darren's Wilderness Cape Shop",
     "location": "East of Wilderness Agility Course",
+    "owner": "Darren",
     "currency": "Coins",
     "items": [
       {
@@ -12043,6 +12211,7 @@
   {
     "name": "Daryl's Ranging Surplus",
     "location": "Shayzien",
+    "owner": "Daryl",
     "currency": "Coins",
     "x": 1538,
     "y": 3559,
@@ -12172,6 +12341,7 @@
   {
     "name": "Davon's Amulet Store",
     "location": "Brimhaven",
+    "owner": "Davon",
     "currency": "Coins",
     "items": [
       {
@@ -12214,6 +12384,7 @@
   {
     "name": "Davon's Amulet Store (2)",
     "location": "Brimhaven",
+    "owner": "Davon",
     "currency": "Coins",
     "items": [
       {
@@ -12256,6 +12427,7 @@
   {
     "name": "Dead Man's Chest",
     "location": "Brimhaven",
+    "owner": "Bartender",
     "currency": "Coins",
     "x": 2791,
     "y": 3170,
@@ -12278,6 +12450,7 @@
   {
     "name": "Deadman Reward Store",
     "location": "Lumbridge graveyard",
+    "owner": "Nigel",
     "currency": "Deadman Points",
     "items": [
       {
@@ -12309,6 +12482,7 @@
   {
     "name": "Deadman Reward Store (2)",
     "location": "Lumbridge graveyard",
+    "owner": "Nigel",
     "currency": "Deadman Points",
     "items": [
       {
@@ -12334,6 +12508,7 @@
   {
     "name": "Deepfin Inn",
     "location": "Deepfin Point",
+    "owner": "Brikka",
     "currency": "Coins",
     "x": 1938,
     "y": 2764,
@@ -12384,7 +12559,8 @@
       {
         "itemId": 2327,
         "itemName": "Meat pie",
-        "stock": -1
+        "stock": -1,
+        "sellPrice": 15
       },
       {
         "itemId": 1971,
@@ -12397,6 +12573,7 @@
   {
     "name": "Deepfin Point Ore Exchange",
     "location": "Deepfin Point",
+    "owner": "Korgan",
     "currency": "Coins",
     "x": 1946,
     "y": 2762,
@@ -12483,6 +12660,7 @@
   },
   {
     "name": "Diango",
+    "owner": "Diango",
     "currency": "Coins",
     "items": [
       {
@@ -12798,8 +12976,8 @@
         "sellPrice": 0
       },
       {
-        "itemId": 13203,
-        "itemName": "Mask of balance",
+        "itemId": -1,
+        "itemName": "Mask of Balance",
         "stock": -1,
         "sellPrice": 0
       },
@@ -13644,8 +13822,8 @@
         "sellPrice": 0
       },
       {
-        "itemId": 29433,
-        "itemName": "Book of egg",
+        "itemId": -1,
+        "itemName": "Book of Egg",
         "stock": -1,
         "sellPrice": 0
       },
@@ -13852,6 +14030,7 @@
   {
     "name": "Diango's Toy Store",
     "location": "Draynor Village",
+    "owner": "Diango",
     "currency": "Coins",
     "items": [
       {
@@ -13897,9 +14076,10 @@
         "restockSeconds": 3
       },
       {
-        "itemId": -1,
+        "itemId": 11705,
         "itemName": "Beach boxing gloves (pink)",
         "stock": 5,
+        "sellPrice": 75,
         "restockSeconds": 3
       },
       {
@@ -14043,10 +14223,9 @@
         "restockSeconds": 1
       },
       {
-        "itemId": 13203,
-        "itemName": "Mask of balance",
+        "itemId": -1,
+        "itemName": "Mask of Balance",
         "stock": 100,
-        "sellPrice": 1,
         "restockSeconds": 1
       },
       {
@@ -14057,8 +14236,8 @@
         "restockSeconds": 1
       },
       {
-        "itemId": 981,
-        "itemName": "Disk of returning",
+        "itemId": -1,
+        "itemName": "Disk of Returning",
         "stock": 7,
         "sellPrice": 21000,
         "restockSeconds": 96
@@ -14075,6 +14254,7 @@
   {
     "name": "Dodgy Mike's Second Hand Clothing",
     "location": "Mos Le'Harmless",
+    "owner": "Mike",
     "currency": "Coins",
     "x": 3687,
     "y": 2979,
@@ -14176,6 +14356,7 @@
   {
     "name": "Dom Onion's Reward Shop",
     "location": "Yanille",
+    "owner": "Dominic Onion",
     "currency": "NMZ",
     "items": [
       {
@@ -14197,7 +14378,7 @@
         "sellPrice": 200
       },
       {
-        "itemId": 6476,
+        "itemId": 6470,
         "itemName": "Compost potion(4)",
         "stock": -1,
         "sellPrice": 5000
@@ -14251,8 +14432,8 @@
         "sellPrice": 145
       },
       {
-        "itemId": 11740,
-        "itemName": "Scroll of redirection",
+        "itemId": -1,
+        "itemName": "Scroll of Redirection",
         "stock": -1,
         "sellPrice": 775
       }
@@ -14261,6 +14442,7 @@
   {
     "name": "Dom Onion's Reward Shop (2)",
     "location": "Yanille",
+    "owner": "Dominic Onion",
     "currency": "NMZ",
     "items": [
       {
@@ -14292,6 +14474,7 @@
   {
     "name": "Dommik's Crafting Store",
     "location": "Al Kharid",
+    "owner": "Dommik",
     "currency": "Coins",
     "x": 3321,
     "y": 3194,
@@ -14379,6 +14562,7 @@
   {
     "name": "Dorgesh-Kaan General Supplies",
     "location": "Dorgesh-Kaan",
+    "owner": "Lurgon",
     "currency": "Coins",
     "items": [
       {
@@ -14449,6 +14633,7 @@
   {
     "name": "Dragon Inn",
     "location": "Yanille",
+    "owner": "Bartender",
     "currency": "Coins",
     "x": 2553,
     "y": 3080,
@@ -14477,6 +14662,7 @@
   {
     "name": "Draynor Seed Market",
     "location": "Draynor Village",
+    "owner": "Olivia",
     "currency": "Coins",
     "x": 3078,
     "y": 3251,
@@ -14598,6 +14784,7 @@
   },
   {
     "name": "Dreven",
+    "owner": "Dreven",
     "currency": "Coins",
     "items": [
       {
@@ -14647,6 +14834,7 @@
   {
     "name": "Drogo's Mining Emporium",
     "location": "Dwarven Mines",
+    "owner": "Drogo dwarf",
     "currency": "Coins",
     "items": [
       {
@@ -14716,6 +14904,7 @@
   },
   {
     "name": "Dunstan",
+    "owner": "Dunstan",
     "currency": "Coins",
     "items": [
       {
@@ -14728,16 +14917,17 @@
   },
   {
     "name": "Duradel",
+    "owner": "Duradel",
     "currency": "Coins",
     "items": [
       {
-        "itemId": -1,
+        "itemId": 9786,
         "itemName": "Slayer cape",
         "stock": -1,
         "sellPrice": 99000
       },
       {
-        "itemId": 9786,
+        "itemId": 9787,
         "itemName": "Slayer cape(t)",
         "stock": -1,
         "sellPrice": 99000
@@ -14746,6 +14936,7 @@
   },
   {
     "name": "Durgok",
+    "owner": "Durgok",
     "currency": "Coins",
     "items": [
       {
@@ -14759,6 +14950,7 @@
   {
     "name": "Durrik's Goods",
     "location": "Deepfin Mine",
+    "owner": "Durrik",
     "currency": "Coins",
     "x": 1956,
     "y": 9172,
@@ -14909,6 +15101,7 @@
   {
     "name": "Dusuri's Star Shop",
     "location": "Falador",
+    "owner": "Dusuri",
     "currency": "Stardust",
     "items": [
       {
@@ -14942,6 +15135,7 @@
   {
     "name": "Dwarven shopping store",
     "location": "Dwarven Mine",
+    "owner": "Dwarf",
     "currency": "Coins",
     "items": [
       {
@@ -15012,6 +15206,7 @@
   {
     "name": "Dyes to Die For",
     "location": "Tal Teklan",
+    "owner": "Xochitl",
     "currency": "Coins",
     "x": 1203,
     "y": 3119,
@@ -15063,6 +15258,7 @@
   },
   {
     "name": "Eblis",
+    "owner": "Eblis",
     "currency": "Coins",
     "items": [
       {
@@ -15082,6 +15278,7 @@
   {
     "name": "Edgeville General Store",
     "location": "Edgeville",
+    "owner": "Shop keeper",
     "currency": "Coins",
     "x": 3077,
     "y": 3514,
@@ -15190,6 +15387,7 @@
   {
     "name": "Edmond's Wilderness Cape Shop",
     "location": "South of lava maze",
+    "owner": "Edmond",
     "currency": "Coins",
     "items": [
       {
@@ -15232,6 +15430,7 @@
   {
     "name": "Edward's Wilderness Cape Shop",
     "location": "Around the Rogues' Castle",
+    "owner": "Edward",
     "currency": "Coins",
     "items": [
       {
@@ -15274,6 +15473,7 @@
   {
     "name": "Efaritay's Supplies",
     "location": "Castle Drakan",
+    "owner": "Efaritay Hallow",
     "currency": "Coins",
     "items": [
       {
@@ -15289,8 +15489,8 @@
         "sellPrice": 250
       },
       {
-        "itemId": 7648,
-        "itemName": "Rod of ivandis (10)",
+        "itemId": -1,
+        "itemName": "Rod of Ivandis",
         "stock": -1,
         "sellPrice": 1000
       },
@@ -15334,6 +15534,7 @@
   },
   {
     "name": "Ehecatl",
+    "owner": "Ehecatl",
     "currency": "Coins",
     "items": [
       {
@@ -15383,6 +15584,7 @@
   {
     "name": "Elder Blunn's Spear and Shield Stall",
     "location": "The Summer Shore",
+    "owner": "Elder Blunn",
     "currency": "Coins",
     "x": 3170,
     "y": 2416,
@@ -15392,28 +15594,33 @@
         "itemId": 1237,
         "itemName": "Bronze spear",
         "stock": 10,
+        "sellPrice": 26,
         "restockSeconds": 60
       },
       {
         "itemId": 1239,
         "itemName": "Iron spear",
         "stock": 8,
+        "sellPrice": 91,
         "restockSeconds": 120
       },
       {
         "itemId": 1241,
         "itemName": "Steel spear",
-        "stock": 8
+        "stock": 8,
+        "sellPrice": 325
       },
       {
         "itemId": 1243,
         "itemName": "Mithril spear",
-        "stock": 6
+        "stock": 6,
+        "sellPrice": 845
       },
       {
         "itemId": 1245,
         "itemName": "Adamant spear",
-        "stock": 4
+        "stock": 4,
+        "sellPrice": 2080
       },
       {
         "itemId": 1189,
@@ -15459,6 +15666,7 @@
   {
     "name": "Elder Coco's Crafting Stall",
     "location": "The Summer Shore",
+    "owner": "Elder Coco",
     "currency": "Coins",
     "x": 3170,
     "y": 2406,
@@ -15556,6 +15764,7 @@
   {
     "name": "Elder Krill's Fishing Stall",
     "location": "The Summer Shore",
+    "owner": "Elder Krill",
     "currency": "Coins",
     "x": 3164,
     "y": 2416,
@@ -15699,6 +15908,7 @@
   {
     "name": "Elder Raley's Herblore Stall",
     "location": "The Summer Shore",
+    "owner": "Mag",
     "currency": "Coins",
     "x": 3175,
     "y": 2413,
@@ -15765,6 +15975,7 @@
   {
     "name": "Elder Reggle's Farming Shop",
     "location": "The Great Conch",
+    "owner": "Elder Reggle",
     "currency": "Coins",
     "x": 3249,
     "y": 2466,
@@ -15809,6 +16020,7 @@
         "itemId": 5331,
         "itemName": "Watering can",
         "stock": 10,
+        "sellPrice": 8,
         "restockSeconds": 12
       },
       {
@@ -15893,6 +16105,7 @@
   {
     "name": "Elder Strom's Hunting Stall",
     "location": "The Summer Shore",
+    "owner": "Elder Strom",
     "currency": "Coins",
     "x": 3160,
     "y": 2410,
@@ -15987,6 +16200,7 @@
   {
     "name": "Elgan's Exceptional Staffs!",
     "location": "Prifddinas",
+    "owner": "Elgan",
     "currency": "Coins",
     "items": [
       {
@@ -16042,6 +16256,7 @@
   },
   {
     "name": "Ellena",
+    "owner": "Ellena",
     "currency": "Coins",
     "items": [
       {
@@ -16090,6 +16305,7 @@
   },
   {
     "name": "Elnock Inquisitor",
+    "owner": "Elnock Inquisitor",
     "currency": "Coins",
     "items": [
       {
@@ -16103,6 +16319,7 @@
   },
   {
     "name": "Elstan",
+    "owner": "Elstan",
     "currency": "Coins",
     "items": [
       {
@@ -16152,6 +16369,7 @@
   {
     "name": "Emelio's Kebab Shop",
     "location": "Varlamore",
+    "owner": "Emelio",
     "currency": "Coins",
     "x": 1754,
     "y": 3075,
@@ -16168,6 +16386,7 @@
   },
   {
     "name": "Ercos",
+    "owner": "Ercos",
     "currency": "Coins",
     "items": [
       {
@@ -16216,16 +16435,17 @@
   },
   {
     "name": "Estate agent",
+    "owner": "Estate agent",
     "currency": "Coins",
     "items": [
       {
-        "itemId": -1,
+        "itemId": 9789,
         "itemName": "Construct. cape",
         "stock": -1,
         "sellPrice": 99000
       },
       {
-        "itemId": 9789,
+        "itemId": 9790,
         "itemName": "Construct. cape(t)",
         "stock": -1,
         "sellPrice": 99000
@@ -16234,16 +16454,17 @@
   },
   {
     "name": "Estate agent (2)",
+    "owner": "Estate agent",
     "currency": "Coins",
     "items": [
       {
-        "itemId": -1,
+        "itemId": 9789,
         "itemName": "Construct. cape",
         "stock": -1,
         "sellPrice": 99000
       },
       {
-        "itemId": 9789,
+        "itemId": 9790,
         "itemName": "Construct. cape(t)",
         "stock": -1,
         "sellPrice": 99000
@@ -16252,16 +16473,17 @@
   },
   {
     "name": "Estate agent (3)",
+    "owner": "Estate agent",
     "currency": "Coins",
     "items": [
       {
-        "itemId": -1,
+        "itemId": 9789,
         "itemName": "Construct. cape",
         "stock": -1,
         "sellPrice": 99000
       },
       {
-        "itemId": 9789,
+        "itemId": 9790,
         "itemName": "Construct. cape(t)",
         "stock": -1,
         "sellPrice": 99000
@@ -16270,16 +16492,17 @@
   },
   {
     "name": "Estate agent (4)",
+    "owner": "Estate agent",
     "currency": "Coins",
     "items": [
       {
-        "itemId": -1,
+        "itemId": 9789,
         "itemName": "Construct. cape",
         "stock": -1,
         "sellPrice": 99000
       },
       {
-        "itemId": 9789,
+        "itemId": 9790,
         "itemName": "Construct. cape(t)",
         "stock": -1,
         "sellPrice": 99000
@@ -16288,16 +16511,17 @@
   },
   {
     "name": "Estate agent (5)",
+    "owner": "Estate agent",
     "currency": "Coins",
     "items": [
       {
-        "itemId": -1,
+        "itemId": 9789,
         "itemName": "Construct. cape",
         "stock": -1,
         "sellPrice": 99000
       },
       {
-        "itemId": 9789,
+        "itemId": 9790,
         "itemName": "Construct. cape(t)",
         "stock": -1,
         "sellPrice": 99000
@@ -16306,16 +16530,17 @@
   },
   {
     "name": "Estate agent (6)",
+    "owner": "Estate agent",
     "currency": "Coins",
     "items": [
       {
-        "itemId": -1,
+        "itemId": 9789,
         "itemName": "Construct. cape",
         "stock": -1,
         "sellPrice": 99000
       },
       {
-        "itemId": 9789,
+        "itemId": 9790,
         "itemName": "Construct. cape(t)",
         "stock": -1,
         "sellPrice": 99000
@@ -16325,6 +16550,7 @@
   {
     "name": "Etceteria Fish",
     "location": "Etceteria",
+    "owner": "Fishmonger",
     "currency": "Coins",
     "x": 2600,
     "y": 3878,
@@ -16503,6 +16729,7 @@
   {
     "name": "Events Reward Shop",
     "location": "Varrock Square",
+    "owner": "Nevet",
     "currency": "event points",
     "items": [
       {
@@ -16570,6 +16797,7 @@
   {
     "name": "Fairy Fixit's Fairy Enchantment",
     "location": "Zanaris fairy ring",
+    "owner": "Fairy Fixit",
     "currency": "Coins",
     "items": [
       {
@@ -16584,6 +16812,7 @@
   {
     "name": "Falador General Store",
     "location": "Falador",
+    "owner": "Shop keeper",
     "currency": "Coins",
     "x": 2953,
     "y": 3391,
@@ -16685,6 +16914,7 @@
   {
     "name": "Falador Party Room",
     "location": "Falador",
+    "owner": "Lucy, Megan",
     "currency": "Coins",
     "x": 3036,
     "y": 3385,
@@ -16701,6 +16931,7 @@
   {
     "name": "Fancy Clothes Store",
     "location": "Varrock",
+    "owner": "Asyff",
     "currency": "Coins",
     "x": 3278,
     "y": 3401,
@@ -16865,6 +17096,7 @@
   {
     "name": "Farmer Gricoller's Rewards",
     "location": "Hosidius",
+    "owner": "Farmer Gricoller",
     "currency": "Tithe",
     "items": [
       {
@@ -16962,6 +17194,7 @@
   {
     "name": "Faustus' Fruit and Veg",
     "location": "Aldarin",
+    "owner": "Faustus",
     "currency": "Coins",
     "x": 1419,
     "y": 2984,
@@ -17090,6 +17323,7 @@
   },
   {
     "name": "Fayeth",
+    "owner": "Fayeth",
     "currency": "Coins",
     "items": [
       {
@@ -17139,6 +17373,7 @@
   {
     "name": "Fernahei's Fishing Hut",
     "location": "Shilo Village",
+    "owner": "Fernahei",
     "currency": "Coins",
     "x": 2869,
     "y": 2973,
@@ -17212,6 +17447,7 @@
   {
     "name": "Fernahei's Fishing Hut (2)",
     "location": "Shilo Village",
+    "owner": "Fernahei",
     "currency": "Coins",
     "x": 2869,
     "y": 2973,
@@ -17285,6 +17521,7 @@
   {
     "name": "Fight Arena Bar",
     "location": "South-western corner of the Fight Arena",
+    "owner": "Khazard barman",
     "currency": "Coins",
     "x": 2563,
     "y": 3155,
@@ -17307,6 +17544,7 @@
   {
     "name": "Filamina's Wares",
     "location": "Arceuus",
+    "owner": "Filamina",
     "currency": "Coins",
     "x": 1664,
     "y": 3732,
@@ -17359,6 +17597,7 @@
   {
     "name": "Fine Fashions",
     "location": "Grand Tree",
+    "owner": "Rometti",
     "currency": "Coins",
     "x": 2482,
     "y": 3510,
@@ -17509,6 +17748,7 @@
   {
     "name": "Fishing Guild Shop",
     "location": "Fishing Guild",
+    "owner": "Roachey",
     "currency": "Coins",
     "x": 2590,
     "y": 3403,
@@ -17671,8 +17911,29 @@
     ]
   },
   {
+    "name": "Flakes 'n' Flotsam",
+    "location": "Ruins of Unkah",
+    "owner": "Spirit Angler (Reward pool)",
+    "currency": "Spirit flakes",
+    "items": [
+      {
+        "itemId": 25582,
+        "itemName": "Fish barrel",
+        "stock": -1,
+        "sellPrice": 6000
+      },
+      {
+        "itemId": 25580,
+        "itemName": "Tackle box",
+        "stock": -1,
+        "sellPrice": 6000
+      }
+    ]
+  },
+  {
     "name": "Floria's Fashion",
     "location": "Civitas illa Fortis",
+    "owner": "Floria",
     "currency": "Coins",
     "x": 1656,
     "y": 3104,
@@ -17760,6 +18021,7 @@
   {
     "name": "Flosi's Fishmongers",
     "location": "Jatizso",
+    "owner": "Flosi Dalksson",
     "currency": "Coins",
     "x": 2415,
     "y": 3817,
@@ -17804,6 +18066,7 @@
   },
   {
     "name": "Flower Girl",
+    "owner": "Flower Girl",
     "currency": "Coins",
     "items": [
       {
@@ -17817,6 +18080,7 @@
   {
     "name": "Flying Horse Inn",
     "location": "East Ardougne",
+    "owner": "Bartender",
     "currency": "Coins",
     "x": 2572,
     "y": 3327,
@@ -17833,6 +18097,7 @@
   {
     "name": "Flynn's Mace Market",
     "location": "Falador",
+    "owner": "Flynn",
     "currency": "Coins",
     "x": 2948,
     "y": 3389,
@@ -17878,6 +18143,7 @@
   {
     "name": "Food Store",
     "location": "Port Sarim",
+    "owner": "Wydin",
     "currency": "Coins",
     "x": 3009,
     "y": 3211,
@@ -17965,6 +18231,7 @@
   {
     "name": "Forester's Arms",
     "location": "Seers' Village",
+    "owner": "Bartender",
     "currency": "Coins",
     "x": 2695,
     "y": 3493,
@@ -17992,6 +18259,7 @@
   },
   {
     "name": "Forestry Shop",
+    "owner": "Friendly Forester",
     "currency": "Anima-infused bark",
     "x": 3096,
     "y": 3238,
@@ -18128,6 +18396,7 @@
   {
     "name": "Fortis Baker's Stall",
     "location": "Civitas illa Fortis",
+    "owner": "Baker",
     "currency": "Coins",
     "items": [
       {
@@ -18141,12 +18410,14 @@
         "itemId": 1891,
         "itemName": "Cake",
         "stock": 5,
+        "sellPrice": 50,
         "restockSeconds": 480
       },
       {
-        "itemId": 1897,
+        "itemId": 1901,
         "itemName": "Chocolate slice",
         "stock": 5,
+        "sellPrice": 30,
         "restockSeconds": 120
       }
     ]
@@ -18154,6 +18425,7 @@
   {
     "name": "Fortis Blacksmith",
     "location": "Civitas illa Fortis",
+    "owner": "Blacksmith",
     "currency": "Coins",
     "x": 1656,
     "y": 3143,
@@ -18338,30 +18610,35 @@
         "itemId": 1237,
         "itemName": "Bronze spear",
         "stock": 5,
+        "sellPrice": 26,
         "restockSeconds": 60
       },
       {
         "itemId": 1239,
         "itemName": "Iron spear",
         "stock": 4,
+        "sellPrice": 91,
         "restockSeconds": 120
       },
       {
         "itemId": 1241,
         "itemName": "Steel spear",
         "stock": 4,
+        "sellPrice": 325,
         "restockSeconds": 240
       },
       {
         "itemId": 1243,
         "itemName": "Mithril spear",
         "stock": 3,
+        "sellPrice": 845,
         "restockSeconds": 1800
       },
       {
         "itemId": 1245,
         "itemName": "Adamant spear",
         "stock": 2,
+        "sellPrice": 2080,
         "restockSeconds": 7200
       }
     ]
@@ -18369,6 +18646,7 @@
   {
     "name": "Fortis Blacksmith (2)",
     "location": "Civitas illa Fortis",
+    "owner": "Blacksmith",
     "currency": "Coins",
     "x": 1656,
     "y": 3143,
@@ -18421,6 +18699,7 @@
   {
     "name": "Fortis Fur Stall",
     "location": "Civitas illa Fortis",
+    "owner": "Fur Merchant",
     "currency": "Coins",
     "items": [
       {
@@ -18540,6 +18819,7 @@
   {
     "name": "Fortis Gem Stall",
     "location": "Civitas illa Fortis",
+    "owner": "Gem Merchant",
     "currency": "Coins",
     "items": [
       {
@@ -18575,6 +18855,7 @@
   {
     "name": "Fortis General Store",
     "location": "Civitas illa Fortis",
+    "owner": "Shopkeeper",
     "currency": "Coins",
     "x": 1667,
     "y": 3126,
@@ -18690,6 +18971,7 @@
   {
     "name": "Fortis General Store (2)",
     "location": "Civitas illa Fortis",
+    "owner": "Shopkeeper",
     "currency": "Coins",
     "x": 1667,
     "y": 3126,
@@ -18721,6 +19003,7 @@
   {
     "name": "Fortis Silk Stall",
     "location": "Civitas illa Fortis",
+    "owner": "Silk Merchant",
     "currency": "Coins",
     "items": [
       {
@@ -18749,6 +19032,7 @@
   {
     "name": "Fortis Spice Stall",
     "location": "Civitas illa Fortis",
+    "owner": "Spice Merchant",
     "currency": "Coins",
     "items": [
       {
@@ -18776,6 +19060,7 @@
   },
   {
     "name": "Fortunato",
+    "owner": "Fortunato",
     "currency": "Coins",
     "items": [
       {
@@ -18787,6 +19072,7 @@
   {
     "name": "Fossil Island General Store",
     "location": "Museum Camp",
+    "owner": "Shop keeper",
     "currency": "Coins",
     "x": 3727,
     "y": 3815,
@@ -18866,6 +19152,7 @@
   },
   {
     "name": "Francis",
+    "owner": "Francis",
     "currency": "Coins",
     "items": [
       {
@@ -18915,6 +19202,7 @@
   {
     "name": "Frankie's Fishing Emporium",
     "location": "Port Piscarilius",
+    "owner": "Frankie",
     "currency": "Coins",
     "x": 1829,
     "y": 3724,
@@ -19001,6 +19289,7 @@
   },
   {
     "name": "Franklin Caranos",
+    "owner": "Franklin Caranos",
     "currency": "Coins",
     "items": [
       {
@@ -19012,6 +19301,7 @@
   {
     "name": "Fremennik Fish Monger",
     "location": "Rellekka",
+    "owner": "Fish monger",
     "currency": "Coins",
     "x": 2647,
     "y": 3676,
@@ -19190,6 +19480,7 @@
   {
     "name": "Fremennik Fur Trader",
     "location": "Rellekka",
+    "owner": "Fur trader",
     "currency": "Coins",
     "items": [
       {
@@ -19281,6 +19572,7 @@
   {
     "name": "Frenita's Cookery Shop",
     "location": "Yanille",
+    "owner": "Frenita",
     "currency": "Coins",
     "x": 2565,
     "y": 3105,
@@ -19375,6 +19667,7 @@
   {
     "name": "Frincos' Fabulous Herb Store",
     "location": "Entrana",
+    "owner": "Frincos",
     "currency": "Coins",
     "x": 2807,
     "y": 3346,
@@ -19433,6 +19726,7 @@
   },
   {
     "name": "Fritz the Glassblower",
+    "owner": "Fritz the Glassblower",
     "currency": "Coins",
     "x": 2829,
     "y": 3354,
@@ -19446,6 +19740,7 @@
   },
   {
     "name": "Fritz the Glassblower (2)",
+    "owner": "Fritz the Glassblower",
     "currency": "Coins",
     "x": 2829,
     "y": 3354,
@@ -19459,6 +19754,7 @@
   },
   {
     "name": "Frizzy Skernip",
+    "owner": "Frizzy Skernip",
     "currency": "Coins",
     "items": [
       {
@@ -19508,6 +19804,7 @@
   {
     "name": "Funch's Fine Groceries",
     "location": "Grand Tree",
+    "owner": "Heckel Funch",
     "currency": "Coins",
     "x": 2491,
     "y": 3488,
@@ -19637,6 +19934,7 @@
   {
     "name": "Gabooty's Tai Bwo Wannai Cooperative",
     "location": "Tai Bwo Wannai",
+    "owner": "Gabooty",
     "currency": "Trading sticks",
     "items": [
       {
@@ -19854,6 +20152,7 @@
   {
     "name": "Gabooty's Tai Bwo Wannai Cooperative (2)",
     "location": "Tai Bwo Wannai",
+    "owner": "Gabooty",
     "currency": "Trading sticks",
     "items": [
       {
@@ -20071,6 +20370,7 @@
   {
     "name": "Gabooty's Tai Bwo Wannai Drinky Store",
     "location": "Tai Bwo Wannai",
+    "owner": "Gabooty",
     "currency": "Trading sticks",
     "items": [
       {
@@ -20127,6 +20427,7 @@
   {
     "name": "Gabooty's Tai Bwo Wannai Drinky Store (2)",
     "location": "Tai Bwo Wannai",
+    "owner": "Gabooty",
     "currency": "Trading sticks",
     "items": [
       {
@@ -20182,16 +20483,17 @@
   },
   {
     "name": "Gadrin",
+    "owner": "Gadrin",
     "currency": "Coins",
     "items": [
       {
-        "itemId": -1,
+        "itemId": 9792,
         "itemName": "Mining cape",
         "stock": -1,
         "sellPrice": 99000
       },
       {
-        "itemId": 9792,
+        "itemId": 9793,
         "itemName": "Mining cape(t)",
         "stock": -1,
         "sellPrice": 99000
@@ -20201,6 +20503,7 @@
   {
     "name": "Gaius' Two Handed Shop",
     "location": "Taverley",
+    "owner": "Gaius",
     "currency": "Coins",
     "items": [
       {
@@ -20249,6 +20552,7 @@
   },
   {
     "name": "Garden Centre",
+    "owner": "Garden supplier",
     "currency": "Coins",
     "items": [
       {
@@ -20416,6 +20720,7 @@
   },
   {
     "name": "Gardener Gunnhild",
+    "owner": "Gardener Gunnhild",
     "currency": "Coins",
     "items": [
       {
@@ -20435,12 +20740,13 @@
   {
     "name": "Garlic Cocktail Supply",
     "location": "Darkmeyer",
+    "owner": "Werewolf",
     "currency": "Coins",
     "items": [
       {
         "itemId": -1,
         "itemName": "Garlic cocktail",
-        "stock": 20,
+        "stock": 50,
         "sellPrice": 20,
         "restockSeconds": 6
       }
@@ -20448,6 +20754,7 @@
   },
   {
     "name": "Garth",
+    "owner": "Garth",
     "currency": "Coins",
     "items": [
       {
@@ -20497,6 +20804,7 @@
   {
     "name": "Gem Trader",
     "location": "Al Kharid",
+    "owner": "Gem trader",
     "currency": "Coins",
     "items": [
       {
@@ -20560,6 +20868,7 @@
   {
     "name": "General Store (Canifis)",
     "location": "Canifis",
+    "owner": "Fidelio",
     "currency": "Coins",
     "x": 3474,
     "y": 3500,
@@ -20654,6 +20963,7 @@
   {
     "name": "General Store (Canifis) (2)",
     "location": "Canifis",
+    "owner": "Fidelio",
     "currency": "Coins",
     "x": 3474,
     "y": 3500,
@@ -20671,6 +20981,7 @@
   {
     "name": "Gerrant's Fishy Business",
     "location": "Port Sarim",
+    "owner": "Gerrant",
     "currency": "Coins",
     "x": 3011,
     "y": 3230,
@@ -20814,6 +21125,7 @@
   {
     "name": "Gianne's Restaurant",
     "location": "Grand Tree",
+    "owner": "Gnome Waiter",
     "currency": "Coins",
     "x": 2449,
     "y": 3502,
@@ -20915,6 +21227,7 @@
   {
     "name": "Giants' Foundry Reward Shop",
     "location": "Giants' Foundry",
+    "owner": "Kovac",
     "currency": "Foundry Reputation",
     "x": 3371,
     "y": 11486,
@@ -20979,6 +21292,7 @@
   },
   {
     "name": "Gileth",
+    "owner": "Gileth",
     "currency": "Coins",
     "items": [
       {
@@ -21027,6 +21341,7 @@
   },
   {
     "name": "Gnome Waiter",
+    "owner": "Gnome Waiter",
     "currency": "Coins",
     "x": 2448,
     "y": 3503,
@@ -21128,7 +21443,8 @@
   {
     "name": "Grace's Graceful Clothing",
     "location": "Rogues' Den (Burthorpe)",
-    "currency": "Mark of grace",
+    "owner": "Grace",
+    "currency": "Mark of Grace",
     "x": 3050,
     "y": 4961,
     "plane": 0,
@@ -21188,6 +21504,7 @@
   {
     "name": "Grand Tree Groceries",
     "location": "Grand Tree",
+    "owner": "Hudo",
     "currency": "Coins",
     "x": 2448,
     "y": 3508,
@@ -21379,6 +21696,7 @@
   },
   {
     "name": "Grandpa Jack",
+    "owner": "Grandpa Jack",
     "currency": "Coins",
     "items": [
       {
@@ -21392,6 +21710,7 @@
   {
     "name": "Green Gemstone Gems",
     "location": "Keldagrim",
+    "owner": "Hervi",
     "currency": "Coins",
     "items": [
       {
@@ -21427,6 +21746,7 @@
   {
     "name": "Greengrocer of Miscellania",
     "location": "Miscellania",
+    "owner": "Greengrocer",
     "currency": "Coins",
     "items": [
       {
@@ -21469,6 +21789,7 @@
   {
     "name": "Grud's Herblore Stall",
     "location": "Gu'Tanoth",
+    "owner": "Ogre merchant",
     "currency": "Coins",
     "items": [
       {
@@ -21525,6 +21846,7 @@
   {
     "name": "Grum's Gold Exchange",
     "location": "Port Sarim",
+    "owner": "Grum",
     "currency": "Coins",
     "x": 3013,
     "y": 3247,
@@ -21640,6 +21962,7 @@
   {
     "name": "Guinevere's Dyes",
     "location": "Prifddinas",
+    "owner": "Guinevere",
     "currency": "Coins",
     "x": 3227,
     "y": 6059,
@@ -21692,7 +22015,8 @@
   },
   {
     "name": "Gulluck and Sons",
-    "location": "Grand Tree, {{FloorNumber",
+    "location": "Grand Tree, {{FloorNumber|uk=2}}",
+    "owner": "Gulluck",
     "currency": "Coins",
     "x": 2469,
     "y": 3488,
@@ -21849,6 +22173,7 @@
   },
   {
     "name": "Gundik",
+    "owner": "Gundik",
     "currency": "Coins",
     "items": [
       {
@@ -21862,6 +22187,7 @@
   {
     "name": "Gunslik's Assorted Items",
     "location": "Keldagrim",
+    "owner": "Gunslik",
     "currency": "Coins",
     "x": 2871,
     "y": 10189,
@@ -21978,6 +22304,7 @@
   {
     "name": "Gwyn's Mining Emporium",
     "location": "Prifddinas",
+    "owner": "Gwyn",
     "currency": "Coins",
     "x": 3290,
     "y": 6044,
@@ -22031,6 +22358,7 @@
   {
     "name": "Hair of the Dog",
     "location": "Canifis",
+    "owner": "Roavar",
     "currency": "Coins",
     "x": 3488,
     "y": 3478,
@@ -22053,6 +22381,7 @@
   {
     "name": "Hamab's Crafting Emporium",
     "location": "Ape Atoll",
+    "owner": "Hamab",
     "currency": "Coins",
     "x": 2781,
     "y": 2792,
@@ -22118,7 +22447,8 @@
   },
   {
     "name": "Happy Heroes' H'emporium",
-    "location": "{{FloorNumber",
+    "location": "{{FloorNumber|uk=1}} of the Heroes' Guild",
+    "owner": "Helemos",
     "currency": "Coins",
     "x": 2895,
     "y": 3511,
@@ -22142,6 +22472,7 @@
   },
   {
     "name": "Harminia",
+    "owner": "Harminia",
     "currency": "Coins",
     "items": [
       {
@@ -22191,6 +22522,7 @@
   {
     "name": "Harpoon Joe's House of 'Rum'",
     "location": "Mos Le'Harmless",
+    "owner": "Joe",
     "currency": "Coins",
     "x": 3666,
     "y": 2993,
@@ -22229,6 +22561,7 @@
   {
     "name": "Harry's Fishing Shop",
     "location": "Catherby",
+    "owner": "Harry",
     "currency": "Coins",
     "x": 2830,
     "y": 3447,
@@ -22364,16 +22697,17 @@
   },
   {
     "name": "Head chef",
+    "owner": "Head chef",
     "currency": "Coins",
     "items": [
       {
-        "itemId": -1,
+        "itemId": 9801,
         "itemName": "Cooking cape",
         "stock": -1,
         "sellPrice": 99000
       },
       {
-        "itemId": 9801,
+        "itemId": 9802,
         "itemName": "Cooking cape(t)",
         "stock": -1,
         "sellPrice": 99000
@@ -22383,6 +22717,7 @@
   {
     "name": "Hefin Inn",
     "location": "Prifddinas",
+    "owner": "Eira",
     "currency": "Coins",
     "x": 3236,
     "y": 6128,
@@ -22414,6 +22749,7 @@
   {
     "name": "Helmet Shop",
     "location": "Barbarian Village",
+    "owner": "Peksa",
     "currency": "Coins",
     "items": [
       {
@@ -22491,6 +22827,7 @@
   {
     "name": "Henderson's Catch of the Day",
     "location": "The Pandemonium",
+    "owner": "Henderson",
     "currency": "Coins",
     "items": [
       {
@@ -22617,6 +22954,7 @@
   {
     "name": "Hendor's Awesome Ores",
     "location": "Mining Guild",
+    "owner": "Hendor",
     "currency": "Coins",
     "items": [
       {
@@ -22673,6 +23011,7 @@
   {
     "name": "Herquin's Gems",
     "location": "Falador",
+    "owner": "Herquin",
     "currency": "Coins",
     "x": 2945,
     "y": 3335,
@@ -22738,6 +23077,7 @@
   },
   {
     "name": "Heskel",
+    "owner": "Heskel",
     "currency": "Coins",
     "items": [
       {
@@ -22787,6 +23127,7 @@
   {
     "name": "Hickton's Archery Emporium",
     "location": "Catherby",
+    "owner": "Hickton",
     "currency": "Coins",
     "x": 2823,
     "y": 3443,
@@ -22993,22 +23334,7 @@
   {
     "name": "Hickton's Archery Emporium (2)",
     "location": "Catherby",
-    "currency": "Coins",
-    "x": 2823,
-    "y": 3443,
-    "plane": 0,
-    "items": [
-      {
-        "itemId": -1,
-        "itemName": "Fletching cape",
-        "stock": 1,
-        "restockSeconds": 1
-      }
-    ]
-  },
-  {
-    "name": "Hickton's Archery Emporium (3)",
-    "location": "Catherby",
+    "owner": "Hickton",
     "currency": "Coins",
     "x": 2823,
     "y": 3443,
@@ -23016,6 +23342,24 @@
     "items": [
       {
         "itemId": 9783,
+        "itemName": "Fletching cape",
+        "stock": 1,
+        "sellPrice": 99000,
+        "restockSeconds": 1
+      }
+    ]
+  },
+  {
+    "name": "Hickton's Archery Emporium (3)",
+    "location": "Catherby",
+    "owner": "Hickton",
+    "currency": "Coins",
+    "x": 2823,
+    "y": 3443,
+    "plane": 0,
+    "items": [
+      {
+        "itemId": 9784,
         "itemName": "Fletching cape(t)",
         "stock": 1,
         "sellPrice": 99000,
@@ -23025,6 +23369,7 @@
   },
   {
     "name": "Hirko",
+    "owner": "Hirko",
     "currency": "Coins",
     "items": [
       {
@@ -23037,6 +23382,7 @@
   },
   {
     "name": "Honest Jimmy",
+    "owner": "Honest Jimmy",
     "currency": "pieces of eight",
     "items": [
       {
@@ -23050,6 +23396,7 @@
   {
     "name": "Honest Jimmy's House of Stuff",
     "location": "Trouble Brewing",
+    "owner": "Honest Jimmy",
     "currency": "Pieces of eight",
     "items": [
       {
@@ -23267,6 +23614,7 @@
   {
     "name": "Horvik's Armour Shop",
     "location": "Varrock",
+    "owner": "Horvik",
     "currency": "Coins",
     "x": 3230,
     "y": 3437,
@@ -23360,6 +23708,7 @@
   },
   {
     "name": "Hudo",
+    "owner": "Hudo",
     "currency": "Coins",
     "items": [
       {
@@ -23371,6 +23720,7 @@
   {
     "name": "Huito's Herbal Supplies",
     "location": "Cam Torum",
+    "owner": "Huito",
     "currency": "Coins",
     "x": 1437,
     "y": 9553,
@@ -23430,16 +23780,17 @@
   },
   {
     "name": "Hunting expert",
+    "owner": "Hunting expert",
     "currency": "Coins",
     "items": [
       {
-        "itemId": -1,
+        "itemId": 9948,
         "itemName": "Hunter cape",
         "stock": -1,
         "sellPrice": 99000
       },
       {
-        "itemId": 9948,
+        "itemId": 9949,
         "itemName": "Hunter cape(t)",
         "stock": -1,
         "sellPrice": 99000
@@ -23449,6 +23800,7 @@
   {
     "name": "Ian's Wilderness Cape Shop",
     "location": "Forgotten Cemetery",
+    "owner": "Ian",
     "currency": "Coins",
     "items": [
       {
@@ -23491,6 +23843,7 @@
   {
     "name": "Ifaba's General Store",
     "location": "Ape Atoll",
+    "owner": "Ifaba",
     "currency": "Coins",
     "x": 2753,
     "y": 2775,
@@ -23556,6 +23909,7 @@
   },
   {
     "name": "Ignatius Vulcan",
+    "owner": "Ignatius Vulcan",
     "currency": "Coins",
     "items": [
       {
@@ -23565,7 +23919,7 @@
         "sellPrice": 99000
       },
       {
-        "itemId": 9804,
+        "itemId": 9805,
         "itemName": "Firemaking cape(t)",
         "stock": -1,
         "sellPrice": 99000
@@ -23575,6 +23929,7 @@
   {
     "name": "Imia's Supplies",
     "location": "Hunter Guild",
+    "owner": "Imia",
     "currency": "Coins",
     "items": [
       {
@@ -23665,6 +24020,7 @@
   },
   {
     "name": "Imiago",
+    "owner": "Imiago",
     "currency": "Coins",
     "items": [
       {
@@ -23714,6 +24070,7 @@
   {
     "name": "Initiate Temple Knight Armoury",
     "location": "Falador Park",
+    "owner": "Sir Tiffy Cashien",
     "currency": "Coins",
     "items": [
       {
@@ -23745,6 +24102,7 @@
   {
     "name": "Iorwerth's Arms",
     "location": "Prifddinas",
+    "owner": "Celyn",
     "currency": "Coins",
     "x": 3258,
     "y": 6061,
@@ -23769,6 +24127,7 @@
         "itemId": 1215,
         "itemName": "Dragon dagger",
         "stock": 2,
+        "sellPrice": 45000,
         "restockSeconds": 300
       },
       {
@@ -23811,6 +24170,7 @@
   {
     "name": "Irksol (shop)",
     "location": "Zanaris",
+    "owner": "Irksol",
     "currency": "Coins",
     "items": [
       {
@@ -23824,6 +24184,7 @@
   },
   {
     "name": "Iron Bill",
+    "owner": "Iron Bill",
     "currency": "Coins",
     "x": 1867,
     "y": 3298,
@@ -23876,6 +24237,7 @@
   {
     "name": "Ishmael's Fish He Sells",
     "location": "Ruins of Unkah",
+    "owner": "Ishmael",
     "currency": "Coins",
     "x": 3160,
     "y": 2848,
@@ -24019,6 +24381,7 @@
   {
     "name": "Island Fishmonger",
     "location": "Miscellania",
+    "owner": "Fishmonger",
     "currency": "Coins",
     "x": 2516,
     "y": 3865,
@@ -24197,6 +24560,7 @@
   {
     "name": "Island Greengrocer",
     "location": "Etceteria",
+    "owner": "Greengrocer",
     "currency": "Coins",
     "items": [
       {
@@ -24238,6 +24602,7 @@
   },
   {
     "name": "Islwyn",
+    "owner": "Islwyn",
     "currency": "Coins",
     "x": 2206,
     "y": 3158,
@@ -24245,17 +24610,17 @@
     "mapId": 0,
     "items": [
       {
-        "itemId": 23983,
+        "itemId": 24123,
         "itemName": "Crystal bow",
         "sellPrice": 900000
       },
       {
-        "itemId": 23991,
+        "itemId": 24127,
         "itemName": "Crystal shield",
         "sellPrice": 750000
       },
       {
-        "itemId": 23987,
+        "itemId": 24125,
         "itemName": "Crystal halberd",
         "sellPrice": 750000
       }
@@ -24264,6 +24629,7 @@
   {
     "name": "Ivan's Supplies",
     "location": "Meiyerditch",
+    "owner": "Ivan Strom",
     "currency": "Coins",
     "items": [
       {
@@ -24281,8 +24647,8 @@
         "restockSeconds": 1
       },
       {
-        "itemId": 7648,
-        "itemName": "Rod of ivandis (10)",
+        "itemId": -1,
+        "itemName": "Rod of Ivandis (10)",
         "stock": 20,
         "sellPrice": 1000,
         "restockSeconds": 1
@@ -24313,6 +24679,7 @@
   {
     "name": "Iwan's Maces",
     "location": "Prifddinas",
+    "owner": "Iwan",
     "currency": "Coins",
     "x": 3255,
     "y": 6128,
@@ -24345,6 +24712,7 @@
   {
     "name": "Jamila's Craft Stall",
     "location": "Sophanem",
+    "owner": "Jamila",
     "currency": "Coins",
     "x": 3311,
     "y": 2780,
@@ -24425,6 +24793,7 @@
   {
     "name": "Jatix's Herblore Shop",
     "location": "Taverley",
+    "owner": "Jatix",
     "currency": "Coins",
     "x": 2897,
     "y": 3432,
@@ -24484,6 +24853,7 @@
   {
     "name": "Jennifer's General Supplies",
     "location": "Shayzien",
+    "owner": "Jennifer",
     "currency": "Coins",
     "x": 1517,
     "y": 3594,
@@ -24585,6 +24955,7 @@
   {
     "name": "Jiminua's Jungle Store",
     "location": "Karamja",
+    "owner": "Jiminua",
     "currency": "Coins",
     "items": [
       {
@@ -24693,9 +25064,10 @@
         "restockSeconds": 300
       },
       {
-        "itemId": 179,
+        "itemId": 175,
         "itemName": "Antipoison(3)",
         "stock": 10,
+        "sellPrice": 432,
         "restockSeconds": 90
       },
       {
@@ -24787,6 +25159,7 @@
   {
     "name": "Jiminua's Jungle Store (2)",
     "location": "Karamja",
+    "owner": "Jiminua",
     "currency": "Coins",
     "items": [
       {
@@ -24895,9 +25268,10 @@
         "restockSeconds": 300
       },
       {
-        "itemId": 179,
+        "itemId": 175,
         "itemName": "Antipoison(3)",
         "stock": 10,
+        "sellPrice": 374,
         "restockSeconds": 90
       },
       {
@@ -24989,6 +25363,7 @@
   {
     "name": "Jolly Boar Inn",
     "location": "North-east of Varrock",
+    "owner": "Bartender",
     "currency": "Coins",
     "x": 3275,
     "y": 3507,
@@ -25005,6 +25380,7 @@
   {
     "name": "Jukat (shop)",
     "location": "Zanaris",
+    "owner": "Jukat",
     "currency": "Coins",
     "items": [
       {
@@ -25018,6 +25394,7 @@
         "itemId": 1215,
         "itemName": "Dragon dagger",
         "stock": 2,
+        "sellPrice": 30000,
         "restockSeconds": 300
       }
     ]
@@ -25025,6 +25402,7 @@
   {
     "name": "Justine's stuff for the Last Shopper Standing",
     "location": "Last Man Standing lobby",
+    "owner": "Justine",
     "currency": "Points",
     "items": [
       {
@@ -25136,7 +25514,7 @@
         "sellPrice": 1
       },
       {
-        "itemId": 24605,
+        "itemId": 24598,
         "itemName": "Blighted super restore(4)",
         "stock": -1,
         "sellPrice": 1
@@ -25286,7 +25664,7 @@
         "sellPrice": 250
       },
       {
-        "itemId": 24617,
+        "itemId": 24619,
         "itemName": "Vesta's longsword (inactive)",
         "stock": -1,
         "sellPrice": 300
@@ -25439,16 +25817,17 @@
   },
   {
     "name": "Kaqemeex",
+    "owner": "Kaqemeex",
     "currency": "Coins",
     "items": [
       {
-        "itemId": -1,
+        "itemId": 9774,
         "itemName": "Herblore cape",
         "stock": -1,
         "sellPrice": 99000
       },
       {
-        "itemId": 9774,
+        "itemId": 9775,
         "itemName": "Herblore cape(t)",
         "stock": -1,
         "sellPrice": 99000
@@ -25458,6 +25837,7 @@
   {
     "name": "Karamja General Store",
     "location": "Musa Point (Karamja)",
+    "owner": "Shop keeper",
     "currency": "Coins",
     "items": [
       {
@@ -25542,6 +25922,7 @@
   {
     "name": "Karamja General Store (2)",
     "location": "Musa Point (Karamja)",
+    "owner": "Shop keeper",
     "currency": "Coins",
     "items": [
       {
@@ -25626,6 +26007,7 @@
   {
     "name": "Karamja Wines, Spirits, and Beers",
     "location": "Karamja",
+    "owner": "Zembo",
     "currency": "Coins",
     "x": 2918,
     "y": 3145,
@@ -25656,6 +26038,7 @@
   },
   {
     "name": "Karim",
+    "owner": "Karim",
     "currency": "Coins",
     "items": [
       {
@@ -25669,6 +26052,7 @@
   {
     "name": "Kastori Farming Supplies",
     "location": "Kastori",
+    "owner": "Ameyalli",
     "currency": "Coins",
     "x": 1357,
     "y": 3061,
@@ -25713,6 +26097,7 @@
         "itemId": 5331,
         "itemName": "Watering can",
         "stock": 30,
+        "sellPrice": 8,
         "restockSeconds": 3
       },
       {
@@ -25797,6 +26182,7 @@
   {
     "name": "Kastori General Store",
     "location": "Kastori",
+    "owner": "Shopkeeper",
     "currency": "Coins",
     "x": 1377,
     "y": 3044,
@@ -25926,6 +26312,7 @@
   {
     "name": "Keepa Kettilon's store",
     "location": "Jatizso",
+    "owner": "Keepa Kettilon",
     "currency": "Coins",
     "x": 2415,
     "y": 3817,
@@ -25978,6 +26365,7 @@
   {
     "name": "Keldagrim Stonemason",
     "location": "Keldagrim",
+    "owner": "Stonemason",
     "currency": "Coins",
     "x": 2849,
     "y": 10184,
@@ -26024,6 +26412,7 @@
   {
     "name": "Keldagrim's Best Bread",
     "location": "Keldagrim Palace",
+    "owner": "Randivor",
     "currency": "Coins",
     "x": 2892,
     "y": 10211,
@@ -26041,12 +26430,14 @@
         "itemId": 1891,
         "itemName": "Cake",
         "stock": 3,
+        "sellPrice": 75,
         "restockSeconds": 480
       },
       {
-        "itemId": 1897,
+        "itemId": 1901,
         "itemName": "Chocolate slice",
         "stock": 8,
+        "sellPrice": 45,
         "restockSeconds": 120
       }
     ]
@@ -26054,6 +26445,7 @@
   {
     "name": "Kenelme's Wares",
     "location": "Port Piscarilius",
+    "owner": "Kenelme",
     "currency": "Coins",
     "x": 1785,
     "y": 3757,
@@ -26134,6 +26526,7 @@
   {
     "name": "Khazard General Store",
     "location": "Port Khazard",
+    "owner": "Shop keeper",
     "currency": "Coins",
     "x": 2656,
     "y": 3152,
@@ -26256,6 +26649,7 @@
   {
     "name": "King Narnode's Royal Seed Pods",
     "location": "Grand Tree",
+    "owner": "King Narnode Shareen",
     "currency": "Coins",
     "items": [
       {
@@ -26270,6 +26664,7 @@
   {
     "name": "King's Axe Inn",
     "location": "Western Keldagrim",
+    "owner": "Barman",
     "currency": "Coins",
     "x": 2839,
     "y": 10195,
@@ -26299,6 +26694,7 @@
   {
     "name": "Kjut's Kebabs",
     "location": "Keldagrim",
+    "owner": "Kjut",
     "currency": "Coins",
     "x": 2905,
     "y": 10216,
@@ -26315,6 +26711,7 @@
   },
   {
     "name": "Klank",
+    "owner": "Klank",
     "currency": "Coins",
     "items": [
       {
@@ -26328,6 +26725,7 @@
   {
     "name": "Kourend Castle Baker's Stall",
     "location": "Kourend Castle",
+    "owner": "Baker",
     "currency": "Coins",
     "x": 1639,
     "y": 3684,
@@ -26344,12 +26742,14 @@
         "itemId": 1891,
         "itemName": "Cake",
         "stock": 10,
+        "sellPrice": 50,
         "restockSeconds": 600
       },
       {
-        "itemId": 1897,
+        "itemId": 1901,
         "itemName": "Chocolate slice",
         "stock": 5,
+        "sellPrice": 30,
         "restockSeconds": 240
       },
       {
@@ -26364,6 +26764,7 @@
   {
     "name": "Kourend Castle Gem Stall",
     "location": "Kourend Castle",
+    "owner": "Gem merchant",
     "currency": "Coins",
     "items": [
       {
@@ -26398,6 +26799,7 @@
   },
   {
     "name": "Kragen",
+    "owner": "Kragen",
     "currency": "Coins",
     "items": [
       {
@@ -26446,16 +26848,17 @@
   },
   {
     "name": "Kuradal",
+    "owner": "Kuradal",
     "currency": "Coins",
     "items": [
       {
-        "itemId": -1,
+        "itemId": 9786,
         "itemName": "Slayer cape",
         "stock": -1,
         "sellPrice": 99000
       },
       {
-        "itemId": 9786,
+        "itemId": 9787,
         "itemName": "Slayer cape(t)",
         "stock": -1,
         "sellPrice": 99000
@@ -26464,6 +26867,7 @@
   },
   {
     "name": "Kylie Minnow",
+    "owner": "Kylie Minnow",
     "currency": "minnow",
     "items": [
       {
@@ -26476,6 +26880,7 @@
   },
   {
     "name": "Lalli",
+    "owner": "Lalli",
     "currency": "Coins",
     "items": [
       {
@@ -26488,6 +26893,7 @@
   },
   {
     "name": "Lammy Langle",
+    "owner": "Lammy Langle",
     "currency": "Coins",
     "items": [
       {
@@ -26537,6 +26943,7 @@
   {
     "name": "Larry's Wilderness Cape Shop",
     "location": "Graveyard of Shadows/Bone Yard",
+    "owner": "Larry",
     "currency": "Coins",
     "x": 3205,
     "y": 3718,
@@ -26581,6 +26988,7 @@
   },
   {
     "name": "Latlink Fastbell",
+    "owner": "Latlink Fastbell",
     "currency": "Coins",
     "items": [
       {
@@ -26630,6 +27038,7 @@
   {
     "name": "Leagues Reward Shop",
     "location": "Lumbridge Castle",
+    "owner": "Leagues Tutor",
     "currency": "League Points",
     "items": [
       {
@@ -26679,6 +27088,7 @@
   {
     "name": "Leagues Reward Shop (2)",
     "location": "Lumbridge Castle",
+    "owner": "Leagues Tutor",
     "currency": "League Points",
     "items": [
       {
@@ -26740,6 +27150,7 @@
   {
     "name": "Leagues Reward Shop (3)",
     "location": "Lumbridge Castle",
+    "owner": "Leagues Tutor",
     "currency": "League Points",
     "items": [
       {
@@ -26801,6 +27212,7 @@
   {
     "name": "Leagues Reward Shop (4)",
     "location": "Lumbridge Castle",
+    "owner": "Leagues Tutor",
     "currency": "League Points",
     "items": [
       {
@@ -26874,6 +27286,7 @@
   {
     "name": "Leagues Reward Shop (5)",
     "location": "Lumbridge Castle",
+    "owner": "Leagues Tutor",
     "currency": "League Points",
     "items": [
       {
@@ -26977,6 +27390,7 @@
   {
     "name": "Leagues Reward Shop (6)",
     "location": "Lumbridge Castle",
+    "owner": "Leagues Tutor",
     "currency": "League Points",
     "items": [
       {
@@ -27061,6 +27475,7 @@
   },
   {
     "name": "Leela",
+    "owner": "Leela",
     "currency": "Coins",
     "items": [
       {
@@ -27074,6 +27489,7 @@
   {
     "name": "Leenz's General Supplies",
     "location": "Port Piscarilius",
+    "owner": "Leenz",
     "currency": "Coins",
     "x": 1808,
     "y": 3726,
@@ -27153,7 +27569,8 @@
   },
   {
     "name": "Legends Guild General Store",
-    "location": "{{FloorNumber",
+    "location": "{{FloorNumber|uk=1}} of Legends' Guild",
+    "owner": "Fionella",
     "currency": "Coins",
     "items": [
       {
@@ -27167,12 +27584,14 @@
         "itemId": 2323,
         "itemName": "Apple pie",
         "stock": 5,
+        "sellPrice": 46,
         "restockSeconds": 120
       },
       {
-        "itemId": 125,
+        "itemId": 121,
         "itemName": "Attack potion(3)",
         "stock": 3,
+        "sellPrice": 18,
         "restockSeconds": 60
       },
       {
@@ -27186,7 +27605,8 @@
   },
   {
     "name": "Legends Guild Shop of Useful Items",
-    "location": "{{FloorNumber",
+    "location": "{{FloorNumber|uk=2}} of Legends' Guild (west side)",
+    "owner": "Siegfried Erkle",
     "currency": "Coins",
     "items": [
       {
@@ -27229,6 +27649,7 @@
   {
     "name": "Leon's Prototype Crossbow",
     "location": "Yanille",
+    "owner": "Leon",
     "currency": "Coins",
     "items": [
       {
@@ -27243,6 +27664,7 @@
   {
     "name": "Leprechaun Larry's Farming Supplies",
     "location": "Troll Stronghold",
+    "owner": "Leprechaun Larry",
     "currency": "Coins",
     "x": 2825,
     "y": 3685,
@@ -27287,6 +27709,7 @@
         "itemId": 5331,
         "itemName": "Watering can",
         "stock": 2,
+        "sellPrice": 10,
         "restockSeconds": 6
       },
       {
@@ -27328,6 +27751,7 @@
   },
   {
     "name": "Liliwen",
+    "owner": "Liliwen",
     "currency": "Coins",
     "items": [
       {
@@ -27377,6 +27801,7 @@
   {
     "name": "Little Munty's Little Shop",
     "location": "Lovakengj",
+    "owner": "Munty",
     "currency": "Coins",
     "x": 1548,
     "y": 3755,
@@ -27464,6 +27889,7 @@
   {
     "name": "Little Shop of Horace",
     "location": "Hosidius",
+    "owner": "Horace",
     "currency": "Coins",
     "x": 1770,
     "y": 3590,
@@ -27600,6 +28026,7 @@
   {
     "name": "Lletya Archery Shop",
     "location": "Lletya",
+    "owner": "Dalldav",
     "currency": "Coins",
     "x": 2322,
     "y": 3165,
@@ -27687,6 +28114,7 @@
   {
     "name": "Lletya Food Store",
     "location": "Lletya",
+    "owner": "Gethin",
     "currency": "Coins",
     "items": [
       {
@@ -27721,6 +28149,7 @@
         "itemId": 1891,
         "itemName": "Cake",
         "stock": 5,
+        "sellPrice": 65,
         "restockSeconds": 120
       }
     ]
@@ -27728,6 +28157,7 @@
   {
     "name": "Lletya General Store",
     "location": "Lletya",
+    "owner": "Eudav",
     "currency": "Coins",
     "items": [
       {
@@ -27812,6 +28242,7 @@
   {
     "name": "Lletya Seamstress",
     "location": "Lletya",
+    "owner": "Oronwen",
     "currency": "Coins",
     "x": 2322,
     "y": 3181,
@@ -27885,6 +28316,7 @@
   {
     "name": "Lliann's Wares",
     "location": "Prifddinas",
+    "owner": "Lliann",
     "currency": "Coins",
     "x": 3229,
     "y": 6070,
@@ -27899,59 +28331,51 @@
         "restockSeconds": 150000000
       },
       {
-        "itemId": 23927,
-        "itemName": "Crystal of ithell",
+        "itemId": -1,
+        "itemName": "Crystal of Ithell",
         "stock": 10,
-        "sellPrice": 500000,
         "restockSeconds": 120
       },
       {
-        "itemId": 23929,
-        "itemName": "Crystal of iorwerth",
+        "itemId": -1,
+        "itemName": "Crystal of Iorwerth",
         "stock": 10,
-        "sellPrice": 500000,
         "restockSeconds": 120
       },
       {
-        "itemId": 23931,
-        "itemName": "Crystal of trahaearn",
+        "itemId": -1,
+        "itemName": "Crystal of Trahaearn",
         "stock": 10,
-        "sellPrice": 500000,
         "restockSeconds": 120
       },
       {
-        "itemId": 23933,
-        "itemName": "Crystal of cadarn",
+        "itemId": -1,
+        "itemName": "Crystal of Cadarn",
         "stock": 10,
-        "sellPrice": 500000,
         "restockSeconds": 120
       },
       {
-        "itemId": 23935,
-        "itemName": "Crystal of crwys",
+        "itemId": -1,
+        "itemName": "Crystal of Crwys",
         "stock": 10,
-        "sellPrice": 500000,
         "restockSeconds": 120
       },
       {
-        "itemId": 23937,
-        "itemName": "Crystal of meilyr",
+        "itemId": -1,
+        "itemName": "Crystal of Meilyr",
         "stock": 10,
-        "sellPrice": 500000,
         "restockSeconds": 120
       },
       {
-        "itemId": 23939,
-        "itemName": "Crystal of hefin",
+        "itemId": -1,
+        "itemName": "Crystal of Hefin",
         "stock": 10,
-        "sellPrice": 500000,
         "restockSeconds": 120
       },
       {
-        "itemId": 23941,
-        "itemName": "Crystal of amlodd",
+        "itemId": -1,
+        "itemName": "Crystal of Amlodd",
         "stock": 10,
-        "sellPrice": 500000,
         "restockSeconds": 120
       },
       {
@@ -28022,6 +28446,7 @@
   {
     "name": "Logava Gricoller's Cooking Supplies",
     "location": "Hosidius",
+    "owner": "Logava",
     "currency": "Coins",
     "x": 1767,
     "y": 3599,
@@ -28170,26 +28595,26 @@
         "sellPrice": 23000
       },
       {
-        "itemId": 3844,
-        "itemName": "Book of balance",
+        "itemId": -1,
+        "itemName": "Book of Balance",
         "stock": -1,
         "sellPrice": 12000
       },
       {
-        "itemId": 12612,
-        "itemName": "Book of darkness",
+        "itemId": -1,
+        "itemName": "Book of Darkness",
         "stock": -1,
         "sellPrice": 14000
       },
       {
-        "itemId": 12610,
-        "itemName": "Book of law",
+        "itemId": -1,
+        "itemName": "Book of Law",
         "stock": -1,
         "sellPrice": 14000
       },
       {
-        "itemId": 12608,
-        "itemName": "Book of war",
+        "itemId": -1,
+        "itemName": "Book of War",
         "stock": -1,
         "sellPrice": 14000
       },
@@ -28206,8 +28631,8 @@
         "sellPrice": 12000
       },
       {
-        "itemId": 25818,
-        "itemName": "Book of the dead",
+        "itemId": -1,
+        "itemName": "Book of the Dead",
         "stock": -1,
         "sellPrice": 9500
       },
@@ -28428,8 +28853,8 @@
         "sellPrice": 115000
       },
       {
-        "itemId": 10828,
-        "itemName": "Helm of neitiznot",
+        "itemId": -1,
+        "itemName": "Helm of Neitiznot",
         "stock": -1,
         "sellPrice": 95000
       },
@@ -28456,20 +28881,20 @@
         "itemName": "Ava's assembler"
       },
       {
-        "itemId": 21793,
-        "itemName": "Imbued guthix cape",
+        "itemId": -1,
+        "itemName": "Imbued Guthix cape",
         "stock": -1,
         "sellPrice": 250000
       },
       {
-        "itemId": 21795,
-        "itemName": "Imbued zamorak cape",
+        "itemId": -1,
+        "itemName": "Imbued Zamorak cape",
         "stock": -1,
         "sellPrice": 250000
       },
       {
-        "itemId": 21791,
-        "itemName": "Imbued saradomin cape",
+        "itemId": -1,
+        "itemName": "Imbued Saradomin cape",
         "stock": -1,
         "sellPrice": 250000
       },
@@ -28480,8 +28905,8 @@
         "sellPrice": 30000
       },
       {
-        "itemId": 27279,
-        "itemName": "Thread of elidinis",
+        "itemId": -1,
+        "itemName": "Thread of Elidinis",
         "stock": -1,
         "sellPrice": 350000
       }
@@ -28490,6 +28915,7 @@
   {
     "name": "Louie's Armoured Legs Bazaar",
     "location": "Al Kharid",
+    "owner": "Louie Legs",
     "currency": "Coins",
     "items": [
       {
@@ -28539,6 +28965,7 @@
   {
     "name": "Lovecraft's Tackle",
     "location": "Witchaven",
+    "owner": "Ezekial Lovecraft",
     "currency": "Coins",
     "x": 2731,
     "y": 3295,
@@ -28682,6 +29109,7 @@
   {
     "name": "Lowe's Archery Emporium",
     "location": "Varrock",
+    "owner": "Lowe",
     "currency": "Coins",
     "x": 3230,
     "y": 3427,
@@ -28796,6 +29224,7 @@
   },
   {
     "name": "Lucrezia",
+    "owner": "Lucrezia",
     "currency": "Coins",
     "x": 1356,
     "y": 2926,
@@ -28812,6 +29241,7 @@
   {
     "name": "Lumbridge General Store",
     "location": "Lumbridge",
+    "owner": "Shop keeper, Shop assistant",
     "currency": "Coins",
     "x": 3210,
     "y": 3252,
@@ -28927,6 +29357,7 @@
   {
     "name": "Lunami's Axe Shop",
     "location": "Auburnvale",
+    "owner": "Lunami",
     "currency": "Coins",
     "x": 1402,
     "y": 3344,
@@ -29007,6 +29438,7 @@
   {
     "name": "Lundail's Arena-side Rune Shop",
     "location": "Mage Arena",
+    "owner": "Lundail",
     "currency": "Coins",
     "items": [
       {
@@ -29132,6 +29564,7 @@
   },
   {
     "name": "Lunderwin",
+    "owner": "Lunderwin",
     "currency": "Coins",
     "items": [
       {
@@ -29142,6 +29575,7 @@
   },
   {
     "name": "Lyra",
+    "owner": "Lyra",
     "currency": "Coins",
     "items": [
       {
@@ -29190,6 +29624,7 @@
   },
   {
     "name": "Mac",
+    "owner": "Mac",
     "currency": "Coins",
     "x": 2787,
     "y": 3543,
@@ -29206,6 +29641,7 @@
   {
     "name": "Mage Arena Staffs",
     "location": "Mage Arena",
+    "owner": "Chamber guardian",
     "currency": "Coins",
     "items": [
       {
@@ -29234,6 +29670,7 @@
   {
     "name": "Magic Guild Store (Mystic Robes)",
     "location": "Wizards' Guild",
+    "owner": "Wizard Sinina",
     "currency": "Coins",
     "items": [
       {
@@ -29276,12 +29713,14 @@
   {
     "name": "Magic Guild Store (Mystic Robes) (2)",
     "location": "Wizards' Guild",
+    "owner": "Wizard Sinina",
     "currency": "Coins",
     "items": [
       {
-        "itemId": -1,
+        "itemId": 9762,
         "itemName": "Magic cape",
         "stock": 1,
+        "sellPrice": 99000,
         "restockSeconds": 1
       }
     ]
@@ -29289,10 +29728,11 @@
   {
     "name": "Magic Guild Store (Mystic Robes) (3)",
     "location": "Wizards' Guild",
+    "owner": "Wizard Sinina",
     "currency": "Coins",
     "items": [
       {
-        "itemId": 9762,
+        "itemId": 9763,
         "itemName": "Magic cape(t)",
         "stock": 1,
         "sellPrice": 99000,
@@ -29303,6 +29743,7 @@
   {
     "name": "Magic Guild Store (Runes and Staves)",
     "location": "Wizards' Guild",
+    "owner": "Wizard Akutha",
     "currency": "Coins",
     "items": [
       {
@@ -29471,6 +29912,7 @@
   {
     "name": "Mahogany Homes Reward Shop",
     "location": "Falador",
+    "owner": "Amy",
     "currency": "Points",
     "x": 2988,
     "y": 3368,
@@ -29529,6 +29971,7 @@
   {
     "name": "Mairin's Market",
     "location": "Underwater",
+    "owner": "Mairin",
     "currency": "Mermaid's tear",
     "x": 3765,
     "y": 10290,
@@ -29575,6 +30018,7 @@
   },
   {
     "name": "Makeover Mage",
+    "owner": "Makeover Mage",
     "currency": "Coins",
     "items": [
       {
@@ -29587,6 +30031,7 @@
   },
   {
     "name": "Malignius Mortifer",
+    "owner": "Malignius Mortifer",
     "currency": "Coins",
     "items": [
       {
@@ -29599,6 +30044,7 @@
   },
   {
     "name": "Malignius Mortifer (2)",
+    "owner": "Malignius Mortifer",
     "currency": "Coins",
     "items": [
       {
@@ -29617,6 +30063,7 @@
   },
   {
     "name": "Marcellus",
+    "owner": "Marcellus",
     "currency": "Coins",
     "items": [
       {
@@ -29665,6 +30112,7 @@
   },
   {
     "name": "Marisi",
+    "owner": "Marisi",
     "currency": "Coins",
     "items": [
       {
@@ -29712,8 +30160,9 @@
     ]
   },
   {
-    "name": "Mark of grace",
-    "currency": "Mark of grace",
+    "name": "Mark of Grace",
+    "owner": "Mark of Grace",
+    "currency": "Mark of Grace",
     "items": [
       {
         "itemId": 11850,
@@ -29768,6 +30217,7 @@
   },
   {
     "name": "Markog",
+    "owner": "Markog",
     "currency": "Coins",
     "items": [
       {
@@ -29780,16 +30230,17 @@
   },
   {
     "name": "Martin the Master Gardener",
+    "owner": "Martin the Master Gardener",
     "currency": "Coins",
     "items": [
       {
-        "itemId": -1,
+        "itemId": 9810,
         "itemName": "Farming cape",
         "stock": -1,
         "sellPrice": 99000
       },
       {
-        "itemId": 9810,
+        "itemId": 9811,
         "itemName": "Farming cape(t)",
         "stock": -1,
         "sellPrice": 99000
@@ -29799,6 +30250,7 @@
   {
     "name": "Martin Thwait's Lost and Found",
     "location": "Rogues' Den",
+    "owner": "Martin Thwait",
     "currency": "Coins",
     "x": 3051,
     "y": 4974,
@@ -29858,6 +30310,7 @@
         "itemId": 865,
         "itemName": "Steel knife",
         "stock": 5,
+        "sellPrice": 11,
         "restockSeconds": 60
       },
       {
@@ -29886,23 +30339,7 @@
   {
     "name": "Martin Thwait's Lost and Found (2)",
     "location": "Rogues' Den",
-    "currency": "Coins",
-    "x": 3051,
-    "y": 4974,
-    "plane": 0,
-    "mapId": 10137,
-    "items": [
-      {
-        "itemId": -1,
-        "itemName": "Thieving cape",
-        "stock": 1,
-        "restockSeconds": 1
-      }
-    ]
-  },
-  {
-    "name": "Martin Thwait's Lost and Found (3)",
-    "location": "Rogues' Den",
+    "owner": "Martin Thwait",
     "currency": "Coins",
     "x": 3051,
     "y": 4974,
@@ -29911,6 +30348,25 @@
     "items": [
       {
         "itemId": 9777,
+        "itemName": "Thieving cape",
+        "stock": 1,
+        "sellPrice": 99000,
+        "restockSeconds": 1
+      }
+    ]
+  },
+  {
+    "name": "Martin Thwait's Lost and Found (3)",
+    "location": "Rogues' Den",
+    "owner": "Martin Thwait",
+    "currency": "Coins",
+    "x": 3051,
+    "y": 4974,
+    "plane": 0,
+    "mapId": 10137,
+    "items": [
+      {
+        "itemId": 9778,
         "itemName": "Thieving cape(t)",
         "stock": 1,
         "sellPrice": 99000,
@@ -29920,16 +30376,17 @@
   },
   {
     "name": "Master Crafter",
+    "owner": "Master Crafter",
     "currency": "Coins",
     "items": [
       {
-        "itemId": -1,
+        "itemId": 9780,
         "itemName": "Crafting cape",
         "stock": -1,
         "sellPrice": 99000
       },
       {
-        "itemId": 9780,
+        "itemId": 9781,
         "itemName": "Crafting cape(t)",
         "stock": -1,
         "sellPrice": 99000
@@ -29938,16 +30395,17 @@
   },
   {
     "name": "Master fisher",
+    "owner": "Master fisher",
     "currency": "Coins",
     "items": [
       {
-        "itemId": -1,
+        "itemId": 9798,
         "itemName": "Fishing cape",
         "stock": -1,
         "sellPrice": 99000
       },
       {
-        "itemId": 9798,
+        "itemId": 9799,
         "itemName": "Fishing cape(t)",
         "stock": -1,
         "sellPrice": 99000
@@ -29956,11 +30414,12 @@
   },
   {
     "name": "Mawnis Burowgar",
+    "owner": "Mawnis Burowgar",
     "currency": "Coins",
     "items": [
       {
-        "itemId": 10828,
-        "itemName": "Helm of neitiznot",
+        "itemId": -1,
+        "itemName": "Helm of Neitiznot",
         "stock": -1,
         "sellPrice": 50000
       }
@@ -29968,16 +30427,17 @@
   },
   {
     "name": "Melee combat tutor",
+    "owner": "Melee combat tutor",
     "currency": "Coins",
     "items": [
       {
-        "itemId": -1,
+        "itemId": 9753,
         "itemName": "Defence cape",
         "stock": -1,
         "sellPrice": 99000
       },
       {
-        "itemId": 9753,
+        "itemId": 9754,
         "itemName": "Defence cape(t)",
         "stock": -1,
         "sellPrice": 99000
@@ -29986,6 +30446,7 @@
   },
   {
     "name": "Mernia",
+    "owner": "Mernia",
     "currency": "Coins",
     "items": [
       {
@@ -30034,6 +30495,7 @@
   },
   {
     "name": "Metarialus",
+    "owner": "Metarialus",
     "currency": "ecto-tokens",
     "items": [
       {
@@ -30047,6 +30509,7 @@
   {
     "name": "Miltog's Lamps",
     "location": "Dorgesh-Kaan",
+    "owner": "Miltog",
     "currency": "Coins",
     "x": 2721,
     "y": 5322,
@@ -30128,6 +30591,7 @@
   {
     "name": "Mining Guild Mineral Exchange",
     "location": "Mining Guild",
+    "owner": "Belona",
     "currency": "Unidentified minerals",
     "items": [
       {
@@ -30161,7 +30625,8 @@
   },
   {
     "name": "Miscellanian Clothes Shop",
-    "location": "Miscellania and Etceteria Dungeon",
+    "location": "Miscellania Expansion",
+    "owner": "Halla",
     "currency": "Coins",
     "x": 2506,
     "y": 10253,
@@ -30291,7 +30756,8 @@
   },
   {
     "name": "Miscellanian Food Shop",
-    "location": "Miscellania and Etceteria Dungeon",
+    "location": "Miscellania Expansion",
+    "owner": "Osvald",
     "currency": "Coins",
     "x": 2517,
     "y": 10253,
@@ -30358,7 +30824,8 @@
   },
   {
     "name": "Miscellanian General Store",
-    "location": "Miscellania and Etceteria Dungeon",
+    "location": "Miscellania Expansion",
+    "owner": "Finn",
     "currency": "Coins",
     "x": 2506,
     "y": 10260,
@@ -30447,6 +30914,7 @@
   {
     "name": "Mistrock Mining Supplies",
     "location": "Mistrock",
+    "owner": "Necto",
     "currency": "Coins",
     "x": 1398,
     "y": 2870,
@@ -30555,6 +31023,7 @@
   {
     "name": "Mixology Rewards",
     "location": "Mastering Mixology",
+    "owner": "Supervisor Lalo",
     "currency": "Coins",
     "x": 1395,
     "y": 9312,
@@ -30626,6 +31095,7 @@
   {
     "name": "Moon Clan Fine Clothes",
     "location": "Lunar Isle",
+    "owner": "Rimae Sirsalis",
     "currency": "Coins",
     "x": 2102,
     "y": 3912,
@@ -30699,6 +31169,7 @@
   {
     "name": "Moon Clan General Store",
     "location": "Lunar Isle",
+    "owner": "Melana Moonlander",
     "currency": "Coins",
     "x": 2096,
     "y": 3907,
@@ -30793,6 +31264,7 @@
   {
     "name": "Moonrise Wines",
     "location": "Moonrise Brewery and Winery",
+    "owner": "Antonius",
     "currency": "Coins",
     "items": [
       {
@@ -30848,6 +31320,7 @@
   {
     "name": "Mount Karuulm Weapon Shop",
     "location": "Mount Karuulm",
+    "owner": "Leke quo Keran",
     "currency": "Coins",
     "x": 1298,
     "y": 3797,
@@ -30857,24 +31330,28 @@
         "itemId": 1241,
         "itemName": "Steel spear",
         "stock": 2,
+        "sellPrice": 325,
         "restockSeconds": 120
       },
       {
         "itemId": 1243,
         "itemName": "Mithril spear",
         "stock": 1,
+        "sellPrice": 845,
         "restockSeconds": 1800
       },
       {
         "itemId": 1245,
         "itemName": "Adamant spear",
         "stock": 1,
+        "sellPrice": 2080,
         "restockSeconds": 3000
       },
       {
         "itemId": 1247,
         "itemName": "Rune spear",
         "stock": 1,
+        "sellPrice": 20800,
         "restockSeconds": 4800
       },
       {
@@ -30924,6 +31401,7 @@
   {
     "name": "Multicannon parts for sale",
     "location": "Ice Mountain workshop",
+    "owner": "Nulodion",
     "currency": "Coins",
     "items": [
       {
@@ -30979,6 +31457,7 @@
   {
     "name": "Myreque's Rest",
     "location": "Burgh de Rott",
+    "owner": "Veliaf Hurtz",
     "currency": "Coins",
     "x": 3495,
     "y": 9628,
@@ -31002,6 +31481,7 @@
   {
     "name": "Mysterious Hallowed Goods",
     "location": "Hallowed Sepulchre lobby",
+    "owner": "Mysterious Stranger",
     "currency": "Hallowed mark",
     "items": [
       {
@@ -31079,6 +31559,7 @@
   {
     "name": "Mysterious Stranger (shop)",
     "location": "Theatre of Blood",
+    "owner": "Mysterious Stranger",
     "currency": "Coins",
     "items": [
       {
@@ -31092,7 +31573,8 @@
   },
   {
     "name": "Mythical Cape Store",
-    "location": "{{FloorNumber",
+    "location": "{{FloorNumber|uk=2}} of Myths' Guild",
+    "owner": "Jack",
     "currency": "Coins",
     "x": 2448,
     "y": 2849,
@@ -31108,7 +31590,8 @@
   },
   {
     "name": "Myths' Guild Armoury",
-    "location": "{{FloorNumber",
+    "location": "{{FloorNumber|uk=2}} of Myths' Guild",
+    "owner": "Erdan",
     "currency": "Coins",
     "items": [
       {
@@ -31129,7 +31612,8 @@
   },
   {
     "name": "Myths' Guild Herbalist",
-    "location": "Myths' Guild, {{FloorNumber",
+    "location": "Myths' Guild, {{FloorNumber|uk=1}}",
+    "owner": "Primula",
     "currency": "Coins",
     "items": [
       {
@@ -31185,7 +31669,8 @@
   },
   {
     "name": "Myths' Guild Weaponry",
-    "location": "{{FloorNumber",
+    "location": "{{FloorNumber|uk=2}} of Myths' Guild",
+    "owner": "Diana",
     "currency": "Coins",
     "x": 2461,
     "y": 2848,
@@ -31195,6 +31680,7 @@
         "itemId": 1215,
         "itemName": "Dragon dagger",
         "stock": 2,
+        "sellPrice": 30000,
         "restockSeconds": 300
       },
       {
@@ -31223,6 +31709,7 @@
   {
     "name": "Nardah General Store",
     "location": "Nardah",
+    "owner": "Kazemde",
     "currency": "Coins",
     "x": 3413,
     "y": 2912,
@@ -31317,6 +31804,7 @@
   {
     "name": "Nardah Hunter Shop",
     "location": "Nardah",
+    "owner": "Artimeus",
     "currency": "Coins",
     "x": 3438,
     "y": 2903,
@@ -31411,6 +31899,7 @@
   {
     "name": "Nardok's Bone Weapons",
     "location": "Dorgesh-Kaan mine",
+    "owner": "Nardok",
     "currency": "Coins",
     "items": [
       {
@@ -31460,6 +31949,7 @@
   {
     "name": "Nathifa's Bake Stall",
     "location": "Sophanem",
+    "owner": "Nathifa",
     "currency": "Coins",
     "x": 3304,
     "y": 2770,
@@ -31476,18 +31966,21 @@
         "itemId": 1891,
         "itemName": "Cake",
         "stock": 3,
+        "sellPrice": 50,
         "restockSeconds": 480
       },
       {
-        "itemId": 1897,
+        "itemId": 1901,
         "itemName": "Chocolate slice",
         "stock": 8,
+        "sellPrice": 30,
         "restockSeconds": 120
       },
       {
         "itemId": 1823,
         "itemName": "Waterskin(4)",
         "stock": 50,
+        "sellPrice": 30,
         "restockSeconds": 60
       }
     ]
@@ -31495,6 +31988,7 @@
   {
     "name": "Ned's Handmade Rope (100% Wool)",
     "location": "Draynor Village",
+    "owner": "Ned",
     "currency": "Coins",
     "items": [
       {
@@ -31509,6 +32003,7 @@
   {
     "name": "Ned's Handmade Rope (100% Wool) (2)",
     "location": "Draynor Village",
+    "owner": "Ned",
     "currency": "Coins",
     "items": [
       {
@@ -31523,6 +32018,7 @@
   {
     "name": "Neil's Wilderness Cape Shop",
     "location": "Bandit Camp",
+    "owner": "Neil",
     "currency": "Coins",
     "x": 3026,
     "y": 3707,
@@ -31568,6 +32064,7 @@
   {
     "name": "Neitiznot supplies",
     "location": "Neitiznot",
+    "owner": "Jofridr Mordstatter",
     "currency": "Coins",
     "x": 2337,
     "y": 3807,
@@ -31620,6 +32117,7 @@
   {
     "name": "Nemus Retreat (pub)",
     "location": "Nemus Retreat",
+    "owner": "Bartender",
     "currency": "Coins",
     "x": 1366,
     "y": 3304,
@@ -31679,6 +32177,7 @@
   },
   {
     "name": "Nigel",
+    "owner": "Nigel",
     "currency": "Blood money",
     "items": [
       {
@@ -31703,6 +32202,7 @@
   },
   {
     "name": "Nikkie",
+    "owner": "Nikkie",
     "currency": "Coins",
     "items": [
       {
@@ -31751,6 +32251,7 @@
   },
   {
     "name": "Nulodion",
+    "owner": "Nulodion",
     "currency": "Coins",
     "items": [
       {
@@ -31764,6 +32265,7 @@
   {
     "name": "Nurmof's Pickaxe Shop",
     "location": "Dwarven Mines",
+    "owner": "Nurmof",
     "currency": "Coins",
     "items": [
       {
@@ -31813,6 +32315,7 @@
   {
     "name": "Obli's General Store",
     "location": "Shilo Village",
+    "owner": "Obli",
     "currency": "Coins",
     "x": 2822,
     "y": 2960,
@@ -31998,6 +32501,7 @@
   {
     "name": "Obli's General Store (2)",
     "location": "Shilo Village",
+    "owner": "Obli",
     "currency": "Coins",
     "x": 2822,
     "y": 2960,
@@ -32182,16 +32686,17 @@
   },
   {
     "name": "Olaf the Bard",
+    "owner": "Olaf the Bard",
     "currency": "Coins",
     "items": [
       {
-        "itemId": -1,
+        "itemId": 13221,
         "itemName": "Music cape",
         "stock": -1,
         "sellPrice": 99000
       },
       {
-        "itemId": 13221,
+        "itemId": 13222,
         "itemName": "Music cape(t)",
         "stock": -1,
         "sellPrice": 99000
@@ -32201,6 +32706,7 @@
   {
     "name": "Old Man Ral's Supplies",
     "location": "Meiyerditch",
+    "owner": "Old Man Ral",
     "currency": "Coins",
     "items": [
       {
@@ -32218,8 +32724,8 @@
         "restockSeconds": 1
       },
       {
-        "itemId": 7648,
-        "itemName": "Rod of ivandis (10)",
+        "itemId": -1,
+        "itemName": "Rod of Ivandis (10)",
         "stock": -1,
         "sellPrice": 1000,
         "restockSeconds": 1
@@ -32249,6 +32755,7 @@
   },
   {
     "name": "Oneiromancer",
+    "owner": "Oneiromancer",
     "currency": "Coins",
     "items": [
       {
@@ -32310,6 +32817,7 @@
   {
     "name": "Oobapohk's Javelin Store",
     "location": "Marim",
+    "owner": "Oobapohk",
     "currency": "Coins",
     "x": 2775,
     "y": 2778,
@@ -32362,6 +32870,7 @@
   {
     "name": "Ore seller",
     "location": "Blast Furnace in Keldagrim",
+    "owner": "Ordan",
     "currency": "Coins",
     "items": [
       {
@@ -32418,6 +32927,7 @@
   {
     "name": "Ore store",
     "location": "Jatizso",
+    "owner": "Hring Hring",
     "currency": "Coins",
     "x": 2393,
     "y": 3799,
@@ -32483,6 +32993,7 @@
   },
   {
     "name": "Osman",
+    "owner": "Osman",
     "currency": "Coins",
     "items": [
       {
@@ -32501,6 +33012,7 @@
   },
   {
     "name": "Oswallt",
+    "owner": "Oswallt",
     "currency": "Coins",
     "items": [
       {
@@ -32550,6 +33062,7 @@
   {
     "name": "Outer Fortis General Store",
     "location": "Outer Fortis",
+    "owner": "Shopkeeper (Outer Fortis)",
     "currency": "Coins",
     "items": [
       {
@@ -32662,6 +33175,7 @@
   {
     "name": "Outer Fortis General Store (2)",
     "location": "Outer Fortis",
+    "owner": "Shopkeeper (Outer Fortis)",
     "currency": "Coins",
     "items": [
       {
@@ -32690,6 +33204,7 @@
   {
     "name": "Oziach (shop)",
     "location": "Edgeville",
+    "owner": "Oziach",
     "currency": "Coins",
     "x": 3069,
     "y": 3517,
@@ -32721,6 +33236,7 @@
   {
     "name": "Paramaya Inn",
     "location": "Shilo Village",
+    "owner": "Kaleb Paramaya",
     "currency": "Coins",
     "x": 2857,
     "y": 2999,
@@ -32755,6 +33271,7 @@
   {
     "name": "Pellem's Fur Store",
     "location": "Hunter Guild",
+    "owner": "Pellem",
     "currency": "Coins",
     "items": [
       {
@@ -32915,6 +33432,7 @@
   {
     "name": "Perry's Chop-chop Shop",
     "location": "Woodcutting Guild",
+    "owner": "Perry",
     "currency": "Coins",
     "x": 1649,
     "y": 3502,
@@ -32974,6 +33492,7 @@
   {
     "name": "Petrified Pete's Ore Shop",
     "location": "Volcanic Mine",
+    "owner": "Petrified Pete",
     "currency": "Volcanic Mine points",
     "items": [
       {
@@ -33089,6 +33608,7 @@
   {
     "name": "Picaria's Fishing Shop",
     "location": "Sunset Coast",
+    "owner": "Picaria",
     "currency": "Coins",
     "x": 1557,
     "y": 2962,
@@ -33225,6 +33745,7 @@
   {
     "name": "Pickaxe-Is-Mine",
     "location": "Keldagrim",
+    "owner": "Tati and Sune",
     "currency": "Coins",
     "x": 2922,
     "y": 10215,
@@ -33271,6 +33792,7 @@
   {
     "name": "Pie Shop",
     "location": "Cooks' Guild",
+    "owner": "Romily Weaklax",
     "currency": "Coins",
     "x": 3142,
     "y": 3444,
@@ -33287,12 +33809,14 @@
         "itemId": 2325,
         "itemName": "Redberry pie",
         "stock": 5,
+        "sellPrice": 12,
         "restockSeconds": 60
       },
       {
         "itemId": 2327,
         "itemName": "Meat pie",
         "stock": 4,
+        "sellPrice": 15,
         "restockSeconds": 60
       },
       {
@@ -33306,36 +33830,42 @@
         "itemId": 2323,
         "itemName": "Apple pie",
         "stock": 3,
+        "sellPrice": 30,
         "restockSeconds": 60
       },
       {
         "itemId": 7178,
         "itemName": "Garden pie",
         "stock": 2,
+        "sellPrice": 24,
         "restockSeconds": 60
       },
       {
         "itemId": 7188,
         "itemName": "Fish pie",
         "stock": 1,
+        "sellPrice": 100,
         "restockSeconds": 60
       },
       {
         "itemId": 7198,
         "itemName": "Admiral pie",
         "stock": 0,
+        "sellPrice": 310,
         "restockSeconds": 60
       },
       {
         "itemId": 7208,
         "itemName": "Wild pie",
         "stock": 0,
+        "sellPrice": 182,
         "restockSeconds": 60
       },
       {
         "itemId": 7218,
         "itemName": "Summer pie",
         "stock": 0,
+        "sellPrice": 140,
         "restockSeconds": 60
       }
     ]
@@ -33343,6 +33873,7 @@
   {
     "name": "Pollnivneach general store",
     "location": "Pollnivneach",
+    "owner": "Market seller",
     "currency": "Coins",
     "x": 3358,
     "y": 2988,
@@ -33370,9 +33901,10 @@
         "restockSeconds": 9
       },
       {
-        "itemId": -1,
+        "itemId": 1825,
         "itemName": "Waterskin(3)",
         "stock": 20,
+        "sellPrice": 27,
         "restockSeconds": 6
       },
       {
@@ -33471,6 +34003,7 @@
   {
     "name": "Port Phasmatys General Store",
     "location": "Port Phasmatys",
+    "owner": "Ghost shopkeeper",
     "currency": "Coins",
     "x": 3659,
     "y": 3477,
@@ -33544,6 +34077,7 @@
   {
     "name": "Port Roberts Cannonball Stall",
     "location": "Port Roberts",
+    "owner": "Iron Bill",
     "currency": "Coins",
     "items": [
       {
@@ -33593,6 +34127,7 @@
   {
     "name": "Port Roberts Fish Stall",
     "location": "Port Roberts",
+    "owner": "Gregory",
     "currency": "Coins",
     "items": [
       {
@@ -33698,6 +34233,7 @@
   {
     "name": "Port Roberts Fur Stall",
     "location": "Port Roberts",
+    "owner": "Perdie",
     "currency": "Coins",
     "items": [
       {
@@ -33803,6 +34339,7 @@
   {
     "name": "Port Roberts Gem Stall",
     "location": "Port Roberts",
+    "owner": "Eleanor",
     "currency": "Coins",
     "items": [
       {
@@ -33838,6 +34375,7 @@
   {
     "name": "Port Roberts General Store",
     "location": "Port Roberts",
+    "owner": "Shopkeeper (Port Roberts)",
     "currency": "Coins",
     "x": 1887,
     "y": 3294,
@@ -33974,6 +34512,7 @@
   {
     "name": "Port Roberts Ore Stall",
     "location": "Port Roberts",
+    "owner": "Delf",
     "currency": "Coins",
     "items": [
       {
@@ -34058,6 +34597,7 @@
   {
     "name": "Port Roberts Silk Stall",
     "location": "Port Roberts",
+    "owner": "Doria",
     "currency": "Coins",
     "items": [
       {
@@ -34086,13 +34626,14 @@
   {
     "name": "Port Roberts Silver Stall",
     "location": "Port Roberts",
+    "owner": "Amos",
     "currency": "Coins",
     "items": [
       {
         "itemId": 442,
         "itemName": "Silver ore",
         "stock": 10,
-        "sellPrice": 90,
+        "sellPrice": 75,
         "restockSeconds": 60
       },
       {
@@ -34114,6 +34655,7 @@
   {
     "name": "Port Roberts Spice Stall",
     "location": "Port Roberts",
+    "owner": "Samir",
     "currency": "Coins",
     "items": [
       {
@@ -34142,6 +34684,7 @@
   {
     "name": "Port Roberts Veg Stall",
     "location": "Port Roberts",
+    "owner": "Marla",
     "currency": "Coins",
     "items": [
       {
@@ -34218,6 +34761,7 @@
   },
   {
     "name": "Praistan Ebola",
+    "owner": "Praistan Ebola",
     "currency": "Coins",
     "items": [
       {
@@ -34267,6 +34811,7 @@
   {
     "name": "Prifddinas Foodstuffs",
     "location": "Prifddinas",
+    "owner": "Derwen",
     "currency": "Coins",
     "x": 3276,
     "y": 6108,
@@ -34396,6 +34941,7 @@
         "itemId": 1891,
         "itemName": "Cake",
         "stock": 5,
+        "sellPrice": 50,
         "restockSeconds": 60
       }
     ]
@@ -34403,6 +34949,7 @@
   {
     "name": "Prifddinas Gem Stall",
     "location": "Prifddinas",
+    "owner": "Glenda",
     "currency": "Coins",
     "x": 3276,
     "y": 6099,
@@ -34442,6 +34989,7 @@
   {
     "name": "Prifddinas General Store",
     "location": "Prifddinas",
+    "owner": "Gwallter",
     "currency": "Coins",
     "x": 3301,
     "y": 6055,
@@ -34558,6 +35106,7 @@
   {
     "name": "Prifddinas Herbal Supplies",
     "location": "Prifddinas",
+    "owner": "Llio",
     "currency": "Coins",
     "x": 3284,
     "y": 6121,
@@ -34618,6 +35167,7 @@
   {
     "name": "Prifddinas Silver Stall",
     "location": "Prifddinas",
+    "owner": "Osian",
     "currency": "Coins",
     "x": 3282,
     "y": 6098,
@@ -34650,6 +35200,7 @@
   {
     "name": "Prifddinas Spice Stall",
     "location": "Prifddinas",
+    "owner": "Caerwyn",
     "currency": "Coins",
     "items": [
       {
@@ -34678,6 +35229,7 @@
   {
     "name": "Prifddinas' Seamstress",
     "location": "Prifddinas",
+    "owner": "Nia",
     "currency": "Coins",
     "x": 3219,
     "y": 6077,
@@ -34807,6 +35359,7 @@
   },
   {
     "name": "Prissy Scilla",
+    "owner": "Prissy Scilla",
     "currency": "Coins",
     "items": [
       {
@@ -34856,6 +35409,7 @@
   {
     "name": "Proselyte Temple Knight Armoury",
     "location": "Falador Park",
+    "owner": "Sir Tiffy Cashien",
     "currency": "Coins",
     "items": [
       {
@@ -34923,30 +35477,35 @@
   {
     "name": "Prospector Percy's Nugget Shop",
     "location": "Motherlode Mine",
+    "owner": "Prospector Percy",
     "currency": "Golden nugget",
     "items": [
       {
-        "itemId": -1,
+        "itemId": 12013,
         "itemName": "Prospector helmet#Motherlode Mine",
         "stock": 100,
+        "sellPrice": 40,
         "restockSeconds": 1
       },
       {
-        "itemId": -1,
+        "itemId": 12014,
         "itemName": "Prospector jacket#Motherlode Mine",
         "stock": 100,
+        "sellPrice": 60,
         "restockSeconds": 1
       },
       {
-        "itemId": -1,
+        "itemId": 12015,
         "itemName": "Prospector legs#Motherlode Mine",
         "stock": 100,
+        "sellPrice": 50,
         "restockSeconds": 1
       },
       {
-        "itemId": -1,
+        "itemId": 12016,
         "itemName": "Prospector boots#Motherlode Mine",
         "stock": 100,
+        "sellPrice": 30,
         "restockSeconds": 1
       },
       {
@@ -34980,6 +35539,7 @@
   {
     "name": "PvP Arena Rewards",
     "location": "Emir's Arena",
+    "owner": "Mubariz",
     "currency": "Points",
     "items": [
       {
@@ -34999,6 +35559,7 @@
   {
     "name": "Quality Armour Shop",
     "location": "Keldagrim",
+    "owner": "Saro",
     "currency": "Coins",
     "x": 2825,
     "y": 10202,
@@ -35073,6 +35634,7 @@
   {
     "name": "Quality Weapons Shop",
     "location": "North-west corner of Keldagrim",
+    "owner": "Santiri",
     "currency": "Coins",
     "x": 2824,
     "y": 10234,
@@ -35161,6 +35723,7 @@
   {
     "name": "Quartermaster's Stores",
     "location": "Tyras Camp",
+    "owner": "Quartermaster",
     "currency": "Coins",
     "items": [
       {
@@ -35266,6 +35829,7 @@
   {
     "name": "Quetzacalli Gorge General Store",
     "location": "Quetzacalli Gorge",
+    "owner": "Shopkeeper",
     "currency": "Coins",
     "x": 1515,
     "y": 3226,
@@ -35381,6 +35945,7 @@
   {
     "name": "Raetul and Co's Cloth Store",
     "location": "Sophanem",
+    "owner": "Raetul",
     "currency": "Coins",
     "x": 3313,
     "y": 2789,
@@ -35433,6 +35998,7 @@
   {
     "name": "Raetul and Co's Cloth Store (2)",
     "location": "Sophanem",
+    "owner": "Raetul",
     "currency": "Coins",
     "x": 3313,
     "y": 2789,
@@ -35492,6 +36058,7 @@
   {
     "name": "Ranael's Super Skirt Store",
     "location": "Al Kharid",
+    "owner": "Ranael",
     "currency": "Coins",
     "items": [
       {
@@ -35541,6 +36108,7 @@
   {
     "name": "Ranging Guild Ticket Exchange",
     "location": "Ranging Guild",
+    "owner": "Ticket Merchant",
     "currency": "Archery ticket",
     "items": [
       {
@@ -35583,6 +36151,7 @@
   },
   {
     "name": "Raqueel",
+    "owner": "Raqueel",
     "currency": "Coins",
     "items": [
       {
@@ -35595,6 +36164,7 @@
   },
   {
     "name": "Rasolo",
+    "owner": "Rasolo",
     "currency": "Coins",
     "items": [
       {
@@ -35608,6 +36178,7 @@
   {
     "name": "Rasolo the Wandering Merchant",
     "location": "South of Baxtorian Falls",
+    "owner": "Rasolo",
     "currency": "Coins",
     "items": [
       {
@@ -35635,6 +36206,7 @@
         "itemId": 1215,
         "itemName": "Dragon dagger",
         "stock": 1,
+        "sellPrice": 60000,
         "restockSeconds": 300
       },
       {
@@ -35697,6 +36269,7 @@
         "itemId": 1823,
         "itemName": "Waterskin(4)",
         "stock": 1,
+        "sellPrice": 60,
         "restockSeconds": 300
       },
       {
@@ -35763,9 +36336,10 @@
         "restockSeconds": 300
       },
       {
-        "itemId": 3428,
+        "itemId": 3424,
         "itemName": "Olive oil(3)",
         "stock": 2,
+        "sellPrice": 40,
         "restockSeconds": 300
       },
       {
@@ -35787,6 +36361,7 @@
   {
     "name": "Rat & Bat",
     "location": "Slepe",
+    "owner": "Carl <br/> Roy (After Sins of the Father)",
     "currency": "Coins",
     "x": 3746,
     "y": 3301,
@@ -35803,6 +36378,7 @@
   {
     "name": "Ratpit bar (Keldagrim)",
     "location": "Under Keldagrim",
+    "owner": "Rauborn",
     "currency": "Coins",
     "x": 1932,
     "y": 4692,
@@ -35826,6 +36402,7 @@
   {
     "name": "Ratpit bar (Port Sarim)",
     "location": "Under Port Sarim",
+    "owner": "Barman",
     "currency": "Coins",
     "x": 2979,
     "y": 9658,
@@ -35849,6 +36426,7 @@
   {
     "name": "Ratpit bar (Varrock)",
     "location": "Under Varrock",
+    "owner": "Barman",
     "currency": "Coins",
     "x": 2905,
     "y": 5080,
@@ -35872,6 +36450,7 @@
   {
     "name": "Razmire Builders Merchants",
     "location": "Mort'ton",
+    "owner": "Razmire Keelgan",
     "currency": "Coins",
     "items": [
       {
@@ -35914,6 +36493,7 @@
   {
     "name": "Razmire General Store",
     "location": "Mort'ton",
+    "owner": "Razmire Keelgan",
     "currency": "Coins",
     "items": [
       {
@@ -35980,9 +36560,10 @@
         "restockSeconds": 60
       },
       {
-        "itemId": -1,
+        "itemId": 3422,
         "itemName": "Olive oil(4)",
         "stock": 150,
+        "sellPrice": 28,
         "restockSeconds": 6
       },
       {
@@ -36025,6 +36606,7 @@
   {
     "name": "Regath's Wares",
     "location": "Arceuus",
+    "owner": "Regath",
     "currency": "Coins",
     "x": 1717,
     "y": 3732,
@@ -36175,6 +36757,7 @@
   {
     "name": "Reldak's Leather Armour",
     "location": "Dorgesh-Kaan",
+    "owner": "Reldak",
     "currency": "Coins",
     "items": [
       {
@@ -36203,6 +36786,7 @@
   {
     "name": "Rellekka Longhall Bar",
     "location": "Rellekka",
+    "owner": "Thora the Barkeep",
     "currency": "Coins",
     "x": 2659,
     "y": 3672,
@@ -36233,6 +36817,7 @@
   },
   {
     "name": "Rhazien",
+    "owner": "Rhazien",
     "currency": "Coins",
     "items": [
       {
@@ -36281,6 +36866,7 @@
   },
   {
     "name": "Rhonen",
+    "owner": "Rhonen",
     "currency": "Coins",
     "items": [
       {
@@ -36330,6 +36916,7 @@
   {
     "name": "Richard's Farming shop",
     "location": "North of East Ardougne",
+    "owner": "Richard",
     "currency": "Coins",
     "x": 2645,
     "y": 3360,
@@ -36374,6 +36961,7 @@
         "itemId": 5331,
         "itemName": "Watering can",
         "stock": 500,
+        "sellPrice": 8,
         "restockSeconds": 6
       },
       {
@@ -36556,6 +37144,7 @@
   {
     "name": "Richard's Wilderness Cape Shop",
     "location": "Edgeville",
+    "owner": "Richard",
     "currency": "Coins",
     "items": [
       {
@@ -36597,6 +37186,7 @@
   },
   {
     "name": "Rick (Wizards' Tower)",
+    "owner": "Rick (Wizards' Tower)",
     "currency": "Coins",
     "x": 3108,
     "y": 3163,
@@ -36613,6 +37203,7 @@
   {
     "name": "Rimmington General Store",
     "location": "Rimmington",
+    "owner": "Shop keeper (Rimmington)",
     "currency": "Coins",
     "items": [
       {
@@ -36711,6 +37302,7 @@
   {
     "name": "Rising Sun Inn",
     "location": "Falador",
+    "owner": "Kaylee, Emily, Tina",
     "currency": "Coins",
     "x": 2955,
     "y": 3379,
@@ -36738,6 +37330,7 @@
   },
   {
     "name": "Rohak",
+    "owner": "Rohak",
     "currency": "Coins",
     "items": [
       {
@@ -36751,6 +37344,7 @@
   {
     "name": "Rok's Chocs Box",
     "location": "Nardah",
+    "owner": "Rokuh",
     "currency": "Coins",
     "items": [
       {
@@ -36772,6 +37366,7 @@
   {
     "name": "Rommik's Crafty Supplies",
     "location": "Rimmington",
+    "owner": "Rommik",
     "currency": "Coins",
     "x": 2946,
     "y": 3209,
@@ -36858,6 +37453,7 @@
   },
   {
     "name": "Rosie",
+    "owner": "Rosie",
     "currency": "Coins",
     "items": [
       {
@@ -36907,6 +37503,7 @@
   {
     "name": "Rufus' Meat Emporium",
     "location": "Canifis",
+    "owner": "Rufus",
     "currency": "Coins",
     "x": 3505,
     "y": 3499,
@@ -36972,6 +37569,7 @@
   },
   {
     "name": "Rupert the Beard",
+    "owner": "Rupert the Beard",
     "currency": "Coins",
     "items": [
       {
@@ -36985,6 +37583,7 @@
   {
     "name": "Rusty Anchor Inn",
     "location": "Port Sarim",
+    "owner": "Bartender (Rusty Anchor Inn)",
     "currency": "Coins",
     "x": 3050,
     "y": 3257,
@@ -37001,6 +37600,7 @@
   {
     "name": "Salius' Armour Shop",
     "location": "Salvager Overlook",
+    "owner": "Salius",
     "currency": "Coins",
     "x": 1618,
     "y": 3293,
@@ -37044,6 +37644,7 @@
   {
     "name": "Salvager Overlook General Store",
     "location": "Salvager Overlook",
+    "owner": "Shopkeeper (Salvager Overlook)",
     "currency": "Coins",
     "x": 1625,
     "y": 3291,
@@ -37173,6 +37774,7 @@
   {
     "name": "Sam's Wilderness Cape Shop",
     "location": "East of Dark Warriors' Fortress",
+    "owner": "Sam (merchant)",
     "currency": "Coins",
     "items": [
       {
@@ -37215,6 +37817,7 @@
   {
     "name": "Sarah's Farming shop",
     "location": "South Falador Farm",
+    "owner": "Sarah",
     "currency": "Coins",
     "x": 3038,
     "y": 3294,
@@ -37259,6 +37862,7 @@
         "itemId": 5331,
         "itemName": "Watering can",
         "stock": 500,
+        "sellPrice": 8,
         "restockSeconds": 6
       },
       {
@@ -37441,6 +38045,7 @@
   {
     "name": "Scavvo's Rune Store",
     "location": "Champions' Guild",
+    "owner": "Scavvo",
     "currency": "Coins",
     "x": 3191,
     "y": 3354,
@@ -37514,6 +38119,7 @@
   {
     "name": "Seb's Shipyard Supplies",
     "location": "Shipyard",
+    "owner": "Shipwright Seb",
     "currency": "Coins",
     "items": [
       {
@@ -37556,6 +38162,7 @@
   {
     "name": "Sebamo's Sublime Staffs",
     "location": "Auburnvale",
+    "owner": "Sebamo",
     "currency": "Coins",
     "x": 1412,
     "y": 3343,
@@ -37608,6 +38215,7 @@
   {
     "name": "Seddu's Adventurer's Store",
     "location": "Nardah",
+    "owner": "Seddu",
     "currency": "Coins",
     "x": 3402,
     "y": 2929,
@@ -37666,6 +38274,7 @@
   },
   {
     "name": "Selena",
+    "owner": "Selena",
     "currency": "Coins",
     "items": [
       {
@@ -37714,6 +38323,7 @@
   },
   {
     "name": "Selim",
+    "owner": "Selim",
     "currency": "Coins",
     "items": [
       {
@@ -37732,6 +38342,7 @@
   },
   {
     "name": "Seravel",
+    "owner": "Seravel",
     "currency": "Coins",
     "x": 2870,
     "y": 2973,
@@ -37756,12 +38367,14 @@
         "itemId": 1823,
         "itemName": "Waterskin(4)",
         "stock": 100,
+        "sellPrice": 30,
         "restockSeconds": 6
       },
       {
         "itemId": 1831,
         "itemName": "Waterskin(0)",
         "stock": 100,
+        "sellPrice": 15,
         "restockSeconds": 6
       },
       {
@@ -37895,6 +38508,7 @@
   {
     "name": "Shayzien Styles",
     "location": "Shayzien",
+    "owner": "Robyn",
     "currency": "Coins",
     "x": 1504,
     "y": 3596,
@@ -37988,6 +38602,7 @@
   },
   {
     "name": "Shield master",
+    "owner": "Shield master",
     "currency": "Coins",
     "items": [
       {
@@ -38001,6 +38616,7 @@
   {
     "name": "Shields of Mistrock",
     "location": "Mistrock",
+    "owner": "Ichta",
     "currency": "Coins",
     "x": 1384,
     "y": 2872,
@@ -38080,6 +38696,7 @@
   },
   {
     "name": "Shipwright Seb",
+    "owner": "Shipwright Seb",
     "currency": "Coins",
     "items": [
       {
@@ -38122,6 +38739,7 @@
   {
     "name": "Shop of Distaste",
     "location": "Emir's Arena",
+    "owner": "Fadli",
     "currency": "Coins",
     "items": [
       {
@@ -38136,6 +38754,7 @@
   {
     "name": "Sian's Ranged Weaponry",
     "location": "Prifddinas",
+    "owner": "Sian",
     "currency": "Coins",
     "x": 3306,
     "y": 6074,
@@ -38196,6 +38815,7 @@
   {
     "name": "Sigmund the Merchant (shop)",
     "location": "Rellekka",
+    "owner": "Sigmund the Merchant",
     "currency": "Coins",
     "items": [
       {
@@ -38342,6 +38962,7 @@
   },
   {
     "name": "Silk merchant",
+    "owner": "Silk merchant",
     "currency": "Coins",
     "items": [
       {
@@ -38352,6 +38973,7 @@
   },
   {
     "name": "Silk trader",
+    "owner": "Silk trader",
     "currency": "Coins",
     "items": [
       {
@@ -38371,6 +38993,7 @@
   {
     "name": "Silver Cog Silver Stall",
     "location": "Keldagrim",
+    "owner": "Gulldamar",
     "currency": "Coins",
     "items": [
       {
@@ -38399,6 +39022,7 @@
   {
     "name": "Simon's Wilderness Cape Shop",
     "location": "Chaos Temple",
+    "owner": "Simon",
     "currency": "Coins",
     "items": [
       {
@@ -38440,6 +39064,7 @@
   },
   {
     "name": "Sir Renitee",
+    "owner": "Sir Renitee",
     "currency": "Coins",
     "items": [
       {
@@ -38519,6 +39144,7 @@
   {
     "name": "Skulgrimen's Battle Gear",
     "location": "Rellekka",
+    "owner": "Skulgrimen",
     "currency": "Coins",
     "items": [
       {
@@ -38811,7 +39437,7 @@
     "currency": "Points",
     "items": [
       {
-        "itemId": 11873,
+        "itemId": 11866,
         "itemName": "Slayer ring (8)",
         "stock": -1,
         "sellPrice": 75
@@ -38850,19 +39476,20 @@
   },
   {
     "name": "Sloane",
+    "owner": "Sloane",
     "currency": "Coins",
     "x": 2855,
     "y": 3553,
     "plane": 1,
     "items": [
       {
-        "itemId": -1,
+        "itemId": 9750,
         "itemName": "Strength cape",
         "stock": -1,
         "sellPrice": 99000
       },
       {
-        "itemId": 9750,
+        "itemId": 9751,
         "itemName": "Strength cape(t)",
         "stock": -1,
         "sellPrice": 99000
@@ -38871,6 +39498,7 @@
   },
   {
     "name": "Smith",
+    "owner": "Smith",
     "currency": "Coins",
     "items": [
       {
@@ -38893,6 +39521,7 @@
   {
     "name": "Smithing Smith's Shop",
     "location": "Mos Le'Harmless",
+    "owner": "Smith",
     "currency": "Coins",
     "items": [
       {
@@ -38935,6 +39564,7 @@
   {
     "name": "Solihib's Food Stall",
     "location": "Ape Atoll",
+    "owner": "Solihib",
     "currency": "Coins",
     "x": 2769,
     "y": 2789,
@@ -38973,6 +39603,7 @@
   {
     "name": "Soul Wars Reward Shop",
     "location": "Isle of Souls",
+    "owner": "Nomad",
     "currency": "Zeal Tokens",
     "items": [
       {
@@ -38992,6 +39623,7 @@
   {
     "name": "Speedrunning Reward Shop",
     "location": "Varrock",
+    "owner": "Eliza",
     "currency": "Speedrun Points",
     "items": [
       {
@@ -39029,6 +39661,7 @@
   {
     "name": "Spike's Spikes",
     "location": "Outer Fortis",
+    "owner": "Spike",
     "currency": "Coins",
     "x": 1772,
     "y": 3062,
@@ -39074,6 +39707,7 @@
   },
   {
     "name": "Spirit of Scorpius",
+    "owner": "Spirit of Scorpius",
     "currency": "Coins",
     "items": [
       {
@@ -39086,7 +39720,12 @@
   },
   {
     "name": "Squirrel (Fossil Island)",
+    "owner": "Squirrel (Fossil Island)",
     "currency": "Coins",
+    "x": 3705,
+    "y": 3838,
+    "plane": 0,
+    "mapId": 0,
     "items": [
       {
         "itemId": 6036,
@@ -39134,6 +39773,7 @@
   },
   {
     "name": "Stankers",
+    "owner": "Stankers",
     "currency": "Coins",
     "items": [
       {
@@ -39148,6 +39788,7 @@
   {
     "name": "Stick Your Ore Inn",
     "location": "Mistrock",
+    "owner": "Bartender",
     "currency": "Coins",
     "x": 1390,
     "y": 2856,
@@ -39208,6 +39849,7 @@
   {
     "name": "Stonecutter Supplies",
     "location": "Stonecutter Outpost",
+    "owner": "Metla",
     "currency": "Coins",
     "items": [
       {
@@ -39256,6 +39898,7 @@
   {
     "name": "Sulisal's Superb Fishing Store",
     "location": "Kastori",
+    "owner": "Sulisal",
     "currency": "Coins",
     "x": 1375,
     "y": 3037,
@@ -39392,6 +40035,7 @@
   {
     "name": "Sunlight's Sanctum",
     "location": "Aldarin",
+    "owner": "Bartender",
     "currency": "Coins",
     "x": 1382,
     "y": 2931,
@@ -39487,6 +40131,7 @@
   {
     "name": "Sunset Coast General Store",
     "location": "Sunset Coast",
+    "owner": "Shopkeeper",
     "currency": "Coins",
     "x": 1514,
     "y": 2988,
@@ -39594,6 +40239,7 @@
   },
   {
     "name": "Supervisor Lalo",
+    "owner": "Supervisor Lalo",
     "currency": "Coins",
     "x": 1394,
     "y": 9313,
@@ -39665,6 +40311,7 @@
   {
     "name": "Supplies's Supplies",
     "location": "Wyrmscraig",
+    "owner": "Mr Supplies Jnr",
     "currency": "Coins",
     "x": 2564,
     "y": 2257,
@@ -39770,16 +40417,17 @@
   },
   {
     "name": "Surgeon General Tafani",
+    "owner": "Surgeon General Tafani",
     "currency": "Coins",
     "items": [
       {
-        "itemId": -1,
+        "itemId": 9768,
         "itemName": "Hitpoints cape",
         "stock": -1,
         "sellPrice": 99000
       },
       {
-        "itemId": 9768,
+        "itemId": 9769,
         "itemName": "Hitpoints cape(t)",
         "stock": -1,
         "sellPrice": 99000
@@ -39789,6 +40437,7 @@
   {
     "name": "Tal Teklan General Store",
     "location": "Tal Teklan",
+    "owner": "Shopkeeper",
     "currency": "Coins",
     "x": 1241,
     "y": 3109,
@@ -39911,6 +40560,7 @@
   {
     "name": "Tal Teklan Rune Shop",
     "location": "Tal Teklan",
+    "owner": "Teicuh",
     "currency": "Coins",
     "x": 1211,
     "y": 3118,
@@ -40033,45 +40683,46 @@
   {
     "name": "Tamayu's Spear Stall",
     "location": "Tai Bwo Wannai",
+    "owner": "Tamayu",
     "currency": "Coins",
     "items": [
       {
-        "itemId": 1237,
+        "itemId": 3170,
         "itemName": "Bronze spear(kp)",
         "stock": 10,
         "sellPrice": 26,
         "restockSeconds": 6
       },
       {
-        "itemId": 1239,
+        "itemId": 3171,
         "itemName": "Iron spear(kp)",
         "stock": 10,
         "sellPrice": 91,
         "restockSeconds": 60
       },
       {
-        "itemId": 1241,
+        "itemId": 3172,
         "itemName": "Steel spear(kp)",
         "stock": 5,
         "sellPrice": 325,
         "restockSeconds": 60
       },
       {
-        "itemId": 1243,
+        "itemId": 3173,
         "itemName": "Mithril spear(kp)",
         "stock": 2,
         "sellPrice": 845,
         "restockSeconds": 60
       },
       {
-        "itemId": 1245,
+        "itemId": 3174,
         "itemName": "Adamant spear(kp)",
         "stock": 0,
         "sellPrice": 2080,
         "restockSeconds": 60
       },
       {
-        "itemId": 1247,
+        "itemId": 3175,
         "itemName": "Rune spear(kp)",
         "stock": 0,
         "sellPrice": 20800,
@@ -40089,45 +40740,46 @@
   {
     "name": "Tamayu's Spear Stall (2)",
     "location": "Tai Bwo Wannai",
+    "owner": "Tamayu",
     "currency": "Coins",
     "items": [
       {
-        "itemId": 1237,
+        "itemId": 3170,
         "itemName": "Bronze spear(kp)",
         "stock": 10,
         "sellPrice": 24,
         "restockSeconds": 6
       },
       {
-        "itemId": 1239,
+        "itemId": 3171,
         "itemName": "Iron spear(kp)",
         "stock": 10,
         "sellPrice": 86,
         "restockSeconds": 60
       },
       {
-        "itemId": 1241,
+        "itemId": 3172,
         "itemName": "Steel spear(kp)",
         "stock": 5,
         "sellPrice": 308,
         "restockSeconds": 60
       },
       {
-        "itemId": 1243,
+        "itemId": 3173,
         "itemName": "Mithril spear(kp)",
         "stock": 2,
         "sellPrice": 802,
         "restockSeconds": 60
       },
       {
-        "itemId": 1245,
+        "itemId": 3174,
         "itemName": "Adamant spear(kp)",
         "stock": 0,
         "sellPrice": 1976,
         "restockSeconds": 60
       },
       {
-        "itemId": 1247,
+        "itemId": 3175,
         "itemName": "Rune spear(kp)",
         "stock": 0,
         "sellPrice": 19760,
@@ -40144,6 +40796,7 @@
   },
   {
     "name": "Taria",
+    "owner": "Taria",
     "currency": "Coins",
     "items": [
       {
@@ -40192,6 +40845,7 @@
   },
   {
     "name": "Taylor",
+    "owner": "Taylor",
     "currency": "Coins",
     "items": [
       {
@@ -40241,29 +40895,30 @@
   {
     "name": "Temple Supplies",
     "location": "Temple of the Eye",
+    "owner": "Apprentice Felix",
     "currency": "Abyssal pearls",
     "items": [
       {
-        "itemId": 26850,
-        "itemName": "Hat of the eye",
+        "itemId": -1,
+        "itemName": "Hat of the Eye",
         "stock": 100,
         "sellPrice": 400
       },
       {
-        "itemId": 26852,
-        "itemName": "Robe top of the eye",
+        "itemId": -1,
+        "itemName": "Robe top of the Eye",
         "stock": 100,
         "sellPrice": 350
       },
       {
-        "itemId": 26854,
-        "itemName": "Robe bottoms of the eye",
+        "itemId": -1,
+        "itemName": "Robe bottoms of the Eye",
         "stock": 100,
         "sellPrice": 350
       },
       {
-        "itemId": 26856,
-        "itemName": "Boots of the eye",
+        "itemId": -1,
+        "itemName": "Boots of the Eye",
         "stock": 100,
         "sellPrice": 250
       },
@@ -40278,6 +40933,18 @@
         "itemName": "Guardian's eye",
         "stock": 100,
         "sellPrice": 3000
+      },
+      {
+        "itemId": 26822,
+        "itemName": "Abyssal lantern",
+        "stock": 100,
+        "sellPrice": 1500
+      },
+      {
+        "itemId": 26813,
+        "itemName": "Abyssal needle",
+        "stock": 100,
+        "sellPrice": 750
       },
       {
         "itemId": 1438,
@@ -40355,6 +41022,7 @@
   },
   {
     "name": "Tenzing",
+    "owner": "Tenzing",
     "currency": "Coins",
     "items": [
       {
@@ -40368,6 +41036,7 @@
   {
     "name": "The Asp & Snake Bar",
     "location": "Pollnivneach",
+    "owner": "Ali the Barman",
     "currency": "Coins",
     "x": 3359,
     "y": 2957,
@@ -40420,6 +41089,7 @@
   {
     "name": "The Big Heist Lodge",
     "location": "Bandit Village in the Kharidian Desert",
+    "owner": "Bartender",
     "currency": "Coins",
     "x": 3157,
     "y": 2990,
@@ -40437,6 +41107,7 @@
   {
     "name": "The Burrow",
     "location": "Hunter Guild",
+    "owner": "Huntmaster Gilman",
     "currency": "Coins",
     "items": [
       {
@@ -40456,6 +41127,7 @@
   {
     "name": "The Cloak and Stagger",
     "location": "Shayzien",
+    "owner": "Oswald",
     "currency": "Coins",
     "x": 1548,
     "y": 3569,
@@ -40501,6 +41173,7 @@
   {
     "name": "The Crypt",
     "location": "Darkmeyer",
+    "owner": "Despoina Callidra",
     "currency": "Coins",
     "x": 3594,
     "y": 3397,
@@ -40517,6 +41190,7 @@
   {
     "name": "The Deeper Lode",
     "location": "Lovakengj",
+    "owner": "Fuggy",
     "currency": "Coins",
     "x": 1561,
     "y": 3767,
@@ -40561,7 +41235,8 @@
   },
   {
     "name": "The Esoterican Arms",
-    "location": "Miscellania and Etceteria dungeon",
+    "location": "Miscellania Expansion",
+    "owner": "Runa",
     "currency": "Coins",
     "x": 2526,
     "y": 10259,
@@ -40601,6 +41276,7 @@
   {
     "name": "The Flaming Arrow",
     "location": "Civitas illa Fortis",
+    "owner": "Bartender",
     "currency": "Coins",
     "x": 1711,
     "y": 3121,
@@ -40686,6 +41362,7 @@
   {
     "name": "The Golden Field",
     "location": "Hosidius",
+    "owner": "Richard, Golova",
     "currency": "Coins",
     "x": 1737,
     "y": 3623,
@@ -40724,6 +41401,7 @@
   {
     "name": "The King's Inn",
     "location": "Tal Teklan",
+    "owner": "King",
     "currency": "Coins",
     "x": 1226,
     "y": 3118,
@@ -40809,6 +41487,7 @@
   {
     "name": "The Legless Faun",
     "location": "Kingstown",
+    "owner": "Bast",
     "currency": "Coins",
     "x": 1766,
     "y": 3686,
@@ -40825,6 +41504,7 @@
   {
     "name": "The Lighthouse Store",
     "location": "Lighthouse",
+    "owner": "Jossik",
     "currency": "Coins",
     "items": [
       {
@@ -41028,6 +41708,7 @@
   {
     "name": "The Lost Pickaxe",
     "location": "Cam Torum",
+    "owner": "Bartender",
     "currency": "Coins",
     "x": 1431,
     "y": 9584,
@@ -41089,6 +41770,7 @@
   {
     "name": "The Old Nite",
     "location": "Ferox Enclave",
+    "owner": "Camarst",
     "currency": "Coins",
     "x": 3152,
     "y": 3644,
@@ -41105,6 +41787,7 @@
   {
     "name": "The Other Inn",
     "location": "Mos Le'Harmless",
+    "owner": "Mama",
     "currency": "Coins",
     "x": 3662,
     "y": 2985,
@@ -41143,6 +41826,7 @@
   {
     "name": "The Pandemonium (pub)",
     "location": "The Pandemonium",
+    "owner": "'Squawking' Steve Beanie",
     "currency": "Coins",
     "items": [
       {
@@ -41234,6 +41918,7 @@
   {
     "name": "The Rolling Tide",
     "location": "Port Roberts",
+    "owner": "Bartender (Port Roberts)",
     "currency": "Coins",
     "x": 1888,
     "y": 3314,
@@ -41298,6 +41983,7 @@
   {
     "name": "The Runic Emporium",
     "location": "Cam Torum",
+    "owner": "Nahta",
     "currency": "Coins",
     "x": 1426,
     "y": 9568,
@@ -41421,6 +42107,7 @@
   {
     "name": "The Sheared Ram",
     "location": "Lumbridge",
+    "owner": "Bartender",
     "currency": "Coins",
     "x": 3226,
     "y": 3243,
@@ -41437,6 +42124,7 @@
   {
     "name": "The Shrimp and Parrot",
     "location": "Brimhaven",
+    "owner": "Alfonse the waiter/Charlie the cook",
     "currency": "Coins",
     "x": 2794,
     "y": 3187,
@@ -41489,6 +42177,7 @@
   {
     "name": "The Spice Is Right",
     "location": "Sophanem",
+    "owner": "Embalmer",
     "currency": "Coins",
     "items": [
       {
@@ -41527,9 +42216,10 @@
         "restockSeconds": 240
       },
       {
-        "itemId": 179,
+        "itemId": 175,
         "itemName": "Antipoison(3)",
         "stock": 20,
+        "sellPrice": 432,
         "restockSeconds": 60
       }
     ]
@@ -41567,6 +42257,7 @@
   {
     "name": "The Windbreaker",
     "location": "Quetzacalli Gorge",
+    "owner": "Bartender (The Windbreaker)",
     "currency": "Coins",
     "x": 1496,
     "y": 3223,
@@ -41641,6 +42332,7 @@
   },
   {
     "name": "Thessalia",
+    "owner": "Thessalia",
     "currency": "Frog token",
     "x": 3206,
     "y": 3416,
@@ -41675,6 +42367,7 @@
   {
     "name": "Thessalia's Fine Clothes",
     "location": "Varrock",
+    "owner": "Thessalia",
     "currency": "Coins",
     "x": 3201,
     "y": 3417,
@@ -41769,6 +42462,7 @@
   {
     "name": "Thirus Urkar's Fine Dynamite Store",
     "location": "Lovakengj",
+    "owner": "Thirus",
     "currency": "Coins",
     "x": 1517,
     "y": 3834,
@@ -41792,16 +42486,17 @@
   },
   {
     "name": "Thurgo",
+    "owner": "Thurgo",
     "currency": "Coins",
     "items": [
       {
-        "itemId": -1,
+        "itemId": 9795,
         "itemName": "Smithing cape",
         "stock": -1,
         "sellPrice": 99000
       },
       {
-        "itemId": 9795,
+        "itemId": 9796,
         "itemName": "Smithing cape(t)",
         "stock": -1,
         "sellPrice": 99000
@@ -41811,6 +42506,7 @@
   {
     "name": "Thurid's Brain Buckets",
     "location": "Sunset Coast",
+    "owner": "Thurid",
     "currency": "Coins",
     "x": 1515,
     "y": 2994,
@@ -41891,6 +42587,7 @@
   {
     "name": "Thyria's Wares",
     "location": "Arceuus",
+    "owner": "Thyria",
     "currency": "Coins",
     "x": 1716,
     "y": 3750,
@@ -41999,6 +42696,7 @@
   {
     "name": "Tiadeche's Karambwan Stall",
     "location": "Tai Bwo Wannai",
+    "owner": "Tiadeche",
     "currency": "Coins",
     "items": [
       {
@@ -42025,6 +42723,7 @@
   },
   {
     "name": "Ticket Merchant",
+    "owner": "Ticket Merchant",
     "currency": "Archery ticket",
     "items": [
       {
@@ -42067,6 +42766,7 @@
   },
   {
     "name": "Tindar",
+    "owner": "Tindar",
     "currency": "Coins",
     "items": [
       {
@@ -42080,6 +42780,7 @@
   {
     "name": "Tizoro's Pickaxes",
     "location": "Cam Torum",
+    "owner": "Tizoro",
     "currency": "Coins",
     "x": 1443,
     "y": 9553,
@@ -42147,6 +42848,7 @@
   {
     "name": "Toci's Gem Store",
     "location": "Aldarin",
+    "owner": "Toci",
     "currency": "Coins",
     "x": 1430,
     "y": 2975,
@@ -42213,6 +42915,7 @@
   {
     "name": "Tony's Pizza Bases",
     "location": "Wilderness Bandit Camp",
+    "owner": "Fat Tony",
     "currency": "Coins",
     "x": 3038,
     "y": 3707,
@@ -42230,6 +42933,7 @@
   {
     "name": "Toothy's Pickaxes",
     "location": "Lovakengj",
+    "owner": "Toothy",
     "currency": "Coins",
     "items": [
       {
@@ -42285,6 +42989,7 @@
   },
   {
     "name": "Torrell",
+    "owner": "Torrell",
     "currency": "Coins",
     "items": [
       {
@@ -42553,6 +43258,7 @@
   {
     "name": "Trader Sven's Black-market Goods",
     "location": "Meiyerditch",
+    "owner": "Trader Sven",
     "currency": "Coins",
     "items": [
       {
@@ -42601,6 +43307,7 @@
   },
   {
     "name": "Tree (Draynor guard)",
+    "owner": "Tree (Draynor guard)",
     "currency": "Coins",
     "items": [
       {
@@ -42611,6 +43318,7 @@
   },
   {
     "name": "Treznor",
+    "owner": "Treznor",
     "currency": "Coins",
     "items": [
       {
@@ -42659,6 +43367,7 @@
   },
   {
     "name": "Trufitus",
+    "owner": "Trufitus",
     "currency": "Coins",
     "x": 2809,
     "y": 3086,
@@ -42688,6 +43397,7 @@
   },
   {
     "name": "Turgok",
+    "owner": "Turgok",
     "currency": "Coins",
     "items": [
       {
@@ -42701,6 +43411,7 @@
   {
     "name": "Tutab's Magical Market",
     "location": "Ape Atoll",
+    "owner": "Tutab",
     "currency": "Coins",
     "items": [
       {
@@ -42791,16 +43502,17 @@
   },
   {
     "name": "Twiggy O'Korn",
+    "owner": "Twiggy O'Korn",
     "currency": "Coins",
     "items": [
       {
-        "itemId": -1,
+        "itemId": 19476,
         "itemName": "Achievement diary cape",
         "stock": -1,
         "sellPrice": 99000
       },
       {
-        "itemId": 19476,
+        "itemId": 13069,
         "itemName": "Achievement diary cape (t)",
         "stock": -1,
         "sellPrice": 99000
@@ -42810,6 +43522,7 @@
   {
     "name": "Two Feet Charley's Fish Shop",
     "location": "Mos Le'Harmless",
+    "owner": "Charley",
     "currency": "Coins",
     "x": 3671,
     "y": 2972,
@@ -42890,6 +43603,7 @@
   {
     "name": "Tynan's Fishing Supplies",
     "location": "Port Piscarilius",
+    "owner": "Tynan",
     "currency": "Coins",
     "x": 1841,
     "y": 3786,
@@ -42969,6 +43683,7 @@
   },
   {
     "name": "Tyss",
+    "owner": "Tyss",
     "currency": "Coins",
     "items": [
       {
@@ -42981,6 +43696,7 @@
   },
   {
     "name": "TzHaar-Hur-Lek",
+    "owner": "TzHaar-Hur-Lek",
     "currency": "Tokkul",
     "items": [
       {
@@ -43099,6 +43815,7 @@
   },
   {
     "name": "TzHaar-Hur-Lek (2)",
+    "owner": "TzHaar-Hur-Lek",
     "currency": "Tokkul",
     "items": [
       {
@@ -43217,6 +43934,7 @@
   },
   {
     "name": "TzHaar-Hur-Rin",
+    "owner": "TzHaar-Hur-Rin",
     "currency": "Tokkul",
     "items": [
       {
@@ -43335,6 +44053,7 @@
   },
   {
     "name": "TzHaar-Hur-Rin (2)",
+    "owner": "TzHaar-Hur-Rin",
     "currency": "Tokkul",
     "items": [
       {
@@ -43453,6 +44172,7 @@
   },
   {
     "name": "TzHaar-Hur-Tel",
+    "owner": "TzHaar-Hur-Tel",
     "currency": "Tokkul",
     "items": [
       {
@@ -43515,6 +44235,7 @@
   },
   {
     "name": "TzHaar-Hur-Tel (2)",
+    "owner": "TzHaar-Hur-Tel",
     "currency": "Tokkul",
     "items": [
       {
@@ -43577,6 +44298,7 @@
   },
   {
     "name": "TzHaar-Hur-Zal",
+    "owner": "TzHaar-Hur-Zal",
     "currency": "Tokkul",
     "items": [
       {
@@ -43660,6 +44382,7 @@
   },
   {
     "name": "TzHaar-Hur-Zal (2)",
+    "owner": "TzHaar-Hur-Zal",
     "currency": "Tokkul",
     "items": [
       {
@@ -43743,6 +44466,7 @@
   },
   {
     "name": "TzHaar-Mej-Roh",
+    "owner": "TzHaar-Mej-Roh",
     "currency": "Tokkul",
     "items": [
       {
@@ -43805,6 +44529,7 @@
   },
   {
     "name": "TzHaar-Mej-Roh (2)",
+    "owner": "TzHaar-Mej-Roh",
     "currency": "Tokkul",
     "items": [
       {
@@ -43867,6 +44592,7 @@
   },
   {
     "name": "Tziuhtla",
+    "owner": "Tziuhtla",
     "currency": "Coins",
     "items": [
       {
@@ -43915,7 +44641,8 @@
   },
   {
     "name": "Valaine's Shop of Champions",
-    "location": "{{FloorNumber",
+    "location": "{{FloorNumber|uk=1}} of Champions' Guild",
+    "owner": "Valaine",
     "currency": "Coins",
     "items": [
       {
@@ -43951,6 +44678,7 @@
   {
     "name": "Vale Research Exchange",
     "location": "Auburnvale",
+    "owner": "Ranulph",
     "currency": "points",
     "x": 1366,
     "y": 3367,
@@ -43969,8 +44697,8 @@
         "sellPrice": 350
       },
       {
-        "itemId": -1,
-        "itemName": "iron",
+        "itemId": 31034,
+        "itemName": "Greenman mask",
         "stock": -1,
         "sellPrice": 500
       },
@@ -43985,6 +44713,7 @@
   {
     "name": "Vanessa's Farming shop",
     "location": "Catherby",
+    "owner": "Vanessa",
     "currency": "Coins",
     "x": 2820,
     "y": 3462,
@@ -44029,6 +44758,7 @@
         "itemId": 5331,
         "itemName": "Watering can",
         "stock": 500,
+        "sellPrice": 8,
         "restockSeconds": 6
       },
       {
@@ -44211,6 +44941,7 @@
   {
     "name": "Vannah's Farming Stall",
     "location": "Hosidius",
+    "owner": "Vannah",
     "currency": "Coins",
     "x": 1763,
     "y": 3594,
@@ -44255,6 +44986,7 @@
         "itemId": 5331,
         "itemName": "Watering can",
         "stock": 30,
+        "sellPrice": 8,
         "restockSeconds": 3
       },
       {
@@ -44339,6 +45071,7 @@
   {
     "name": "Varrock General Store",
     "location": "Varrock",
+    "owner": "Shop keeper",
     "currency": "Coins",
     "x": 3214,
     "y": 3420,
@@ -44440,6 +45173,7 @@
   {
     "name": "Varrock Swordshop",
     "location": "Varrock",
+    "owner": "Shop keeper",
     "currency": "Coins",
     "x": 3202,
     "y": 3404,
@@ -44575,6 +45309,7 @@
   },
   {
     "name": "Vasile",
+    "owner": "Vasile",
     "currency": "Coins",
     "items": [
       {
@@ -44587,6 +45322,7 @@
   },
   {
     "name": "Vasquen",
+    "owner": "Vasquen",
     "currency": "Coins",
     "items": [
       {
@@ -44635,6 +45371,7 @@
   },
   {
     "name": "Velrak the explorer",
+    "owner": "Velrak the explorer",
     "currency": "Coins",
     "items": [
       {
@@ -44648,6 +45385,7 @@
   {
     "name": "Vermundi's Clothes Stall",
     "location": "Keldagrim Palace",
+    "owner": "Vermundi",
     "currency": "Coins",
     "x": 2888,
     "y": 10189,
@@ -44699,8 +45437,32 @@
     ]
   },
   {
+    "name": "Vertida Sefalatis",
+    "owner": "Vertida Sefalatis",
+    "currency": "Coins",
+    "x": 3630,
+    "y": 9643,
+    "plane": 0,
+    "mapId": -1,
+    "items": [
+      {
+        "itemId": 22398,
+        "itemName": "Ivandis flail",
+        "stock": -1,
+        "sellPrice": 20000
+      },
+      {
+        "itemId": 24699,
+        "itemName": "Blisterwood flail",
+        "stock": -1,
+        "sellPrice": 40000
+      }
+    ]
+  },
+  {
     "name": "Vigr's Warhammers",
     "location": "Keldagrim",
+    "owner": "Vigr",
     "currency": "Coins",
     "x": 2873,
     "y": 10209,
@@ -44754,6 +45516,7 @@
   {
     "name": "Void Knight Archery Store",
     "location": "Void Knights' Outpost",
+    "owner": "Squire",
     "currency": "Coins",
     "x": 2665,
     "y": 2660,
@@ -44848,6 +45611,7 @@
   {
     "name": "Void Knight General Store",
     "location": "Void Knights' Outpost",
+    "owner": "Squire",
     "currency": "Coins",
     "items": [
       {
@@ -44946,6 +45710,7 @@
   {
     "name": "Void Knight Magic Store",
     "location": "Void Knights' Outpost",
+    "owner": "Squire",
     "currency": "Coins",
     "items": [
       {
@@ -45051,6 +45816,7 @@
   {
     "name": "Void Knights' Reward Options",
     "location": "Void Knights' Outpost",
+    "owner": "Void Knight",
     "currency": "Void Knight commendation points",
     "items": [
       {
@@ -45124,6 +45890,7 @@
   {
     "name": "Warrens Fish Monger",
     "location": "The Warrens",
+    "owner": "Fish monger",
     "currency": "Coins",
     "x": 1825,
     "y": 10145,
@@ -45303,6 +46070,7 @@
   {
     "name": "Warrens General Store",
     "location": "The Warrens",
+    "owner": "Shop keeper",
     "currency": "Coins",
     "x": 1838,
     "y": 10149,
@@ -45390,7 +46158,8 @@
   },
   {
     "name": "Warrior Guild Armoury",
-    "location": "{{FloorNumber",
+    "location": "{{FloorNumber|uk=1}} of Warriors' Guild",
+    "owner": "Anton",
     "currency": "Coins",
     "x": 2848,
     "y": 3538,
@@ -45666,7 +46435,8 @@
   },
   {
     "name": "Warrior Guild Food Shop",
-    "location": "{{FloorNumber",
+    "location": "{{FloorNumber|uk=0|caps=y}} of Warriors' Guild",
+    "owner": "Lidio",
     "currency": "Coins",
     "x": 2841,
     "y": 3552,
@@ -45690,6 +46460,7 @@
         "itemId": 2289,
         "itemName": "Plain pizza",
         "stock": 5,
+        "sellPrice": 48,
         "restockSeconds": 60
       },
       {
@@ -45710,31 +46481,36 @@
   },
   {
     "name": "Warrior Guild Potion Shop",
-    "location": "{{FloorNumber",
+    "location": "{{FloorNumber|uk=0}} of the Warriors' Guild",
+    "owner": "Lilly",
     "currency": "Coins",
     "items": [
       {
-        "itemId": 119,
+        "itemId": 115,
         "itemName": "Strength potion(3)",
         "stock": 10,
+        "sellPrice": 15,
         "restockSeconds": 60
       },
       {
-        "itemId": 125,
+        "itemId": 121,
         "itemName": "Attack potion(3)",
         "stock": 10,
+        "sellPrice": 14,
         "restockSeconds": 60
       },
       {
-        "itemId": 137,
+        "itemId": 133,
         "itemName": "Defence potion(3)",
         "stock": 10,
+        "sellPrice": 144,
         "restockSeconds": 60
       }
     ]
   },
   {
     "name": "Watson",
+    "owner": "Watson",
     "currency": "Coins",
     "items": [
       {
@@ -45748,6 +46524,7 @@
   {
     "name": "Wayne's Chains! - Chainmail specialist",
     "location": "Falador",
+    "owner": "Wayne",
     "currency": "Coins",
     "x": 2972,
     "y": 3312,
@@ -45800,6 +46577,7 @@
   {
     "name": "Weapons galore",
     "location": "Jatizso",
+    "owner": "Skuli Myrka",
     "currency": "Coins",
     "x": 2394,
     "y": 3807,
@@ -45845,6 +46623,7 @@
   {
     "name": "West Ardougne General Store",
     "location": "West Ardougne",
+    "owner": "Chadwell",
     "currency": "Coins",
     "items": [
       {
@@ -45928,6 +46707,7 @@
         "itemId": 2327,
         "itemName": "Meat pie",
         "stock": 10,
+        "sellPrice": 18,
         "restockSeconds": 60
       },
       {
@@ -45948,45 +46728,46 @@
   },
   {
     "name": "Where Wyrmscraig's Wear Wares Were",
+    "owner": "Where Wyrmscraig's Wear Wares Were",
     "currency": "Coins",
     "items": [
       {
-        "itemId": -1,
+        "itemId": 33836,
         "itemName": "Noble robe top (green)",
         "stock": 5,
         "sellPrice": 50000,
         "restockSeconds": 54
       },
       {
-        "itemId": -1,
+        "itemId": 33836,
         "itemName": "Noble robe top (blue)",
         "stock": 5,
         "sellPrice": 50000,
         "restockSeconds": 54
       },
       {
-        "itemId": -1,
+        "itemId": 33836,
         "itemName": "Noble robe top (red)",
         "stock": 5,
         "sellPrice": 50000,
         "restockSeconds": 54
       },
       {
-        "itemId": -1,
+        "itemId": 33836,
         "itemName": "Noble robe top (yellow)",
         "stock": 5,
         "sellPrice": 50000,
         "restockSeconds": 54
       },
       {
-        "itemId": -1,
+        "itemId": 33836,
         "itemName": "Noble robe top (white)",
         "stock": 5,
         "sellPrice": 50000,
         "restockSeconds": 54
       },
       {
-        "itemId": -1,
+        "itemId": 33836,
         "itemName": "Noble robe top (black)",
         "stock": 5,
         "sellPrice": 50000,
@@ -46000,42 +46781,42 @@
         "restockSeconds": 54
       },
       {
-        "itemId": -1,
+        "itemId": 33857,
         "itemName": "Wyrmscraig noble skirt (green)",
         "stock": 5,
         "sellPrice": 40000,
         "restockSeconds": 54
       },
       {
-        "itemId": -1,
+        "itemId": 33857,
         "itemName": "Wyrmscraig noble skirt (blue)",
         "stock": 5,
         "sellPrice": 40000,
         "restockSeconds": 54
       },
       {
-        "itemId": -1,
+        "itemId": 33857,
         "itemName": "Wyrmscraig noble skirt (red)",
         "stock": 5,
         "sellPrice": 40000,
         "restockSeconds": 54
       },
       {
-        "itemId": -1,
+        "itemId": 33857,
         "itemName": "Wyrmscraig noble skirt (yellow)",
         "stock": 5,
         "sellPrice": 40000,
         "restockSeconds": 54
       },
       {
-        "itemId": -1,
+        "itemId": 33857,
         "itemName": "Wyrmscraig noble skirt (white)",
         "stock": 5,
         "sellPrice": 40000,
         "restockSeconds": 54
       },
       {
-        "itemId": -1,
+        "itemId": 33857,
         "itemName": "Wyrmscraig noble skirt (black)",
         "stock": 5,
         "sellPrice": 40000,
@@ -46049,49 +46830,49 @@
         "restockSeconds": 54
       },
       {
-        "itemId": -1,
+        "itemId": 33884,
         "itemName": "Wyrmscraig villager robe top (A, green)",
         "stock": 5,
         "sellPrice": 500,
         "restockSeconds": 54
       },
       {
-        "itemId": -1,
+        "itemId": 33884,
         "itemName": "Wyrmscraig villager robe top (A, blue)",
         "stock": 5,
         "sellPrice": 500,
         "restockSeconds": 54
       },
       {
-        "itemId": -1,
+        "itemId": 33884,
         "itemName": "Wyrmscraig villager robe top (A, red)",
         "stock": 5,
         "sellPrice": 500,
         "restockSeconds": 54
       },
       {
-        "itemId": -1,
+        "itemId": 33884,
         "itemName": "Wyrmscraig villager robe top (A, yellow)",
         "stock": 5,
         "sellPrice": 500,
         "restockSeconds": 54
       },
       {
-        "itemId": -1,
+        "itemId": 33884,
         "itemName": "Wyrmscraig villager robe top (A, white)",
         "stock": 5,
         "sellPrice": 500,
         "restockSeconds": 54
       },
       {
-        "itemId": -1,
+        "itemId": 33884,
         "itemName": "Wyrmscraig villager robe top (A, black)",
         "stock": 5,
         "sellPrice": 500,
         "restockSeconds": 54
       },
       {
-        "itemId": -1,
+        "itemId": 33884,
         "itemName": "Wyrmscraig villager robe top (A, pink)",
         "stock": 5,
         "sellPrice": 500,
@@ -46105,42 +46886,42 @@
         "restockSeconds": 54
       },
       {
-        "itemId": -1,
+        "itemId": 33908,
         "itemName": "Wyrmscraig villager robe bottom (A, green)",
         "stock": 5,
         "sellPrice": 400,
         "restockSeconds": 54
       },
       {
-        "itemId": -1,
+        "itemId": 33908,
         "itemName": "Wyrmscraig villager robe bottom (A, blue)",
         "stock": 5,
         "sellPrice": 400,
         "restockSeconds": 54
       },
       {
-        "itemId": -1,
+        "itemId": 33908,
         "itemName": "Wyrmscraig villager robe bottom (A, red)",
         "stock": 5,
         "sellPrice": 400,
         "restockSeconds": 54
       },
       {
-        "itemId": -1,
+        "itemId": 33908,
         "itemName": "Wyrmscraig villager robe bottom (A, yellow)",
         "stock": 5,
         "sellPrice": 400,
         "restockSeconds": 54
       },
       {
-        "itemId": -1,
+        "itemId": 33908,
         "itemName": "Wyrmscraig villager robe bottom (A, white)",
         "stock": 5,
         "sellPrice": 400,
         "restockSeconds": 54
       },
       {
-        "itemId": -1,
+        "itemId": 33908,
         "itemName": "Wyrmscraig villager robe bottom (A, black)",
         "stock": 5,
         "sellPrice": 400,
@@ -46154,42 +46935,42 @@
         "restockSeconds": 54
       },
       {
-        "itemId": -1,
+        "itemId": 33929,
         "itemName": "Wyrmscraig villager robe bottom (B, green)",
         "stock": 5,
         "sellPrice": 400,
         "restockSeconds": 54
       },
       {
-        "itemId": -1,
+        "itemId": 33929,
         "itemName": "Wyrmscraig villager robe bottom (B, blue)",
         "stock": 5,
         "sellPrice": 400,
         "restockSeconds": 54
       },
       {
-        "itemId": -1,
+        "itemId": 33929,
         "itemName": "Wyrmscraig villager robe bottom (B, red)",
         "stock": 5,
         "sellPrice": 400,
         "restockSeconds": 54
       },
       {
-        "itemId": -1,
+        "itemId": 33929,
         "itemName": "Wyrmscraig villager robe bottom (B, yellow)",
         "stock": 5,
         "sellPrice": 400,
         "restockSeconds": 54
       },
       {
-        "itemId": -1,
+        "itemId": 33929,
         "itemName": "Wyrmscraig villager robe bottom (B, white)",
         "stock": 5,
         "sellPrice": 400,
         "restockSeconds": 54
       },
       {
-        "itemId": -1,
+        "itemId": 33929,
         "itemName": "Wyrmscraig villager robe bottom (B, black)",
         "stock": 5,
         "sellPrice": 400,
@@ -46203,42 +46984,42 @@
         "restockSeconds": 54
       },
       {
-        "itemId": -1,
+        "itemId": 33950,
         "itemName": "Wyrmscraig villager robe top (B, green)",
         "stock": 5,
         "sellPrice": 500,
         "restockSeconds": 54
       },
       {
-        "itemId": -1,
+        "itemId": 33950,
         "itemName": "Wyrmscraig villager robe top (B, blue)",
         "stock": 5,
         "sellPrice": 500,
         "restockSeconds": 54
       },
       {
-        "itemId": -1,
+        "itemId": 33950,
         "itemName": "Wyrmscraig villager robe top (B, red)",
         "stock": 5,
         "sellPrice": 500,
         "restockSeconds": 54
       },
       {
-        "itemId": -1,
+        "itemId": 33950,
         "itemName": "Wyrmscraig villager robe top (B, yellow)",
         "stock": 5,
         "sellPrice": 500,
         "restockSeconds": 54
       },
       {
-        "itemId": -1,
+        "itemId": 33950,
         "itemName": "Wyrmscraig villager robe top (B, white)",
         "stock": 5,
         "sellPrice": 500,
         "restockSeconds": 54
       },
       {
-        "itemId": -1,
+        "itemId": 33950,
         "itemName": "Wyrmscraig villager robe top (B, black)",
         "stock": 5,
         "sellPrice": 500,
@@ -46252,28 +47033,28 @@
         "restockSeconds": 54
       },
       {
-        "itemId": -1,
+        "itemId": 33971,
         "itemName": "Wyrmscraig villager skirt (green)",
         "stock": 5,
         "sellPrice": 400,
         "restockSeconds": 54
       },
       {
-        "itemId": -1,
+        "itemId": 33971,
         "itemName": "Wyrmscraig villager skirt (blue)",
         "stock": 5,
         "sellPrice": 400,
         "restockSeconds": 54
       },
       {
-        "itemId": -1,
+        "itemId": 33971,
         "itemName": "Wyrmscraig villager skirt (red)",
         "stock": 5,
         "sellPrice": 400,
         "restockSeconds": 54
       },
       {
-        "itemId": -1,
+        "itemId": 33971,
         "itemName": "Wyrmscraig villager skirt (yellow)",
         "stock": 5,
         "sellPrice": 400,
@@ -46287,7 +47068,7 @@
         "restockSeconds": 54
       },
       {
-        "itemId": -1,
+        "itemId": 33971,
         "itemName": "Wyrmscraig villager skirt (black)",
         "stock": 5,
         "sellPrice": 400,
@@ -46301,49 +47082,49 @@
         "restockSeconds": 54
       },
       {
-        "itemId": -1,
+        "itemId": 33992,
         "itemName": "Wyrmscraig villager work skirt (green)",
         "stock": 5,
         "sellPrice": 400,
         "restockSeconds": 54
       },
       {
-        "itemId": -1,
+        "itemId": 33992,
         "itemName": "Wyrmscraig villager work skirt (blue)",
         "stock": 5,
         "sellPrice": 400,
         "restockSeconds": 54
       },
       {
-        "itemId": -1,
+        "itemId": 33992,
         "itemName": "Wyrmscraig villager work skirt (red)",
         "stock": 5,
         "sellPrice": 400,
         "restockSeconds": 54
       },
       {
-        "itemId": -1,
+        "itemId": 33992,
         "itemName": "Wyrmscraig villager work skirt (yellow)",
         "stock": 5,
         "sellPrice": 400,
         "restockSeconds": 54
       },
       {
-        "itemId": -1,
+        "itemId": 33992,
         "itemName": "Wyrmscraig villager work skirt (white)",
         "stock": 5,
         "sellPrice": 400,
         "restockSeconds": 54
       },
       {
-        "itemId": -1,
+        "itemId": 33992,
         "itemName": "Wyrmscraig villager work skirt (black)",
         "stock": 5,
         "sellPrice": 400,
         "restockSeconds": 54
       },
       {
-        "itemId": -1,
+        "itemId": 33992,
         "itemName": "Wyrmscraig villager work skirt (pink)",
         "stock": 5,
         "sellPrice": 400,
@@ -46375,6 +47156,7 @@
   {
     "name": "White Knight Armoury",
     "location": "Falador",
+    "owner": "Sir Vyvin",
     "currency": "Coins",
     "x": 2980,
     "y": 3344,
@@ -46532,6 +47314,7 @@
   {
     "name": "White Knight Armoury (2)",
     "location": "Falador",
+    "owner": "Sir Vyvin",
     "currency": "Coins",
     "x": 2980,
     "y": 3344,
@@ -46689,6 +47472,7 @@
   {
     "name": "White Knight Armoury (3)",
     "location": "Falador",
+    "owner": "Sir Vyvin",
     "currency": "Coins",
     "x": 2980,
     "y": 3344,
@@ -46846,6 +47630,7 @@
   {
     "name": "White Knight Armoury (4)",
     "location": "Falador",
+    "owner": "Sir Vyvin",
     "currency": "Coins",
     "x": 2980,
     "y": 3344,
@@ -47003,6 +47788,7 @@
   {
     "name": "White Knight Armoury (5)",
     "location": "Falador",
+    "owner": "Sir Vyvin",
     "currency": "Coins",
     "x": 2980,
     "y": 3344,
@@ -47160,6 +47946,7 @@
   {
     "name": "White Knight Armoury (6)",
     "location": "Falador",
+    "owner": "Sir Vyvin",
     "currency": "Coins",
     "x": 2980,
     "y": 3344,
@@ -47317,6 +48104,7 @@
   {
     "name": "William's Wilderness Cape Shop",
     "location": "Lava Dragon Isle",
+    "owner": "William",
     "currency": "Coins",
     "items": [
       {
@@ -47359,6 +48147,7 @@
   {
     "name": "Wine Shop",
     "location": "Draynor Village",
+    "owner": "Fortunato",
     "currency": "Coins",
     "items": [
       {
@@ -47400,16 +48189,17 @@
   },
   {
     "name": "Wise Old Man",
+    "owner": "Wise Old Man",
     "currency": "Coins",
     "items": [
       {
-        "itemId": -1,
+        "itemId": 9813,
         "itemName": "Quest point cape",
         "stock": -1,
         "sellPrice": 99000
       },
       {
-        "itemId": 9813,
+        "itemId": 13068,
         "itemName": "Quest point cape (t)",
         "stock": -1,
         "sellPrice": 99000
@@ -47418,16 +48208,17 @@
   },
   {
     "name": "Woodsman tutor",
+    "owner": "Woodsman tutor",
     "currency": "Coins",
     "items": [
       {
-        "itemId": -1,
+        "itemId": 9807,
         "itemName": "Woodcutting cape",
         "stock": -1,
         "sellPrice": 99000
       },
       {
-        "itemId": 9807,
+        "itemId": 9808,
         "itemName": "Woodcut. cape(t)",
         "stock": -1,
         "sellPrice": 99000
@@ -47437,6 +48228,7 @@
   {
     "name": "Worm Tongue's Wares",
     "location": "Colossal Wyrm Remains",
+    "owner": "Worm Tongue",
     "currency": "Termites",
     "items": [
       {
@@ -47467,6 +48259,7 @@
   },
   {
     "name": "Wyson the gardener",
+    "owner": "Wyson the gardener",
     "currency": "Coins",
     "items": [
       {
@@ -47485,19 +48278,20 @@
   },
   {
     "name": "Yadech Strongarm",
+    "owner": "Yadech Strongarm",
     "currency": "Coins",
     "x": 2855,
     "y": 3553,
     "plane": 1,
     "items": [
       {
-        "itemId": -1,
+        "itemId": 9750,
         "itemName": "Strength cape",
         "stock": -1,
         "sellPrice": 99000
       },
       {
-        "itemId": 9750,
+        "itemId": 9751,
         "itemName": "Strength cape(t)",
         "stock": -1,
         "sellPrice": 99000
@@ -47506,6 +48300,7 @@
   },
   {
     "name": "Yanni Salika",
+    "owner": "Yanni Salika",
     "currency": "Coins",
     "items": [
       {
@@ -47535,8 +48330,8 @@
         "itemName": "Locating crystal"
       },
       {
-        "itemId": 616,
-        "itemName": "Beads of the dead",
+        "itemId": -1,
+        "itemName": "Beads of the Dead",
         "stock": -1,
         "sellPrice": 1200
       },
@@ -47555,6 +48350,7 @@
   {
     "name": "Yarnio's Baked Goods",
     "location": "Cam Torum",
+    "owner": "Yarnio",
     "currency": "Coins",
     "x": 1443,
     "y": 9559,
@@ -47572,36 +48368,42 @@
         "itemId": 1891,
         "itemName": "Cake",
         "stock": 5,
+        "sellPrice": 50,
         "restockSeconds": 480
       },
       {
         "itemId": 2325,
         "itemName": "Redberry pie",
         "stock": 5,
+        "sellPrice": 12,
         "restockSeconds": 90
       },
       {
         "itemId": 2327,
         "itemName": "Meat pie",
         "stock": 5,
+        "sellPrice": 15,
         "restockSeconds": 90
       },
       {
         "itemId": 2323,
         "itemName": "Apple pie",
         "stock": 5,
+        "sellPrice": 30,
         "restockSeconds": 90
       },
       {
         "itemId": 7178,
         "itemName": "Garden pie",
         "stock": 5,
+        "sellPrice": 24,
         "restockSeconds": 90
       },
       {
         "itemId": 7188,
         "itemName": "Fish pie",
         "stock": 5,
+        "sellPrice": 100,
         "restockSeconds": 90
       }
     ]
@@ -47609,6 +48411,7 @@
   {
     "name": "Yarsul's Prodigious Pickaxes",
     "location": "Mining Guild",
+    "owner": "Yarsul",
     "currency": "Coins",
     "items": [
       {
@@ -47658,6 +48461,7 @@
   {
     "name": "Ye olde Tea Shoppe",
     "location": "Varrock",
+    "owner": "Tea seller",
     "currency": "Coins",
     "items": [
       {
@@ -47672,6 +48476,7 @@
   {
     "name": "Yrsa's Accoutrements",
     "location": "Rellekka",
+    "owner": "Yrsa",
     "currency": "Coins",
     "x": 2624,
     "y": 3674,
@@ -47828,6 +48633,7 @@
   },
   {
     "name": "Yulf Squecks",
+    "owner": "Yulf Squecks",
     "currency": "Coins",
     "items": [
       {
@@ -47877,6 +48683,7 @@
   {
     "name": "Zaff's Superior Staffs!",
     "location": "Varrock",
+    "owner": "Zaff",
     "currency": "Coins",
     "x": 3203,
     "y": 3434,
@@ -47936,6 +48743,7 @@
   {
     "name": "Zanaris General Store",
     "location": "Zanaris",
+    "owner": "Fairy shop keeper",
     "currency": "Coins",
     "items": [
       {
@@ -48033,6 +48841,7 @@
   },
   {
     "name": "Zavistic Rarve",
+    "owner": "Zavistic Rarve",
     "currency": "Coins",
     "items": [
       {
@@ -48044,6 +48853,7 @@
   {
     "name": "Zeke's Superior Scimitars",
     "location": "Al Kharid",
+    "owner": "Zeke",
     "currency": "Coins",
     "items": [
       {
@@ -48079,6 +48889,7 @@
   {
     "name": "Zenesha's Plate Mail Body Shop",
     "location": "East Ardougne",
+    "owner": "Zenesha",
     "currency": "Coins",
     "x": 2649,
     "y": 3297,
@@ -48123,6 +48934,7 @@
   },
   {
     "name": "Zenkog",
+    "owner": "Zenkog",
     "currency": "Coins",
     "items": [
       {
@@ -48136,18 +48948,21 @@
   {
     "name": "~ Uglug's stuffsies ~",
     "location": "Jiggig",
+    "owner": "Uglug Nar",
     "currency": "Coins",
     "items": [
       {
-        "itemId": 4848,
+        "itemId": 4844,
         "itemName": "Relicym's balm(3)",
         "stock": 100,
+        "sellPrice": 200,
         "restockSeconds": 6
       },
       {
-        "itemId": 10931,
+        "itemId": 10927,
         "itemName": "Sanfew serum(3)",
         "stock": 0,
+        "sellPrice": 240,
         "restockSeconds": 60
       },
       {

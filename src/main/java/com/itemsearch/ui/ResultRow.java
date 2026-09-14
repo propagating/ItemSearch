@@ -37,8 +37,8 @@ import net.runelite.client.ui.ColorScheme;
 
 public class ResultRow extends JPanel
 {
-	// wide enough for the longest badge ("PICKPOCKET" was; "STEAL" and "STORE" are shorter)
-	private static final int BADGE_WIDTH = 46;
+	// wide enough for the longest badge, "CONTAINER"
+	private static final int BADGE_WIDTH = 68;
 	private static final int ICON_HEIGHT = 32;
 
 	// square reserved for an icon, so named rows still line up with iconless ones beside them

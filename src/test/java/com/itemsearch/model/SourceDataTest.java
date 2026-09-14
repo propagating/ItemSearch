@@ -33,7 +33,8 @@ public class SourceDataTest
 	private static SourceData source(String name, String wikiPage)
 	{
 		return new SourceData(1, name, 55, null, Collections.emptyList(), Collections.emptyList(),
-			Collections.singletonList(1), null, SourceType.KILL, null, null, null, null, wikiPage, null, null);
+			Collections.singletonList(1), null, SourceType.KILL, null, null, null, null, wikiPage, null, null,
+			null);
 	}
 
 	/**

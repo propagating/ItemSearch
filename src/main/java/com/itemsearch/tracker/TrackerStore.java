@@ -31,6 +31,7 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 import lombok.extern.slf4j.Slf4j;
@@ -72,9 +73,15 @@ public class TrackerStore
 	// atomic with respect to each other: recordKill on the client thread cannot interleave
 	// with clear()/resetPair() on the EDT and re-persist counters a reset just wiped.
 	// Reads (getNpcKills/getDry) stay lock-free on the concurrent maps.
+	// the blob as last read from or written to the config, so a change made elsewhere — a second
+	// client on the same profile, or the profile synced down from the RuneLite account — can be
+	// told apart from this store's own writes
+	private String lastSeen;
+
 	public synchronized void load()
 	{
 		String json = configManager.getConfiguration(GROUP, KEY);
+		lastSeen = json;
 		if (json == null || json.isEmpty())
 		{
 			return;
@@ -115,6 +122,25 @@ public class TrackerStore
 		}
 	}
 
+	/**
+	 * Re-reads the counters if something other than this store has changed them, and says so.
+	 *
+	 * <p>Two clients on one profile each hold their own copy of the counters, and whichever saves
+	 * last wins; a kill counted in one client vanished when the other saved its stale copy plus
+	 * one. Every change made here therefore starts from what is actually saved, so a kill is
+	 * added to the other client's count rather than in place of it.
+	 */
+	public synchronized boolean absorbExternalChanges()
+	{
+		String json = configManager.getConfiguration(GROUP, KEY);
+		if (Objects.equals(json, lastSeen))
+		{
+			return false;
+		}
+		load();
+		return true;
+	}
+
 	public int getNpcKills(int npcId)
 	{
 		return npcKills.getOrDefault(npcId, 0);
@@ -147,6 +173,7 @@ public class TrackerStore
 
 	public synchronized void recordKill(int npcId, Set<Integer> droppedItemIds, Collection<Integer> possibleItemIds)
 	{
+		absorbExternalChanges();
 		npcKills.merge(npcId, 1, Integer::sum);
 		for (int itemId : possibleItemIds)
 		{
@@ -163,18 +190,36 @@ public class TrackerStore
 		}
 	}
 
+	/**
+	 * Raises a source's count to a total the game itself reported, when that is higher than what
+	 * has been counted here. The game's figure covers attempts made before this plugin was
+	 * watching, so it is trusted upwards and never used to take counted attempts away.
+	 */
+	public synchronized void raiseCountTo(int npcId, int total)
+	{
+		absorbExternalChanges();
+		if (total > getNpcKills(npcId))
+		{
+			npcKills.put(npcId, total);
+			save();
+		}
+	}
+
 	public synchronized void resetPair(int npcId, int itemId)
 	{
+		absorbExternalChanges();
 		dry.put(pairKey(npcId, itemId), 0);
 	}
 
 	public synchronized void resetNpcKills(int npcId)
 	{
+		absorbExternalChanges();
 		npcKills.remove(npcId);
 	}
 
 	public synchronized void resetNpcDrops(int npcId)
 	{
+		absorbExternalChanges();
 		// keys are "npcId:itemId"; the ':' delimiter prevents 3031 from matching 30310
 		String prefix = npcId + ":";
 		dry.keySet().removeIf(k -> k.startsWith(prefix));
@@ -202,7 +247,9 @@ public class TrackerStore
 		p.dry = new HashMap<>(dry);
 		p.obtained = new HashMap<>(obtained);
 		p.expanded = new HashSet<>(expanded);
-		configManager.setConfiguration(GROUP, KEY, gson.toJson(p));
+		String json = gson.toJson(p);
+		lastSeen = json;
+		configManager.setConfiguration(GROUP, KEY, json);
 	}
 
 	private static class Persisted

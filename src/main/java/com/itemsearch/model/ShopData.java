@@ -25,13 +25,18 @@
 package com.itemsearch.model;
 
 import java.util.List;
+import lombok.AllArgsConstructor;
 import lombok.Value;
 
 @Value
+@AllArgsConstructor
 public class ShopData
 {
 	String name;
 	String location;
+	// the NPC who runs the shop, when the wiki names one. An owner who can also be pickpocketed
+	// shares one page between selling and being robbed.
+	String owner;
 	String currency;
 	// world-map coordinates of the shop, from the wiki infobox's {{Map}} template;
 	// all null when the page has none. plane is 0 (ground) when coords are present.
@@ -40,4 +45,11 @@ public class ShopData
 	Integer plane;
 	Integer mapId; // wiki map layer id; null/<=0 = ordinary surface map
 	List<ShopItem> items;
+
+	/** A shop with no named owner. */
+	public ShopData(String name, String location, String currency, Integer x, Integer y,
+		Integer plane, Integer mapId, List<ShopItem> items)
+	{
+		this(name, location, null, currency, x, y, plane, mapId, items);
+	}
 }

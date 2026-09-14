@@ -83,6 +83,52 @@ public class TrackerStoreTest
 		assertEquals(0, store.getDry(3031, 995));
 	}
 
+	/**
+	 * Two clients on one profile each hold their own counters. A kill counted here must be added
+	 * to what the other client saved in the meantime, not written over it: the albatross count
+	 * went 1, 2, then back to 1 when a second client saved its stale copy plus one.
+	 */
+	@Test
+	public void aKillIsAddedToCountersAnotherClientSavedMeanwhile()
+	{
+		store.recordKill(3031, Collections.emptySet(), Collections.singletonList(995));
+		store.save();
+		assertEquals(1, store.getNpcKills(3031));
+
+		// another client saved five kills of its own since
+		when(configManager.getConfiguration(eq("itemsearch"), eq("data")))
+			.thenReturn("{\"npcKills\":{\"3031\":5},\"dry\":{\"3031:995\":5},\"obtained\":{}}");
+
+		store.recordKill(3031, Collections.emptySet(), Collections.singletonList(995));
+		assertEquals(6, store.getNpcKills(3031));
+		assertEquals(6, store.getDry(3031, 995));
+	}
+
+	@Test
+	public void thisStoresOwnSaveIsNotMistakenForAnotherClients()
+	{
+		store.recordKill(3031, Collections.emptySet(), Collections.singletonList(995));
+		store.save();
+		ArgumentCaptor<String> saved = ArgumentCaptor.forClass(String.class);
+		verify(configManager).setConfiguration(eq("itemsearch"), eq("data"), saved.capture());
+		when(configManager.getConfiguration(eq("itemsearch"), eq("data"))).thenReturn(saved.getValue());
+
+		assertEquals(false, store.absorbExternalChanges());
+		assertEquals(1, store.getNpcKills(3031));
+	}
+
+	/** The game's own total is trusted upwards only: it never takes counted attempts away. */
+	@Test
+	public void aReportedTotalRaisesTheCountButNeverLowersIt()
+	{
+		store.recordKill(-1001, Collections.emptySet(), Collections.singletonList(995));
+		store.raiseCountTo(-1001, 40);
+		assertEquals(40, store.getNpcKills(-1001));
+		store.raiseCountTo(-1001, 12);
+		assertEquals(40, store.getNpcKills(-1001));
+		verify(configManager).setConfiguration(eq("itemsearch"), eq("data"), anyString());
+	}
+
 	@Test
 	public void corruptBlobLoadsEmpty()
 	{

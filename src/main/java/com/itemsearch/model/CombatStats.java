@@ -25,9 +25,12 @@
 package com.itemsearch.model;
 
 import java.util.List;
+import java.util.Map;
+import lombok.AllArgsConstructor;
 import lombok.Value;
 
 @Value
+@AllArgsConstructor
 public class CombatStats
 {
 	int attackLevel;
@@ -44,4 +47,16 @@ public class CombatStats
 	// the spell school it takes extra damage from, and by how much: "Earth", 50
 	String elementalWeakness;
 	Integer elementalWeaknessPercent;
+	// what it shrugs off: "Poison" -> "Immune", "Cannon" -> "Susceptible", "Freeze" -> "50%
+	// resistant", in the order to show them. Null when the wiki says nothing.
+	Map<String, String> statuses;
+
+	/** Stats with nothing said about poison, venom, or the other statuses. */
+	public CombatStats(int attackLevel, int strengthLevel, int defenceLevel, int magicLevel,
+		int rangedLevel, int hitpoints, List<Attack> attacks, List<String> weakTo,
+		String elementalWeakness, Integer elementalWeaknessPercent)
+	{
+		this(attackLevel, strengthLevel, defenceLevel, magicLevel, rangedLevel, hitpoints, attacks,
+			weakTo, elementalWeakness, elementalWeaknessPercent, null);
+	}
 }

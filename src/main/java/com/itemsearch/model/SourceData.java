@@ -25,9 +25,11 @@
 package com.itemsearch.model;
 
 import java.util.List;
+import lombok.AllArgsConstructor;
 import lombok.Value;
 
 @Value
+@AllArgsConstructor
 public class SourceData
 {
 	int id;
@@ -61,6 +63,24 @@ public class SourceData
 	// where this source is found, in words, when the wiki gives no coordinates the map can use —
 	// the Black Knight Catacombs have no wiki map, so their tiles are drawing coordinates
 	String locationName;
+	// the wiki versions this source stands for, when it stands for several that look or fight
+	// differently. Null for the rest, which is most sources.
+	List<Phase> phases;
+	// for a pickpocket source: the Thieving level it takes and the experience a success gives.
+	// Null when the wiki's table does not list the NPC, and for everything that is not robbed.
+	Integer thievingLevel;
+	Double thievingXp;
+
+	/** A source with no thieving requirement recorded. */
+	public SourceData(int id, String name, int combatLevel, String wikiImageUrl,
+		List<DropSource> drops, List<SpawnPoint> spawnPoints, List<Integer> npcIds,
+		CombatStats combat, SourceType type, Integer x, Integer y, Integer plane,
+		java.util.List<Integer> tables, String wikiPage, SpawnPoint entrance, String locationName,
+		List<Phase> phases)
+	{
+		this(id, name, combatLevel, wikiImageUrl, drops, spawnPoints, npcIds, combat, type, x, y,
+			plane, tables, wikiPage, entrance, locationName, phases, null, null);
+	}
 
 	/**
 	 * The title to ask the wiki about. The display name is not always one: version splits and
@@ -75,6 +95,7 @@ public class SourceData
 	public SourceData withDrops(List<DropSource> resolved)
 	{
 		return new SourceData(id, name, combatLevel, wikiImageUrl, resolved, spawnPoints,
-			npcIds, combat, type, x, y, plane, tables, wikiPage, entrance, locationName);
+			npcIds, combat, type, x, y, plane, tables, wikiPage, entrance, locationName, phases,
+			thievingLevel, thievingXp);
 	}
 }
