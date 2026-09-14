@@ -1907,7 +1907,7 @@
         "restockSeconds": 1
       },
       {
-        "itemId": -1,
+        "itemId": 34065,
         "itemName": "Shark lure pack",
         "stock": 10000,
         "restockSeconds": 1
@@ -2499,6 +2499,7 @@
     "name": "Ardougne Baker's Stall",
     "location": "East Ardougne",
     "owner": "Baker",
+    "stall": "Bakery stall",
     "currency": "Coins",
     "x": 2656,
     "y": 3310,
@@ -2538,6 +2539,7 @@
     "name": "Ardougne Baker's Stall (2)",
     "location": "East Ardougne",
     "owner": "Baker",
+    "stall": "Bakery stall",
     "currency": "Coins",
     "x": 2656,
     "y": 3310,
@@ -2577,6 +2579,7 @@
     "name": "Ardougne Fur Stall",
     "location": "East Ardougne",
     "owner": "Fur Trader",
+    "stall": "Fur stall",
     "currency": "Coins",
     "items": [
       {
@@ -2669,6 +2672,7 @@
     "name": "Ardougne Gem Stall",
     "location": "East Ardougne",
     "owner": "Gem merchant",
+    "stall": "Gem stall",
     "currency": "Coins",
     "items": [
       {
@@ -2705,6 +2709,7 @@
     "name": "Ardougne Silver Stall",
     "location": "East Ardougne",
     "owner": "Silver merchant",
+    "stall": "Silver stall",
     "currency": "Coins",
     "items": [
       {
@@ -2734,6 +2739,7 @@
     "name": "Ardougne Spice Stall",
     "location": "East Ardougne",
     "owner": "Spice seller",
+    "stall": "Spice stall",
     "currency": "Coins",
     "items": [
       {
@@ -7231,6 +7237,7 @@
     "name": "Carefree Crafting Stall",
     "location": "Keldagrim",
     "owner": "Nolar",
+    "stall": "Crafting stall",
     "currency": "Coins",
     "x": 2887,
     "y": 10207,
@@ -12976,7 +12983,7 @@
         "sellPrice": 0
       },
       {
-        "itemId": -1,
+        "itemId": 13203,
         "itemName": "Mask of Balance",
         "stock": -1,
         "sellPrice": 0
@@ -13822,7 +13829,7 @@
         "sellPrice": 0
       },
       {
-        "itemId": -1,
+        "itemId": 29433,
         "itemName": "Book of Egg",
         "stock": -1,
         "sellPrice": 0
@@ -14223,9 +14230,10 @@
         "restockSeconds": 1
       },
       {
-        "itemId": -1,
+        "itemId": 13203,
         "itemName": "Mask of Balance",
         "stock": 100,
+        "sellPrice": 1,
         "restockSeconds": 1
       },
       {
@@ -14236,7 +14244,7 @@
         "restockSeconds": 1
       },
       {
-        "itemId": -1,
+        "itemId": 981,
         "itemName": "Disk of Returning",
         "stock": 7,
         "sellPrice": 21000,
@@ -14432,7 +14440,7 @@
         "sellPrice": 145
       },
       {
-        "itemId": -1,
+        "itemId": 11740,
         "itemName": "Scroll of Redirection",
         "stock": -1,
         "sellPrice": 775
@@ -15489,7 +15497,7 @@
         "sellPrice": 250
       },
       {
-        "itemId": -1,
+        "itemId": 7648,
         "itemName": "Rod of Ivandis",
         "stock": -1,
         "sellPrice": 1000
@@ -18397,6 +18405,7 @@
     "name": "Fortis Baker's Stall",
     "location": "Civitas illa Fortis",
     "owner": "Baker",
+    "stall": "Bakery stall",
     "currency": "Coins",
     "items": [
       {
@@ -18700,6 +18709,7 @@
     "name": "Fortis Fur Stall",
     "location": "Civitas illa Fortis",
     "owner": "Fur Merchant",
+    "stall": "Fur stall",
     "currency": "Coins",
     "items": [
       {
@@ -18820,6 +18830,7 @@
     "name": "Fortis Gem Stall",
     "location": "Civitas illa Fortis",
     "owner": "Gem Merchant",
+    "stall": "Gem stall",
     "currency": "Coins",
     "items": [
       {
@@ -19004,6 +19015,7 @@
     "name": "Fortis Silk Stall",
     "location": "Civitas illa Fortis",
     "owner": "Silk Merchant",
+    "stall": "Silk stall",
     "currency": "Coins",
     "items": [
       {
@@ -19033,6 +19045,7 @@
     "name": "Fortis Spice Stall",
     "location": "Civitas illa Fortis",
     "owner": "Spice Merchant",
+    "stall": "Spice stall",
     "currency": "Coins",
     "items": [
       {
@@ -24647,7 +24660,7 @@
         "restockSeconds": 1
       },
       {
-        "itemId": -1,
+        "itemId": 7639,
         "itemName": "Rod of Ivandis (10)",
         "stock": 20,
         "sellPrice": 1000,
@@ -26726,6 +26739,7 @@
     "name": "Kourend Castle Baker's Stall",
     "location": "Kourend Castle",
     "owner": "Baker",
+    "stall": "Bakery stall",
     "currency": "Coins",
     "x": 1639,
     "y": 3684,
@@ -26765,6 +26779,7 @@
     "name": "Kourend Castle Gem Stall",
     "location": "Kourend Castle",
     "owner": "Gem merchant",
+    "stall": "Gem stall",
     "currency": "Coins",
     "items": [
       {
@@ -28331,51 +28346,59 @@
         "restockSeconds": 150000000
       },
       {
-        "itemId": -1,
+        "itemId": 23927,
         "itemName": "Crystal of Ithell",
         "stock": 10,
+        "sellPrice": 500000,
         "restockSeconds": 120
       },
       {
-        "itemId": -1,
+        "itemId": 23929,
         "itemName": "Crystal of Iorwerth",
         "stock": 10,
+        "sellPrice": 500000,
         "restockSeconds": 120
       },
       {
-        "itemId": -1,
+        "itemId": 23931,
         "itemName": "Crystal of Trahaearn",
         "stock": 10,
+        "sellPrice": 500000,
         "restockSeconds": 120
       },
       {
-        "itemId": -1,
+        "itemId": 23933,
         "itemName": "Crystal of Cadarn",
         "stock": 10,
+        "sellPrice": 500000,
         "restockSeconds": 120
       },
       {
-        "itemId": -1,
+        "itemId": 23935,
         "itemName": "Crystal of Crwys",
         "stock": 10,
+        "sellPrice": 500000,
         "restockSeconds": 120
       },
       {
-        "itemId": -1,
+        "itemId": 23937,
         "itemName": "Crystal of Meilyr",
         "stock": 10,
+        "sellPrice": 500000,
         "restockSeconds": 120
       },
       {
-        "itemId": -1,
+        "itemId": 23939,
         "itemName": "Crystal of Hefin",
         "stock": 10,
+        "sellPrice": 500000,
         "restockSeconds": 120
       },
       {
-        "itemId": -1,
+        "itemId": 23941,
         "itemName": "Crystal of Amlodd",
         "stock": 10,
+        "sellPrice": 500000,
         "restockSeconds": 120
       },
       {
@@ -28595,25 +28618,25 @@
         "sellPrice": 23000
       },
       {
-        "itemId": -1,
+        "itemId": 3844,
         "itemName": "Book of Balance",
         "stock": -1,
         "sellPrice": 12000
       },
       {
-        "itemId": -1,
+        "itemId": 12612,
         "itemName": "Book of Darkness",
         "stock": -1,
         "sellPrice": 14000
       },
       {
-        "itemId": -1,
+        "itemId": 12610,
         "itemName": "Book of Law",
         "stock": -1,
         "sellPrice": 14000
       },
       {
-        "itemId": -1,
+        "itemId": 12608,
         "itemName": "Book of War",
         "stock": -1,
         "sellPrice": 14000
@@ -28631,7 +28654,7 @@
         "sellPrice": 12000
       },
       {
-        "itemId": -1,
+        "itemId": 25818,
         "itemName": "Book of the Dead",
         "stock": -1,
         "sellPrice": 9500
@@ -28853,7 +28876,7 @@
         "sellPrice": 115000
       },
       {
-        "itemId": -1,
+        "itemId": 10828,
         "itemName": "Helm of Neitiznot",
         "stock": -1,
         "sellPrice": 95000
@@ -28881,19 +28904,19 @@
         "itemName": "Ava's assembler"
       },
       {
-        "itemId": -1,
+        "itemId": 21793,
         "itemName": "Imbued Guthix cape",
         "stock": -1,
         "sellPrice": 250000
       },
       {
-        "itemId": -1,
+        "itemId": 21795,
         "itemName": "Imbued Zamorak cape",
         "stock": -1,
         "sellPrice": 250000
       },
       {
-        "itemId": -1,
+        "itemId": 21791,
         "itemName": "Imbued Saradomin cape",
         "stock": -1,
         "sellPrice": 250000
@@ -28905,7 +28928,7 @@
         "sellPrice": 30000
       },
       {
-        "itemId": -1,
+        "itemId": 27279,
         "itemName": "Thread of Elidinis",
         "stock": -1,
         "sellPrice": 350000
@@ -30418,7 +30441,7 @@
     "currency": "Coins",
     "items": [
       {
-        "itemId": -1,
+        "itemId": 10828,
         "itemName": "Helm of Neitiznot",
         "stock": -1,
         "sellPrice": 50000
@@ -32724,7 +32747,7 @@
         "restockSeconds": 1
       },
       {
-        "itemId": -1,
+        "itemId": 7639,
         "itemName": "Rod of Ivandis (10)",
         "stock": -1,
         "sellPrice": 1000,
@@ -34078,6 +34101,7 @@
     "name": "Port Roberts Cannonball Stall",
     "location": "Port Roberts",
     "owner": "Iron Bill",
+    "stall": "Cannonball stall",
     "currency": "Coins",
     "items": [
       {
@@ -34128,6 +34152,7 @@
     "name": "Port Roberts Fish Stall",
     "location": "Port Roberts",
     "owner": "Gregory",
+    "stall": "Fish stall (Port Roberts)",
     "currency": "Coins",
     "items": [
       {
@@ -34234,6 +34259,7 @@
     "name": "Port Roberts Fur Stall",
     "location": "Port Roberts",
     "owner": "Perdie",
+    "stall": "Fur stall (Port Roberts)",
     "currency": "Coins",
     "items": [
       {
@@ -34340,6 +34366,7 @@
     "name": "Port Roberts Gem Stall",
     "location": "Port Roberts",
     "owner": "Eleanor",
+    "stall": "Gem stall (Port Roberts)",
     "currency": "Coins",
     "items": [
       {
@@ -34513,6 +34540,7 @@
     "name": "Port Roberts Ore Stall",
     "location": "Port Roberts",
     "owner": "Delf",
+    "stall": "Ore stall (Port Roberts)",
     "currency": "Coins",
     "items": [
       {
@@ -34598,6 +34626,7 @@
     "name": "Port Roberts Silk Stall",
     "location": "Port Roberts",
     "owner": "Doria",
+    "stall": "Silk stall (Port Roberts)",
     "currency": "Coins",
     "items": [
       {
@@ -34627,6 +34656,7 @@
     "name": "Port Roberts Silver Stall",
     "location": "Port Roberts",
     "owner": "Amos",
+    "stall": "Silver stall (Port Roberts)",
     "currency": "Coins",
     "items": [
       {
@@ -34656,6 +34686,7 @@
     "name": "Port Roberts Spice Stall",
     "location": "Port Roberts",
     "owner": "Samir",
+    "stall": "Spice stall (Port Roberts)",
     "currency": "Coins",
     "items": [
       {
@@ -34685,6 +34716,7 @@
     "name": "Port Roberts Veg Stall",
     "location": "Port Roberts",
     "owner": "Marla",
+    "stall": "Veg stall (Port Roberts)",
     "currency": "Coins",
     "items": [
       {
@@ -34950,6 +34982,7 @@
     "name": "Prifddinas Gem Stall",
     "location": "Prifddinas",
     "owner": "Glenda",
+    "stall": "Gem stall",
     "currency": "Coins",
     "x": 3276,
     "y": 6099,
@@ -35168,6 +35201,7 @@
     "name": "Prifddinas Silver Stall",
     "location": "Prifddinas",
     "owner": "Osian",
+    "stall": "Silver stall",
     "currency": "Coins",
     "x": 3282,
     "y": 6098,
@@ -35201,6 +35235,7 @@
     "name": "Prifddinas Spice Stall",
     "location": "Prifddinas",
     "owner": "Caerwyn",
+    "stall": "Spice stall",
     "currency": "Coins",
     "items": [
       {
@@ -38994,6 +39029,7 @@
     "name": "Silver Cog Silver Stall",
     "location": "Keldagrim",
     "owner": "Gulldamar",
+    "stall": "Silver stall",
     "currency": "Coins",
     "items": [
       {
@@ -39565,6 +39601,7 @@
     "name": "Solihib's Food Stall",
     "location": "Ape Atoll",
     "owner": "Solihib",
+    "stall": "Food Stall",
     "currency": "Coins",
     "x": 2769,
     "y": 2789,
@@ -40899,25 +40936,25 @@
     "currency": "Abyssal pearls",
     "items": [
       {
-        "itemId": -1,
+        "itemId": 26850,
         "itemName": "Hat of the Eye",
         "stock": 100,
         "sellPrice": 400
       },
       {
-        "itemId": -1,
+        "itemId": 26852,
         "itemName": "Robe top of the Eye",
         "stock": 100,
         "sellPrice": 350
       },
       {
-        "itemId": -1,
+        "itemId": 26854,
         "itemName": "Robe bottoms of the Eye",
         "stock": 100,
         "sellPrice": 350
       },
       {
-        "itemId": -1,
+        "itemId": 26856,
         "itemName": "Boots of the Eye",
         "stock": 100,
         "sellPrice": 250
@@ -48330,7 +48367,7 @@
         "itemName": "Locating crystal"
       },
       {
-        "itemId": -1,
+        "itemId": 616,
         "itemName": "Beads of the Dead",
         "stock": -1,
         "sellPrice": 1200

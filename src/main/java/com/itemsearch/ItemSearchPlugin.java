@@ -156,13 +156,21 @@ public class ItemSearchPlugin extends Plugin
 
 		// the click arrives on the client thread and both calls below touch Swing, so the
 		// whole handler crosses to the EDT once here rather than each callee guarding itself
-		showDropsMenu = new ShowDropsMenu(client, dataService, source ->
+		showDropsMenu = new ShowDropsMenu(client, dataService, itemManager, source ->
 			SwingUtilities.invokeLater(() ->
 			{
 				if (panel != null && navButton != null)
 				{
 					clientToolbar.openPanel(navButton);
 					panel.showSource(source);
+				}
+			}), item ->
+			SwingUtilities.invokeLater(() ->
+			{
+				if (panel != null && navButton != null)
+				{
+					clientToolbar.openPanel(navButton);
+					panel.showItemFromGame(item);
 				}
 			}));
 		showDropsMenu.setEnabled(config.showDropsMenuEntry());

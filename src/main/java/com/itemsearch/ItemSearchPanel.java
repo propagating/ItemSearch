@@ -32,6 +32,7 @@ import java.awt.Insets;
 import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
@@ -567,6 +568,12 @@ class ItemSearchPanel extends PluginPanel
 		showItem(item);
 	}
 
+	/** Opens an item's page from outside the panel — the in-game "Show information" menu entry. EDT only. */
+	void showItemFromGame(ItemMatch item)
+	{
+		showItem(item);
+	}
+
 	/** Opens a shop's page the way a Buy from card does. Package-visible for tests. */
 	void showShopForTest(ShopData shop)
 	{
@@ -581,8 +588,9 @@ class ItemSearchPanel extends PluginPanel
 	private void renderNpc(SourceData npc)
 	{
 		// someone you can rob who also keeps a shop gets one page for both. The NPC's name is
-		// the page title; older data without one carries it in the display name's prefix.
-		ShopData shop = null;
+		// the page title; older data without one carries it in the display name's prefix. A
+		// stall likewise: its shops in every town it stands in join it on one page.
+		List<ShopData> shops = Collections.emptyList();
 		if (npc.getType() == SourceType.PICKPOCKET)
 		{
 			String suffix = " (pickpocket)";
@@ -591,15 +599,20 @@ class ItemSearchPanel extends PluginPanel
 			{
 				owner = owner.substring(0, owner.length() - suffix.length());
 			}
-			shop = dataService.shopOwnedBy(owner);
+			ShopData shop = dataService.shopOwnedBy(owner);
+			shops = shop == null ? Collections.emptyList() : Collections.singletonList(shop);
 		}
-		renderNpc(npc, shop);
+		else
+		{
+			shops = dataService.shopsForStall(npc.getName());
+		}
+		renderNpc(npc, shops);
 	}
 
-	private void renderNpc(SourceData npc, ShopData shop)
+	private void renderNpc(SourceData npc, List<ShopData> shops)
 	{
 		currentItemView = null;
-		SourceResultView view = new SourceResultView(npc, shop, trackerStore, spriteManager, itemManager,
+		SourceResultView view = new SourceResultView(npc, shops, trackerStore, spriteManager, itemManager,
 			okHttpClient, spawnMapMarker, clientThread, spawnStore, spawnRecorder,
 			config.allowSpawnEditing(), this::back, this::showItem);
 		currentNpcView = view;
@@ -627,7 +640,17 @@ class ItemSearchPanel extends PluginPanel
 			SourceData thief = dataService.sourceByNameAndLevel(shop.getOwner() + " (pickpocket)", 0);
 			if (thief != null && thief.getType() == SourceType.PICKPOCKET)
 			{
-				renderNpc(thief, shop);
+				renderNpc(thief, Collections.singletonList(shop));
+				return;
+			}
+		}
+		// and a shop that is the front of a stall is the stall's page, with this town's stock
+		if (shop.getStall() != null)
+		{
+			SourceData stall = dataService.sourceByNameAndLevel(shop.getStall(), 0);
+			if (stall != null)
+			{
+				renderNpc(stall, Collections.singletonList(shop));
 				return;
 			}
 		}

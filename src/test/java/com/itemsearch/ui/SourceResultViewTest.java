@@ -484,6 +484,65 @@ public class SourceResultViewTest
 		assertTrue(alone.contains("Pickpocketing"));
 	}
 
+	private static SourceData stall(Integer level, Double xp)
+	{
+		return new SourceData(11730, "Bakery stall", 0, null,
+			Collections.singletonList(drop(2309, "Bread", 0.5, 1, null)),
+			Collections.emptyList(), Collections.singletonList(11730), null, SourceType.GATHER,
+			null, null, null, null, "Bakery stall", null, null, null, level, xp);
+	}
+
+	private static ShopData bakery(String name, String location)
+	{
+		return new ShopData(name, location, "Baker", "Bakery stall", "Coins", null, null, null, null,
+			Collections.singletonList(new ShopItem(2309, "Bread", 10, 12, 90)));
+	}
+
+	private SourceResultView buildWithShops(SourceData npc, List<ShopData> shops)
+	{
+		return new SourceResultView(npc, shops, new TrackerStore(mock(ConfigManager.class), new Gson()),
+			mock(SpriteManager.class), mock(ItemManager.class), new OkHttpClient(),
+			mock(SpawnMapMarker.class), mock(ClientThread.class),
+			new SpawnStore(mock(ConfigManager.class), new Gson()), mock(SpawnRecorder.class), false,
+			() ->
+			{
+			}, item ->
+			{
+			});
+	}
+
+	/**
+	 * A market stall is a shop by day and robbed by night, in every town it stands in. Its page
+	 * lists each town's stock under Purchasable, names each shop since the stock differs, and
+	 * says what robbing it takes; the name card calls it a stall, not a node.
+	 */
+	@Test
+	public void aStallListsEveryTownsShopAndWhatRobbingItTakes()
+	{
+		List<String> text = labelTexts(buildWithShops(stall(5, 16.0), java.util.Arrays.asList(
+			bakery("Ardougne Baker's Stall", "East Ardougne"), bakery("Fortis Baker's Stall", "Civitas illa Fortis"))));
+		assertTrue(text.contains("PURCHASABLE"));
+		assertTrue(text.contains("Ardougne Baker's Stall  ·  East Ardougne  ·  Coins"));
+		assertTrue(text.contains("Fortis Baker's Stall  ·  Civitas illa Fortis  ·  Coins"));
+		assertTrue(text.contains("STEALABLE @ 5 THIEVING · 16 XP"));
+		assertTrue(text.contains("Stall  ·  Shop"));
+
+		List<String> one = labelTexts(buildWithShops(stall(5, 16.0),
+			Collections.singletonList(bakery("Fortis Baker's Stall", "Civitas illa Fortis"))));
+		assertTrue("one shop needs no name of its own", one.contains("Civitas illa Fortis  ·  Coins"));
+		assertFalse(one.contains("Fortis Baker's Stall  ·  Civitas illa Fortis  ·  Coins"));
+
+		List<String> alone = labelTexts(build(stall(5, 16.0),
+			new TrackerStore(mock(ConfigManager.class), new Gson())));
+		assertFalse(alone.contains("PURCHASABLE"));
+		assertTrue("a stall the tables price is a stall", alone.contains("Stall"));
+		assertTrue(alone.contains("STEALABLE @ 5 THIEVING · 16 XP"));
+
+		List<String> node = labelTexts(build(stall(null, null),
+			new TrackerStore(mock(ConfigManager.class), new Gson())));
+		assertTrue("one they do not is still a node", node.contains("Gathering node"));
+	}
+
 	/** Whether to bring poison, a cannon, or thralls is answered on the Stats card, in one vocabulary. */
 	@Test
 	public void theStatsCardSaysWhatTheMonsterShrugsOff()

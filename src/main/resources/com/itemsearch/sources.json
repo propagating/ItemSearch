@@ -259108,6 +259108,8 @@
       "tables": [
         152
       ],
+      "thievingLevel": 5,
+      "thievingXp": 16.0,
       "type": "GATHER"
     },
     {
@@ -271759,6 +271761,8 @@
       "tables": [
         362
       ],
+      "thievingLevel": 87,
+      "thievingXp": 223.0,
       "type": "GATHER"
     },
     {
@@ -275791,6 +275795,8 @@
       "tables": [
         417
       ],
+      "thievingLevel": 13,
+      "thievingXp": 7.8,
       "type": "GATHER"
     },
     {
@@ -275804,6 +275810,8 @@
       "tables": [
         418
       ],
+      "thievingLevel": 43,
+      "thievingXp": 125.0,
       "type": "GATHER"
     },
     {
@@ -275833,6 +275841,8 @@
         420,
         421
       ],
+      "thievingLevel": 36,
+      "thievingXp": 200.0,
       "type": "GATHER"
     },
     {
@@ -275875,6 +275885,8 @@
       "tables": [
         424
       ],
+      "thievingLevel": 72,
+      "thievingXp": 500.0,
       "type": "GATHER"
     },
     {
@@ -276068,6 +276080,8 @@
       "tables": [
         435
       ],
+      "thievingLevel": 52,
+      "thievingXp": 200.0,
       "type": "GATHER"
     },
     {
@@ -276081,6 +276095,8 @@
       "tables": [
         436
       ],
+      "thievingLevel": 78,
+      "thievingXp": 650.0,
       "type": "GATHER"
     },
     {
@@ -276394,6 +276410,8 @@
       "tables": [
         442
       ],
+      "thievingLevel": 28,
+      "thievingXp": 150.0,
       "type": "GATHER"
     },
     {
@@ -276489,6 +276507,8 @@
       "tables": [
         449
       ],
+      "thievingLevel": 28,
+      "thievingXp": 25.0,
       "type": "GATHER"
     },
     {
@@ -276644,6 +276664,8 @@
       "tables": [
         454
       ],
+      "thievingLevel": 84,
+      "thievingXp": 701.7,
       "type": "GATHER"
     },
     {
@@ -276697,6 +276719,8 @@
       "tables": [
         458
       ],
+      "thievingLevel": 47,
+      "thievingXp": 150.0,
       "type": "GATHER"
     },
     {
@@ -276884,6 +276908,8 @@
         462,
         463
       ],
+      "thievingLevel": 1,
+      "thievingXp": 4.5,
       "type": "GATHER"
     },
     {
@@ -279635,6 +279661,8 @@
       "tables": [
         527
       ],
+      "thievingLevel": 15,
+      "thievingXp": 6.4,
       "type": "GATHER"
     },
     {
@@ -280322,6 +280350,8 @@
       "tables": [
         530
       ],
+      "thievingLevel": 5,
+      "thievingXp": 20.0,
       "type": "GATHER"
     },
     {
@@ -281917,6 +281947,8 @@
       "tables": [
         560
       ],
+      "thievingLevel": 49,
+      "thievingXp": 52.0,
       "type": "GATHER"
     },
     {
@@ -293690,6 +293722,8 @@
       "tables": [
         719
       ],
+      "thievingLevel": 85,
+      "thievingXp": 353.3,
       "type": "GATHER"
     },
     {
@@ -298977,6 +299011,8 @@
       "tables": [
         776
       ],
+      "thievingLevel": 42,
+      "thievingXp": 42.0,
       "type": "GATHER"
     },
     {
@@ -298990,6 +299026,8 @@
       "tables": [
         777
       ],
+      "thievingLevel": 42,
+      "thievingXp": 49.0,
       "type": "GATHER"
     },
     {
@@ -301460,6 +301498,8 @@
       "tables": [
         821
       ],
+      "thievingLevel": 5,
+      "thievingXp": 16.0,
       "type": "GATHER"
     },
     {
@@ -302328,6 +302368,8 @@
       "tables": [
         271
       ],
+      "thievingLevel": 45,
+      "thievingXp": 65.0,
       "type": "GATHER",
       "x": 256,
       "y": 86,
@@ -303141,6 +303183,8 @@
       "tables": [
         842
       ],
+      "thievingLevel": 25,
+      "thievingXp": 28.5,
       "type": "GATHER"
     },
     {
@@ -303223,6 +303267,8 @@
       "tables": [
         844
       ],
+      "thievingLevel": 35,
+      "thievingXp": 45.0,
       "type": "GATHER"
     },
     {
@@ -303236,6 +303282,8 @@
       "tables": [
         845
       ],
+      "thievingLevel": 35,
+      "thievingXp": 38.5,
       "type": "GATHER"
     },
     {
@@ -304093,6 +304141,8 @@
       "tables": [
         851
       ],
+      "thievingLevel": 75,
+      "thievingXp": 408.0,
       "type": "GATHER"
     },
     {
@@ -304106,6 +304156,8 @@
       "tables": [
         852
       ],
+      "thievingLevel": 75,
+      "thievingXp": 129.5,
       "type": "GATHER"
     },
     {
@@ -337980,6 +338032,8 @@
       "tables": [
         1209
       ],
+      "thievingLevel": 65,
+      "thievingXp": 90.0,
       "type": "GATHER"
     },
     {
@@ -350952,6 +351006,8 @@
       "tables": [
         1365
       ],
+      "thievingLevel": 82,
+      "thievingXp": 191.0,
       "type": "GATHER"
     },
     {
@@ -360465,6 +360521,8 @@
       "tables": [
         1469
       ],
+      "thievingLevel": 76,
+      "thievingXp": 182.5,
       "type": "GATHER"
     },
     {
@@ -364519,6 +364577,8 @@
       "tables": [
         1545
       ],
+      "thievingLevel": 33,
+      "thievingXp": 90.0,
       "type": "GATHER"
     },
     {
@@ -366084,6 +366144,8 @@
       "tables": [
         1577
       ],
+      "thievingLevel": 65,
+      "thievingXp": 210.0,
       "type": "GATHER"
     },
     {
@@ -368022,6 +368084,8 @@
       "tables": [
         1599
       ],
+      "thievingLevel": 27,
+      "thievingXp": 10.0,
       "type": "GATHER"
     },
     {
@@ -369589,6 +369653,8 @@
       "tables": [
         1623
       ],
+      "thievingLevel": 20,
+      "thievingXp": 24.0,
       "type": "GATHER"
     },
     {
@@ -369602,6 +369668,8 @@
       "tables": [
         1623
       ],
+      "thievingLevel": 20,
+      "thievingXp": 24.0,
       "type": "GATHER"
     },
     {
@@ -369820,6 +369888,8 @@
       "tables": [
         1632
       ],
+      "thievingLevel": 50,
+      "thievingXp": 205.0,
       "type": "GATHER"
     },
     {
@@ -369833,6 +369903,8 @@
       "tables": [
         1633
       ],
+      "thievingLevel": 50,
+      "thievingXp": 80.0,
       "type": "GATHER"
     },
     {
@@ -378177,6 +378249,8 @@
       "tables": [
         1715
       ],
+      "thievingLevel": 65,
+      "thievingXp": 92.0,
       "type": "GATHER"
     },
     {
@@ -378190,6 +378264,8 @@
       "tables": [
         1715
       ],
+      "thievingLevel": 65,
+      "thievingXp": 110.0,
       "type": "GATHER"
     },
     {
@@ -381477,6 +381553,8 @@
         1742,
         1743
       ],
+      "thievingLevel": 64,
+      "thievingXp": 280.0,
       "type": "GATHER"
     },
     {
@@ -383900,6 +383978,8 @@
       "tables": [
         1785
       ],
+      "thievingLevel": 54,
+      "thievingXp": 122.5,
       "type": "GATHER"
     },
     {
@@ -384024,6 +384104,8 @@
       "tables": [
         1793
       ],
+      "thievingLevel": 5,
+      "thievingXp": 16.0,
       "type": "GATHER"
     },
     {
@@ -396584,6 +396666,8 @@
       "tables": [
         1906
       ],
+      "thievingLevel": 2,
+      "thievingXp": 5.0,
       "type": "GATHER"
     },
     {

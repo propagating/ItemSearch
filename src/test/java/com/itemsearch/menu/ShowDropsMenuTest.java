@@ -155,6 +155,96 @@ public class ShowDropsMenuTest
 		assertEquals(GOBLIN, shown.get().getId());
 	}
 
+	private static final int BRONZE_DAGGER = 1205;
+
+	private ShowDropsMenu withItems(AtomicReference<com.itemsearch.model.ItemMatch> shownItem)
+	{
+		net.runelite.client.game.ItemManager itemManager = mock(net.runelite.client.game.ItemManager.class);
+		org.mockito.Mockito.lenient().when(itemManager.canonicalize(anyInt()))
+			.thenAnswer(inv -> inv.getArgument(0));
+		org.mockito.Mockito.lenient().when(itemManager.canonicalize(1206)).thenReturn(BRONZE_DAGGER);
+		return new ShowDropsMenu(client, data, itemManager, shown::set, shownItem::set);
+	}
+
+	private static MenuOpened itemMenu(int itemId)
+	{
+		MenuEntry wield = mock(MenuEntry.class);
+		org.mockito.Mockito.lenient().when(wield.getType()).thenReturn(MenuAction.CC_OP);
+		when(wield.getItemId()).thenReturn(itemId);
+		MenuOpened event = mock(MenuOpened.class);
+		when(event.getMenuEntries()).thenReturn(new MenuEntry[]{wield});
+		return event;
+	}
+
+	/** An item in the inventory carries its id on the menu entry; its page is one click away. */
+	@Test
+	public void addsShowInformationForAnItemWeHaveDataFor()
+	{
+		AtomicReference<com.itemsearch.model.ItemMatch> shownItem = new AtomicReference<>();
+		AtomicReference<java.util.function.Consumer<MenuEntry>> handler = new AtomicReference<>();
+		when(created.onClick(org.mockito.ArgumentMatchers.any())).thenAnswer(inv ->
+		{
+			handler.set(inv.getArgument(0));
+			return created;
+		});
+
+		withItems(shownItem).onMenuOpened(itemMenu(BRONZE_DAGGER));
+
+		verify(created).setOption("Show information");
+		verify(created).setTarget("<col=ff9040>Bronze dagger</col>");
+		verify(created).setType(MenuAction.RUNELITE);
+		handler.get().accept(created);
+		assertEquals(BRONZE_DAGGER, shownItem.get().getItemId());
+		assertNull("an item is not a source", shown.get());
+	}
+
+	/** A noted dagger opens the dagger's page. */
+	@Test
+	public void aNotedItemOpensTheItemItself()
+	{
+		AtomicReference<com.itemsearch.model.ItemMatch> shownItem = new AtomicReference<>();
+		AtomicReference<java.util.function.Consumer<MenuEntry>> handler = new AtomicReference<>();
+		when(created.onClick(org.mockito.ArgumentMatchers.any())).thenAnswer(inv ->
+		{
+			handler.set(inv.getArgument(0));
+			return created;
+		});
+		withItems(shownItem).onMenuOpened(itemMenu(1206));
+		handler.get().accept(created);
+		assertEquals(BRONZE_DAGGER, shownItem.get().getItemId());
+	}
+
+	/** An item on the ground names itself through the entry's identifier instead. */
+	@Test
+	public void aGroundItemIsFoundByItsIdentifier()
+	{
+		MenuEntry take = mock(MenuEntry.class);
+		when(take.getType()).thenReturn(MenuAction.GROUND_ITEM_THIRD_OPTION);
+		when(take.getItemId()).thenReturn(-1);
+		when(take.getIdentifier()).thenReturn(BRONZE_DAGGER);
+		MenuOpened event = mock(MenuOpened.class);
+		when(event.getMenuEntries()).thenReturn(new MenuEntry[]{take});
+
+		withItems(new AtomicReference<>()).onMenuOpened(event);
+		verify(created).setTarget("<col=ff9040>Bronze dagger</col>");
+	}
+
+	/** An item nothing drops and no shop sells has no page worth opening. */
+	@Test
+	public void addsNothingForAnItemWeHaveNoDataFor()
+	{
+		withItems(new AtomicReference<>()).onMenuOpened(itemMenu(4151));
+		verify(client, never()).createMenuEntry(anyInt());
+	}
+
+	/** Without an item callback, items are left alone. */
+	@Test
+	public void theNpcOnlyMenuIgnoresItems()
+	{
+		menu.onMenuOpened(itemMenu(BRONZE_DAGGER));
+		verify(client, never()).createMenuEntry(anyInt());
+	}
+
 	@Test
 	public void aDisabledMenuAddsNothing()
 	{

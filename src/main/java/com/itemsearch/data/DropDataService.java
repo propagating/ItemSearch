@@ -75,4 +75,11 @@ public interface DropDataService
 
 	/** The shop this NPC runs, matched on the wiki's named owner case-insensitively, or null. */
 	ShopData shopOwnedBy(String npcName);
+
+	/**
+	 * The shops that are the fronts of a thieving stall, by the stall source's name; empty for
+	 * anything that is not a stall. A stall of a kind stands in several towns, each with its own
+	 * shop page, so there may be several.
+	 */
+	List<ShopData> shopsForStall(String stallName);
 }

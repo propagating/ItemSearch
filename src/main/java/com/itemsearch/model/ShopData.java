@@ -37,6 +37,9 @@ public class ShopData
 	// the NPC who runs the shop, when the wiki names one. An owner who can also be pickpocketed
 	// shares one page between selling and being robbed.
 	String owner;
+	// the thieving stall this shop is the front of, by its source's name ("Bakery stall"), when
+	// it is one. The stall and its shops share one page: what it sells, and what robbing it pays.
+	String stall;
 	String currency;
 	// world-map coordinates of the shop, from the wiki infobox's {{Map}} template;
 	// all null when the page has none. plane is 0 (ground) when coords are present.
@@ -50,6 +53,13 @@ public class ShopData
 	public ShopData(String name, String location, String currency, Integer x, Integer y,
 		Integer plane, Integer mapId, List<ShopItem> items)
 	{
-		this(name, location, null, currency, x, y, plane, mapId, items);
+		this(name, location, null, null, currency, x, y, plane, mapId, items);
+	}
+
+	/** A shop that is not a stall. */
+	public ShopData(String name, String location, String owner, String currency, Integer x,
+		Integer y, Integer plane, Integer mapId, List<ShopItem> items)
+	{
+		this(name, location, owner, null, currency, x, y, plane, mapId, items);
 	}
 }

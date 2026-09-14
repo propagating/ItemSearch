@@ -141,7 +141,8 @@
           "rarityKnown": true
         }
       ]
-    }
+    },
+    {"drops": [{"itemId": 2309, "itemName": "Bread", "rarity": 0.5, "quantity": 1, "noted": false, "rarityKnown": true}, {"itemId": 1891, "itemName": "Cake", "rarity": 0.25, "quantity": 1, "noted": false, "rarityKnown": true}]}
   ],
   "sources": [
     {
@@ -307,6 +308,7 @@
       "tables": [
         7
       ]
-    }
+    },
+    {"id": 11730, "npcIds": [11730], "name": "Bakery stall", "type": "GATHER", "combatLevel": 0, "thievingLevel": 5, "thievingXp": 16, "spawnPoints": [], "tables": [8]}
   ]
 }

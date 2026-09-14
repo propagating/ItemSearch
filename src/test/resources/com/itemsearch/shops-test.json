@@ -63,5 +63,7 @@
     "x": 3080,
     "y": 3250,
     "plane": 0
-  }
+  },
+  {"name": "Ardougne Baker's Stall", "location": "East Ardougne", "owner": "Baker", "stall": "Bakery stall", "currency": "Coins", "items": [{"itemId": 2309, "itemName": "Bread", "stock": 10, "sellPrice": 12, "restockSeconds": 90}, {"itemId": 1891, "itemName": "Cake", "stock": 3, "sellPrice": 50, "restockSeconds": 600}], "x": 2656, "y": 3310, "plane": 0},
+  {"name": "Fortis Baker's Stall", "location": "Civitas illa Fortis", "owner": "Baker", "stall": "Bakery stall", "currency": "Coins", "items": [{"itemId": 2309, "itemName": "Bread", "stock": 15, "sellPrice": 12, "restockSeconds": 60}]}
 ]

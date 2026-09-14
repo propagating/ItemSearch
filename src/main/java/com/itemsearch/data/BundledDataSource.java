@@ -80,11 +80,24 @@ public class BundledDataSource implements DropDataService
 	private final List<ShopData> allShops = new CopyOnWriteArrayList<>();
 	// lower-cased owner name -> the shop they run
 	private final Map<String, ShopData> shopsByOwner = new ConcurrentHashMap<>();
+	// lower-cased stall source name -> the shops that are its fronts, in data order
+	private final Map<String, List<ShopData>> shopsByStall = new ConcurrentHashMap<>();
 
 	@Override
 	public ShopData shopOwnedBy(String npcName)
 	{
 		return npcName == null ? null : shopsByOwner.get(npcName.trim().toLowerCase(Locale.ROOT));
+	}
+
+	@Override
+	public List<ShopData> shopsForStall(String stallName)
+	{
+		if (stallName == null)
+		{
+			return Collections.emptyList();
+		}
+		List<ShopData> shops = shopsByStall.get(stallName.trim().toLowerCase(Locale.ROOT));
+		return shops == null ? Collections.emptyList() : Collections.unmodifiableList(shops);
 	}
 
 	public BundledDataSource(Gson gson, String resourcePath)
@@ -178,12 +191,18 @@ public class BundledDataSource implements DropDataService
 					.filter(i -> i != null && i.getItemName() != null)
 					.collect(Collectors.toList());
 			ShopData normalized = new ShopData(shop.getName(), shop.getLocation(), shop.getOwner(),
-				shop.getCurrency(), shop.getX(), shop.getY(), shop.getPlane(), shop.getMapId(), items);
+				shop.getStall(), shop.getCurrency(), shop.getX(), shop.getY(), shop.getPlane(),
+				shop.getMapId(), items);
 			allShops.add(normalized);
 			if (shop.getOwner() != null && !shop.getOwner().trim().isEmpty())
 			{
 				// the first shop an owner runs is the one their page shows
 				shopsByOwner.putIfAbsent(shop.getOwner().trim().toLowerCase(Locale.ROOT), normalized);
+			}
+			if (shop.getStall() != null && !shop.getStall().trim().isEmpty())
+			{
+				shopsByStall.computeIfAbsent(shop.getStall().trim().toLowerCase(Locale.ROOT),
+					k -> new CopyOnWriteArrayList<>()).add(normalized);
 			}
 			for (ShopItem item : items)
 			{

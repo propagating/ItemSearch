@@ -86,6 +86,22 @@ public class BundledDataSourceShopTest
 		assertEquals("Aaron's Archery Appendages", byLocation.get(0).getName());
 	}
 
+	/** A stall of one kind has a shop page in every town it stands in; the stall's page shows them all. */
+	@Test
+	public void theShopsOfAStallAreFoundByTheStallsName()
+	{
+		BundledDataSource ds = loaded();
+		List<ShopData> shops = ds.shopsForStall("Bakery stall");
+		assertEquals(2, shops.size());
+		assertEquals("Ardougne Baker's Stall", shops.get(0).getName());
+		assertEquals("Bakery stall", shops.get(0).getStall());
+		assertEquals("Fortis Baker's Stall", shops.get(1).getName());
+		assertTrue(ds.shopsForStall("bakery stall").size() == 2);
+		assertTrue(ds.shopsForStall("Zaff's Superior Staffs").isEmpty());
+		assertTrue(ds.shopsForStall(null).isEmpty());
+		assertNull("a shop that is not a stall says so", ds.searchShops("zaff").get(0).getStall());
+	}
+
 	@Test
 	public void shopOnlyItemsBecomeSearchableItems()
 	{

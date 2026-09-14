@@ -351,6 +351,31 @@ public class ItemSearchPanelTest
 		assertTrue("the pickpocket entry opens the same page", showing(panel, "PURCHASABLE"));
 	}
 
+	/**
+	 * The Bakery stall is robbed in Ardougne and in Fortis, and each town's stall has a shop page.
+	 * A shop opens the stall's page with that town's stock; the stall opens with every town's.
+	 */
+	@Test
+	public void aStallAndItsShopsShareOnePageFromEitherDoor() throws Exception
+	{
+		BundledDataSource ds = loadedTestData();
+		ItemSearchPanel panel = newPanel(ds);
+
+		panel.showShopForTest(ds.searchShops("fortis baker").get(0));
+		assertTrue("the shop opens the stall's page", showing(panel, "PURCHASABLE"));
+		assertTrue(showing(panel, "STEALABLE @ 5 THIEVING"));
+		assertTrue("the shop's stock", showing(panel, "Bread"));
+		assertFalse("only this town's shop", showing(panel, "Ardougne Baker's Stall"));
+		assertNotNull(field(panel, "currentNpcView", Object.class));
+
+		backButton(panel).doClick();
+		panel.showSource(ds.sourceById(11730));
+		assertTrue("the stall's own page sells too", showing(panel, "PURCHASABLE"));
+		assertTrue(showing(panel, "Ardougne Baker's Stall"));
+		assertTrue(showing(panel, "Fortis Baker's Stall"));
+		assertTrue(showing(panel, "Stall  ·  Shop"));
+	}
+
 	@Test
 	public void aShopWithNoRobbableOwnerKeepsTheShopPage() throws Exception
 	{

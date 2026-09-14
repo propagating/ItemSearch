@@ -38,6 +38,7 @@ import java.awt.Insets;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Comparator;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -115,7 +116,7 @@ public class SourceResultView extends JPanel
 		boolean allowSpawnEditing,
 		Runnable onBack, Consumer<ItemMatch> onItemSelected)
 	{
-		this(npc, null, store, spriteManager, itemManager, okHttpClient, mapMarker, clientThread,
+		this(npc, Collections.<ShopData>emptyList(), store, spriteManager, itemManager, okHttpClient, mapMarker, clientThread,
 			spawnStore, spawnRecorder, allowSpawnEditing, onBack, onItemSelected);
 	}
 
@@ -129,7 +130,23 @@ public class SourceResultView extends JPanel
 		boolean allowSpawnEditing,
 		Runnable onBack, Consumer<ItemMatch> onItemSelected)
 	{
-		this.shop = shop;
+		this(npc, shop == null ? Collections.<ShopData>emptyList() : Collections.singletonList(shop),
+			store, spriteManager, itemManager, okHttpClient, mapMarker, clientThread, spawnStore,
+			spawnRecorder, allowSpawnEditing, onBack, onItemSelected);
+	}
+
+	/**
+	 * @param shops the shops that sell over this counter: the one an NPC keeps as well as being
+	 *              robbed, or the shop page of every town a stall of this kind stands in. Their
+	 *              stock is shown above the loot so the source has one page. Empty for the rest.
+	 */
+	public SourceResultView(SourceData npc, List<ShopData> shops, TrackerStore store, SpriteManager spriteManager,
+		ItemManager itemManager, OkHttpClient okHttpClient, SpawnMapMarker mapMarker,
+		ClientThread clientThread, SpawnStore spawnStore, SpawnRecorder spawnRecorder,
+		boolean allowSpawnEditing,
+		Runnable onBack, Consumer<ItemMatch> onItemSelected)
+	{
+		this.shops = shops == null ? Collections.<ShopData>emptyList() : shops;
 		this.spawnStore = spawnStore;
 		this.spawnRecorder = spawnRecorder;
 		this.allowSpawnEditing = allowSpawnEditing;
@@ -165,12 +182,12 @@ public class SourceResultView extends JPanel
 
 		body.add(buildActionsBox(npc, store, mapMarker));
 
-		if (shop != null)
+		if (!this.shops.isEmpty())
 		{
-			body.add(buildShopBox(shop, itemManager, onItemSelected));
+			body.add(buildShopBox(this.shops, itemManager, onItemSelected));
 		}
-		// what robbing this NPC takes and pays, above what it can yield
-		if (npc.getType() == SourceType.PICKPOCKET && npc.getThievingLevel() != null)
+		// what robbing this NPC, stall, or chest takes and pays, above what it can yield
+		if (npc.getThievingLevel() != null)
 		{
 			body.add(groupHeading(stealableHeading(npc.getThievingLevel(), npc.getThievingXp())));
 		}
@@ -193,8 +210,21 @@ public class SourceResultView extends JPanel
 		add(body, BorderLayout.CENTER);
 	}
 
-	// the shop this NPC keeps, or null
-	private final ShopData shop;
+	// the shops that sell over this counter, or none
+	private final List<ShopData> shops;
+
+	/** The first shop of this page the map can place, or null. */
+	private ShopData mappableShop()
+	{
+		for (ShopData shop : shops)
+		{
+			if (shop.getX() != null && shop.getY() != null)
+			{
+				return shop;
+			}
+		}
+		return null;
+	}
 
 	/** "Stealable @ 38 Thieving · 43 xp", with the xp left off when the table gave none. */
 	static String stealableHeading(int level, Double xp)
@@ -212,21 +242,34 @@ public class SourceResultView extends JPanel
 		return xp == Math.rint(xp) ? String.valueOf((long) xp) : String.format(Locale.ROOT, "%.1f", xp);
 	}
 
-	/** The shop's stock, headed Purchasable, drawn with the same rows as a shop page. */
-	private static JPanel buildShopBox(ShopData shop, ItemManager itemManager,
+	/**
+	 * The shops' stock, headed Purchasable, drawn with the same rows as a shop page. One shop is
+	 * introduced by where it is; several are each introduced by name as well, since a stall of
+	 * one kind stocks a little differently in every town it stands in.
+	 */
+	private static JPanel buildShopBox(List<ShopData> shops, ItemManager itemManager,
 		Consumer<ItemMatch> onItemSelected)
 	{
 		JPanel box = card();
 		box.add(section("Purchasable"));
-		String currency = shop.getCurrency() == null ? "Coins" : shop.getCurrency();
-		JLabel where = new JLabel((shop.getLocation() != null ? shop.getLocation() + "  ·  " : "") + currency);
-		where.setForeground(ColorScheme.LIGHT_GRAY_COLOR);
-		where.setAlignmentX(Component.LEFT_ALIGNMENT);
-		box.add(where);
-		for (ShopItem item : shop.getItems())
+		for (ShopData shop : shops)
 		{
-			box.add(ShopRows.row(shop, item, itemManager,
-				line -> onItemSelected.accept(new ItemMatch(line.getItemId(), line.getItemName()))));
+			String currency = shop.getCurrency() == null ? "Coins" : shop.getCurrency();
+			String intro = (shops.size() > 1 ? shop.getName() + "  ·  " : "")
+				+ (shop.getLocation() != null ? shop.getLocation() + "  ·  " : "") + currency;
+			JLabel where = new JLabel(intro);
+			where.setForeground(ColorScheme.LIGHT_GRAY_COLOR);
+			where.setAlignmentX(Component.LEFT_ALIGNMENT);
+			if (shop != shops.get(0))
+			{
+				where.setBorder(BorderFactory.createEmptyBorder(6, 0, 0, 0));
+			}
+			box.add(where);
+			for (ShopItem item : shop.getItems())
+			{
+				box.add(ShopRows.row(shop, item, itemManager,
+					line -> onItemSelected.accept(new ItemMatch(line.getItemId(), line.getItemName()))));
+			}
 		}
 		return box;
 	}
@@ -546,10 +589,11 @@ public class SourceResultView extends JPanel
 
 		// a chest or node has no combat level; name what it is instead
 		String kind = npc.getType() == SourceType.KILL
-			? "Level " + npc.getCombatLevel() : typeLabel(npc.getType());
-		if (shop != null)
+			? "Level " + npc.getCombatLevel() : typeLabel(npc.getType(), npc.getThievingLevel() != null);
+		if (!shops.isEmpty())
 		{
-			kind += "  ·  Shopkeeper";
+			// a robbed NPC keeps the shop; a robbed stall is the shop
+			kind += npc.getType() == SourceType.PICKPOCKET ? "  ·  Shopkeeper" : "  ·  Shop";
 		}
 		JLabel level = new JLabel(kind);
 		level.setForeground(ColorScheme.LIGHT_GRAY_COLOR);
@@ -571,7 +615,8 @@ public class SourceResultView extends JPanel
 		return box;
 	}
 
-	private static String typeLabel(SourceType type)
+	/** @param stealable whether the Thieving tables give a level for robbing it */
+	private static String typeLabel(SourceType type, boolean stealable)
 	{
 		switch (type)
 		{
@@ -580,7 +625,8 @@ public class SourceResultView extends JPanel
 			case PICKPOCKET:
 				return "Pickpocketing";
 			case GATHER:
-				return "Gathering node";
+				// a market stall is robbed, not mined or picked
+				return stealable ? "Stall" : "Gathering node";
 			case ACTIVITY:
 				return "Activity";
 			case PROCESS:
@@ -1083,9 +1129,10 @@ public class SourceResultView extends JPanel
 				() -> mapMarker.showSpawns(withRecorded(npc, spawnStore)),
 				mapMarker::clear));
 		}
-		else if (shop != null && shop.getX() != null && shop.getY() != null)
+		else if (mappableShop() != null)
 		{
 			// no tiles of their own, but the shop they keep is somewhere on the map
+			ShopData shop = mappableShop();
 			grid.add(MapToggle.create(() -> mapMarker.showShop(shop), mapMarker::clear));
 		}
 		else if (npc.getLocationName() != null && !npc.getLocationName().trim().isEmpty())
