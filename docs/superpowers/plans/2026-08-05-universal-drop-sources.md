@@ -1,7 +1,5 @@
 # Universal Drop Sources Implementation Plan
 
-> **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
-
 **Goal:** Replace the frozen osrsbox monster database with a live OSRS Wiki sweep so every item shows every source: kills, reward chests/raids, pickpocketing, gathering nodes, and shops.
 
 **Architecture:** Two repos. The generator (`E:\Projects\Python\ItemSearchDataGenerator`) enumerates every wiki page embedding `{{DropsLine}}` or `{{DropsLineReward}}`, parses drop tables with source-type inference, and joins item ids/values, NPC spawns, and combat data into a `sources.json` written to the plugin repo (`E:\Projects\JAVA\ItemSearch`), replacing `drops.json`. The plugin renames `NpcData` → `SourceData` (+ `SourceType`, map coords), badges search results by type, and adapts the views. Spec: `docs/superpowers/specs/2026-08-05-universal-drop-sources-design.md`.

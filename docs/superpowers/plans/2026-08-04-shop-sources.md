@@ -1,7 +1,5 @@
 # Shop Purchase Sources Implementation Plan
 
-> **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
-
 **Goal:** Show which shops sell an item (excluding 0-base-stock entries) in the drop search plugin's item results, and make shops searchable with a full catalog view.
 
 **Architecture:** Shops are a separate entity from monsters, built across two repos. The offline generator (`E:\Projects\Python\ItemSearchDataGenerator`) scrapes OSRS wiki shop pages into committed snapshots and joins them into a bundled `shops.json` written into the plugin repo (`E:\Projects\JAVA\ItemSearch`); the plugin loads it beside `drops.json`, indexes `itemId → shop entries`, and renders a "Buy from" section in item results plus a new shop catalog view. Spec: `docs/superpowers/specs/2026-08-04-shop-sources-design.md`.

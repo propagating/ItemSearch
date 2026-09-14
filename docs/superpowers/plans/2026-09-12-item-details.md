@@ -1,7 +1,5 @@
 # Item Details Implementation Plan
 
-> **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
-
 **Goal:** An item's page shows its examine text, a Facts card (value, low and high alch, general store price, Exchange price and limit, weight, flags), and an Equipment card for wearable items.
 
 **Architecture:** The plugin reads value, alch, flags, weight, Exchange price and equipment bonuses from the client's `ItemManager` on the client thread and fills two cards built in the same style as the monster page. Examine text is the one wiki fact, gathered by the generator's existing item fetch into a top-level `examines` map in the bundled file.

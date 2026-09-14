@@ -1,7 +1,5 @@
 # Monster Phases Implementation Plan
 
-> **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
-
 **Goal:** A merged source carries one phase per wiki version (label, image, full combat block), and the monster page switches image, name, stats, and attacks between them.
 
 **Architecture:** The generator reads per-version images from the local monster text snapshot, builds a per-version combat block with the same code path the source's own combat uses, dedupes identical phases, and writes `phases` on the source. The plugin adds a `Phase` model, reads it through the existing Gson path, and gives `SourceResultView` a switcher that swaps the image and rebuilds the Stats and Attacks cards inside fixed slots.

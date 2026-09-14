@@ -1,7 +1,5 @@
 # Shopkeeper + Pickpocket Page Implementation Plan
 
-> **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
-
 **Goal:** An NPC who runs a shop and can be pickpocketed has one page with a Purchasable section and a "Stealable @ level · xp" section; every pickpocket page shows its thieving level.
 
 **Architecture:** The generator adds the shop owner from the shop infobox and thieving level/xp from the wiki's Thieving table. The plugin indexes shops by owner, routes both the shop and the pickpocket entry to `SourceResultView` with the shop attached, and that view draws the shop rows above the loot.
