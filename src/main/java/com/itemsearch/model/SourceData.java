@@ -27,6 +27,7 @@ package com.itemsearch.model;
 import java.util.List;
 import lombok.AllArgsConstructor;
 import lombok.Value;
+import lombok.With;
 
 @Value
 @AllArgsConstructor
@@ -35,8 +36,12 @@ public class SourceData
 	int id;
 	String name;
 	int combatLevel;
+	@With
 	String wikiImageUrl;
+	// resolved from the shared tables at load time, which is what the copy is for
+	@With
 	List<DropSource> drops;
+	@With
 	List<SpawnPoint> spawnPoints;
 	// every game NPC id that maps to this monster (same name + combat level); includes id.
 	// A kill under any of these counts as this monster. Empty for non-NPC sources
@@ -59,6 +64,7 @@ public class SourceData
 	String wikiPage;
 	// the surface tile you go in by, when this source's own tiles are somewhere the world map
 	// does not draw (underground). Null for anything reachable on foot above ground.
+	@With
 	SpawnPoint entrance;
 	// where this source is found, in words, when the wiki gives no coordinates the map can use —
 	// the Black Knight Catacombs have no wiki map, so their tiles are drawing coordinates
@@ -89,13 +95,5 @@ public class SourceData
 	public String wikiTitle()
 	{
 		return wikiPage != null && !wikiPage.trim().isEmpty() ? wikiPage : name;
-	}
-
-	/** A copy carrying the given drops, used once the shared tables have been resolved. */
-	public SourceData withDrops(List<DropSource> resolved)
-	{
-		return new SourceData(id, name, combatLevel, wikiImageUrl, resolved, spawnPoints,
-			npcIds, combat, type, x, y, plane, tables, wikiPage, entrance, locationName, phases,
-			thievingLevel, thievingXp);
 	}
 }

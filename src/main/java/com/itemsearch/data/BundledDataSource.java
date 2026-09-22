@@ -143,8 +143,9 @@ public class BundledDataSource implements DropDataService
 		{
 			examines.putAll(data.examines);
 		}
-		loaded = true;
 		loadShops();
+		// last, so that "loaded" means the item names are final: shops add the shop-only ones
+		loaded = true;
 	}
 
 	private void loadShops()
@@ -152,6 +153,7 @@ public class BundledDataSource implements DropDataService
 		shopsByItemId.clear();
 		allShops.clear();
 		shopsByOwner.clear();
+		shopsByStall.clear();
 		if (shopsResourcePath == null)
 		{
 			return;
@@ -297,6 +299,7 @@ public class BundledDataSource implements DropDataService
 
 	private void index(List<SourceData> npcs)
 	{
+		itemsByName = null;
 		byNpcId.clear();
 		allNpcs.clear();
 		pickpocketIds.clear();
@@ -386,7 +389,7 @@ public class BundledDataSource implements DropDataService
 	private static String pickpocketBaseName(String sourceName)
 	{
 		String lower = sourceName.toLowerCase(Locale.ROOT);
-		String suffix = " (pickpocket)";
+		String suffix = SourceType.PICKPOCKET_SUFFIX;
 		return lower.endsWith(suffix) ? lower.substring(0, lower.length() - suffix.length()) : lower;
 	}
 
@@ -471,16 +474,30 @@ public class BundledDataSource implements DropDataService
 		return list;
 	}
 
+	// every item, name-ordered. The names only change when the data is loaded, and the browse
+	// list asks again on every "Show more", so the sort is done once per load rather than per ask.
+	private volatile List<ItemMatch> itemsByName;
+
 	@Override
 	public List<ItemMatch> allItems()
 	{
-		List<ItemMatch> list = new ArrayList<>();
-		for (Map.Entry<Integer, String> e : itemNames.entrySet())
+		List<ItemMatch> sorted = itemsByName;
+		if (sorted == null)
 		{
-			list.add(new ItemMatch(e.getKey(), e.getValue()));
+			List<ItemMatch> list = new ArrayList<>(itemNames.size());
+			for (Map.Entry<Integer, String> e : itemNames.entrySet())
+			{
+				list.add(new ItemMatch(e.getKey(), e.getValue()));
+			}
+			list.sort((a, b) -> a.getItemName().compareToIgnoreCase(b.getItemName()));
+			sorted = Collections.unmodifiableList(list);
+			// only worth keeping once the names are final; a list built mid-load is a partial one
+			if (loaded)
+			{
+				itemsByName = sorted;
+			}
 		}
-		list.sort((a, b) -> a.getItemName().compareToIgnoreCase(b.getItemName()));
-		return list;
+		return sorted;
 	}
 
 	@Override
@@ -537,11 +554,7 @@ public class BundledDataSource implements DropDataService
 		{
 			return;
 		}
-		SourceData updated = new SourceData(cur.getId(), cur.getName(), cur.getCombatLevel(),
-			wikiImageUrl, cur.getDrops(), cur.getSpawnPoints(), cur.getNpcIds(), cur.getCombat(),
-			cur.getType(), cur.getX(), cur.getY(), cur.getPlane(), cur.getTables(), cur.getWikiPage(),
-			cur.getEntrance(), cur.getLocationName(), cur.getPhases(), cur.getThievingLevel(),
-			cur.getThievingXp());
+		SourceData updated = cur.withWikiImageUrl(wikiImageUrl);
 		// replace across every id that resolves to this entry, plus the search list, so a
 		// later reopen (search reads allNpcs) sees the fresh image too. replace(k,old,new)
 		// is a CAS: a racing overlay simply wins/loses a key without clobbering fields.

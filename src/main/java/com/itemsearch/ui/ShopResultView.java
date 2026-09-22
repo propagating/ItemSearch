@@ -34,7 +34,6 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
-import javax.swing.UIManager;
 import net.runelite.client.game.ItemManager;
 import com.itemsearch.model.ShopData;
 import com.itemsearch.model.ShopItem;
@@ -54,7 +53,7 @@ public class ShopResultView extends JPanel
 		JPanel body = new JPanel();
 		body.setLayout(new BoxLayout(body, BoxLayout.Y_AXIS));
 
-		JTextArea name = wrapLabel(shop.getName());
+		JTextArea name = Cards.wrapLabel(shop.getName());
 		name.setFont(name.getFont().deriveFont(Font.BOLD));
 		body.add(name);
 
@@ -81,21 +80,5 @@ public class ShopResultView extends JPanel
 		}
 
 		add(body, BorderLayout.CENTER);
-	}
-
-	// same re-wrapping label used by the other detail views (see ItemResultView.wrapLabel)
-	private static JTextArea wrapLabel(String text)
-	{
-		JTextArea area = new JTextArea(text);
-		area.setLineWrap(true);
-		area.setWrapStyleWord(true);
-		area.setEditable(false);
-		area.setFocusable(false);
-		area.setOpaque(false);
-		area.setBorder(null);
-		area.setFont(UIManager.getFont("Label.font"));
-		area.setForeground(UIManager.getColor("Label.foreground"));
-		area.setAlignmentX(Component.LEFT_ALIGNMENT);
-		return area;
 	}
 }

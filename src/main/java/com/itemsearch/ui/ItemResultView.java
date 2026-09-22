@@ -46,7 +46,6 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
 import javax.swing.SwingUtilities;
-import javax.swing.UIManager;
 import net.runelite.client.callback.ClientThread;
 import net.runelite.client.game.ItemEquipmentStats;
 import net.runelite.client.game.ItemManager;
@@ -112,7 +111,7 @@ public class ItemResultView extends JPanel
 		String examine = data.examineFor(item.getItemId());
 		if (examine != null)
 		{
-			JTextArea line = wrapLabel(examine);
+			JTextArea line = Cards.wrapLabel(examine);
 			line.setForeground(ColorScheme.LIGHT_GRAY_COLOR);
 			line.setBorder(BorderFactory.createEmptyBorder(0, 0, 4, 0));
 			body.add(fullWidth(line));
@@ -146,7 +145,7 @@ public class ItemResultView extends JPanel
 		if (!shopEntries.isEmpty())
 		{
 			body.add(Box.createVerticalStrut(6));
-			body.add(fullWidth(section("Buy from")));
+			body.add(fullWidth(Cards.section("Buy from")));
 			for (ShopEntry entry : shopEntries)
 			{
 				body.add(buildShopBox(entry, onShopSelected));
@@ -154,7 +153,7 @@ public class ItemResultView extends JPanel
 			if (!rawSources.isEmpty())
 			{
 				body.add(Box.createVerticalStrut(6));
-				body.add(fullWidth(section("Obtained from")));
+				body.add(fullWidth(Cards.section("Obtained from")));
 			}
 		}
 
@@ -385,7 +384,7 @@ public class ItemResultView extends JPanel
 		// the same full-width card as the Facts box above it
 		JPanel box = Cards.card();
 
-		JTextArea name = wrapLabel(shop.getName());
+		JTextArea name = Cards.wrapLabel(shop.getName());
 		name.setFont(name.getFont().deriveFont(Font.BOLD));
 		name.setForeground(ColorScheme.BRAND_ORANGE);
 		name.setCursor(new Cursor(Cursor.HAND_CURSOR));
@@ -434,7 +433,7 @@ public class ItemResultView extends JPanel
 		// the same full-width card as the Facts box above it
 		JPanel box = Cards.card();
 
-		JTextArea name = wrapLabel(owner != null ? owner.getName() : "Unknown");
+		JTextArea name = Cards.wrapLabel(owner != null ? owner.getName() : "Unknown");
 		name.setFont(name.getFont().deriveFont(Font.BOLD));
 		if (owner != null)
 		{
@@ -470,7 +469,7 @@ public class ItemResultView extends JPanel
 		if (owner != null)
 		{
 			boolean killable = !owner.getNpcIds().isEmpty();
-			JLabel sinceValue = new JLabel(count(store.getDry(npcId, itemId)));
+			JLabel sinceValue = new JLabel(Format.tally(store.getDry(npcId, itemId)));
 			box.add(statRow(killable ? "Kills since drop" : "Attempts since drop", sinceValue));
 			dryRows.add(new DryRow(npcId, itemId, sinceValue));
 		}
@@ -524,7 +523,7 @@ public class ItemResultView extends JPanel
 			for (double c : new double[]{0.10, 0.50, 0.90})
 			{
 				JPanel row = statRow(Math.round(c * 100) + "% chance",
-					count(DropStats.killsForConfidence(p, c)));
+					Format.tally(DropStats.killsForConfidence(p, c)));
 				bands.add(row);
 				box.add(row);
 			}
@@ -571,13 +570,8 @@ public class ItemResultView extends JPanel
 	{
 		for (DryRow row : dryRows)
 		{
-			row.sinceValue.setText(count(store.getDry(row.npcId, row.itemId)));
+			row.sinceValue.setText(Format.tally(store.getDry(row.npcId, row.itemId)));
 		}
-	}
-
-	private static String count(int n)
-	{
-		return Format.tally(n);
 	}
 
 	// expected kills is 1/p: usually a whole number, but can be fractional for common drops
@@ -585,19 +579,9 @@ public class ItemResultView extends JPanel
 	{
 		if (Math.abs(v - Math.rint(v)) < 1e-9)
 		{
-			return count((int) Math.rint(v));
+			return Format.tally((int) Math.rint(v));
 		}
 		return String.format(Locale.US, "%,.1f", v);
-	}
-
-	// small section heading (e.g. "KILLS TO OBTAIN")
-	private static JLabel section(String title)
-	{
-		JLabel label = new JLabel(title.toUpperCase(Locale.ROOT));
-		label.setFont(label.getFont().deriveFont(Font.BOLD, label.getFont().getSize2D() - 1f));
-		label.setForeground(ColorScheme.BRAND_ORANGE);
-		label.setAlignmentX(Component.LEFT_ALIGNMENT);
-		return label;
 	}
 
 	// dim secondary line under the monster name (level + drop rate)
@@ -644,23 +628,5 @@ public class ItemResultView extends JPanel
 			this.itemId = itemId;
 			this.sinceValue = sinceValue;
 		}
-	}
-
-	// A left-aligned, non-editable text area styled like a label. Unlike a JLabel it
-	// re-wraps to whatever width it is given, so it fills the (viewport-bounded) box width
-	// and wraps instead of being clipped — see ItemSearchPanel.ScrollableWrapper.
-	private static JTextArea wrapLabel(String text)
-	{
-		JTextArea area = new JTextArea(text);
-		area.setLineWrap(true);
-		area.setWrapStyleWord(true);
-		area.setEditable(false);
-		area.setFocusable(false);
-		area.setOpaque(false);
-		area.setBorder(null);
-		area.setFont(UIManager.getFont("Label.font"));
-		area.setForeground(UIManager.getColor("Label.foreground"));
-		area.setAlignmentX(Component.LEFT_ALIGNMENT);
-		return area;
 	}
 }

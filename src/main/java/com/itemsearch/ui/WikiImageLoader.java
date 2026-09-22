@@ -29,6 +29,9 @@ import java.awt.RenderingHints;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.util.Collections;
+import java.util.Map;
+import java.util.WeakHashMap;
 import java.util.concurrent.ConcurrentHashMap;
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
@@ -54,6 +57,12 @@ public final class WikiImageLoader
 
 	private static final ConcurrentHashMap<String, BufferedImage> CACHE = new ConcurrentHashMap<>();
 
+	// label -> the image it was last asked to show. Loads finish in whatever order the disk and
+	// the wiki please, and a label asked for two pictures in a row (a phase switch) must end up
+	// showing the second — so a load that is no longer the latest ask is dropped on arrival.
+	// Weak, so a label that has left the screen is not kept alive by its entry.
+	private static final Map<JLabel, String> LATEST = Collections.synchronizedMap(new WeakHashMap<>());
+
 	private WikiImageLoader()
 	{
 	}
@@ -75,21 +84,33 @@ public final class WikiImageLoader
 			return;
 		}
 		String key = maxDimension + "|" + url;
+		LATEST.put(target, key);
 		BufferedImage cached = CACHE.get(key);
 		if (cached != null)
 		{
-			// Marshal to the EDT unconditionally so this utility is safe to call from any thread.
-			SwingUtilities.invokeLater(() -> target.setIcon(new ImageIcon(cached)));
+			showIfLatest(target, key, cached);
 			return;
 		}
-		// disk next: an image the player has seen once should never be asked of the wiki again
-		BufferedImage onDisk = readFromDisk(key);
-		if (onDisk != null)
+		// Disk next: an image the player has seen once should never be asked of the wiki again.
+		// Off the calling thread, which is usually the EDT — a screenful of rows scrolled into
+		// view is a screenful of file reads and PNG decodes, and the sidebar stutters for them.
+		// OkHttp's pool is where the network fallback would run anyway.
+		httpClient.dispatcher().executorService().execute(() ->
 		{
-			CACHE.put(key, onDisk);
-			SwingUtilities.invokeLater(() -> target.setIcon(new ImageIcon(onDisk)));
-			return;
-		}
+			BufferedImage onDisk = readFromDisk(key);
+			if (onDisk != null)
+			{
+				CACHE.put(key, onDisk);
+				showIfLatest(target, key, onDisk);
+				return;
+			}
+			fetch(httpClient, target, url, key, maxDimension);
+		});
+	}
+
+	private static void fetch(OkHttpClient httpClient, JLabel target, String url, String key,
+		int maxDimension)
+	{
 		HttpUrl parsed = HttpUrl.parse(url);
 		if (parsed == null)
 		{
@@ -127,13 +148,26 @@ public final class WikiImageLoader
 						BufferedImage scaled = scaleToFit(img, maxDimension);
 						CACHE.put(key, scaled);
 						writeToDisk(key, scaled);
-						SwingUtilities.invokeLater(() -> target.setIcon(new ImageIcon(scaled)));
+						showIfLatest(target, key, scaled);
 					}
 				}
 				catch (Exception e)
 				{
 					log.debug("itemsearch: image load failed {}", url, e);
 				}
+			}
+		});
+	}
+
+	// Marshalled to the EDT unconditionally, so the loader is safe to call from any thread; the
+	// check happens there too, so it sees whatever the label was most recently asked for.
+	private static void showIfLatest(JLabel target, String key, BufferedImage image)
+	{
+		SwingUtilities.invokeLater(() ->
+		{
+			if (key.equals(LATEST.get(target)))
+			{
+				target.setIcon(new ImageIcon(image));
 			}
 		});
 	}

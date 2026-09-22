@@ -79,18 +79,51 @@ public class WikiRefreshService
 		executor.submit(this::loadUrlsOnce);
 	}
 
-	public void refreshNpcImage(int npcId, String npcName)
-	{
-		refreshNpcImage(npcId, npcName, null);
-	}
+	// npc id -> the image the wiki answered with since launch, or MISSING when it had none.
+	// Asking again on every visit, and on every Back, would be a request to a third-party server
+	// that can only repeat itself, so a repeat is answered here.
+	private final Map<Integer, String> freshImages = new ConcurrentHashMap<>();
+	// npc id -> the views waiting on a question still in flight. A page opened, left, and reopened
+	// before the wiki answers is a second view of the same source, and it wants the answer too.
+	private final Map<Integer, List<Consumer<String>>> inFlight = new ConcurrentHashMap<>();
 
 	/**
-	 * Fetches the NPC's current wiki image, overlays it on the data source, and — if
-	 * {@code onImage} is non-null — hands the fresh URL to the caller (on an arbitrary
+	 * Fetches the NPC's current wiki image, once per session, overlays it on the data source,
+	 * and — if {@code onImage} is non-null — hands the fresh URL to the caller (on an arbitrary
 	 * thread) so an already-open view can update without being reopened.
 	 */
-	public void refreshNpcImage(int npcId, String npcName, java.util.function.Consumer<String> onImage)
+	public void refreshNpcImage(int npcId, String npcName, Consumer<String> onImage)
 	{
+		String known = freshImages.get(npcId);
+		if (known != null)
+		{
+			// a page reached through Back was built from the source as it was before the overlay,
+			// so it still needs telling
+			if (!MISSING.equals(known) && onImage != null)
+			{
+				onImage.accept(known);
+			}
+			return;
+		}
+		// join the request already in flight, or be the one that starts it
+		boolean[] first = {false};
+		inFlight.compute(npcId, (id, waiting) ->
+		{
+			if (waiting == null)
+			{
+				waiting = new ArrayList<>();
+				first[0] = true;
+			}
+			if (onImage != null)
+			{
+				waiting.add(onImage);
+			}
+			return waiting;
+		});
+		if (!first[0])
+		{
+			return;
+		}
 		executor.submit(() ->
 		{
 			try
@@ -103,37 +136,44 @@ public class WikiRefreshService
 					@Override
 					public void onFailure(Call call, IOException e)
 					{
+						inFlight.remove(npcId); // nothing was learned, so the next visit may ask
 						log.debug("itemsearch: wiki image fetch failed for {}", npcName, e);
 					}
 
 					@Override
 					public void onResponse(Call call, Response response)
 					{
+						String parsed = null;
 						try (Response r = response)
 						{
-							if (r.body() == null)
+							if (r.body() != null)
 							{
-								return;
-							}
-							String parsed = parseOriginalImageUrl(gson, r.body().string());
-							if (parsed != null)
-							{
-								dataService.overlayImage(npcId, parsed);
-								if (onImage != null)
-								{
-									onImage.accept(parsed);
-								}
+								parsed = parseOriginalImageUrl(gson, r.body().string());
 							}
 						}
 						catch (Exception e)
 						{
 							log.debug("itemsearch: wiki image parse failed for {}", npcName, e);
 						}
+						freshImages.put(npcId, parsed == null ? MISSING : parsed);
+						List<Consumer<String>> waiting = inFlight.remove(npcId);
+						if (parsed != null)
+						{
+							dataService.overlayImage(npcId, parsed);
+							if (waiting != null)
+							{
+								for (Consumer<String> view : waiting)
+								{
+									view.accept(parsed);
+								}
+							}
+						}
 					}
 				});
 			}
 			catch (Exception e)
 			{
+				inFlight.remove(npcId);
 				log.debug("itemsearch: wiki refresh error", e);
 			}
 		});

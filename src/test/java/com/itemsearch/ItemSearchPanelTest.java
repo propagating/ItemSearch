@@ -341,13 +341,13 @@ public class ItemSearchPanelTest
 		BundledDataSource ds = loadedTestData();
 		ItemSearchPanel panel = newPanel(ds);
 
-		panel.showShopForTest(ds.shopOwnedBy("Master Farmer"));
+		panel.showShop(ds.shopOwnedBy("Master Farmer"));
 		assertTrue("the shop opens the NPC's page", showing(panel, "PURCHASABLE"));
 		assertTrue(showing(panel, "STEALABLE @ 38 THIEVING"));
 		assertNotNull(field(panel, "currentNpcView", Object.class));
 
 		backButton(panel).doClick();
-		panel.showSource(ds.sourceById(3257));
+		panel.showNpc(ds.sourceById(3257));
 		assertTrue("the pickpocket entry opens the same page", showing(panel, "PURCHASABLE"));
 	}
 
@@ -361,7 +361,7 @@ public class ItemSearchPanelTest
 		BundledDataSource ds = loadedTestData();
 		ItemSearchPanel panel = newPanel(ds);
 
-		panel.showShopForTest(ds.searchShops("fortis baker").get(0));
+		panel.showShop(ds.searchShops("fortis baker").get(0));
 		assertTrue("the shop opens the stall's page", showing(panel, "PURCHASABLE"));
 		assertTrue(showing(panel, "STEALABLE @ 5 THIEVING"));
 		assertTrue("the shop's stock", showing(panel, "Bread"));
@@ -369,7 +369,7 @@ public class ItemSearchPanelTest
 		assertNotNull(field(panel, "currentNpcView", Object.class));
 
 		backButton(panel).doClick();
-		panel.showSource(ds.sourceById(11730));
+		panel.showNpc(ds.sourceById(11730));
 		assertTrue("the stall's own page sells too", showing(panel, "PURCHASABLE"));
 		assertTrue(showing(panel, "Ardougne Baker's Stall"));
 		assertTrue(showing(panel, "Fortis Baker's Stall"));
@@ -381,7 +381,7 @@ public class ItemSearchPanelTest
 	{
 		BundledDataSource ds = loadedTestData();
 		ItemSearchPanel panel = newPanel(ds);
-		panel.showShopForTest(ds.searchShops("zaff").get(0));
+		panel.showShop(ds.searchShops("zaff").get(0));
 		assertTrue(showing(panel, "Zaff's Superior Staffs"));
 		assertFalse(showing(panel, "PURCHASABLE"));
 		assertNull(field(panel, "currentNpcView", Object.class));
@@ -392,11 +392,11 @@ public class ItemSearchPanelTest
 	public void backReturnsToThePreviousPageNotTheSearch() throws Exception
 	{
 		ItemSearchPanel panel = newPanel(loadedTestData());
-		panel.showSource(loadedTestData().sourceById(3031)); // Goblin
+		panel.showNpc(loadedTestData().sourceById(3031)); // Goblin
 		assertTrue("the source page is showing", showing(panel, "Goblin"));
 
 		// step into one of its drops, then back out again
-		panel.showItemForTest(new com.itemsearch.model.ItemMatch(1205, "Bronze dagger"));
+		panel.showItem(new com.itemsearch.model.ItemMatch(1205, "Bronze dagger"));
 		assertTrue("the item page is showing", showing(panel, "Bronze dagger"));
 
 		backButton(panel).doClick();
@@ -411,7 +411,7 @@ public class ItemSearchPanelTest
 	{
 		ItemSearchPanel panel = newPanel(loadedTestData());
 		JTextField search = field(panel, "search", JTextField.class);
-		panel.showSource(loadedTestData().sourceById(3031));
+		panel.showNpc(loadedTestData().sourceById(3031));
 		assertNotNull("a detail page is open", backButton(panel));
 
 		search.setText("zulrah");

@@ -36,5 +36,8 @@ public enum SourceType
 	ACTIVITY,
 	// an item broken down into others: a sacred eel cut into Zulrah's scales, a leaping
 	// sturgeon into caviar, a tanzanite fang dismantled into scales
-	PROCESS
+	PROCESS;
+
+	/** What a pickpocket source's name adds to the NPC's: "Master Farmer (pickpocket)". */
+	public static final String PICKPOCKET_SUFFIX = " (pickpocket)";
 }

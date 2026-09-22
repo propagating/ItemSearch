@@ -87,38 +87,41 @@ public class KillTracker
 		this.clock = clock;
 	}
 
-	public void onKill(int npcId, Set<Integer> droppedItemIds)
+	// Every handler below answers whether it changed a counter, so the caller only redraws the
+	// sidebar for the events that were about something it tracks.
+
+	public boolean onKill(int npcId, Set<Integer> droppedItemIds)
 	{
-		record(dataService.sourceById(npcId), droppedItemIds);
+		return record(dataService.sourceById(npcId), droppedItemIds);
 	}
 
-	public void onNpcLootReceived(NpcLootReceived event)
+	public boolean onNpcLootReceived(NpcLootReceived event)
 	{
 		NPC npc = event.getNpc();
 		if (npc == null)
 		{
-			return;
+			return false;
 		}
 		SourceData data = resolve(npc.getId(), npc.getName(), npc.getCombatLevel());
 		if (data == null)
 		{
-			return;
+			return false;
 		}
 		Set<Integer> dropped = canonical(event.getItems());
 		if (isRepeat(lastServer, data.getId(), dropped))
 		{
-			return;
+			return false;
 		}
 		lastGround.put(data.getId(), new RecentLoot(dropped, clock.getAsLong()));
-		record(data, dropped);
+		return record(data, dropped);
 	}
 
-	public void onServerNpcLoot(ServerNpcLoot event)
+	public boolean onServerNpcLoot(ServerNpcLoot event)
 	{
 		NPCComposition npc = event.getComposition();
 		if (npc == null)
 		{
-			return;
+			return false;
 		}
 		SourceData data = resolve(npc.getId(), npc.getName(), npc.getCombatLevel());
 		// only a fought monster: the same report describes a pickpocket, and a pickpocketable
@@ -126,15 +129,15 @@ public class KillTracker
 		if (data == null || data.getType() != SourceType.KILL
 			|| dataService.canBePickpocketed(npc.getId(), npc.getName()))
 		{
-			return;
+			return false;
 		}
 		Set<Integer> dropped = canonical(event.getItems());
 		if (isRepeat(lastGround, data.getId(), dropped))
 		{
-			return;
+			return false;
 		}
 		lastServer.put(data.getId(), new RecentLoot(dropped, clock.getAsLong()));
-		record(data, dropped);
+		return record(data, dropped);
 	}
 
 	/**
@@ -143,20 +146,20 @@ public class KillTracker
 	 * names, so a Barrows chest or a Golem crafting reward moves the same counters a kill does.
 	 * Monster and player loot on this channel is left alone, since kills arrive by their own.
 	 */
-	public void onLootReceived(LootReceived event)
+	public boolean onLootReceived(LootReceived event)
 	{
 		if (event.getType() == null || event.getName() == null || event.getItems() == null)
 		{
-			return;
+			return false;
 		}
 		SourceData data;
 		switch (event.getType())
 		{
 			case PICKPOCKET:
-				data = dataService.sourceByNameAndLevel(event.getName() + " (pickpocket)", 0);
+				data = dataService.sourceByNameAndLevel(event.getName() + SourceType.PICKPOCKET_SUFFIX, 0);
 				if (data == null || data.getType() != SourceType.PICKPOCKET)
 				{
-					return;
+					return false;
 				}
 				break;
 			case EVENT:
@@ -164,13 +167,13 @@ public class KillTracker
 				// a pocket is picked, not opened; that channel says so itself
 				if (data == null || data.getType() == SourceType.PICKPOCKET)
 				{
-					return;
+					return false;
 				}
 				break;
 			default:
-				return;
+				return false;
 		}
-		record(data, canonical(event.getItems()));
+		return record(data, canonical(event.getItems()));
 	}
 
 	// the game's own running total, announced as a golem is finished
@@ -183,22 +186,20 @@ public class KillTracker
 	 * says how many golems the player has ever finished, which covers the ones made before the
 	 * plugin was watching, so the attempt count is raised to match.
 	 */
-	public void onChatMessage(ChatMessage event)
+	public boolean onChatMessage(ChatMessage event)
 	{
 		if (event.getType() != ChatMessageType.GAMEMESSAGE && event.getType() != ChatMessageType.SPAM)
 		{
-			return;
+			return false;
 		}
 		Matcher golems = GOLEMS_CRAFTED.matcher(event.getMessage());
 		if (!golems.find())
 		{
-			return;
+			return false;
 		}
 		SourceData golemCrafting = dataService.sourceByNameAndLevel(GOLEM_CRAFTING, 0);
-		if (golemCrafting != null)
-		{
-			store.raiseCountTo(golemCrafting.getId(), Integer.parseInt(golems.group(1).replace(",", "")));
-		}
+		return golemCrafting != null
+			&& store.raiseCountTo(golemCrafting.getId(), Integer.parseInt(golems.group(1).replace(",", "")));
 	}
 
 	// Match by id first; fall back to the name + level the game reports, because the bundled
@@ -232,11 +233,11 @@ public class KillTracker
 	// Record one kill against a resolved monster. The data maps every variant id of a monster
 	// to one canonical entry, so kills recorded under the canonical id (npc.getId()) all
 	// accumulate into a single shared dry counter regardless of which variant was killed.
-	private void record(SourceData npc, Set<Integer> droppedItemIds)
+	private boolean record(SourceData npc, Set<Integer> droppedItemIds)
 	{
 		if (npc == null)
 		{
-			return;
+			return false;
 		}
 		Set<Integer> possible = new HashSet<>();
 		for (DropSource d : npc.getDrops())
@@ -254,6 +255,7 @@ public class KillTracker
 		}
 		store.recordKill(npc.getId(), droppedItemIds, possible);
 		store.save();
+		return true;
 	}
 
 	private static final class RecentLoot

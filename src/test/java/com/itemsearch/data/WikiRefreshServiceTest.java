@@ -140,6 +140,24 @@ public class WikiRefreshServiceTest
 			handed.get(0).containsKey("Faceless"));
 	}
 
+	/**
+	 * A source's page opened twice before the wiki has answered — opened, left, and reopened — is
+	 * one question, not two, and both pages are told the answer.
+	 */
+	@Test
+	public void aSourceIsAskedAboutOncePerSession()
+	{
+		ScheduledExecutorService executor = mock(ScheduledExecutorService.class);
+		WikiRefreshService service = new WikiRefreshService(new OkHttpClient(), new Gson(),
+			mock(BundledDataSource.class), executor);
+		clearInvocations(executor);
+
+		service.refreshNpcImage(3031, "Goblin", url -> { });
+		service.refreshNpcImage(3031, "Goblin", url -> { });
+
+		verify(executor, times(1)).submit(any(Runnable.class));
+	}
+
 	@Test
 	public void aMalformedBatchIsEmptyRatherThanAnException()
 	{

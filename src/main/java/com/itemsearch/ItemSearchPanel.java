@@ -34,6 +34,7 @@ import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.function.Supplier;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JComponent;
@@ -288,15 +289,15 @@ class ItemSearchPanel extends PluginPanel
 		}
 
 		results.removeAll();
-		List<ResultRow> rows = q.isEmpty() ? browseRows() : searchRows(q);
+		List<Supplier<ResultRow>> rows = q.isEmpty() ? browseRows() : searchRows(q);
 		if (rows.isEmpty())
 		{
 			results.add(hintLabel); // nothing matched, or the data is still loading
 		}
 		int shown = Math.min(shownLimit, rows.size());
-		for (ResultRow row : rows.subList(0, shown))
+		for (Supplier<ResultRow> row : rows.subList(0, shown))
 		{
-			results.add(row);
+			results.add(row.get());
 		}
 		if (shown < rows.size())
 		{
@@ -317,26 +318,28 @@ class ItemSearchPanel extends PluginPanel
 	/**
 	 * Rows for a query, every match, in the order they are offered.
 	 *
-	 * <p>They are built rather than added straight to the panel because a one-letter query
-	 * matches thousands of sources and items; rendering all of them froze the client, and going
-	 * Back froze it again re-laying out the same panel. Only the first {@value #PAGE} are shown.
+	 * <p>A one-letter query matches thousands of sources and items; rendering all of them froze
+	 * the client, and going Back froze it again re-laying out the same panel. Only the first
+	 * {@value #PAGE} are shown, so each match is a recipe for its row rather than the row: the
+	 * count is known without building thousands of components to throw away, and an item's icon
+	 * is only asked of the client for a row somebody will see.
 	 */
-	private List<ResultRow> searchRows(String q)
+	private List<Supplier<ResultRow>> searchRows(String q)
 	{
-		List<ResultRow> rows = new ArrayList<>();
+		List<Supplier<ResultRow>> rows = new ArrayList<>();
 		for (SourceData npc : dataService.searchSources(q))
 		{
-			rows.add(new ResultRow(badgeFor(npc.getType()), sourceLabel(npc), () -> showNpc(npc)));
+			rows.add(() -> new ResultRow(badgeFor(npc.getType()), sourceLabel(npc), () -> showNpc(npc)));
 		}
 		for (ShopData shop : dataService.searchShops(q))
 		{
-			rows.add(new ResultRow("SHOP", shop.getName(), () -> showShop(shop)));
+			rows.add(() -> new ResultRow("SHOP", shop.getName(), () -> showShop(shop)));
 		}
 		for (ItemMatch item : dataService.searchItems(q))
 		{
 			// no icon here: search results mix items with sources, and only some rows having one
 			// would leave their names starting at different x
-			rows.add(new ResultRow("ITEM", item.getItemName(), () -> showItem(item)));
+			rows.add(() -> new ResultRow("ITEM", item.getItemName(), () -> showItem(item)));
 		}
 		return rows;
 	}
@@ -345,25 +348,29 @@ class ItemSearchPanel extends PluginPanel
 	 * The page with nothing typed: a list worth scrolling rather than an instruction to search,
 	 * narrowed to whichever kind of thing the filter bar has selected.
 	 */
-	private List<ResultRow> browseRows()
+	private List<Supplier<ResultRow>> browseRows()
 	{
-		List<ResultRow> rows = new ArrayList<>();
+		List<Supplier<ResultRow>> rows = new ArrayList<>();
 		if (browseFilter == BrowseFilter.ITEM)
 		{
 			for (ItemMatch item : dataService.allItems())
 			{
-				rows.add(itemRow(item));
+				rows.add(() -> itemRow(item));
 			}
 			return rows;
 		}
+		boolean images = config.showBrowseImages();
 		for (SourceData npc : dataService.allSources())
 		{
 			if (browseFilter.type == null || browseFilter.type == npc.getType())
 			{
-				ResultRow row = new ResultRow(badgeFor(npc.getType()), sourceLabel(npc),
-					() -> showNpc(npc), config.showBrowseImages() ? placeholderIcon() : null);
-				row.putClientProperty(WIKI_TITLE, npc.wikiTitle());
-				rows.add(row);
+				rows.add(() ->
+				{
+					ResultRow row = new ResultRow(badgeFor(npc.getType()), sourceLabel(npc),
+						() -> showNpc(npc), images ? placeholderIcon() : null);
+					row.putClientProperty(WIKI_TITLE, npc.wikiTitle());
+					return row;
+				});
 			}
 		}
 		return rows;
@@ -408,8 +415,7 @@ class ItemSearchPanel extends PluginPanel
 			{
 				continue;
 			}
-			Rectangle bounds = SwingUtilities.convertRectangle(results, row.getBounds(), results);
-			if (!bounds.intersects(view))
+			if (!row.getBounds().intersects(view))
 			{
 				continue;
 			}
@@ -556,31 +562,10 @@ class ItemSearchPanel extends PluginPanel
 		content.repaint();
 	}
 
-	/** Opens a source's page from outside the panel — the in-game "Show information" menu entry. EDT only. */
-	void showSource(SourceData source)
-	{
-		showNpc(source);
-	}
+	// The three ways onto a page. Package-visible because the in-game "Show information" menu
+	// entry comes in through them as well as the rows and cards here. EDT only.
 
-	/** Opens an item's page. Package-visible so tests can walk the navigation. */
-	void showItemForTest(ItemMatch item)
-	{
-		showItem(item);
-	}
-
-	/** Opens an item's page from outside the panel — the in-game "Show information" menu entry. EDT only. */
-	void showItemFromGame(ItemMatch item)
-	{
-		showItem(item);
-	}
-
-	/** Opens a shop's page the way a Buy from card does. Package-visible for tests. */
-	void showShopForTest(ShopData shop)
-	{
-		showShop(shop);
-	}
-
-	private void showNpc(SourceData npc)
+	void showNpc(SourceData npc)
 	{
 		go(() -> renderNpc(npc));
 	}
@@ -593,7 +578,7 @@ class ItemSearchPanel extends PluginPanel
 		List<ShopData> shops = Collections.emptyList();
 		if (npc.getType() == SourceType.PICKPOCKET)
 		{
-			String suffix = " (pickpocket)";
+			String suffix = SourceType.PICKPOCKET_SUFFIX;
 			String owner = npc.wikiTitle();
 			if (owner.endsWith(suffix))
 			{
@@ -627,7 +612,7 @@ class ItemSearchPanel extends PluginPanel
 		wikiRefreshService.refreshNpcImage(npc.getId(), npc.wikiTitle(), view::updateImage);
 	}
 
-	private void showShop(ShopData shop)
+	void showShop(ShopData shop)
 	{
 		go(() -> renderShop(shop));
 	}
@@ -637,7 +622,8 @@ class ItemSearchPanel extends PluginPanel
 		// a shop run by someone the player can rob is that NPC's page, robbing included
 		if (shop.getOwner() != null)
 		{
-			SourceData thief = dataService.sourceByNameAndLevel(shop.getOwner() + " (pickpocket)", 0);
+			SourceData thief = dataService.sourceByNameAndLevel(
+				shop.getOwner() + SourceType.PICKPOCKET_SUFFIX, 0);
 			if (thief != null && thief.getType() == SourceType.PICKPOCKET)
 			{
 				renderNpc(thief, Collections.singletonList(shop));
@@ -662,7 +648,7 @@ class ItemSearchPanel extends PluginPanel
 		showDetail(view);
 	}
 
-	private void showItem(ItemMatch item)
+	void showItem(ItemMatch item)
 	{
 		go(() -> renderItem(item));
 	}

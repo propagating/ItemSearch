@@ -28,17 +28,16 @@ import com.google.gson.Gson;
 import com.google.inject.Provides;
 import java.awt.image.BufferedImage;
 import java.io.File;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.concurrent.ScheduledExecutorService;
+import java.util.function.Consumer;
 import javax.inject.Inject;
 import javax.swing.SwingUtilities;
 import lombok.extern.slf4j.Slf4j;
 import net.runelite.api.Client;
-import net.runelite.api.GameState;
 import net.runelite.api.events.ChatMessage;
-import net.runelite.api.events.GameStateChanged;
 import net.runelite.api.events.GameTick;
-import net.runelite.api.events.NpcDespawned;
-import net.runelite.api.events.NpcSpawned;
 import net.runelite.api.events.MenuOpened;
 import net.runelite.client.callback.ClientThread;
 import net.runelite.client.config.ConfigManager;
@@ -154,25 +153,9 @@ public class ItemSearchPlugin extends Plugin
 			wikiRefreshService, spawnMapMarker, clientThread, config, spriteManager,
 			spawnStore, spawnRecorder);
 
-		// the click arrives on the client thread and both calls below touch Swing, so the
-		// whole handler crosses to the EDT once here rather than each callee guarding itself
-		showDropsMenu = new ShowDropsMenu(client, dataService, itemManager, source ->
-			SwingUtilities.invokeLater(() ->
-			{
-				if (panel != null && navButton != null)
-				{
-					clientToolbar.openPanel(navButton);
-					panel.showSource(source);
-				}
-			}), item ->
-			SwingUtilities.invokeLater(() ->
-			{
-				if (panel != null && navButton != null)
-				{
-					clientToolbar.openPanel(navButton);
-					panel.showItemFromGame(item);
-				}
-			}));
+		showDropsMenu = new ShowDropsMenu(client, dataService, itemManager,
+			source -> openPanelTo(p -> p.showNpc(source)),
+			item -> openPanelTo(p -> p.showItem(item)));
 		showDropsMenu.setEnabled(config.showDropsMenuEntry());
 
 		final BufferedImage icon = ImageUtil.loadImageResource(getClass(), "panel_icon.png");
@@ -217,14 +200,27 @@ public class ItemSearchPlugin extends Plugin
 		showDropsMenu = null;
 	}
 
+	// the menu click arrives on the client thread and everything it leads to touches Swing, so
+	// the whole handler crosses to the EDT once here rather than each callee guarding itself
+	private void openPanelTo(Consumer<ItemSearchPanel> page)
+	{
+		SwingUtilities.invokeLater(() ->
+		{
+			if (panel != null && navButton != null)
+			{
+				clientToolbar.openPanel(navButton);
+				page.accept(panel);
+			}
+		});
+	}
+
 	@Subscribe
 	public void onNpcLootReceived(NpcLootReceived event)
 	{
-		if (killTracker != null)
+		if (killTracker != null && killTracker.onNpcLootReceived(event))
 		{
-			killTracker.onNpcLootReceived(event);
+			refreshTrackingViews();
 		}
-		refreshTrackingViews();
 	}
 
 	/** Loot the server reports directly, for monsters whose drops never touch the ground. */
@@ -237,11 +233,10 @@ public class ItemSearchPlugin extends Plugin
 				event.getComposition().getName(), event.getComposition().getId(),
 				event.getItems().size());
 		}
-		if (killTracker != null)
+		if (killTracker != null && killTracker.onServerNpcLoot(event))
 		{
-			killTracker.onServerNpcLoot(event);
+			refreshTrackingViews();
 		}
-		refreshTrackingViews();
 	}
 
 	/**
@@ -251,20 +246,22 @@ public class ItemSearchPlugin extends Plugin
 	@Subscribe
 	public void onLootReceived(LootReceived event)
 	{
-		if (killTracker != null)
+		if (killTracker != null && killTracker.onLootReceived(event))
 		{
-			killTracker.onLootReceived(event);
+			refreshTrackingViews();
 		}
-		refreshTrackingViews();
 	}
 
-	/** Game messages that carry a running total, such as how many golems the player has finished. */
+	/**
+	 * Game messages that carry a running total, such as how many golems the player has finished.
+	 * Every line of chat passes through here, so the sidebar is only redrawn for the rare one that
+	 * moved a counter.
+	 */
 	@Subscribe
 	public void onChatMessage(ChatMessage event)
 	{
-		if (killTracker != null)
+		if (killTracker != null && killTracker.onChatMessage(event))
 		{
-			killTracker.onChatMessage(event);
 			refreshTrackingViews();
 		}
 	}
@@ -292,7 +289,7 @@ public class ItemSearchPlugin extends Plugin
 			try
 			{
 				// names make a contributed file reviewable by eye rather than by cross-reference
-				java.util.Map<Integer, String> names = new java.util.HashMap<>();
+				Map<Integer, String> names = new HashMap<>();
 				for (Integer npcId : spawnStore.editedNpcIds())
 				{
 					SourceData source = dataService.sourceById(npcId);
@@ -334,38 +331,46 @@ public class ItemSearchPlugin extends Plugin
 	@Subscribe
 	public void onConfigChanged(ConfigChanged event)
 	{
-		if (showDropsMenu != null && ItemSearchConfig.GROUP.equals(event.getGroup())
-			&& "showDropsMenuEntry".equals(event.getKey()))
+		if (!ItemSearchConfig.GROUP.equals(event.getGroup()))
 		{
-			showDropsMenu.setEnabled(Boolean.parseBoolean(event.getNewValue()));
+			return;
 		}
-		if (spawnStore != null
-			&& ItemSearchConfig.GROUP.equals(event.getGroup())
-			&& "exportSpawns".equals(event.getKey())
-			&& Boolean.parseBoolean(event.getNewValue()))
+		boolean switchedOn = Boolean.parseBoolean(event.getNewValue());
+		switch (event.getKey())
 		{
-			exportRecordedSpawns();
-			// a one-shot action rather than a setting: leave it on and it would fire again on
-			// every restart, so it puts itself back
-			configManager.setConfiguration(ItemSearchConfig.GROUP, "exportSpawns", false);
-		}
-		if (trackerStore != null
-			&& ItemSearchConfig.GROUP.equals(event.getGroup())
-			&& "resetAll".equals(event.getKey())
-			&& Boolean.parseBoolean(event.getNewValue()))
-		{
-			trackerStore.clear(); // empties in-memory counters and persists the reset
-			configManager.setConfiguration(ItemSearchConfig.GROUP, "resetAll", false);
-		}
-		// the counters changed under us: another client on this profile, or the profile synced
-		// down from the RuneLite account. Our own saves announce themselves the same way and
-		// are recognised as ours.
-		if (trackerStore != null
-			&& ItemSearchConfig.GROUP.equals(event.getGroup())
-			&& "data".equals(event.getKey())
-			&& trackerStore.absorbExternalChanges())
-		{
-			refreshTrackingViews();
+			case "showDropsMenuEntry":
+				if (showDropsMenu != null)
+				{
+					showDropsMenu.setEnabled(switchedOn);
+				}
+				break;
+			case "exportSpawns":
+				if (spawnStore != null && switchedOn)
+				{
+					exportRecordedSpawns();
+					// a one-shot action rather than a setting: leave it on and it would fire again
+					// on every restart, so it puts itself back
+					configManager.setConfiguration(ItemSearchConfig.GROUP, "exportSpawns", false);
+				}
+				break;
+			case "resetAll":
+				if (trackerStore != null && switchedOn)
+				{
+					trackerStore.clear(); // empties in-memory counters and persists the reset
+					configManager.setConfiguration(ItemSearchConfig.GROUP, "resetAll", false);
+				}
+				break;
+			case "data":
+				// the counters changed under us: another client on this profile, or the profile
+				// synced down from the RuneLite account. Our own saves announce themselves the
+				// same way and are recognised as ours.
+				if (trackerStore != null && trackerStore.absorbExternalChanges())
+				{
+					refreshTrackingViews();
+				}
+				break;
+			default:
+				break;
 		}
 	}
 

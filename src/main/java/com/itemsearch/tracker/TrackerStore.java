@@ -25,8 +25,6 @@
 package com.itemsearch.tracker;
 
 import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
-import java.lang.reflect.Type;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -88,14 +86,8 @@ public class TrackerStore
 		}
 		try
 		{
-			Type type = new TypeToken<Persisted>()
-			{
-			}.getType();
-			Persisted p = gson.fromJson(json, type);
-			npcKills.clear();
-			dry.clear();
-			obtained.clear();
-			expanded.clear();
+			Persisted p = gson.fromJson(json, Persisted.class);
+			forgetEverything();
 			if (p != null)
 			{
 				if (p.npcKills != null)
@@ -110,16 +102,25 @@ public class TrackerStore
 				{
 					obtained.putAll(p.obtained);
 				}
+				if (p.expanded != null)
+				{
+					expanded.addAll(p.expanded);
+				}
 			}
 		}
 		catch (Exception e)
 		{
 			log.warn("itemsearch: corrupt tracker data, starting fresh", e);
-			npcKills.clear();
-			dry.clear();
-			obtained.clear();
-			expanded.clear();
+			forgetEverything();
 		}
+	}
+
+	private void forgetEverything()
+	{
+		npcKills.clear();
+		dry.clear();
+		obtained.clear();
+		expanded.clear();
 	}
 
 	/**
@@ -194,15 +195,19 @@ public class TrackerStore
 	 * Raises a source's count to a total the game itself reported, when that is higher than what
 	 * has been counted here. The game's figure covers attempts made before this plugin was
 	 * watching, so it is trusted upwards and never used to take counted attempts away.
+	 *
+	 * @return whether the count moved
 	 */
-	public synchronized void raiseCountTo(int npcId, int total)
+	public synchronized boolean raiseCountTo(int npcId, int total)
 	{
 		absorbExternalChanges();
-		if (total > getNpcKills(npcId))
+		if (total <= getNpcKills(npcId))
 		{
-			npcKills.put(npcId, total);
-			save();
+			return false;
 		}
+		npcKills.put(npcId, total);
+		save();
+		return true;
 	}
 
 	public synchronized void resetPair(int npcId, int itemId)

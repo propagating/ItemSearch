@@ -30,6 +30,8 @@ import java.util.Collections;
 import java.util.HashSet;
 import net.runelite.client.config.ConfigManager;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -102,6 +104,23 @@ public class TrackerStoreTest
 		store.recordKill(3031, Collections.emptySet(), Collections.singletonList(995));
 		assertEquals(6, store.getNpcKills(3031));
 		assertEquals(6, store.getDry(3031, 995));
+	}
+
+	/**
+	 * Which cards the player opened was written on every toggle and never read back, so the
+	 * choice lasted until the client closed — and until the next kill, wherever another client
+	 * shared the profile, since absorbing its counters reloads everything.
+	 */
+	@Test
+	public void expandedCardsSurviveAReload()
+	{
+		when(configManager.getConfiguration(eq("itemsearch"), eq("data")))
+			.thenReturn("{\"npcKills\":{},\"dry\":{},\"obtained\":{},\"expanded\":[\"1205:3031\"]}");
+
+		store.load();
+
+		assertTrue(store.isExpanded(1205, 3031));
+		assertFalse(store.isExpanded(995, 3031));
 	}
 
 	@Test

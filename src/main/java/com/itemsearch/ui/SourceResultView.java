@@ -25,7 +25,6 @@
 package com.itemsearch.ui;
 
 import java.awt.BorderLayout;
-import java.awt.Color;
 import java.awt.Component;
 import java.awt.Cursor;
 import java.awt.Dimension;
@@ -103,8 +102,8 @@ public class SourceResultView extends JPanel
 	private JLabel phaseName;
 	// the Stats and Attacks cards sit in these, so a phase switch can swap the card without
 	// moving anything else on the page
-	private final JPanel statsSlot = slot();
-	private final JPanel attacksSlot = slot();
+	private final JPanel statsSlot = Cards.slot();
+	private final JPanel attacksSlot = Cards.slot();
 	private final SpriteManager spriteManager;
 	private final ItemManager itemManager;
 	// what the picture was last asked to show
@@ -250,8 +249,8 @@ public class SourceResultView extends JPanel
 	private static JPanel buildShopBox(List<ShopData> shops, ItemManager itemManager,
 		Consumer<ItemMatch> onItemSelected)
 	{
-		JPanel box = card();
-		box.add(section("Purchasable"));
+		JPanel box = Cards.card();
+		box.add(Cards.section("Purchasable"));
 		for (ShopData shop : shops)
 		{
 			String currency = shop.getCurrency() == null ? "Coins" : shop.getCurrency();
@@ -296,7 +295,7 @@ public class SourceResultView extends JPanel
 		row.setOpaque(false);
 		row.setAlignmentX(Component.CENTER_ALIGNMENT);
 		row.setBorder(BorderFactory.createEmptyBorder(6, 4, 2, 4));
-		row.add(section(title), BorderLayout.WEST);
+		row.add(Cards.section(title), BorderLayout.WEST);
 		return row;
 	}
 
@@ -463,36 +462,9 @@ public class SourceResultView extends JPanel
 		return row;
 	}
 
-	// A full-width bordered card (matching the rest of the plugin's card styling). The getMaximumSize
-	// override lets the parent Y_AXIS BoxLayout stretch the card across the whole sidebar width — a
-	// BoxLayout panel otherwise reports only its (narrower) children's max width, so BoxLayout leaves
-	// the card at preferred width and its alignmentX floats it inward. Height stays capped to the
-	// natural height (so it never stretches vertically and still grows when the portrait loads).
-	private static JPanel card()
-	{
-		JPanel box = new JPanel()
-		{
-			@Override
-			public Dimension getMaximumSize()
-			{
-				return new Dimension(Integer.MAX_VALUE, getPreferredSize().height);
-			}
-		};
-		box.setLayout(new BoxLayout(box, BoxLayout.Y_AXIS));
-		box.setBorder(BorderFactory.createCompoundBorder(
-			BorderFactory.createLineBorder(ColorScheme.MEDIUM_GRAY_COLOR),
-			BorderFactory.createEmptyBorder(6, 8, 6, 8)));
-		box.setBackground(ColorScheme.DARKER_GRAY_COLOR);
-		// Match the drop rows' alignmentX (0.5). In a Y_AXIS BoxLayout a child whose alignmentX
-		// differs from its siblings is offset and shrunk rather than filled; keeping every body
-		// child at CENTER_ALIGNMENT lets the MAX-width cards span the full sidebar like the rows.
-		box.setAlignmentX(Component.CENTER_ALIGNMENT);
-		return box;
-	}
-
 	private JPanel buildImageBox(SourceData npc)
 	{
-		JPanel box = card();
+		JPanel box = Cards.card();
 		showImage(phases != null ? phases.get(0).getImage() : npc.getWikiImageUrl());
 		JPanel center = new JPanel(new FlowLayout(FlowLayout.CENTER, 0, 0));
 		center.setOpaque(false);
@@ -531,8 +503,8 @@ public class SourceResultView extends JPanel
 		Phase p = phases.get(phase);
 		phaseName.setText(p.getLabel());
 		showImage(p.getImage());
-		refill(statsSlot, buildStatsBox(p.getCombat()));
-		refill(attacksSlot, buildAttacksBox(p.getCombat(), spriteManager, itemManager));
+		Cards.refill(statsSlot, buildStatsBox(p.getCombat()));
+		Cards.refill(attacksSlot, buildAttacksBox(p.getCombat(), spriteManager, itemManager));
 	}
 
 	private void showImage(String url)
@@ -552,35 +524,9 @@ public class SourceResultView extends JPanel
 		return shownImageUrl;
 	}
 
-	private static void refill(JPanel slot, JPanel card)
-	{
-		slot.removeAll();
-		slot.add(card);
-		slot.revalidate();
-		slot.repaint();
-	}
-
-	// A full-width holder for one card, so the card can be replaced in place. Sized like a card
-	// so the body's BoxLayout treats it the same way.
-	private static JPanel slot()
-	{
-		JPanel slot = new JPanel()
-		{
-			@Override
-			public Dimension getMaximumSize()
-			{
-				return new Dimension(Integer.MAX_VALUE, getPreferredSize().height);
-			}
-		};
-		slot.setLayout(new BoxLayout(slot, BoxLayout.Y_AXIS));
-		slot.setOpaque(false);
-		slot.setAlignmentX(Component.CENTER_ALIGNMENT);
-		return slot;
-	}
-
 	private JPanel buildNameBox(SourceData npc, TrackerStore store)
 	{
-		JPanel box = card();
+		JPanel box = Cards.card();
 
 		JLabel name = new JLabel(npc.getName());
 		name.setFont(name.getFont().deriveFont(Font.BOLD));
@@ -732,28 +678,25 @@ public class SourceResultView extends JPanel
 		List<SpawnPoint> spawns = new ArrayList<>(npc.getSpawnPoints());
 		spawns.addAll(store.spawnsFor(npc.getId()));
 		SpawnPoint entrance = store.entranceFor(npc.getId());
-		return new SourceData(npc.getId(), npc.getName(), npc.getCombatLevel(),
-			npc.getWikiImageUrl(), npc.getDrops(), spawns, npc.getNpcIds(), npc.getCombat(),
-			npc.getType(), npc.getX(), npc.getY(), npc.getPlane(), npc.getTables(),
-			npc.getWikiPage(), entrance != null ? entrance : npc.getEntrance(),
-			npc.getLocationName(), npc.getPhases());
+		SourceData marked = npc.withSpawnPoints(spawns);
+		return entrance != null ? marked.withEntrance(entrance) : marked;
 	}
 
 	private JPanel buildStatsBox(CombatStats c)
 	{
-		JPanel box = card();
-		box.add(section("Stats"));
+		JPanel box = Cards.card();
+		box.add(Cards.section("Stats"));
 
 		JPanel grid = new JPanel(new GridLayout(0, 2, 8, 0));
 		grid.setOpaque(false);
 		grid.setAlignmentX(Component.LEFT_ALIGNMENT);
 		// GridLayout fills row-by-row, giving left column ATK/STR/DEF and right column Magic/Range/HP
-		grid.add(statCell("Attack", c.getAttackLevel()));
-		grid.add(statCell("Magic", c.getMagicLevel()));
-		grid.add(statCell("Strength", c.getStrengthLevel()));
-		grid.add(statCell("Ranged", c.getRangedLevel()));
-		grid.add(statCell("Defence", c.getDefenceLevel()));
-		grid.add(statCell("Hitpoints", c.getHitpoints()));
+		grid.add(Cards.statCell("Attack", Format.tally(c.getAttackLevel())));
+		grid.add(Cards.statCell("Magic", Format.tally(c.getMagicLevel())));
+		grid.add(Cards.statCell("Strength", Format.tally(c.getStrengthLevel())));
+		grid.add(Cards.statCell("Ranged", Format.tally(c.getRangedLevel())));
+		grid.add(Cards.statCell("Defence", Format.tally(c.getDefenceLevel())));
+		grid.add(Cards.statCell("Hitpoints", Format.tally(c.getHitpoints())));
 		grid.setMaximumSize(new Dimension(Integer.MAX_VALUE, grid.getPreferredSize().height));
 		box.add(grid);
 
@@ -824,8 +767,8 @@ public class SourceResultView extends JPanel
 
 	private JPanel buildAttacksBox(CombatStats c, SpriteManager spriteManager, ItemManager itemManager)
 	{
-		JPanel box = card();
-		box.add(section("Attacks"));
+		JPanel box = Cards.card();
+		box.add(Cards.section("Attacks"));
 
 		List<Attack> attacks = c.getAttacks();
 		if (attacks == null || attacks.isEmpty())
@@ -1113,8 +1056,8 @@ public class SourceResultView extends JPanel
 
 	private JPanel buildActionsBox(SourceData npc, TrackerStore store, SpawnMapMarker mapMarker)
 	{
-		JPanel box = card();
-		box.add(section("Actions"));
+		JPanel box = Cards.card();
+		box.add(Cards.section("Actions"));
 
 		JPanel grid = new JPanel(new GridLayout(0, 2, 4, 4));
 		grid.setOpaque(false);
@@ -1200,17 +1143,6 @@ public class SourceResultView extends JPanel
 		return "Got: " + Format.tally(got) + " · Dry: " + dry;
 	}
 
-	private static JPanel statCell(String label, int value)
-	{
-		JPanel cell = new JPanel(new BorderLayout());
-		cell.setOpaque(false);
-		JLabel name = new JLabel(label);
-		name.setForeground(ColorScheme.LIGHT_GRAY_COLOR);
-		cell.add(name, BorderLayout.WEST);
-		cell.add(new JLabel(Format.tally(value)), BorderLayout.EAST);
-		return cell;
-	}
-
 	private static JLabel dim(String text)
 	{
 		JLabel label = new JLabel(text);
@@ -1232,15 +1164,6 @@ public class SourceResultView extends JPanel
 			return Format.tally(hi);
 		}
 		return Format.tally(low) + "-" + Format.tally(hi);
-	}
-
-	private static JLabel section(String title)
-	{
-		JLabel label = new JLabel(title.toUpperCase(Locale.ROOT));
-		label.setFont(label.getFont().deriveFont(Font.BOLD, label.getFont().getSize2D() - 1f));
-		label.setForeground(ColorScheme.BRAND_ORANGE);
-		label.setAlignmentX(Component.LEFT_ALIGNMENT);
-		return label;
 	}
 
 	/**

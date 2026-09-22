@@ -68,7 +68,6 @@ public class SpawnMapMarker
 
 	// kept so the lift can follow the zoom while the map is open
 	private WorldMapPoint entranceMarker;
-	private BufferedImage entranceIcon;
 
 	private final Client client;
 	private final ClientThread clientThread;
@@ -107,16 +106,7 @@ public class SpawnMapMarker
 		}
 		for (SpawnPoint sp : spawns)
 		{
-			WorldMapPoint point = WorldMapPoint.builder()
-				.worldPoint(new WorldPoint(sp.getX(), sp.getY(), sp.getPlane()))
-				.image(markerIcon)
-				.snapToEdge(true)
-				.jumpOnClick(true)
-				.name(npc.getName())
-				.tooltip(tooltipFor(npc.getName(), sp.getPlane(), null))
-				.build();
-			worldMapPointManager.add(point);
-			shown.add(point);
+			show(marker(worldPoint(sp), npc.getName(), tooltipFor(npc.getName(), sp.getPlane(), null)));
 		}
 		// A monster that lives underground has its markers drawn on tiles the surface world map
 		// never shows, so from above ground they are invisible and from below they are redundant
@@ -124,33 +114,14 @@ public class SpawnMapMarker
 		SpawnPoint entrance = npc.getEntrance();
 		if (entrance != null)
 		{
-			WorldMapPoint way = WorldMapPoint.builder()
-				.worldPoint(new WorldPoint(entrance.getX(), entrance.getY(), entrance.getPlane()))
-				.image(markerIcon)
-				.snapToEdge(true)
-				.jumpOnClick(true)
-				.name(npc.getName())
-				.tooltip(npc.getName() + " — entrance")
-				.build();
-			entranceMarker = way;
-			entranceIcon = markerIcon;
+			entranceMarker = marker(worldPoint(entrance), npc.getName(), npc.getName() + " — entrance");
 			liftEntranceMarker();
-			worldMapPointManager.add(way);
-			shown.add(way);
+			show(entranceMarker);
 		}
 
 		// pan to the entrance when there is one: it is the part of the trip the player has to
 		// make, and the spawn tiles are somewhere the map cannot show them yet
-		SpawnPoint first = entrance != null ? entrance : spawns.get(0);
-		WorldPoint target = new WorldPoint(first.getX(), first.getY(), first.getPlane());
-		clientThread.invokeLater(() ->
-		{
-			WorldMap worldMap = client.getWorldMap();
-			if (worldMap != null)
-			{
-				worldMap.setWorldMapPositionTarget(target);
-			}
-		});
+		panTo(worldPoint(entrance != null ? entrance : spawns.get(0)));
 	}
 
 	/** Marks a single shop's location and pans the world map to it. */
@@ -168,16 +139,38 @@ public class SpawnMapMarker
 		}
 		WorldPoint target = new WorldPoint(shop.getX(), shop.getY(),
 			shop.getPlane() == null ? 0 : shop.getPlane());
-		WorldMapPoint point = WorldMapPoint.builder()
-			.worldPoint(target)
+		show(marker(target, shop.getName(),
+			tooltipFor(shop.getName(), shop.getPlane(), shop.getMapId())));
+		panTo(target);
+	}
+
+	private static WorldPoint worldPoint(SpawnPoint sp)
+	{
+		return new WorldPoint(sp.getX(), sp.getY(), sp.getPlane());
+	}
+
+	// every marker this plugin draws is the same pin; only where it is and what it says differ
+	private WorldMapPoint marker(WorldPoint where, String name, String tooltip)
+	{
+		return WorldMapPoint.builder()
+			.worldPoint(where)
 			.image(markerIcon)
 			.snapToEdge(true)
 			.jumpOnClick(true)
-			.name(shop.getName())
-			.tooltip(tooltipFor(shop.getName(), shop.getPlane(), shop.getMapId()))
+			.name(name)
+			.tooltip(tooltip)
 			.build();
+	}
+
+	private void show(WorldMapPoint point)
+	{
 		worldMapPointManager.add(point);
 		shown.add(point);
+	}
+
+	// the map is the game's, so its target is set on the client thread
+	private void panTo(WorldPoint target)
+	{
 		clientThread.invokeLater(() ->
 		{
 			WorldMap worldMap = client.getWorldMap();
@@ -219,7 +212,7 @@ public class SpawnMapMarker
 	public void liftEntranceMarker()
 	{
 		WorldMapPoint marker = entranceMarker;
-		BufferedImage icon = entranceIcon;
+		BufferedImage icon = markerIcon;
 		if (marker == null || icon == null)
 		{
 			return;
@@ -238,6 +231,5 @@ public class SpawnMapMarker
 		}
 		shown.clear();
 		entranceMarker = null;
-		entranceIcon = null;
 	}
 }

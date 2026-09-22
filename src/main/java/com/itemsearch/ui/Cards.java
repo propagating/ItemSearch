@@ -33,6 +33,8 @@ import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JTextArea;
+import javax.swing.UIManager;
 import net.runelite.client.ui.ColorScheme;
 
 /** The bordered cards, section headings, and stat cells the detail pages share. */
@@ -109,5 +111,23 @@ final class Cards
 		slot.add(card);
 		slot.revalidate();
 		slot.repaint();
+	}
+
+	// A left-aligned, non-editable text area styled like a label. Unlike a JLabel it
+	// re-wraps to whatever width it is given, so it fills the (viewport-bounded) box width
+	// and wraps instead of being clipped — see ItemSearchPanel.ScrollableWrapper.
+	static JTextArea wrapLabel(String text)
+	{
+		JTextArea area = new JTextArea(text);
+		area.setLineWrap(true);
+		area.setWrapStyleWord(true);
+		area.setEditable(false);
+		area.setFocusable(false);
+		area.setOpaque(false);
+		area.setBorder(null);
+		area.setFont(UIManager.getFont("Label.font"));
+		area.setForeground(UIManager.getColor("Label.foreground"));
+		area.setAlignmentX(Component.LEFT_ALIGNMENT);
+		return area;
 	}
 }
