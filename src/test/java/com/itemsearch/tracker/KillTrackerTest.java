@@ -132,7 +132,7 @@ public class KillTrackerTest
 		verify(store).recordKill(3031,
 			new HashSet<>(Collections.singletonList(1205)),
 			new HashSet<>(Arrays.asList(995, 1205)));
-		verify(store).save();
+		verify(store).saveSoon();
 	}
 
 	@Test
@@ -202,7 +202,7 @@ public class KillTrackerTest
 		verify(store).recordKill(7001,
 			new HashSet<>(Collections.singletonList(995)),
 			new HashSet<>(Collections.singletonList(995)));
-		verify(store).save();
+		verify(store).saveSoon();
 	}
 
 	@Test

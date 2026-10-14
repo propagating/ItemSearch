@@ -285277,7 +285277,7 @@
       "npcIds": [
         1134
       ],
-      "name": "Damis (Nightmare Zone) (First form (Hard Mode))",
+      "name": "Damis (Nightmare Zone) (Hard Mode, First form)",
       "wikiPage": "Damis (Nightmare Zone)",
       "combatLevel": 200,
       "spawnPoints": [],
@@ -285308,46 +285308,11 @@
       "type": "KILL"
     },
     {
-      "id": 6346,
-      "npcIds": [
-        6346
-      ],
-      "name": "Damis (Nightmare Zone) (First form (Normal Mode))",
-      "wikiPage": "Damis (Nightmare Zone)",
-      "combatLevel": 103,
-      "spawnPoints": [],
-      "tables": [
-        3
-      ],
-      "combat": {
-        "attackLevel": 90,
-        "strengthLevel": 90,
-        "defenceLevel": 90,
-        "magicLevel": 1,
-        "rangedLevel": 1,
-        "hitpoints": 90,
-        "attacks": [
-          {
-            "style": "crush",
-            "maxHit": 22,
-            "maxHitMax": 22,
-            "speed": 4,
-            "speedMax": 4
-          }
-        ],
-        "statuses": {
-          "Poison": "Susceptible",
-          "Venom": "Susceptible"
-        }
-      },
-      "type": "KILL"
-    },
-    {
       "id": 1135,
       "npcIds": [
         1135
       ],
-      "name": "Damis (Nightmare Zone) (Second form (Hard Mode))",
+      "name": "Damis (Nightmare Zone) (Hard Mode, Second form)",
       "wikiPage": "Damis (Nightmare Zone)",
       "combatLevel": 272,
       "spawnPoints": [],
@@ -285378,11 +285343,46 @@
       "type": "KILL"
     },
     {
+      "id": 6346,
+      "npcIds": [
+        6346
+      ],
+      "name": "Damis (Nightmare Zone) (Normal Mode, First form)",
+      "wikiPage": "Damis (Nightmare Zone)",
+      "combatLevel": 103,
+      "spawnPoints": [],
+      "tables": [
+        3
+      ],
+      "combat": {
+        "attackLevel": 90,
+        "strengthLevel": 90,
+        "defenceLevel": 90,
+        "magicLevel": 1,
+        "rangedLevel": 1,
+        "hitpoints": 90,
+        "attacks": [
+          {
+            "style": "crush",
+            "maxHit": 22,
+            "maxHitMax": 22,
+            "speed": 4,
+            "speedMax": 4
+          }
+        ],
+        "statuses": {
+          "Poison": "Susceptible",
+          "Venom": "Susceptible"
+        }
+      },
+      "type": "KILL"
+    },
+    {
       "id": 6347,
       "npcIds": [
         6347
       ],
-      "name": "Damis (Nightmare Zone) (Second form (Normal Mode))",
+      "name": "Damis (Nightmare Zone) (Normal Mode, Second form)",
       "wikiPage": "Damis (Nightmare Zone)",
       "combatLevel": 174,
       "spawnPoints": [],
@@ -318769,9 +318769,7 @@
       "id": 7569,
       "npcIds": [
         7569,
-        7571,
-        7570,
-        7572
+        7571
       ],
       "name": "Guardian (Chambers of Xeric)",
       "combatLevel": 0,
@@ -318790,6 +318788,46 @@
           {
             "style": "slash",
             "maxHit": 20,
+            "maxHitMax": 20,
+            "speed": 4,
+            "speedMax": 4
+          }
+        ],
+        "weakTo": [
+          "CRUSH"
+        ],
+        "statuses": {
+          "Poison": "Susceptible",
+          "Venom": "Susceptible",
+          "Thralls": "Immune"
+        }
+      },
+      "type": "KILL"
+    },
+    {
+      "id": 7570,
+      "npcIds": [
+        7570,
+        7572
+      ],
+      "name": "Guardian (Chambers of Xeric) (Challenge Mode)",
+      "wikiPage": "Guardian (Chambers of Xeric)",
+      "combatLevel": 0,
+      "spawnPoints": [],
+      "tables": [
+        971
+      ],
+      "combat": {
+        "attackLevel": 0,
+        "strengthLevel": 0,
+        "defenceLevel": 0,
+        "magicLevel": 0,
+        "rangedLevel": 0,
+        "hitpoints": 0,
+        "attacks": [
+          {
+            "style": "slash",
+            "maxHit": 33,
             "maxHitMax": 33,
             "speed": 4,
             "speedMax": 4
@@ -318804,66 +318842,6 @@
           "Thralls": "Immune"
         }
       },
-      "phases": [
-        {
-          "label": "Normal",
-          "image": "https://oldschool.runescape.wiki/images/Guardian_%28Chambers_of_Xeric%2C_female%29.png",
-          "combat": {
-            "attackLevel": 0,
-            "strengthLevel": 0,
-            "defenceLevel": 0,
-            "magicLevel": 0,
-            "rangedLevel": 0,
-            "hitpoints": 0,
-            "attacks": [
-              {
-                "style": "slash",
-                "maxHit": 20,
-                "maxHitMax": 20,
-                "speed": 4,
-                "speedMax": 4
-              }
-            ],
-            "weakTo": [
-              "CRUSH"
-            ],
-            "statuses": {
-              "Poison": "Susceptible",
-              "Venom": "Susceptible",
-              "Thralls": "Immune"
-            }
-          }
-        },
-        {
-          "label": "Challenge Mode",
-          "image": "https://oldschool.runescape.wiki/images/Guardian_%28Chambers_of_Xeric%2C_female%29.png",
-          "combat": {
-            "attackLevel": 0,
-            "strengthLevel": 0,
-            "defenceLevel": 0,
-            "magicLevel": 0,
-            "rangedLevel": 0,
-            "hitpoints": 0,
-            "attacks": [
-              {
-                "style": "slash",
-                "maxHit": 33,
-                "maxHitMax": 33,
-                "speed": 4,
-                "speedMax": 4
-              }
-            ],
-            "weakTo": [
-              "CRUSH"
-            ],
-            "statuses": {
-              "Poison": "Susceptible",
-              "Venom": "Susceptible",
-              "Thralls": "Immune"
-            }
-          }
-        }
-      ],
       "type": "KILL"
     },
     {
@@ -322950,8 +322928,7 @@
     {
       "id": 7584,
       "npcIds": [
-        7584,
-        7585
+        7584
       ],
       "name": "Ice demon",
       "combatLevel": 0,
@@ -322992,82 +322969,53 @@
           "Venom": "Immune"
         }
       },
-      "phases": [
-        {
-          "label": "Normal",
-          "image": "https://oldschool.runescape.wiki/images/Ice_demon.png",
-          "combat": {
-            "attackLevel": 1,
-            "strengthLevel": 1,
-            "defenceLevel": 160,
-            "magicLevel": 390,
-            "rangedLevel": 390,
-            "hitpoints": 140,
-            "attacks": [
-              {
-                "style": "ranged",
-                "maxHit": 0,
-                "maxHitMax": 0,
-                "speed": 3,
-                "speedMax": 3
-              },
-              {
-                "style": "magic",
-                "maxHit": 0,
-                "maxHitMax": 0,
-                "speed": 3,
-                "speedMax": 3
-              }
-            ],
-            "weakTo": [
-              "MAGIC"
-            ],
-            "elementalWeakness": "Fire",
-            "elementalWeaknessPercent": 150,
-            "statuses": {
-              "Poison": "Immune",
-              "Venom": "Immune"
-            }
-          }
-        },
-        {
-          "label": "Challenge Mode",
-          "image": "https://oldschool.runescape.wiki/images/Ice_demon.png",
-          "combat": {
-            "attackLevel": 1,
-            "strengthLevel": 1,
-            "defenceLevel": 240,
-            "magicLevel": 585,
-            "rangedLevel": 585,
-            "hitpoints": 210,
-            "attacks": [
-              {
-                "style": "ranged",
-                "maxHit": 0,
-                "maxHitMax": 0,
-                "speed": 3,
-                "speedMax": 3
-              },
-              {
-                "style": "magic",
-                "maxHit": 0,
-                "maxHitMax": 0,
-                "speed": 3,
-                "speedMax": 3
-              }
-            ],
-            "weakTo": [
-              "MAGIC"
-            ],
-            "elementalWeakness": "Fire",
-            "elementalWeaknessPercent": 150,
-            "statuses": {
-              "Poison": "Immune",
-              "Venom": "Immune"
-            }
-          }
-        }
+      "type": "KILL"
+    },
+    {
+      "id": 7585,
+      "npcIds": [
+        7585
       ],
+      "name": "Ice demon (Challenge Mode)",
+      "wikiPage": "Ice demon",
+      "combatLevel": 0,
+      "spawnPoints": [],
+      "tables": [
+        1027
+      ],
+      "combat": {
+        "attackLevel": 1,
+        "strengthLevel": 1,
+        "defenceLevel": 240,
+        "magicLevel": 585,
+        "rangedLevel": 585,
+        "hitpoints": 210,
+        "attacks": [
+          {
+            "style": "ranged",
+            "maxHit": 0,
+            "maxHitMax": 0,
+            "speed": 3,
+            "speedMax": 3
+          },
+          {
+            "style": "magic",
+            "maxHit": 0,
+            "maxHitMax": 0,
+            "speed": 3,
+            "speedMax": 3
+          }
+        ],
+        "weakTo": [
+          "MAGIC"
+        ],
+        "elementalWeakness": "Fire",
+        "elementalWeaknessPercent": 150,
+        "statuses": {
+          "Poison": "Immune",
+          "Venom": "Immune"
+        }
+      },
       "type": "KILL"
     },
     {
@@ -346685,28 +346633,28 @@
           {
             "style": "melee",
             "maxHit": 28,
-            "maxHitMax": 71,
+            "maxHitMax": 48,
             "speed": 4,
             "speedMax": 4
           },
           {
             "style": "ranged",
             "maxHit": 30,
-            "maxHitMax": 67,
+            "maxHitMax": 45,
             "speed": 4,
             "speedMax": 4
           },
           {
             "style": "magic",
             "maxHit": 23,
-            "maxHitMax": 34,
+            "maxHitMax": 23,
             "speed": 4,
             "speedMax": 4
           },
           {
             "style": "stomp",
             "maxHit": 72,
-            "maxHitMax": 106,
+            "maxHitMax": 72,
             "speed": 4,
             "speedMax": 4
           }
@@ -346809,9 +346757,74 @@
               "Venom": "Immune"
             }
           }
-        },
+        }
+      ],
+      "type": "KILL"
+    },
+    {
+      "id": 7562,
+      "npcIds": [
+        7562,
+        7561,
+        7563
+      ],
+      "name": "Muttadile (Challenge Mode)",
+      "wikiPage": "Muttadile",
+      "combatLevel": 0,
+      "spawnPoints": [],
+      "tables": [
+        1297
+      ],
+      "combat": {
+        "attackLevel": 0,
+        "strengthLevel": 0,
+        "defenceLevel": 0,
+        "magicLevel": 0,
+        "rangedLevel": 0,
+        "hitpoints": 0,
+        "attacks": [
+          {
+            "style": "melee",
+            "maxHit": 41,
+            "maxHitMax": 71,
+            "speed": 4,
+            "speedMax": 4
+          },
+          {
+            "style": "ranged",
+            "maxHit": 44,
+            "maxHitMax": 67,
+            "speed": 4,
+            "speedMax": 4
+          },
+          {
+            "style": "magic",
+            "maxHit": 34,
+            "maxHitMax": 34,
+            "speed": 4,
+            "speedMax": 4
+          },
+          {
+            "style": "stomp",
+            "maxHit": 106,
+            "maxHitMax": 106,
+            "speed": 4,
+            "speedMax": 4
+          }
+        ],
+        "weakTo": [
+          "STAB"
+        ],
+        "elementalWeakness": "earth",
+        "elementalWeaknessPercent": 40,
+        "statuses": {
+          "Poison": "Immune",
+          "Venom": "Immune"
+        }
+      },
+      "phases": [
         {
-          "label": "Small (Challenge Mode)",
+          "label": "Small",
           "image": "https://oldschool.runescape.wiki/images/Muttadile.png",
           "combat": {
             "attackLevel": 0,
@@ -346848,7 +346861,7 @@
           }
         },
         {
-          "label": "Large (Challenge Mode)",
+          "label": "Large",
           "image": "https://oldschool.runescape.wiki/images/Muttadile.png",
           "combat": {
             "attackLevel": 0,
@@ -348607,18 +348620,68 @@
       "type": "KILL"
     },
     {
-      "id": 8354,
+      "id": 10807,
       "npcIds": [
-        8354,
-        8355,
-        8356,
-        8357,
         10807,
         10808,
         10809,
         10810
       ],
-      "name": "Nylocas Vasilias (Level 800)",
+      "name": "Nylocas Vasilias (Hard)",
+      "wikiPage": "Nylocas Vasilias",
+      "combatLevel": 800,
+      "spawnPoints": [],
+      "tables": [
+        1330
+      ],
+      "combat": {
+        "attackLevel": 160,
+        "strengthLevel": 140,
+        "defenceLevel": 50,
+        "magicLevel": 20,
+        "rangedLevel": 140,
+        "hitpoints": 1800,
+        "attacks": [
+          {
+            "style": "stab",
+            "maxHit": 105,
+            "maxHitMax": 105,
+            "speed": 4,
+            "speedMax": 4
+          },
+          {
+            "style": "magic",
+            "maxHit": 105,
+            "maxHitMax": 105,
+            "speed": 4,
+            "speedMax": 4
+          },
+          {
+            "style": "ranged",
+            "maxHit": 105,
+            "maxHitMax": 105,
+            "speed": 4,
+            "speedMax": 4
+          }
+        ],
+        "elementalWeakness": "Fire",
+        "elementalWeaknessPercent": 15,
+        "statuses": {
+          "Poison": "Immune",
+          "Venom": "Immune"
+        }
+      },
+      "type": "KILL"
+    },
+    {
+      "id": 8354,
+      "npcIds": [
+        8354,
+        8355,
+        8356,
+        8357
+      ],
+      "name": "Nylocas Vasilias (Normal)",
       "wikiPage": "Nylocas Vasilias",
       "combatLevel": 800,
       "spawnPoints": [],
@@ -348636,21 +348699,21 @@
           {
             "style": "stab",
             "maxHit": 70,
-            "maxHitMax": 105,
+            "maxHitMax": 70,
             "speed": 4,
             "speedMax": 4
           },
           {
             "style": "magic",
             "maxHit": 70,
-            "maxHitMax": 105,
+            "maxHitMax": 70,
             "speed": 4,
             "speedMax": 4
           },
           {
             "style": "ranged",
             "maxHit": 70,
-            "maxHitMax": 105,
+            "maxHitMax": 70,
             "speed": 4,
             "speedMax": 4
           }
@@ -348662,90 +348725,6 @@
           "Venom": "Immune"
         }
       },
-      "phases": [
-        {
-          "label": "Normal",
-          "image": "https://oldschool.runescape.wiki/images/Nylocas_Vasilias_%28melee%29.png",
-          "combat": {
-            "attackLevel": 400,
-            "strengthLevel": 350,
-            "defenceLevel": 50,
-            "magicLevel": 50,
-            "rangedLevel": 350,
-            "hitpoints": 2500,
-            "attacks": [
-              {
-                "style": "stab",
-                "maxHit": 70,
-                "maxHitMax": 70,
-                "speed": 4,
-                "speedMax": 4
-              },
-              {
-                "style": "magic",
-                "maxHit": 70,
-                "maxHitMax": 70,
-                "speed": 4,
-                "speedMax": 4
-              },
-              {
-                "style": "ranged",
-                "maxHit": 70,
-                "maxHitMax": 70,
-                "speed": 4,
-                "speedMax": 4
-              }
-            ],
-            "elementalWeakness": "Fire",
-            "elementalWeaknessPercent": 15,
-            "statuses": {
-              "Poison": "Immune",
-              "Venom": "Immune"
-            }
-          }
-        },
-        {
-          "label": "Hard",
-          "image": "https://oldschool.runescape.wiki/images/Nylocas_Vasilias_%28melee%29.png",
-          "combat": {
-            "attackLevel": 160,
-            "strengthLevel": 140,
-            "defenceLevel": 50,
-            "magicLevel": 20,
-            "rangedLevel": 140,
-            "hitpoints": 1800,
-            "attacks": [
-              {
-                "style": "stab",
-                "maxHit": 105,
-                "maxHitMax": 105,
-                "speed": 4,
-                "speedMax": 4
-              },
-              {
-                "style": "magic",
-                "maxHit": 105,
-                "maxHitMax": 105,
-                "speed": 4,
-                "speedMax": 4
-              },
-              {
-                "style": "ranged",
-                "maxHit": 105,
-                "maxHitMax": 105,
-                "speed": 4,
-                "speedMax": 4
-              }
-            ],
-            "elementalWeakness": "Fire",
-            "elementalWeaknessPercent": 15,
-            "statuses": {
-              "Poison": "Immune",
-              "Venom": "Immune"
-            }
-          }
-        }
-      ],
       "type": "KILL"
     },
     {
@@ -366049,8 +366028,7 @@
     {
       "id": 7548,
       "npcIds": [
-        7548,
-        7549
+        7548
       ],
       "name": "Scavenger beast",
       "combatLevel": 0,
@@ -366069,6 +366047,41 @@
           {
             "style": "crush",
             "maxHit": 13,
+            "maxHitMax": 13,
+            "speed": 4,
+            "speedMax": 4
+          }
+        ],
+        "statuses": {
+          "Poison": "Susceptible",
+          "Venom": "Susceptible"
+        }
+      },
+      "type": "KILL"
+    },
+    {
+      "id": 7549,
+      "npcIds": [
+        7549
+      ],
+      "name": "Scavenger beast (Challenge Mode)",
+      "wikiPage": "Scavenger beast",
+      "combatLevel": 0,
+      "spawnPoints": [],
+      "tables": [
+        1576
+      ],
+      "combat": {
+        "attackLevel": 180,
+        "strengthLevel": 180,
+        "defenceLevel": 67,
+        "magicLevel": 1,
+        "rangedLevel": 1,
+        "hitpoints": 45,
+        "attacks": [
+          {
+            "style": "crush",
+            "maxHit": 27,
             "maxHitMax": 27,
             "speed": 4,
             "speedMax": 4
@@ -366079,58 +366092,6 @@
           "Venom": "Susceptible"
         }
       },
-      "phases": [
-        {
-          "label": "Normal",
-          "image": "https://oldschool.runescape.wiki/images/Corrupted_scavenger.png",
-          "combat": {
-            "attackLevel": 120,
-            "strengthLevel": 120,
-            "defenceLevel": 45,
-            "magicLevel": 1,
-            "rangedLevel": 1,
-            "hitpoints": 30,
-            "attacks": [
-              {
-                "style": "crush",
-                "maxHit": 13,
-                "maxHitMax": 13,
-                "speed": 4,
-                "speedMax": 4
-              }
-            ],
-            "statuses": {
-              "Poison": "Susceptible",
-              "Venom": "Susceptible"
-            }
-          }
-        },
-        {
-          "label": "Challenge Mode",
-          "image": "https://oldschool.runescape.wiki/images/Corrupted_scavenger.png",
-          "combat": {
-            "attackLevel": 180,
-            "strengthLevel": 180,
-            "defenceLevel": 67,
-            "magicLevel": 1,
-            "rangedLevel": 1,
-            "hitpoints": 45,
-            "attacks": [
-              {
-                "style": "crush",
-                "maxHit": 27,
-                "maxHitMax": 27,
-                "speed": 4,
-                "speedMax": 4
-              }
-            ],
-            "statuses": {
-              "Poison": "Susceptible",
-              "Venom": "Susceptible"
-            }
-          }
-        }
-      ],
       "type": "KILL"
     },
     {
@@ -384248,9 +384209,7 @@
         7540,
         7541,
         7542,
-        7543,
-        7545,
-        7544
+        7543
       ],
       "name": "Tekton",
       "combatLevel": 0,
@@ -384269,7 +384228,7 @@
           {
             "style": "melee",
             "maxHit": 52,
-            "maxHitMax": 87,
+            "maxHitMax": 59,
             "speed": 3,
             "speedMax": 3
           }
@@ -384347,9 +384306,53 @@
               "Venom": "Immune"
             }
           }
-        },
+        }
+      ],
+      "type": "KILL"
+    },
+    {
+      "id": 7545,
+      "npcIds": [
+        7545,
+        7544
+      ],
+      "name": "Tekton (Challenge Mode)",
+      "wikiPage": "Tekton",
+      "combatLevel": 0,
+      "spawnPoints": [],
+      "tables": [
+        1800
+      ],
+      "combat": {
+        "attackLevel": 585,
+        "strengthLevel": 585,
+        "defenceLevel": 246,
+        "magicLevel": 246,
+        "rangedLevel": 1,
+        "hitpoints": 450,
+        "attacks": [
+          {
+            "style": "melee",
+            "maxHit": 78,
+            "maxHitMax": 87,
+            "speed": 3,
+            "speedMax": 3
+          }
+        ],
+        "weakTo": [
+          "MAGIC",
+          "RANGED"
+        ],
+        "elementalWeakness": "Water",
+        "elementalWeaknessPercent": 20,
+        "statuses": {
+          "Poison": "Immune",
+          "Venom": "Immune"
+        }
+      },
+      "phases": [
         {
-          "label": "Normal (Challenge Mode)",
+          "label": "Normal",
           "image": "https://oldschool.runescape.wiki/images/Tekton.png",
           "combat": {
             "attackLevel": 585,
@@ -384380,7 +384383,7 @@
           }
         },
         {
-          "label": "Enraged (Challenge Mode)",
+          "label": "Enraged",
           "image": "https://oldschool.runescape.wiki/images/Tekton_%28enraged%29.png",
           "combat": {
             "attackLevel": 585,
@@ -396190,21 +396193,21 @@
           {
             "style": "magic",
             "maxHit": 22,
-            "maxHitMax": 33,
+            "maxHitMax": 22,
             "speed": 4,
             "speedMax": 4
           },
           {
             "style": "melee",
             "maxHit": 18,
-            "maxHitMax": 27,
+            "maxHitMax": 18,
             "speed": 4,
             "speedMax": 4
           },
           {
             "style": "ranged",
             "maxHit": 22,
-            "maxHitMax": 33,
+            "maxHitMax": 22,
             "speed": 4,
             "speedMax": 4
           },
@@ -396310,7 +396313,91 @@
           }
         },
         {
-          "label": "Magic (Challenge Mode)",
+          "label": "Moving",
+          "image": "https://oldschool.runescape.wiki/images/Vanguard_%28moving%29.png",
+          "combat": {
+            "attackLevel": 0,
+            "strengthLevel": 0,
+            "defenceLevel": 0,
+            "magicLevel": 0,
+            "rangedLevel": 0,
+            "hitpoints": 0,
+            "attacks": [
+              {
+                "style": "none",
+                "maxHit": 0,
+                "maxHitMax": 0,
+                "speed": 4,
+                "speedMax": 4
+              }
+            ],
+            "weakTo": [
+              "RANGED"
+            ],
+            "statuses": {
+              "Poison": "Immune",
+              "Venom": "Immune"
+            }
+          }
+        }
+      ],
+      "type": "KILL"
+    },
+    {
+      "id": 7529,
+      "npcIds": [
+        7529,
+        7527,
+        7528
+      ],
+      "name": "Vanguard (Challenge Mode)",
+      "wikiPage": "Vanguard",
+      "combatLevel": 0,
+      "spawnPoints": [],
+      "tables": [
+        1902
+      ],
+      "combat": {
+        "attackLevel": 225,
+        "strengthLevel": 225,
+        "defenceLevel": 240,
+        "magicLevel": 225,
+        "rangedLevel": 225,
+        "hitpoints": 280,
+        "attacks": [
+          {
+            "style": "magic",
+            "maxHit": 33,
+            "maxHitMax": 33,
+            "speed": 4,
+            "speedMax": 4
+          },
+          {
+            "style": "melee",
+            "maxHit": 27,
+            "maxHitMax": 27,
+            "speed": 4,
+            "speedMax": 4
+          },
+          {
+            "style": "ranged",
+            "maxHit": 33,
+            "maxHitMax": 33,
+            "speed": 4,
+            "speedMax": 4
+          }
+        ],
+        "weakTo": [
+          "RANGED"
+        ],
+        "statuses": {
+          "Poison": "Immune",
+          "Venom": "Immune"
+        }
+      },
+      "phases": [
+        {
+          "label": "Magic",
           "image": "https://oldschool.runescape.wiki/images/Vanguard_%28magic%29.png",
           "combat": {
             "attackLevel": 225,
@@ -396338,7 +396425,7 @@
           }
         },
         {
-          "label": "Melee (Challenge Mode)",
+          "label": "Melee",
           "image": "https://oldschool.runescape.wiki/images/Vanguard_%28melee%29.png",
           "combat": {
             "attackLevel": 225,
@@ -396366,7 +396453,7 @@
           }
         },
         {
-          "label": "Ranged (Challenge Mode)",
+          "label": "Ranged",
           "image": "https://oldschool.runescape.wiki/images/Vanguard_%28ranged%29.png",
           "combat": {
             "attackLevel": 225,
@@ -396386,34 +396473,6 @@
             ],
             "weakTo": [
               "STAB"
-            ],
-            "statuses": {
-              "Poison": "Immune",
-              "Venom": "Immune"
-            }
-          }
-        },
-        {
-          "label": "Moving",
-          "image": "https://oldschool.runescape.wiki/images/Vanguard_%28moving%29.png",
-          "combat": {
-            "attackLevel": 0,
-            "strengthLevel": 0,
-            "defenceLevel": 0,
-            "magicLevel": 0,
-            "rangedLevel": 0,
-            "hitpoints": 0,
-            "attacks": [
-              {
-                "style": "none",
-                "maxHit": 0,
-                "maxHitMax": 0,
-                "speed": 4,
-                "speedMax": 4
-              }
-            ],
-            "weakTo": [
-              "RANGED"
             ],
             "statuses": {
               "Poison": "Immune",
@@ -403291,7 +403350,7 @@
       "npcIds": [
         6335
       ],
-      "name": "Witch's experiment (Nightmare Zone) (Bear (Hard Mode))",
+      "name": "Witch's experiment (Nightmare Zone) (Hard Mode, Bear)",
       "wikiPage": "Witch's experiment (Nightmare Zone)",
       "combatLevel": 90,
       "spawnPoints": [],
@@ -403322,46 +403381,11 @@
       "type": "KILL"
     },
     {
-      "id": 6396,
-      "npcIds": [
-        6396
-      ],
-      "name": "Witch's experiment (Nightmare Zone) (Bear (Normal Mode))",
-      "wikiPage": "Witch's experiment (Nightmare Zone)",
-      "combatLevel": 42,
-      "spawnPoints": [],
-      "tables": [
-        1975
-      ],
-      "combat": {
-        "attackLevel": 38,
-        "strengthLevel": 30,
-        "defenceLevel": 39,
-        "magicLevel": 1,
-        "rangedLevel": 1,
-        "hitpoints": 41,
-        "attacks": [
-          {
-            "style": "slash",
-            "maxHit": 4,
-            "maxHitMax": 4,
-            "speed": 4,
-            "speedMax": 4
-          }
-        ],
-        "statuses": {
-          "Poison": "Susceptible",
-          "Venom": "Susceptible"
-        }
-      },
-      "type": "KILL"
-    },
-    {
       "id": 6333,
       "npcIds": [
         6333
       ],
-      "name": "Witch's experiment (Nightmare Zone) (Skavid (Hard Mode))",
+      "name": "Witch's experiment (Nightmare Zone) (Hard Mode, Skavid)",
       "wikiPage": "Witch's experiment (Nightmare Zone)",
       "combatLevel": 47,
       "spawnPoints": [],
@@ -403392,46 +403416,11 @@
       "type": "KILL"
     },
     {
-      "id": 6394,
-      "npcIds": [
-        6394
-      ],
-      "name": "Witch's experiment (Nightmare Zone) (Skavid (Normal Mode))",
-      "wikiPage": "Witch's experiment (Nightmare Zone)",
-      "combatLevel": 19,
-      "spawnPoints": [],
-      "tables": [
-        1975
-      ],
-      "combat": {
-        "attackLevel": 18,
-        "strengthLevel": 10,
-        "defenceLevel": 19,
-        "magicLevel": 1,
-        "rangedLevel": 1,
-        "hitpoints": 21,
-        "attacks": [
-          {
-            "style": "crush",
-            "maxHit": 2,
-            "maxHitMax": 2,
-            "speed": 4,
-            "speedMax": 4
-          }
-        ],
-        "statuses": {
-          "Poison": "Susceptible",
-          "Venom": "Susceptible"
-        }
-      },
-      "type": "KILL"
-    },
-    {
       "id": 6334,
       "npcIds": [
         6334
       ],
-      "name": "Witch's experiment (Nightmare Zone) (Spider (Hard Mode))",
+      "name": "Witch's experiment (Nightmare Zone) (Hard Mode, Spider)",
       "wikiPage": "Witch's experiment (Nightmare Zone)",
       "combatLevel": 77,
       "spawnPoints": [],
@@ -403462,46 +403451,11 @@
       "type": "KILL"
     },
     {
-      "id": 6395,
-      "npcIds": [
-        6395
-      ],
-      "name": "Witch's experiment (Nightmare Zone) (Spider (Normal Mode))",
-      "wikiPage": "Witch's experiment (Nightmare Zone)",
-      "combatLevel": 30,
-      "spawnPoints": [],
-      "tables": [
-        1975
-      ],
-      "combat": {
-        "attackLevel": 28,
-        "strengthLevel": 20,
-        "defenceLevel": 29,
-        "magicLevel": 1,
-        "rangedLevel": 1,
-        "hitpoints": 31,
-        "attacks": [
-          {
-            "style": "crush",
-            "maxHit": 3,
-            "maxHitMax": 3,
-            "speed": 4,
-            "speedMax": 4
-          }
-        ],
-        "statuses": {
-          "Poison": "Susceptible",
-          "Venom": "Susceptible"
-        }
-      },
-      "type": "KILL"
-    },
-    {
       "id": 6336,
       "npcIds": [
         6336
       ],
-      "name": "Witch's experiment (Nightmare Zone) (Wolf (Hard Mode))",
+      "name": "Witch's experiment (Nightmare Zone) (Hard Mode, Wolf)",
       "wikiPage": "Witch's experiment (Nightmare Zone)",
       "combatLevel": 103,
       "spawnPoints": [],
@@ -403532,11 +403486,116 @@
       "type": "KILL"
     },
     {
+      "id": 6396,
+      "npcIds": [
+        6396
+      ],
+      "name": "Witch's experiment (Nightmare Zone) (Normal Mode, Bear)",
+      "wikiPage": "Witch's experiment (Nightmare Zone)",
+      "combatLevel": 42,
+      "spawnPoints": [],
+      "tables": [
+        1975
+      ],
+      "combat": {
+        "attackLevel": 38,
+        "strengthLevel": 30,
+        "defenceLevel": 39,
+        "magicLevel": 1,
+        "rangedLevel": 1,
+        "hitpoints": 41,
+        "attacks": [
+          {
+            "style": "slash",
+            "maxHit": 4,
+            "maxHitMax": 4,
+            "speed": 4,
+            "speedMax": 4
+          }
+        ],
+        "statuses": {
+          "Poison": "Susceptible",
+          "Venom": "Susceptible"
+        }
+      },
+      "type": "KILL"
+    },
+    {
+      "id": 6394,
+      "npcIds": [
+        6394
+      ],
+      "name": "Witch's experiment (Nightmare Zone) (Normal Mode, Skavid)",
+      "wikiPage": "Witch's experiment (Nightmare Zone)",
+      "combatLevel": 19,
+      "spawnPoints": [],
+      "tables": [
+        1975
+      ],
+      "combat": {
+        "attackLevel": 18,
+        "strengthLevel": 10,
+        "defenceLevel": 19,
+        "magicLevel": 1,
+        "rangedLevel": 1,
+        "hitpoints": 21,
+        "attacks": [
+          {
+            "style": "crush",
+            "maxHit": 2,
+            "maxHitMax": 2,
+            "speed": 4,
+            "speedMax": 4
+          }
+        ],
+        "statuses": {
+          "Poison": "Susceptible",
+          "Venom": "Susceptible"
+        }
+      },
+      "type": "KILL"
+    },
+    {
+      "id": 6395,
+      "npcIds": [
+        6395
+      ],
+      "name": "Witch's experiment (Nightmare Zone) (Normal Mode, Spider)",
+      "wikiPage": "Witch's experiment (Nightmare Zone)",
+      "combatLevel": 30,
+      "spawnPoints": [],
+      "tables": [
+        1975
+      ],
+      "combat": {
+        "attackLevel": 28,
+        "strengthLevel": 20,
+        "defenceLevel": 29,
+        "magicLevel": 1,
+        "rangedLevel": 1,
+        "hitpoints": 31,
+        "attacks": [
+          {
+            "style": "crush",
+            "maxHit": 3,
+            "maxHitMax": 3,
+            "speed": 4,
+            "speedMax": 4
+          }
+        ],
+        "statuses": {
+          "Poison": "Susceptible",
+          "Venom": "Susceptible"
+        }
+      },
+      "type": "KILL"
+    },
+    {
       "id": 6397,
       "npcIds": [
         6397
       ],
-      "name": "Witch's experiment (Nightmare Zone) (Wolf (Normal Mode))",
+      "name": "Witch's experiment (Nightmare Zone) (Normal Mode, Wolf)",
       "wikiPage": "Witch's experiment (Nightmare Zone)",
       "combatLevel": 53,
       "spawnPoints": [],

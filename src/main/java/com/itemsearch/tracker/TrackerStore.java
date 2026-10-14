@@ -32,6 +32,9 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.ScheduledFuture;
+import java.util.concurrent.TimeUnit;
 import lombok.extern.slf4j.Slf4j;
 import net.runelite.client.config.ConfigManager;
 
@@ -43,6 +46,16 @@ public class TrackerStore
 
 	private final ConfigManager configManager;
 	private final Gson gson;
+	// where a debounced save runs; null saves at once, which is what tests want
+	private final ScheduledExecutorService executor;
+
+	/**
+	 * How long a kill waits before the counters are written. A save serialises every counter the
+	 * player has ever rolled, and a barrage task lands a dozen kills in one tick, so each kill
+	 * writing at once meant a dozen copies of the same blob. Short, so a crash costs a second.
+	 */
+	static final long SAVE_DELAY_MS = 1000;
+	private ScheduledFuture<?> pendingSave;
 
 	// npcId -> total kills. Mutated from both the client event-bus thread (recordKill) and the
 	// Swing EDT (resetPair/clear), so the maps are concurrent and their references never reassigned.
@@ -56,10 +69,18 @@ public class TrackerStore
 	// the player actually opened, not to the thousands of sources some items have.
 	private final Set<String> expanded = ConcurrentHashMap.newKeySet();
 
+	/** A store that writes every change at once. */
 	public TrackerStore(ConfigManager configManager, Gson gson)
+	{
+		this(configManager, gson, null);
+	}
+
+	/** @param executor where kills' saves are coalesced; null writes every change at once */
+	public TrackerStore(ConfigManager configManager, Gson gson, ScheduledExecutorService executor)
 	{
 		this.configManager = configManager;
 		this.gson = gson;
+		this.executor = executor;
 	}
 
 	private static String pairKey(int npcId, int itemId)
@@ -243,8 +264,44 @@ public class TrackerStore
 		save();
 	}
 
+	/**
+	 * Saves soon rather than now, so a burst of kills is written once. A reset or a card toggle
+	 * still calls {@link #save()} itself: those are one action each, and the player expects them
+	 * kept. A change from another client that arrives inside the delay is absorbed over whatever
+	 * is waiting here, which loses at most the last second of kills — the trade accepted for not
+	 * serialising the whole history a dozen times a tick.
+	 */
+	public synchronized void saveSoon()
+	{
+		if (executor == null)
+		{
+			save();
+			return;
+		}
+		if (pendingSave == null || pendingSave.isDone())
+		{
+			pendingSave = executor.schedule(this::save, SAVE_DELAY_MS, TimeUnit.MILLISECONDS);
+		}
+	}
+
+	/** Writes anything still waiting. For shutdown, after which nothing would run the save. */
+	public synchronized void flush()
+	{
+		ScheduledFuture<?> waiting = pendingSave;
+		pendingSave = null;
+		if (waiting != null && waiting.cancel(false))
+		{
+			save();
+		}
+	}
+
 	public synchronized void save()
 	{
+		if (pendingSave != null)
+		{
+			pendingSave.cancel(false); // this write covers it
+			pendingSave = null;
+		}
 		// Synchronized with the mutators above, so the two copies below form one
 		// consistent point-in-time snapshot of both maps.
 		Persisted p = new Persisted();

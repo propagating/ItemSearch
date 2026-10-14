@@ -254,7 +254,7 @@ public class KillTracker
 			possible.add(d.getItemId());
 		}
 		store.recordKill(npc.getId(), droppedItemIds, possible);
-		store.save();
+		store.saveSoon();
 		return true;
 	}
 

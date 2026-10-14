@@ -28,6 +28,9 @@ import com.google.gson.Gson;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashSet;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.ScheduledFuture;
+import java.util.concurrent.TimeUnit;
 import net.runelite.client.config.ConfigManager;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
@@ -35,10 +38,16 @@ import static org.junit.Assert.assertTrue;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.ArgumentMatchers.eq;
 import org.mockito.ArgumentCaptor;
 import org.mockito.Mock;
+import static org.mockito.Mockito.doReturn;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.never;
+import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import org.mockito.junit.MockitoJUnitRunner;
@@ -121,6 +130,52 @@ public class TrackerStoreTest
 
 		assertTrue(store.isExpanded(1205, 3031));
 		assertFalse(store.isExpanded(995, 3031));
+	}
+
+	/**
+	 * A barrage task lands a dozen kills in a tick, and each one used to serialise the whole
+	 * history. Kills now share one delayed write; a reset still writes at once and takes the
+	 * waiting one with it.
+	 */
+	@Test
+	public void aBurstOfKillsIsWrittenOnce()
+	{
+		ScheduledExecutorService executor = mock(ScheduledExecutorService.class);
+		ScheduledFuture<?> pending = mock(ScheduledFuture.class);
+		ArgumentCaptor<Runnable> task = ArgumentCaptor.forClass(Runnable.class);
+		doReturn(pending).when(executor).schedule(task.capture(), anyLong(), any(TimeUnit.class));
+		TrackerStore debounced = new TrackerStore(configManager, new Gson(), executor);
+
+		debounced.recordKill(3031, Collections.emptySet(), Collections.singletonList(995));
+		debounced.saveSoon();
+		debounced.recordKill(3031, Collections.emptySet(), Collections.singletonList(995));
+		debounced.saveSoon();
+
+		verify(executor, times(1)).schedule(any(Runnable.class), eq(TrackerStore.SAVE_DELAY_MS),
+			eq(TimeUnit.MILLISECONDS));
+		verify(configManager, never()).setConfiguration(eq("itemsearch"), eq("data"), anyString());
+
+		task.getValue().run();
+		ArgumentCaptor<String> saved = ArgumentCaptor.forClass(String.class);
+		verify(configManager).setConfiguration(eq("itemsearch"), eq("data"), saved.capture());
+		assertTrue("both kills reached the one write", saved.getValue().contains("\"3031\":2"));
+	}
+
+	@Test
+	public void flushWritesWhatIsStillWaiting()
+	{
+		ScheduledExecutorService executor = mock(ScheduledExecutorService.class);
+		ScheduledFuture<?> pending = mock(ScheduledFuture.class);
+		when(pending.cancel(false)).thenReturn(true);
+		doReturn(pending).when(executor).schedule(any(Runnable.class), anyLong(), any(TimeUnit.class));
+		TrackerStore debounced = new TrackerStore(configManager, new Gson(), executor);
+
+		debounced.recordKill(3031, Collections.emptySet(), Collections.singletonList(995));
+		debounced.saveSoon();
+		debounced.flush();
+
+		verify(pending).cancel(false);
+		verify(configManager).setConfiguration(eq("itemsearch"), eq("data"), anyString());
 	}
 
 	@Test

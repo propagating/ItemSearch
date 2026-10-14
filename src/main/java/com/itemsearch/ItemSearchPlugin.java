@@ -129,7 +129,7 @@ public class ItemSearchPlugin extends Plugin
 
 		wikiRefreshService = new WikiRefreshService(okHttpClient, gson, dataService, executor);
 
-		trackerStore = new TrackerStore(configManager, gson);
+		trackerStore = new TrackerStore(configManager, gson, executor);
 		trackerStore.load();
 		killTracker = new KillTracker(dataService, trackerStore, itemManager,
 			new DropConditions(client));
@@ -187,6 +187,10 @@ public class ItemSearchPlugin extends Plugin
 	@Override
 	protected void shutDown()
 	{
+		if (trackerStore != null)
+		{
+			trackerStore.flush(); // a kill from the last second is still waiting to be written
+		}
 		if (spawnMapMarker != null)
 		{
 			spawnMapMarker.clear();
