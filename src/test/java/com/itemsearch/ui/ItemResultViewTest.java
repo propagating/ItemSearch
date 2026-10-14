@@ -130,7 +130,7 @@ public class ItemResultViewTest
 		when(c.isGeTradeable()).thenReturn(true);
 		when(c.isStackable()).thenReturn(false);
 		when(im.getItemComposition(BRONZE_DAGGER)).thenReturn(c);
-		when(im.getItemPrice(BRONZE_DAGGER)).thenReturn(37);
+		when(im.getItemPrice(BRONZE_DAGGER)).thenReturn(37L);
 		ItemEquipmentStats eq = ItemEquipmentStats.builder().slot(3).astab(4).aslash(2).acrush(-4)
 			.amagic(1).arange(0).dstab(0).dslash(1).dcrush(0).dmagic(1).drange(0).str(3).rstr(0)
 			.mdmg(0).prayer(0).aspeed(4).isTwoHanded(false).build();

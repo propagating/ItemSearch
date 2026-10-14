@@ -39,13 +39,13 @@ final class ItemFacts
 	final boolean tradeable;
 	final boolean stackable;
 	final boolean geTradeable;
-	final int gePrice;
+	final long gePrice;
 	final int geLimit;
 	final double weight;
 	// null when the item cannot be worn
 	final ItemEquipmentStats equipment;
 
-	private ItemFacts(ItemComposition c, ItemStats s, int gePrice)
+	private ItemFacts(ItemComposition c, ItemStats s, long gePrice)
 	{
 		value = c.getPrice();
 		// 40% of value, which is also what a general store pays for the first one sold to it

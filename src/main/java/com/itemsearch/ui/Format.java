@@ -64,7 +64,7 @@ final class Format
 	/**
 	 * Formats a whole count with thousands separators (e.g. 1234 -> "1,234").
 	 */
-	static String tally(int n)
+	static String tally(long n)
 	{
 		return String.format(Locale.US, "%,d", n);
 	}
