@@ -70,6 +70,16 @@ public final class AttackStyles
 	}
 
 	/**
+	 * @return whether the token is a ground-targeted "bomb": a projectile aimed at a tile that
+	 *         damages the area around where it lands. It has no prayer of its own — a bomb that a
+	 *         prayer does block carries that in the attack's prayStyle.
+	 */
+	public static boolean isBomb(String attackType)
+	{
+		return attackType != null && "bomb".equals(attackType.toLowerCase(Locale.ROOT));
+	}
+
+	/**
 	 * @return the item that counters this attack (shown as its icon) when no prayer applies —
 	 *         an Anti-dragon shield for dragonfire, an Elemental shield for icy breath — else {@code null}.
 	 */

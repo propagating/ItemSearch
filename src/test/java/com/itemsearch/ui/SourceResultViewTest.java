@@ -556,9 +556,18 @@ public class SourceResultViewTest
 			new Attack("ranged", 41, 41, 4, 4, null, null, null, null)), null, null, null, statuses);
 		List<String> text = labelTexts(build(npc(2042, "Zulrah", 725, c),
 			new TrackerStore(mock(ConfigManager.class), new Gson())));
-		assertTrue(text.contains("Poison") && text.contains("Immune"));
-		assertTrue(text.contains("Cannon") && text.contains("Susceptible"));
-		assertTrue(text.contains("Freeze") && text.contains("50% resistant"));
+		assertTrue(text.contains("Poison") && text.contains("Cannon"));
+		assertFalse("a plain yes or no is a mark, not a word",
+			text.contains("Immune") || text.contains("Susceptible"));
+		assertTrue("a degree between keeps its words", text.contains("Freeze") && text.contains("50% resistant"));
+
+		JLabel immune = (JLabel) SourceResultView.statusCell("Poison", "Immune").getComponent(1);
+		assertEquals(SourceResultView.STATUS_FAILS, immune.getText());
+		assertEquals(ColorScheme.PROGRESS_ERROR_COLOR, immune.getForeground());
+		assertEquals("Immune to poison", immune.getToolTipText());
+		JLabel open = (JLabel) SourceResultView.statusCell("Cannon", "Susceptible").getComponent(1);
+		assertEquals(SourceResultView.STATUS_WORKS, open.getText());
+		assertEquals(ColorScheme.PROGRESS_COMPLETE_COLOR, open.getForeground());
 
 		List<String> silent = labelTexts(build(npc(9001, "Goblin", 2, combat(Collections.singletonList("stab"))),
 			new TrackerStore(mock(ConfigManager.class), new Gson())));
@@ -897,6 +906,97 @@ public class SourceResultViewTest
 		assertEquals(1, countTooltips(view, "<html>Protect from Missiles<br>Magic attack, "
 			+ "blocked by Protect from Ranged</html>"));
 		assertEquals(0, countTooltips(view, "Protect from Magic"));
+	}
+
+	@Test
+	public void bombShowsAnAreaMarkerAndSaysWhereItLands()
+	{
+		SourceResultView view = build(npc(9021, "Bomber", 90, combat(Collections.singletonList("bomb"))),
+			new TrackerStore(mock(ConfigManager.class), new Gson()));
+		assertEquals(1, countTooltips(view, "<html>" + SourceResultView.BOMB_HINT
+			+ "<br>No prayer protects against this attack</html>"));
+	}
+
+	private static Attack attack(String style, String prayStyle)
+	{
+		return new Attack(style, 10, 10, 4, 4, prayStyle, null, null, null);
+	}
+
+	@Test
+	public void aColumnIsAsWideAsItsIconsPlusItsAoeTag()
+	{
+		assertEquals(1, SourceResultView.columnUnits(attack("magic", null)));
+		assertEquals("no icon at all still takes a column", 1, SourceResultView.columnUnits(attack("typeless", null)));
+		assertEquals("partial prayer and a shield", 2, SourceResultView.columnUnits(attack("dragonfire", null)));
+		assertEquals("the tag stands in for the icon", 1, SourceResultView.columnUnits(attack("bomb", null)));
+		assertEquals("the tag sits beside the icon", 2, SourceResultView.columnUnits(attack("bomb", "magic")));
+	}
+
+	@Test
+	public void moreAttacksThanFitWrapOntoFurtherLinesInOrder()
+	{
+		// Vorkath: three prayable styles, dragonfire (two icons), and two bombs
+		List<Attack> vorkath = Arrays.asList(attack("magic", null), attack("ranged", null),
+			attack("slash", null), attack("dragonfire", null), attack("bomb", null), attack("bomb", null));
+		List<List<Attack>> lines = SourceResultView.attackLines(vorkath, SourceResultView.MAX_LINE_UNITS);
+		assertEquals(2, lines.size());
+		assertEquals(vorkath.subList(0, 3), lines.get(0));
+		assertEquals("dragonfire did not fit after three, so it leads the next line",
+			vorkath.subList(3, 6), lines.get(1));
+
+		assertEquals("few attacks stay on one line", 1,
+			SourceResultView.attackLines(vorkath.subList(0, 4).subList(0, 3), SourceResultView.MAX_LINE_UNITS).size());
+		assertEquals("an attack wider than a line is still shown", 1,
+			SourceResultView.attackLines(Collections.singletonList(attack("dragonfire", null)), 1).size());
+	}
+
+	@Test
+	public void everyLineOfTheAttacksCardCarriesItsOwnRowLabels()
+	{
+		CombatStats c = new CombatStats(1, 1, 1, 1, 1, 5, Arrays.asList(attack("magic", null),
+			attack("ranged", null), attack("slash", null), attack("dragonfire", null),
+			attack("bomb", null), attack("bomb", "magic")), null, null, null);
+		SourceResultView view = build(npc(9023, "Many attacks", 90, c),
+			new TrackerStore(mock(ConfigManager.class), new Gson()));
+		assertEquals(2, countLabels(view, "Max hit"));
+		// one tag in place of an icon, one beside the prayer icon of the prayable bomb
+		assertEquals(2, countLabels(view, SourceResultView.AOE_TAG));
+	}
+
+	@Test
+	public void chainAttackIsTaggedAndSaysPrayerStopsOnlyTheFirstHit()
+	{
+		// a nail beast: three slashes in a row, of which Protect from Melee stops only the first
+		Attack chain = new Attack("slash", 4, 4, 8, 8, null, null, null, null, 3);
+		assertEquals("x3", SourceResultView.tagFor(chain));
+		assertEquals("the tag sits beside the prayer icon", 2, SourceResultView.columnUnits(chain));
+		assertNull(SourceResultView.tagFor(attack("slash", null)));
+		assertEquals("AoE x2", SourceResultView.tagFor(new Attack("bomb", 9, 9, 4, 4, null, null, null, null, 2)));
+
+		CombatStats c = new CombatStats(1, 1, 1, 1, 1, 5, Collections.singletonList(chain), null, null, null);
+		SourceResultView view = build(npc(9024, "Nail beast", 141, c),
+			new TrackerStore(mock(ConfigManager.class), new Gson()));
+		assertEquals(1, countLabels(view, "x3"));
+		assertEquals(1, countTooltips(view, "<html>Protect from Melee<br>Chain of 3 hits, max hit is "
+			+ "for each: prayer stops only the first</html>"));
+	}
+
+	@Test
+	public void aChainNothingBlocksDoesNotMentionPrayer()
+	{
+		Attack chain = new Attack("typeless", 5, 5, 4, 4, null, null, null, null, 2);
+		assertEquals("Chain of 2 hits, max hit is for each", SourceResultView.chainHint(chain));
+	}
+
+	@Test
+	public void prayableBombKeepsItsPrayerIconAndStillSaysWhereItLands()
+	{
+		CombatStats c = new CombatStats(1, 1, 1, 1, 1, 5, Collections.singletonList(
+			new Attack("bomb", 30, 30, 6, 6, "magic", null, null, null)), null, null, null);
+		SourceResultView view = build(npc(9022, "Mage bomber", 90, c),
+			new TrackerStore(mock(ConfigManager.class), new Gson()));
+		assertEquals(1, countTooltips(view, "<html>Protect from Magic<br>Bomb attack, "
+			+ "blocked by Protect from Magic<br>" + SourceResultView.BOMB_HINT + "</html>"));
 	}
 
 

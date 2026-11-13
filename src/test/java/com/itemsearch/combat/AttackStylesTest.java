@@ -68,6 +68,17 @@ public class AttackStylesTest
 	}
 
 	@Test
+	public void bombIsRecognisedAndHasNoPrayerOfItsOwn()
+	{
+		assertTrue(AttackStyles.isBomb("bomb"));
+		assertTrue(AttackStyles.isBomb("Bomb"));
+		assertFalse(AttackStyles.isBomb("magic"));
+		assertFalse(AttackStyles.isBomb(null));
+		assertNull(AttackStyles.prayerFor("bomb"));
+		assertTrue(AttackStyles.protectionsFor("bomb").isEmpty());
+	}
+
+	@Test
 	public void unprayableAttacksMapToProtectionItems()
 	{
 		assertEquals(ProtectionItem.ANTIDRAGON_SHIELD, AttackStyles.protectionItemFor("dragonfire"));

@@ -347333,17 +347333,12 @@
         "attacks": [
           {
             "style": "slash",
-            "maxHit": 0,
-            "maxHitMax": 0,
-            "speed": 8,
-            "speedMax": 8
-          },
-          {
-            "style": "x3",
             "maxHit": 4,
             "maxHitMax": 4,
             "speed": 8,
-            "speedMax": 8
+            "speedMax": 8,
+            "notes": "Three strikes in quick succession, each rolled on its own.",
+            "chain": 3
           }
         ],
         "statuses": {
@@ -347376,17 +347371,12 @@
         "attacks": [
           {
             "style": "slash",
-            "maxHit": 0,
-            "maxHitMax": 0,
-            "speed": 8,
-            "speedMax": 8
-          },
-          {
-            "style": "x3",
             "maxHit": 2,
             "maxHitMax": 2,
             "speed": 8,
-            "speedMax": 8
+            "speedMax": 8,
+            "notes": "Three strikes in quick succession, each rolled on its own.",
+            "chain": 3
           }
         ],
         "statuses": {
@@ -347418,17 +347408,12 @@
         "attacks": [
           {
             "style": "slash",
-            "maxHit": 0,
-            "maxHitMax": 0,
-            "speed": 8,
-            "speedMax": 8
-          },
-          {
-            "style": "x3",
             "maxHit": 3,
             "maxHitMax": 3,
             "speed": 8,
-            "speedMax": 8
+            "speedMax": 8,
+            "notes": "Three strikes in quick succession, each rolled on its own.",
+            "chain": 3
           }
         ],
         "statuses": {
@@ -352991,21 +352976,12 @@
         "hitpoints": 0,
         "attacks": [
           {
-            "style": "poison",
+            "style": "typeless",
             "maxHit": 0,
             "maxHitMax": 0,
             "speed": 0,
             "speedMax": 0,
-            "effects": [
-              "POISON"
-            ]
-          },
-          {
-            "style": "does not attack",
-            "maxHit": 0,
-            "maxHitMax": 0,
-            "speed": 0,
-            "speedMax": 0,
+            "notes": "Does not attack.",
             "effects": [
               "POISON"
             ]
@@ -353029,21 +353005,12 @@
             "hitpoints": 0,
             "attacks": [
               {
-                "style": "poison",
+                "style": "typeless",
                 "maxHit": 0,
                 "maxHitMax": 0,
                 "speed": 0,
                 "speedMax": 0,
-                "effects": [
-                  "POISON"
-                ]
-              },
-              {
-                "style": "does not attack",
-                "maxHit": 0,
-                "maxHitMax": 0,
-                "speed": 0,
-                "speedMax": 0,
+                "notes": "Does not attack.",
                 "effects": [
                   "POISON"
                 ]
@@ -391736,15 +391703,15 @@
         "attacks": [
           {
             "style": "magic",
-            "maxHit": 0,
-            "maxHitMax": 0,
+            "maxHit": 13,
+            "maxHitMax": 13,
             "speed": 5,
             "speedMax": 5
           },
           {
             "style": "crush",
-            "maxHit": 0,
-            "maxHitMax": 0,
+            "maxHit": 9,
+            "maxHitMax": 9,
             "speed": 5,
             "speedMax": 5
           }
@@ -397754,6 +397721,14 @@
             "effects": [
               "VENOM"
             ]
+          },
+          {
+            "style": "bomb",
+            "maxHit": 121,
+            "maxHitMax": 121,
+            "speed": 5,
+            "speedMax": 5,
+            "notes": "Dragonfire bomb: one fireball lobbed high at your tile. Kills outright on that tile and deals half on the tiles next to it - move two tiles away. Dragonfire protection does nothing."
           }
         ],
         "weakTo": [
@@ -397840,14 +397815,20 @@
             ]
           },
           {
-            "style": "rapid fire/special",
-            "maxHit": 41,
-            "maxHitMax": 41,
+            "style": "bomb",
+            "maxHit": 121,
+            "maxHitMax": 121,
             "speed": 5,
             "speedMax": 5,
-            "effects": [
-              "VENOM"
-            ]
+            "notes": "Dragonfire bomb: one fireball lobbed high at your tile. Kills outright on that tile and deals half on the tiles next to it - move two tiles away. Dragonfire protection does nothing."
+          },
+          {
+            "style": "bomb",
+            "maxHit": 25,
+            "maxHitMax": 41,
+            "speed": 1,
+            "speedMax": 1,
+            "notes": "Rapid fire: after the acid pools land, a fireball every tick at the tile you are standing on. Keep walking on clean tiles until it ends. Dragonfire protection does nothing."
           }
         ],
         "weakTo": [

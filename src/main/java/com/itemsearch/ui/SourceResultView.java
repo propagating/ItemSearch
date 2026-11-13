@@ -77,6 +77,7 @@ import com.itemsearch.map.SpawnRecorder;
 import com.itemsearch.tracker.SpawnStore;
 import com.itemsearch.tracker.TrackerStore;
 import net.runelite.client.ui.ColorScheme;
+import net.runelite.client.ui.FontManager;
 import net.runelite.client.util.AsyncBufferedImage;
 import net.runelite.client.util.LinkBrowser;
 
@@ -718,12 +719,34 @@ public class SourceResultView extends JPanel
 			statuses.setBorder(BorderFactory.createEmptyBorder(4, 0, 0, 0));
 			for (Map.Entry<String, String> status : c.getStatuses().entrySet())
 			{
-				statuses.add(Cards.statCell(status.getKey(), status.getValue()));
+				statuses.add(statusCell(status.getKey(), status.getValue()));
 			}
 			statuses.setMaximumSize(new Dimension(Integer.MAX_VALUE, statuses.getPreferredSize().height));
 			box.add(statuses);
 		}
 		return box;
+	}
+
+	static final String STATUS_WORKS = "✓";
+	static final String STATUS_FAILS = "✕";
+
+	// A status and how the monster takes it: a green tick when it works on the monster, a red
+	// cross when the monster is immune, and the words only for a degree between ("50% resistant").
+	static JPanel statusCell(String status, String reading)
+	{
+		boolean works = "Susceptible".equalsIgnoreCase(reading);
+		boolean fails = "Immune".equalsIgnoreCase(reading);
+		if (!works && !fails)
+		{
+			return Cards.statCell(status, reading);
+		}
+		JPanel cell = Cards.statCell(status, works ? STATUS_WORKS : STATUS_FAILS);
+		JLabel mark = (JLabel) cell.getComponent(1);
+		mark.setForeground(works ? ColorScheme.PROGRESS_COMPLETE_COLOR : ColorScheme.PROGRESS_ERROR_COLOR);
+		String hint = works ? status + " works on this monster" : "Immune to " + status.toLowerCase(java.util.Locale.ROOT);
+		mark.setToolTipText(hint);
+		cell.setToolTipText(hint);
+		return cell;
 	}
 
 	/**
@@ -786,45 +809,134 @@ public class SourceResultView extends JPanel
 		GridBagConstraints gc = new GridBagConstraints();
 		gc.insets = new Insets(1, 3, 1, 3);
 
-		// column 0: row labels. Nothing sits above the icons — a spacer label there rendered as a
-		// stray mark, and the column is sized by "Speed"/"Max hit" without one.
-		gc.gridx = 0;
-		gc.anchor = GridBagConstraints.WEST;
-		gc.gridy = 1;
-		table.add(dim("Speed"), gc);
-		gc.gridy = 2;
-		table.add(dim("Max hit"), gc);
-
-		// one column per Attack, each with its own prayer icon, speed, and max hit.
-		int col = 1;
-		for (Attack attack : inPrayerOrder(attacks))
+		// A monster with more attacks than the sidebar is wide (Vorkath has six) gets them on
+		// several lines, each a full icon/speed/max-hit block with its own row labels. They share
+		// one grid, so the columns of every line sit under each other.
+		Insets plain = new Insets(1, 3, 1, 3);
+		int line = 0;
+		for (List<Attack> lineAttacks : attackLines(inPrayerOrder(attacks), MAX_LINE_UNITS))
 		{
-			if (attack == null)
+			int top = line * 3;
+			// a little air between one block and the next
+			Insets iconRow = new Insets(line == 0 ? 1 : 8, 3, 1, 3);
+
+			// column 0: row labels. Nothing sits above the icons — a spacer label there rendered as
+			// a stray mark, and the column is sized by "Speed"/"Max hit" without one.
+			gc.gridx = 0;
+			gc.anchor = GridBagConstraints.WEST;
+			gc.insets = plain;
+			gc.gridy = top + 1;
+			table.add(dim("Speed"), gc);
+			gc.gridy = top + 2;
+			table.add(dim("Max hit"), gc);
+
+			// one column per Attack, each with its own prayer icon, speed, and max hit.
+			int col = 1;
+			for (Attack attack : lineAttacks)
 			{
-				continue;
+				gc.gridx = col++;
+				gc.anchor = GridBagConstraints.CENTER;
+				gc.gridy = top;
+				gc.insets = iconRow;
+				// hybrids ("magic ranged") roll accuracy with style but are countered by
+				// prayStyle — the icon must show what to PRAY, with the roll explained on hover
+				JComponent icon = protectionCell(prayToken(attack), tagFor(attack), spriteManager, itemManager);
+				// onto the icons themselves, not just their container: Swing shows the tooltip of
+				// the deepest component under the pointer, so a note set on the panel behind the
+				// icons was never the one displayed — hovering an icon always found the icon's own
+				// text instead
+				applyHover(icon, iconTooltip(attack));
+				table.add(icon, gc);
+				gc.insets = plain;
+				gc.gridy = top + 1;
+				table.add(new JLabel(range(attack.getSpeed(), attack.getSpeedMax())), gc);
+				gc.gridy = top + 2;
+				JLabel maxHit = new JLabel(maxHitText(attack));
+				maxHit.setToolTipText(maxHitTooltip(attack));
+				table.add(maxHit, gc);
 			}
-			gc.gridx = col++;
-			gc.anchor = GridBagConstraints.CENTER;
-			gc.gridy = 0;
-			// hybrids ("magic ranged") roll accuracy with style but are countered by
-			// prayStyle — the icon must show what to PRAY, with the roll explained on hover
-			String prayToken = attack.getPrayStyle() != null ? attack.getPrayStyle() : attack.getStyle();
-			JComponent icon = protectionCell(prayToken, spriteManager, itemManager);
-			// onto the icons themselves, not just their container: Swing shows the tooltip of the
-			// deepest component under the pointer, so a note set on the panel behind the icons was
-			// never the one displayed — hovering an icon always found the icon's own text instead
-			applyHover(icon, iconTooltip(attack));
-			table.add(icon, gc);
-			gc.gridy = 1;
-			table.add(new JLabel(range(attack.getSpeed(), attack.getSpeedMax())), gc);
-			gc.gridy = 2;
-			JLabel maxHit = new JLabel(maxHitText(attack));
-			maxHit.setToolTipText(maxHitTooltip(attack));
-			table.add(maxHit, gc);
+			line++;
 		}
 		box.add(table);
 
 		return box;
+	}
+
+	// how much one line of the attacks card holds, in icon-widths: four prayer icons fit beside
+	// the row labels in the sidebar, and a shield or an "AoE" tag takes about as much room as one
+	static final int MAX_LINE_UNITS = 4;
+
+	private static String prayToken(Attack attack)
+	{
+		return attack.getPrayStyle() != null ? attack.getPrayStyle() : attack.getStyle();
+	}
+
+	/**
+	 * The short text beside an attack's icons saying what kind of attack it is: "AoE" for a
+	 * ground-targeted bomb, "x3" for a chain of three hits, both for a chain of bombs, and
+	 * {@code null} for an ordinary attack.
+	 */
+	static String tagFor(Attack attack)
+	{
+		List<String> parts = new ArrayList<>();
+		if (AttackStyles.isBomb(attack.getStyle()))
+		{
+			parts.add(AOE_TAG);
+		}
+		if (attack.getChain() > 1)
+		{
+			parts.add("x" + attack.getChain());
+		}
+		return parts.isEmpty() ? null : String.join(" ", parts);
+	}
+
+	/**
+	 * What a chain attack's hover says. The point of flagging a chain at all is the prayer: a
+	 * nail beast's three strikes look like one attack to pray against, and the prayer stops
+	 * only the first of them.
+	 */
+	static String chainHint(Attack attack)
+	{
+		String hint = "Chain of " + attack.getChain() + " hits, max hit is for each";
+		return AttackStyles.prayerFor(prayToken(attack)) != null
+			? hint + ": prayer stops only the first" : hint;
+	}
+
+	/** How many icon-widths an attack's column needs: one per protection icon, plus its tag. */
+	static int columnUnits(Attack attack)
+	{
+		int icons = AttackStyles.protectionsFor(prayToken(attack)).size();
+		// with nothing to pray, the tag stands where the icon would, at no extra width
+		return icons == 0 ? 1 : icons + (tagFor(attack) != null ? 1 : 0);
+	}
+
+	/**
+	 * Breaks the attacks into the lines the card draws, in order, filling each line to
+	 * {@code maxUnits} icon-widths before starting the next. An attack wider than a whole line
+	 * still gets a line to itself rather than being dropped.
+	 */
+	static List<List<Attack>> attackLines(List<Attack> attacks, int maxUnits)
+	{
+		List<List<Attack>> lines = new ArrayList<>();
+		List<Attack> current = new ArrayList<>();
+		int used = 0;
+		for (Attack attack : attacks)
+		{
+			int units = columnUnits(attack);
+			if (!current.isEmpty() && used + units > maxUnits)
+			{
+				lines.add(current);
+				current = new ArrayList<>();
+				used = 0;
+			}
+			current.add(attack);
+			used += units;
+		}
+		if (!current.isEmpty())
+		{
+			lines.add(current);
+		}
+		return lines;
 	}
 
 	/**
@@ -848,9 +960,13 @@ public class SourceResultView extends JPanel
 		return ordered;
 	}
 
+	// what a ground-targeted bomb does, added to its hover whether or not a prayer blocks it
+	static final String AOE_TAG = "AoE";
+	static final String BOMB_HINT = "Aimed at a tile: damages the area around where it lands";
+
 	private static int prayerRank(Attack attack)
 	{
-		String token = attack.getPrayStyle() != null ? attack.getPrayStyle() : attack.getStyle();
+		String token = prayToken(attack);
 		String style = token == null ? "" : token.toLowerCase(Locale.ROOT);
 		if (style.contains("magic") || style.contains("mage"))
 		{
@@ -880,6 +996,19 @@ public class SourceResultView extends JPanel
 		{
 			lines.add(capitalize(attack.getStyle()) + " attack, blocked by Protect from "
 				+ capitalize(attack.getPrayStyle()));
+		}
+		if (attack.getChain() > 1)
+		{
+			lines.add(chainHint(attack));
+		}
+		if (AttackStyles.isBomb(attack.getStyle()))
+		{
+			lines.add(BOMB_HINT);
+			if (attack.getPrayStyle() == null)
+			{
+				// this hover replaces the marker's own, so it has to carry that line too
+				lines.add("No prayer protects against this attack");
+			}
 		}
 		if (attack.getNotes() != null && !attack.getNotes().trim().isEmpty())
 		{
@@ -1011,13 +1140,16 @@ public class SourceResultView extends JPanel
 
 	// The icons telling the player how to counter this attack style: each protection prayer or
 	// protecting item as its own icon (dragonfire/icy breath show a partial Protect from Magic plus
-	// the shield that blocks them), or a "✕" when nothing counters it.
-	private static JComponent protectionCell(String style, SpriteManager spriteManager, ItemManager itemManager)
+	// the shield that blocks them), or a "✕" when nothing counters it. A bomb or a chain carries a
+	// tag ("AoE", "x3"): beside its icons when it has any, in place of the "✕" when it has none.
+	private static JComponent protectionCell(String style, String tag, SpriteManager spriteManager,
+		ItemManager itemManager)
 	{
 		List<Protection> protections = AttackStyles.protectionsFor(style);
 		if (protections.isEmpty())
 		{
-			JLabel none = new JLabel("✕");
+			// a bomb is dodged, not prayed: say what it is where the other styles show an icon
+			JLabel none = new JLabel(tag != null ? tag : "✕");
 			none.setForeground(ColorScheme.LIGHT_GRAY_COLOR);
 			none.setToolTipText("No prayer protects against this attack");
 			return none;
@@ -1044,6 +1176,13 @@ public class SourceResultView extends JPanel
 				}
 			}
 			cell.add(icon);
+		}
+		if (tag != null)
+		{
+			JLabel tagLabel = new JLabel(tag);
+			tagLabel.setFont(FontManager.getRunescapeSmallFont());
+			tagLabel.setForeground(ColorScheme.LIGHT_GRAY_COLOR);
+			cell.add(tagLabel);
 		}
 		return cell;
 	}

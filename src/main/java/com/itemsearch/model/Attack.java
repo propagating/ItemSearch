@@ -24,12 +24,14 @@
  */
 package com.itemsearch.model;
 
+import lombok.AllArgsConstructor;
 import lombok.Value;
 
 @Value
+@AllArgsConstructor
 public class Attack
 {
-	// osrsbox/wiki style token: stab/slash/crush/melee/ranged/magic/dragonfire/typeless/...
+	// osrsbox/wiki style token: stab/slash/crush/melee/ranged/magic/dragonfire/typeless/bomb/...
 	String style;
 	// maxHit/speed are the low end of a range; maxHitMax/speedMax the high end. For a single-valued
 	// attack the high equals the low (or is absent/0 in older data — always read via max(low, high)).
@@ -46,4 +48,14 @@ public class Attack
 	String notes;
 	// what it does beyond damage: POISON, VENOM, DISEASE, DRAIN_PRAYER, DRAIN_STATS
 	java.util.List<String> effects;
+	// how many hits land in a row when this is a chain attack (a nail beast strikes three times),
+	// of which a protection prayer stops only the first; 0 or 1 = an ordinary single hit
+	int chain;
+
+	/** An ordinary single-hit attack. */
+	public Attack(String style, int maxHit, int maxHitMax, int speed, int speedMax, String prayStyle,
+		java.util.List<MaxHitVariant> variants, String notes, java.util.List<String> effects)
+	{
+		this(style, maxHit, maxHitMax, speed, speedMax, prayStyle, variants, notes, effects, 0);
+	}
 }
