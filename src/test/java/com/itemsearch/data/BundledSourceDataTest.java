@@ -111,7 +111,7 @@ public class BundledSourceDataTest
         assertNotNull("reward chests must be in the data", chest);
         assertEquals(SourceType.REWARD, chest.getType());
         assertTrue("the chest must carry its rewards",
-            chest.getDrops().stream().anyMatch(d -> "Blood moon helm".equals(d.getItemName())));
+            chest.getDrops().stream().anyMatch(d -> "Blood Moon helm".equals(d.getItemName())));
 
         for (String boss : new String[]{"Zulrah", "Vorkath", "Nex"})
         {

@@ -282,31 +282,6 @@
     ]
   },
   {
-    "name": "Aemad's Adventuring Supplies (2)",
-    "location": "East Ardougne",
-    "owner": "Aemad",
-    "currency": "Coins",
-    "x": 2614,
-    "y": 3293,
-    "plane": 0,
-    "items": [
-      {
-        "itemId": 22118,
-        "itemName": "Wrath talisman",
-        "stock": 1,
-        "sellPrice": 130,
-        "restockSeconds": 0
-      },
-      {
-        "itemId": 5001,
-        "itemName": "Raw cave eel",
-        "stock": 100,
-        "sellPrice": 19,
-        "restockSeconds": 0
-      }
-    ]
-  },
-  {
     "name": "Agelus' Farm Shop",
     "location": "Ortus Farm",
     "owner": "Agelus",
@@ -854,6 +829,143 @@
     ]
   },
   {
+    "name": "Aldarin General Store",
+    "location": "Aldarin",
+    "owner": "Shopkeeper",
+    "currency": "Coins",
+    "x": 1413,
+    "y": 2972,
+    "plane": 0,
+    "items": [
+      {
+        "itemId": 1755,
+        "itemName": "Chisel",
+        "stock": 5,
+        "sellPrice": 1,
+        "restockSeconds": 12
+      },
+      {
+        "itemId": 952,
+        "itemName": "Spade",
+        "stock": 5,
+        "sellPrice": 3,
+        "restockSeconds": 12
+      },
+      {
+        "itemId": 2347,
+        "itemName": "Hammer",
+        "stock": 5,
+        "sellPrice": 1,
+        "restockSeconds": 12
+      },
+      {
+        "itemId": 946,
+        "itemName": "Knife",
+        "stock": 5,
+        "sellPrice": 7,
+        "restockSeconds": 12
+      },
+      {
+        "itemId": 590,
+        "itemName": "Tinderbox",
+        "stock": 5,
+        "sellPrice": 1,
+        "restockSeconds": 12
+      },
+      {
+        "itemId": 233,
+        "itemName": "Pestle and mortar",
+        "stock": 5,
+        "sellPrice": 5,
+        "restockSeconds": 12
+      },
+      {
+        "itemId": 1733,
+        "itemName": "Needle",
+        "stock": 5,
+        "sellPrice": 1,
+        "restockSeconds": 12
+      },
+      {
+        "itemId": 1734,
+        "itemName": "Thread",
+        "stock": 30,
+        "sellPrice": 1,
+        "restockSeconds": 12
+      },
+      {
+        "itemId": 954,
+        "itemName": "Rope",
+        "stock": 10,
+        "sellPrice": 23,
+        "restockSeconds": 12
+      },
+      {
+        "itemId": 1931,
+        "itemName": "Pot",
+        "stock": 15,
+        "sellPrice": 1,
+        "restockSeconds": 12
+      },
+      {
+        "itemId": 1935,
+        "itemName": "Jug",
+        "stock": 15,
+        "sellPrice": 1,
+        "restockSeconds": 12
+      },
+      {
+        "itemId": 1925,
+        "itemName": "Bucket",
+        "stock": 15,
+        "sellPrice": 2,
+        "restockSeconds": 12
+      },
+      {
+        "itemId": 1923,
+        "itemName": "Bowl",
+        "stock": 15,
+        "sellPrice": 5,
+        "restockSeconds": 12
+      },
+      {
+        "itemId": 1887,
+        "itemName": "Cake tin",
+        "stock": 15,
+        "sellPrice": 13,
+        "restockSeconds": 12
+      },
+      {
+        "itemId": 229,
+        "itemName": "Vial",
+        "stock": 15,
+        "sellPrice": 2,
+        "restockSeconds": 90
+      },
+      {
+        "itemId": 20742,
+        "itemName": "Empty jug pack",
+        "stock": 5,
+        "sellPrice": 182,
+        "restockSeconds": 18
+      },
+      {
+        "itemId": 22660,
+        "itemName": "Empty bucket pack",
+        "stock": 5,
+        "sellPrice": 650,
+        "restockSeconds": 18
+      },
+      {
+        "itemId": 11877,
+        "itemName": "Empty vial pack",
+        "stock": 5,
+        "sellPrice": 260,
+        "restockSeconds": 18
+      }
+    ]
+  },
+  {
     "name": "Aleck's Hunter Emporium",
     "location": "Yanille",
     "owner": "Aleck",
@@ -864,7 +976,7 @@
     "items": [
       {
         "itemId": 10010,
-        "itemName": "Butterfly net",
+        "itemName": "Insect net",
         "stock": 5,
         "sellPrice": 24,
         "restockSeconds": 6
@@ -923,6 +1035,13 @@
         "itemName": "Rabbit snare",
         "stock": 10,
         "sellPrice": 18,
+        "restockSeconds": 6
+      },
+      {
+        "itemId": 34631,
+        "itemName": "Net trap (item)",
+        "stock": 25,
+        "sellPrice": 38,
         "restockSeconds": 6
       },
       {
@@ -1035,6 +1154,25 @@
         "itemName": "Red hot sauce",
         "stock": -1,
         "sellPrice": 0
+      }
+    ]
+  },
+  {
+    "name": "Ali the Snake Charmer",
+    "owner": "Ali the Snake Charmer",
+    "currency": "Coins",
+    "items": [
+      {
+        "itemId": 4605,
+        "itemName": "Snake charm",
+        "stock": -1,
+        "sellPrice": 1
+      },
+      {
+        "itemId": -1,
+        "itemName": "Snake basket",
+        "stock": -1,
+        "sellPrice": 1
       }
     ]
   },
@@ -1859,6 +1997,77 @@
     ]
   },
   {
+    "name": "Alliance Supplies",
+    "location": "The Fractured Archive central chamber",
+    "owner": "Quartermaster",
+    "currency": "Supply Credits",
+    "items": [
+      {
+        "itemId": -1,
+        "itemName": "Alliance log",
+        "stock": -1
+      },
+      {
+        "itemId": -1,
+        "itemName": "Leftovers"
+      },
+      {
+        "itemId": 6685,
+        "itemName": "Saradomin brew(4)",
+        "stock": 6,
+        "sellPrice": 3
+      },
+      {
+        "itemId": 3024,
+        "itemName": "Super restore(4)",
+        "stock": 4,
+        "sellPrice": 3
+      },
+      {
+        "itemId": 2434,
+        "itemName": "Prayer potion(4)",
+        "stock": 4,
+        "sellPrice": 2
+      },
+      {
+        "itemId": 391,
+        "itemName": "Manta ray",
+        "stock": 10,
+        "sellPrice": 2
+      },
+      {
+        "itemId": -1,
+        "itemName": "Halibut",
+        "stock": 5,
+        "sellPrice": 2
+      },
+      {
+        "itemId": -1,
+        "itemName": "Giant krill",
+        "stock": 10,
+        "sellPrice": 1
+      },
+      {
+        "itemId": 141,
+        "itemName": "Prayer potion(2)",
+        "stock": 1,
+        "sellPrice": 1
+      },
+      {
+        "itemId": 171,
+        "itemName": "Ranging potion(2)",
+        "stock": 1,
+        "sellPrice": 2
+      },
+      {
+        "itemId": 12699,
+        "itemName": "Super combat potion(2)",
+        "stock": 1,
+        "sellPrice": 2
+      }
+    ]
+  },
+  {
     "name": "Alry the Angler's Angling Accessories",
     "location": "Molch lake",
     "owner": "Alry the Angler",
@@ -2464,38 +2673,6 @@
     ]
   },
   {
-    "name": "Arcuani's Archery Supplies (2)",
-    "location": "Tal Teklan",
-    "owner": "Arcuani",
-    "currency": "Coins",
-    "x": 1210,
-    "y": 3096,
-    "plane": 0,
-    "items": [
-      {
-        "itemId": 864,
-        "itemName": "Bronze knife",
-        "stock": 2000,
-        "sellPrice": 1,
-        "restockSeconds": 0
-      },
-      {
-        "itemId": 863,
-        "itemName": "Iron knife",
-        "stock": 1000,
-        "sellPrice": 3,
-        "restockSeconds": 0
-      },
-      {
-        "itemId": 865,
-        "itemName": "Steel knife",
-        "stock": 800,
-        "sellPrice": 11,
-        "restockSeconds": 0
-      }
-    ]
-  },
-  {
     "name": "Ardougne Baker's Stall",
     "location": "East Ardougne",
     "owner": "Baker",
@@ -2900,7 +3077,7 @@
     ]
   },
   {
-    "name": "Armour Shop (Jatizso)",
+    "name": "Armour Shop",
     "location": "Jatizso",
     "owner": "Raum Urda-Stein",
     "currency": "Coins",
@@ -5313,6 +5490,98 @@
     ]
   },
   {
+    "name": "Bea's Hunting Gear",
+    "location": "Bea's farm",
+    "owner": "Farmer Bea",
+    "currency": "Coins",
+    "items": [
+      {
+        "itemId": 10012,
+        "itemName": "Butterfly jar",
+        "stock": 100,
+        "sellPrice": 1,
+        "restockSeconds": 6
+      },
+      {
+        "itemId": 10025,
+        "itemName": "Magic box",
+        "stock": 30,
+        "sellPrice": 780,
+        "restockSeconds": 30
+      },
+      {
+        "itemId": 10150,
+        "itemName": "Noose wand",
+        "stock": 50,
+        "sellPrice": 5,
+        "restockSeconds": 3
+      },
+      {
+        "itemId": 10006,
+        "itemName": "Bird snare",
+        "stock": 50,
+        "sellPrice": 6,
+        "restockSeconds": 3
+      },
+      {
+        "itemId": 10008,
+        "itemName": "Box trap",
+        "stock": 25,
+        "sellPrice": 41,
+        "restockSeconds": 6
+      },
+      {
+        "itemId": 10029,
+        "itemName": "Teasing stick",
+        "stock": 5,
+        "sellPrice": 65,
+        "restockSeconds": 6
+      },
+      {
+        "itemId": 596,
+        "itemName": "Unlit torch",
+        "stock": 20,
+        "sellPrice": 5,
+        "restockSeconds": 6
+      },
+      {
+        "itemId": 10031,
+        "itemName": "Rabbit snare",
+        "stock": 10,
+        "sellPrice": 19,
+        "restockSeconds": 6
+      },
+      {
+        "itemId": 34631,
+        "itemName": "Net trap (item)",
+        "stock": 25,
+        "sellPrice": 41,
+        "restockSeconds": 6
+      },
+      {
+        "itemId": 12740,
+        "itemName": "Bird snare pack",
+        "stock": 3,
+        "sellPrice": 656,
+        "restockSeconds": 6
+      },
+      {
+        "itemId": 12742,
+        "itemName": "Box trap pack",
+        "stock": 3,
+        "sellPrice": 4160,
+        "restockSeconds": 6
+      },
+      {
+        "itemId": 12744,
+        "itemName": "Magic imp box pack",
+        "stock": 3,
+        "sellPrice": 78000,
+        "restockSeconds": 6
+      }
+    ]
+  },
+  {
     "name": "Bedabin Village Bartering",
     "location": "Bedabin Camp",
     "owner": "Bedabin Nomad",
@@ -6350,6 +6619,25 @@
     ]
   },
   {
+    "name": "Brass Hand Harry",
+    "owner": "Brass Hand Harry",
+    "currency": "Coins",
+    "items": [
+      {
+        "itemId": -1,
+        "itemName": "Sailing cape",
+        "stock": -1,
+        "sellPrice": 99000
+      },
+      {
+        "itemId": -1,
+        "itemName": "Sailing cape(t)",
+        "stock": -1,
+        "sellPrice": 99000
+      }
+    ]
+  },
+  {
     "name": "Brian's Archery Supplies",
     "location": "Rimmington",
     "owner": "Brian",
@@ -6508,42 +6796,42 @@
       },
       {
         "itemId": 1277,
-        "itemName": "Bronze sword",
+        "itemName": "Bronze shortsword",
         "stock": 5,
         "sellPrice": 26,
         "restockSeconds": 60
       },
       {
         "itemId": 1279,
-        "itemName": "Iron sword",
+        "itemName": "Iron shortsword",
         "stock": 4,
         "sellPrice": 91,
         "restockSeconds": 120
       },
       {
         "itemId": 1281,
-        "itemName": "Steel sword",
+        "itemName": "Steel shortsword",
         "stock": 4,
         "sellPrice": 325,
         "restockSeconds": 240
       },
       {
         "itemId": 1283,
-        "itemName": "Black sword",
+        "itemName": "Black shortsword",
         "stock": 3,
         "sellPrice": 624,
         "restockSeconds": 600
       },
       {
         "itemId": 1285,
-        "itemName": "Mithril sword",
+        "itemName": "Mithril shortsword",
         "stock": 3,
         "sellPrice": 845,
         "restockSeconds": 1800
       },
       {
         "itemId": 1287,
-        "itemName": "Adamant sword",
+        "itemName": "Adamant shortsword",
         "stock": 2,
         "sellPrice": 2080,
         "restockSeconds": 7200
@@ -6937,35 +7225,35 @@
       },
       {
         "itemId": 1277,
-        "itemName": "Bronze sword",
+        "itemName": "Bronze shortsword",
         "stock": 5,
         "sellPrice": 26,
         "restockSeconds": 60
       },
       {
         "itemId": 1279,
-        "itemName": "Iron sword",
+        "itemName": "Iron shortsword",
         "stock": 4,
         "sellPrice": 91,
         "restockSeconds": 120
       },
       {
         "itemId": 1281,
-        "itemName": "Steel sword",
+        "itemName": "Steel shortsword",
         "stock": 4,
         "sellPrice": 325,
         "restockSeconds": 240
       },
       {
         "itemId": 1285,
-        "itemName": "Mithril sword",
+        "itemName": "Mithril shortsword",
         "stock": 3,
         "sellPrice": 845,
         "restockSeconds": 1800
       },
       {
         "itemId": 1287,
-        "itemName": "Adamant sword",
+        "itemName": "Adamant shortsword",
         "stock": 2,
         "sellPrice": 2080,
         "restockSeconds": 7200
@@ -7234,6 +7522,25 @@
     ]
   },
   {
+    "name": "Captain Harlan",
+    "owner": "Captain Harlan",
+    "currency": "Coins",
+    "items": [
+      {
+        "itemId": 9753,
+        "itemName": "Defence cape",
+        "stock": -1,
+        "sellPrice": 99000
+      },
+      {
+        "itemId": 9754,
+        "itemName": "Defence cape(t)",
+        "stock": -1,
+        "sellPrice": 99000
+      }
+    ]
+  },
+  {
     "name": "Carefree Crafting Stall",
     "location": "Keldagrim",
     "owner": "Nolar",
@@ -7470,71 +7777,45 @@
     ]
   },
   {
-    "name": "Chest (Theatre of Blood)",
-    "owner": "Chest (Theatre of Blood)",
-    "currency": "Points",
+    "name": "Chest (The Blood Moon Rises)",
+    "owner": "Chest (The Blood Moon Rises)",
+    "currency": "None",
     "items": [
       {
-        "itemId": 12625,
-        "itemName": "Stamina potion(4)",
-        "stock": -1
-      },
-      {
-        "itemId": 2434,
-        "itemName": "Prayer potion(4)",
+        "itemId": -1,
+        "itemName": "Putrid sticky potion",
         "stock": -1,
-        "sellPrice": 2
+        "sellPrice": 0
       },
       {
-        "itemId": 6685,
-        "itemName": "Saradomin brew(4)",
+        "itemId": -1,
+        "itemName": "Foul chunky potion",
         "stock": -1,
-        "sellPrice": 3
+        "sellPrice": 0
       },
       {
-        "itemId": 3024,
-        "itemName": "Super restore(4)",
+        "itemId": -1,
+        "itemName": "Rancid slimy potion",
         "stock": -1,
-        "sellPrice": 3
+        "sellPrice": 0
       },
       {
-        "itemId": 7058,
-        "itemName": "Mushroom potato",
+        "itemId": -1,
+        "itemName": "Rank frothy potion",
         "stock": -1,
-        "sellPrice": 1
+        "sellPrice": 0
       },
       {
-        "itemId": 385,
-        "itemName": "Shark",
+        "itemId": 33802,
+        "itemName": "Mysterious jerky",
         "stock": -1,
-        "sellPrice": 1
+        "sellPrice": 0
       },
       {
-        "itemId": 397,
-        "itemName": "Sea turtle",
+        "itemId": -1,
+        "itemName": "Smelly kebab",
         "stock": -1,
-        "sellPrice": 2
-      },
-      {
-        "itemId": 391,
-        "itemName": "Manta ray",
-        "stock": -1,
-        "sellPrice": 2
-      },
-      {
-        "itemId": 22475,
-        "itemName": "Message (Theatre of Blood)",
-        "stock": -1
-      },
-      {
-        "itemId": 1957,
-        "itemName": "Onion",
-        "stock": -1
-      },
-      {
-        "itemId": 25730,
-        "itemName": "Bandages (Theatre of Blood)",
-        "stock": -1
+        "sellPrice": 0
       }
     ]
   },
@@ -12456,7 +12737,7 @@
   },
   {
     "name": "Deadman Reward Store",
-    "location": "Lumbridge graveyard",
+    "location": "Grand Exchange",
     "owner": "Nigel",
     "currency": "Deadman Points",
     "items": [
@@ -12488,7 +12769,7 @@
   },
   {
     "name": "Deadman Reward Store (2)",
-    "location": "Lumbridge graveyard",
+    "location": "Grand Exchange",
     "owner": "Nigel",
     "currency": "Deadman Points",
     "items": [
@@ -12509,6 +12790,21 @@
         "itemName": "Annihilation teleport scroll",
         "stock": -1,
         "sellPrice": 10000
+      }
+    ]
+  },
+  {
+    "name": "Death (shop)",
+    "location": "Death's Office",
+    "owner": "Death (NPC)",
+    "currency": "Coins",
+    "items": [
+      {
+        "itemId": 22517,
+        "itemName": "Escape crystal",
+        "stock": 9500,
+        "sellPrice": 10000,
+        "restockSeconds": 1
       }
     ]
   },
@@ -14031,6 +14327,30 @@
         "itemName": "Archibald",
         "stock": -1,
         "sellPrice": 0
+      },
+      {
+        "itemId": -1,
+        "itemName": "Vampyre monocle",
+        "stock": -1,
+        "sellPrice": 0
+      },
+      {
+        "itemId": -1,
+        "itemName": "Vampyre costume top",
+        "stock": -1,
+        "sellPrice": 0
+      },
+      {
+        "itemId": -1,
+        "itemName": "Vampyre costume bottom",
+        "stock": -1,
+        "sellPrice": 0
+      },
+      {
+        "itemId": -1,
+        "itemName": "Vampyre costume cape",
+        "stock": -1,
+        "sellPrice": 0
       }
     ]
   },
@@ -14249,6 +14569,24 @@
         "stock": 7,
         "sellPrice": 21000,
         "restockSeconds": 96
+      },
+      {
+        "itemId": -1,
+        "itemName": "Painted shortsword",
+        "stock": 30,
+        "sellPrice": 45
+      },
+      {
+        "itemId": -1,
+        "itemName": "Painted kiteshield",
+        "stock": 30,
+        "sellPrice": 45
+      },
+      {
+        "itemId": -1,
+        "itemName": "Painted shortbow",
+        "stock": 30,
+        "sellPrice": 45
       },
       {
         "itemId": 22364,
@@ -16121,7 +16459,7 @@
     "items": [
       {
         "itemId": 10010,
-        "itemName": "Butterfly net",
+        "itemName": "Insect net",
         "stock": 5,
         "sellPrice": 24,
         "restockSeconds": 6
@@ -16180,6 +16518,13 @@
         "itemName": "Rabbit snare",
         "stock": 10,
         "sellPrice": 18,
+        "restockSeconds": 6
+      },
+      {
+        "itemId": 34631,
+        "itemName": "Net trap (item)",
+        "stock": 25,
+        "sellPrice": 38,
         "restockSeconds": 6
       },
       {
@@ -16736,7 +17081,7 @@
   },
   {
     "name": "Events Reward Shop",
-    "location": "Varrock Square",
+    "location": "Grand Exchange",
     "owner": "Nevet",
     "currency": "event points",
     "items": [
@@ -18748,10 +19093,9 @@
         "restockSeconds": 60
       },
       {
-        "itemId": 29177,
+        "itemId": -1,
         "itemName": "Sunlight antelope fur",
         "stock": 0,
-        "sellPrice": 12,
         "restockSeconds": 60
       },
       {
@@ -18976,38 +19320,6 @@
         "stock": 5,
         "sellPrice": 650,
         "restockSeconds": 18
-      }
-    ]
-  },
-  {
-    "name": "Fortis General Store (2)",
-    "location": "Civitas illa Fortis",
-    "owner": "Shopkeeper",
-    "currency": "Coins",
-    "x": 1667,
-    "y": 3126,
-    "plane": 0,
-    "items": [
-      {
-        "itemId": 10006,
-        "itemName": "Bird snare",
-        "stock": 5,
-        "sellPrice": 6,
-        "restockSeconds": 0
-      },
-      {
-        "itemId": 10008,
-        "itemName": "Box trap",
-        "stock": 5,
-        "sellPrice": 41,
-        "restockSeconds": 0
-      },
-      {
-        "itemId": 233,
-        "itemName": "Pestle and mortar",
-        "stock": 10,
-        "sellPrice": 5,
-        "restockSeconds": 0
       }
     ]
   },
@@ -23947,7 +24259,7 @@
     "items": [
       {
         "itemId": 10010,
-        "itemName": "Butterfly net",
+        "itemName": "Insect net",
         "stock": 5,
         "sellPrice": 26,
         "restockSeconds": 6
@@ -24006,6 +24318,13 @@
         "itemName": "Rabbit snare",
         "stock": 10,
         "sellPrice": 19,
+        "restockSeconds": 6
+      },
+      {
+        "itemId": 34631,
+        "itemName": "Net trap (item)",
+        "stock": 25,
+        "sellPrice": 41,
         "restockSeconds": 6
       },
       {
@@ -27052,7 +27371,7 @@
   },
   {
     "name": "Leagues Reward Shop",
-    "location": "Lumbridge Castle",
+    "location": "Grand Exchange",
     "owner": "Leagues Tutor",
     "currency": "League Points",
     "items": [
@@ -27102,7 +27421,7 @@
   },
   {
     "name": "Leagues Reward Shop (2)",
-    "location": "Lumbridge Castle",
+    "location": "Grand Exchange",
     "owner": "Leagues Tutor",
     "currency": "League Points",
     "items": [
@@ -27164,7 +27483,7 @@
   },
   {
     "name": "Leagues Reward Shop (3)",
-    "location": "Lumbridge Castle",
+    "location": "Grand Exchange",
     "owner": "Leagues Tutor",
     "currency": "League Points",
     "items": [
@@ -27226,7 +27545,7 @@
   },
   {
     "name": "Leagues Reward Shop (4)",
-    "location": "Lumbridge Castle",
+    "location": "Grand Exchange",
     "owner": "Leagues Tutor",
     "currency": "League Points",
     "items": [
@@ -27300,7 +27619,7 @@
   },
   {
     "name": "Leagues Reward Shop (5)",
-    "location": "Lumbridge Castle",
+    "location": "Grand Exchange",
     "owner": "Leagues Tutor",
     "currency": "League Points",
     "items": [
@@ -27404,7 +27723,7 @@
   },
   {
     "name": "Leagues Reward Shop (6)",
-    "location": "Lumbridge Castle",
+    "location": "Grand Exchange",
     "owner": "Leagues Tutor",
     "currency": "League Points",
     "items": [
@@ -27653,10 +27972,9 @@
         "restockSeconds": 300
       },
       {
-        "itemId": 1052,
-        "itemName": "Cape of legends",
+        "itemId": -1,
+        "itemName": "Cape of Legends",
         "stock": 3,
-        "sellPrice": 675,
         "restockSeconds": 300
       }
     ]
@@ -28840,8 +29158,8 @@
         "sellPrice": 9800
       },
       {
-        "itemId": 1052,
-        "itemName": "Cape of legends",
+        "itemId": -1,
+        "itemName": "Cape of Legends",
         "stock": -1,
         "sellPrice": 1900
       },
@@ -28930,6 +29248,12 @@
       {
         "itemId": 27279,
         "itemName": "Thread of Elidinis",
+        "stock": -1,
+        "sellPrice": 350000
+      },
+      {
+        "itemId": -1,
+        "itemName": "Arkan blade",
         "stock": -1,
         "sellPrice": 350000
       }
@@ -29271,6 +29595,62 @@
     "plane": 0,
     "items": [
       {
+        "itemId": 2347,
+        "itemName": "Hammer",
+        "stock": 5,
+        "sellPrice": 1,
+        "restockSeconds": 60
+      },
+      {
+        "itemId": 1755,
+        "itemName": "Chisel",
+        "stock": 5,
+        "sellPrice": 1,
+        "restockSeconds": 60
+      },
+      {
+        "itemId": 590,
+        "itemName": "Tinderbox",
+        "stock": 5,
+        "sellPrice": 1,
+        "restockSeconds": 60
+      },
+      {
+        "itemId": 946,
+        "itemName": "Knife",
+        "stock": 5,
+        "sellPrice": 7,
+        "restockSeconds": 60
+      },
+      {
+        "itemId": 952,
+        "itemName": "Spade",
+        "stock": 5,
+        "sellPrice": 3,
+        "restockSeconds": 60
+      },
+      {
+        "itemId": 1735,
+        "itemName": "Shears",
+        "stock": 5,
+        "sellPrice": 1,
+        "restockSeconds": 60
+      },
+      {
+        "itemId": 1265,
+        "itemName": "Bronze pickaxe",
+        "stock": 5,
+        "sellPrice": 1,
+        "restockSeconds": 60
+      },
+      {
+        "itemId": 1351,
+        "itemName": "Bronze axe",
+        "stock": 5,
+        "sellPrice": 20,
+        "restockSeconds": 60
+      },
+      {
         "itemId": 1931,
         "itemName": "Pot",
         "stock": 5,
@@ -29285,38 +29665,10 @@
         "restockSeconds": 60
       },
       {
-        "itemId": 20742,
-        "itemName": "Empty jug pack",
-        "stock": 5,
-        "sellPrice": 182,
-        "restockSeconds": 12
-      },
-      {
-        "itemId": 1735,
-        "itemName": "Shears",
-        "stock": 2,
-        "sellPrice": 1,
-        "restockSeconds": 60
-      },
-      {
-        "itemId": 946,
-        "itemName": "Knife",
-        "stock": 5,
-        "sellPrice": 7,
-        "restockSeconds": 60
-      },
-      {
         "itemId": 1925,
         "itemName": "Bucket",
         "stock": 3,
         "sellPrice": 2,
-        "restockSeconds": 6
-      },
-      {
-        "itemId": 22660,
-        "itemName": "Empty bucket pack",
-        "stock": 15,
-        "sellPrice": 650,
         "restockSeconds": 6
       },
       {
@@ -29334,45 +29686,10 @@
         "restockSeconds": 30
       },
       {
-        "itemId": 590,
-        "itemName": "Tinderbox",
-        "stock": 2,
-        "sellPrice": 1,
-        "restockSeconds": 60
-      },
-      {
-        "itemId": 1755,
-        "itemName": "Chisel",
-        "stock": 2,
-        "sellPrice": 1,
-        "restockSeconds": 60
-      },
-      {
-        "itemId": 952,
-        "itemName": "Spade",
-        "stock": 5,
-        "sellPrice": 3,
-        "restockSeconds": 60
-      },
-      {
-        "itemId": 2347,
-        "itemName": "Hammer",
-        "stock": 5,
-        "sellPrice": 1,
-        "restockSeconds": 60
-      },
-      {
         "itemId": 550,
         "itemName": "Newcomer map",
         "stock": 5,
         "sellPrice": 1,
-        "restockSeconds": 60
-      },
-      {
-        "itemId": 9003,
-        "itemName": "Security book",
-        "stock": 5,
-        "sellPrice": 2,
         "restockSeconds": 60
       }
     ]
@@ -30445,25 +30762,6 @@
         "itemName": "Helm of Neitiznot",
         "stock": -1,
         "sellPrice": 50000
-      }
-    ]
-  },
-  {
-    "name": "Melee combat tutor",
-    "owner": "Melee combat tutor",
-    "currency": "Coins",
-    "items": [
-      {
-        "itemId": 9753,
-        "itemName": "Defence cape",
-        "stock": -1,
-        "sellPrice": 99000
-      },
-      {
-        "itemId": 9754,
-        "itemName": "Defence cape(t)",
-        "stock": -1,
-        "sellPrice": 99000
       }
     ]
   },
@@ -31580,6 +31878,28 @@
     ]
   },
   {
+    "name": "Mysterious Stranger (dog)",
+    "owner": "Mysterious Stranger (dog)",
+    "currency": "blood runes",
+    "items": [
+      {
+        "itemId": -1,
+        "itemName": "Dog"
+      }
+    ]
+  },
+  {
+    "name": "Mysterious Stranger (dog) (2)",
+    "owner": "Mysterious Stranger (dog)",
+    "currency": "blood runes",
+    "items": [
+      {
+        "itemId": -1,
+        "itemName": "Dog"
+      }
+    ]
+  },
+  {
     "name": "Mysterious Stranger (shop)",
     "location": "Theatre of Blood",
     "owner": "Mysterious Stranger",
@@ -31589,7 +31909,7 @@
         "itemId": 22517,
         "itemName": "Escape crystal",
         "stock": 9500,
-        "sellPrice": 75000,
+        "sellPrice": 10000,
         "restockSeconds": 1
       }
     ]
@@ -31835,7 +32155,7 @@
     "items": [
       {
         "itemId": 10010,
-        "itemName": "Butterfly net",
+        "itemName": "Insect net",
         "stock": 5,
         "sellPrice": 24,
         "restockSeconds": 6
@@ -31894,6 +32214,13 @@
         "itemName": "Rabbit snare",
         "stock": 10,
         "sellPrice": 18,
+        "restockSeconds": 6
+      },
+      {
+        "itemId": 34631,
+        "itemName": "Net trap (item)",
+        "stock": 25,
+        "sellPrice": 38,
         "restockSeconds": 6
       },
       {
@@ -33020,12 +33347,6 @@
     "currency": "Coins",
     "items": [
       {
-        "itemId": 2418,
-        "itemName": "Bronze key (Prince Ali Rescue)",
-        "stock": -1,
-        "sellPrice": 15
-      },
-      {
         "itemId": 10581,
         "itemName": "Keris",
         "stock": -1,
@@ -33196,35 +33517,6 @@
     ]
   },
   {
-    "name": "Outer Fortis General Store (2)",
-    "location": "Outer Fortis",
-    "owner": "Shopkeeper (Outer Fortis)",
-    "currency": "Coins",
-    "items": [
-      {
-        "itemId": 10006,
-        "itemName": "Bird snare",
-        "stock": 5,
-        "sellPrice": 6,
-        "restockSeconds": 0
-      },
-      {
-        "itemId": 10008,
-        "itemName": "Box trap",
-        "stock": 5,
-        "sellPrice": 41,
-        "restockSeconds": 0
-      },
-      {
-        "itemId": 233,
-        "itemName": "Pestle and mortar",
-        "stock": 10,
-        "sellPrice": 5,
-        "restockSeconds": 0
-      }
-    ]
-  },
-  {
     "name": "Oziach (shop)",
     "location": "Edgeville",
     "owner": "Oziach",
@@ -33354,10 +33646,9 @@
         "restockSeconds": 60
       },
       {
-        "itemId": 29177,
+        "itemId": -1,
         "itemName": "Sunlight antelope fur",
         "stock": 0,
-        "sellPrice": 13,
         "restockSeconds": 60
       },
       {
@@ -35584,8 +35875,8 @@
         "sellPrice": 10
       },
       {
-        "itemId": 26706,
-        "itemName": "Scroll of imbuing",
+        "itemId": -1,
+        "itemName": "Scroll of Imbuing",
         "stock": -1,
         "sellPrice": 200
       }
@@ -35692,14 +35983,14 @@
       },
       {
         "itemId": 1285,
-        "itemName": "Mithril sword",
+        "itemName": "Mithril shortsword",
         "stock": 3,
         "sellPrice": 1098,
         "restockSeconds": 1800
       },
       {
         "itemId": 1287,
-        "itemName": "Adamant sword",
+        "itemName": "Adamant shortsword",
         "stock": 2,
         "sellPrice": 2704,
         "restockSeconds": 7200
@@ -37231,7 +37522,7 @@
         "itemId": 22517,
         "itemName": "Escape crystal",
         "stock": -1,
-        "sellPrice": 75000
+        "sellPrice": 10000
       }
     ]
   },
@@ -38123,7 +38414,7 @@
       },
       {
         "itemId": 1289,
-        "itemName": "Rune sword",
+        "itemName": "Rune shortsword",
         "stock": 1,
         "sellPrice": 20800,
         "restockSeconds": 6000
@@ -38388,6 +38679,19 @@
         "itemName": "Ship ticket",
         "stock": -1,
         "sellPrice": 25
+      }
+    ]
+  },
+  {
+    "name": "Sergeant Hudson",
+    "owner": "Sergeant Hudson",
+    "currency": "Coins",
+    "items": [
+      {
+        "itemId": -1,
+        "itemName": "Amulet of sight",
+        "stock": -1,
+        "sellPrice": 1500
       }
     ]
   },
@@ -39634,6 +39938,25 @@
         "stock": 20,
         "sellPrice": 50,
         "restockSeconds": 60
+      }
+    ]
+  },
+  {
+    "name": "Sophanem Guard",
+    "owner": "Sophanem Guard",
+    "currency": "Coins",
+    "items": [
+      {
+        "itemId": 590,
+        "itemName": "Tinderbox",
+        "stock": -1,
+        "sellPrice": 50
+      },
+      {
+        "itemId": 596,
+        "itemName": "Unlit torch",
+        "stock": -1,
+        "sellPrice": 200
       }
     ]
   },
@@ -42155,6 +42478,18 @@
         "itemName": "Beer",
         "stock": -1,
         "sellPrice": 2
+      },
+      {
+        "itemId": 5763,
+        "itemName": "Cider",
+        "stock": -1,
+        "sellPrice": 2
+      },
+      {
+        "itemId": 2142,
+        "itemName": "Cooked meat",
+        "stock": -1,
+        "sellPrice": 4
       }
     ]
   },
@@ -42368,6 +42703,76 @@
     ]
   },
   {
+    "name": "Theatre of Blood Supplies",
+    "location": "Theatre of Blood",
+    "owner": "Chest (Theatre of Blood)",
+    "currency": "Points",
+    "items": [
+      {
+        "itemId": 12625,
+        "itemName": "Stamina potion(4)",
+        "stock": -1
+      },
+      {
+        "itemId": 2434,
+        "itemName": "Prayer potion(4)",
+        "stock": -1,
+        "sellPrice": 2
+      },
+      {
+        "itemId": 6685,
+        "itemName": "Saradomin brew(4)",
+        "stock": -1,
+        "sellPrice": 3
+      },
+      {
+        "itemId": 3024,
+        "itemName": "Super restore(4)",
+        "stock": -1,
+        "sellPrice": 3
+      },
+      {
+        "itemId": 7058,
+        "itemName": "Mushroom potato",
+        "stock": -1,
+        "sellPrice": 1
+      },
+      {
+        "itemId": 385,
+        "itemName": "Shark",
+        "stock": -1,
+        "sellPrice": 1
+      },
+      {
+        "itemId": 397,
+        "itemName": "Sea turtle",
+        "stock": -1,
+        "sellPrice": 2
+      },
+      {
+        "itemId": 391,
+        "itemName": "Manta ray",
+        "stock": -1,
+        "sellPrice": 2
+      },
+      {
+        "itemId": 22475,
+        "itemName": "Message (Theatre of Blood)",
+        "stock": -1
+      },
+      {
+        "itemId": 1957,
+        "itemName": "Onion",
+        "stock": -1
+      },
+      {
+        "itemId": 25730,
+        "itemName": "Bandages (Theatre of Blood)",
+        "stock": -1
+      }
+    ]
+  },
+  {
     "name": "Thessalia",
     "owner": "Thessalia",
     "currency": "Frog token",
@@ -42493,6 +42898,20 @@
         "stock": 3,
         "sellPrice": 5,
         "restockSeconds": 60
+      },
+      {
+        "itemId": 1733,
+        "itemName": "Needle",
+        "stock": 3,
+        "sellPrice": 1,
+        "restockSeconds": 3
+      },
+      {
+        "itemId": 1734,
+        "itemName": "Thread",
+        "stock": 100,
+        "sellPrice": 1,
+        "restockSeconds": 3
       }
     ]
   },
@@ -44677,6 +45096,50 @@
     ]
   },
   {
+    "name": "Useful Supplies",
+    "location": "Castle Drakan, inside Vampyrium",
+    "owner": "Chest (The Blood Moon Rises)",
+    "currency": "None",
+    "items": [
+      {
+        "itemId": -1,
+        "itemName": "Putrid sticky potion",
+        "stock": -1,
+        "sellPrice": 0
+      },
+      {
+        "itemId": -1,
+        "itemName": "Foul chunky potion",
+        "stock": -1,
+        "sellPrice": 0
+      },
+      {
+        "itemId": -1,
+        "itemName": "Rancid slimy potion",
+        "stock": -1,
+        "sellPrice": 0
+      },
+      {
+        "itemId": -1,
+        "itemName": "Rank frothy potion",
+        "stock": -1,
+        "sellPrice": 0
+      },
+      {
+        "itemId": 33802,
+        "itemName": "Mysterious jerky",
+        "stock": -1,
+        "sellPrice": 0
+      },
+      {
+        "itemId": -1,
+        "itemName": "Smelly kebab",
+        "stock": -1,
+        "sellPrice": 0
+      }
+    ]
+  },
+  {
     "name": "Valaine's Shop of Champions",
     "location": "{{FloorNumber|uk=1}} of Champions' Guild",
     "owner": "Valaine",
@@ -45218,42 +45681,42 @@
     "items": [
       {
         "itemId": 1277,
-        "itemName": "Bronze sword",
+        "itemName": "Bronze shortsword",
         "stock": 5,
         "sellPrice": 26,
         "restockSeconds": 60
       },
       {
         "itemId": 1279,
-        "itemName": "Iron sword",
+        "itemName": "Iron shortsword",
         "stock": 4,
         "sellPrice": 91,
         "restockSeconds": 120
       },
       {
         "itemId": 1281,
-        "itemName": "Steel sword",
+        "itemName": "Steel shortsword",
         "stock": 4,
         "sellPrice": 325,
         "restockSeconds": 240
       },
       {
         "itemId": 1283,
-        "itemName": "Black sword",
+        "itemName": "Black shortsword",
         "stock": 3,
         "sellPrice": 624,
         "restockSeconds": 600
       },
       {
         "itemId": 1285,
-        "itemName": "Mithril sword",
+        "itemName": "Mithril shortsword",
         "stock": 3,
         "sellPrice": 845,
         "restockSeconds": 1800
       },
       {
         "itemId": 1287,
-        "itemName": "Adamant sword",
+        "itemName": "Adamant shortsword",
         "stock": 2,
         "sellPrice": 2080,
         "restockSeconds": 7200
@@ -46225,42 +46688,42 @@
       },
       {
         "itemId": 1277,
-        "itemName": "Bronze sword",
+        "itemName": "Bronze shortsword",
         "stock": 5,
         "sellPrice": 31,
         "restockSeconds": 60
       },
       {
         "itemId": 1279,
-        "itemName": "Iron sword",
+        "itemName": "Iron shortsword",
         "stock": 4,
         "sellPrice": 109,
         "restockSeconds": 120
       },
       {
         "itemId": 1281,
-        "itemName": "Steel sword",
+        "itemName": "Steel shortsword",
         "stock": 4,
         "sellPrice": 390,
         "restockSeconds": 240
       },
       {
         "itemId": 1283,
-        "itemName": "Black sword",
+        "itemName": "Black shortsword",
         "stock": 3,
         "sellPrice": 748,
         "restockSeconds": 600
       },
       {
         "itemId": 1285,
-        "itemName": "Mithril sword",
+        "itemName": "Mithril shortsword",
         "stock": 3,
         "sellPrice": 1014,
         "restockSeconds": 1800
       },
       {
         "itemId": 1287,
-        "itemName": "Adamant sword",
+        "itemName": "Adamant shortsword",
         "stock": 2,
         "sellPrice": 2496,
         "restockSeconds": 7200
@@ -47277,10 +47740,9 @@
         "restockSeconds": 60
       },
       {
-        "itemId": 6605,
-        "itemName": "White sword",
+        "itemId": -1,
+        "itemName": "White shortsword",
         "stock": 20,
-        "sellPrice": 624,
         "restockSeconds": 60
       },
       {
@@ -47435,10 +47897,9 @@
         "restockSeconds": 60
       },
       {
-        "itemId": 6605,
-        "itemName": "White sword",
+        "itemId": -1,
+        "itemName": "White shortsword",
         "stock": 20,
-        "sellPrice": 624,
         "restockSeconds": 60
       },
       {
@@ -47593,10 +48054,9 @@
         "restockSeconds": 60
       },
       {
-        "itemId": 6605,
-        "itemName": "White sword",
+        "itemId": -1,
+        "itemName": "White shortsword",
         "stock": 10,
-        "sellPrice": 624,
         "restockSeconds": 60
       },
       {
@@ -47751,10 +48211,9 @@
         "restockSeconds": 60
       },
       {
-        "itemId": 6605,
-        "itemName": "White sword",
+        "itemId": -1,
+        "itemName": "White shortsword",
         "stock": 10,
-        "sellPrice": 624,
         "restockSeconds": 60
       },
       {
@@ -47909,10 +48368,9 @@
         "restockSeconds": 60
       },
       {
-        "itemId": 6605,
-        "itemName": "White sword",
+        "itemId": -1,
+        "itemName": "White shortsword",
         "stock": 10,
-        "sellPrice": 624,
         "restockSeconds": 60
       },
       {
@@ -48067,10 +48525,9 @@
         "restockSeconds": 60
       },
       {
-        "itemId": 6605,
-        "itemName": "White sword",
+        "itemId": -1,
+        "itemName": "White shortsword",
         "stock": 0,
-        "sellPrice": 624,
         "restockSeconds": 60
       },
       {
@@ -48135,6 +48592,25 @@
         "stock": 0,
         "sellPrice": 1920,
         "restockSeconds": 60
+      }
+    ]
+  },
+  {
+    "name": "Wilfred",
+    "owner": "Wilfred",
+    "currency": "Coins",
+    "items": [
+      {
+        "itemId": 9807,
+        "itemName": "Woodcutting cape",
+        "stock": -1,
+        "sellPrice": 99000
+      },
+      {
+        "itemId": 9808,
+        "itemName": "Woodcut. cape(t)",
+        "stock": -1,
+        "sellPrice": 99000
       }
     ]
   },
@@ -48238,25 +48714,6 @@
       {
         "itemId": 13068,
         "itemName": "Quest point cape (t)",
-        "stock": -1,
-        "sellPrice": 99000
-      }
-    ]
-  },
-  {
-    "name": "Woodsman tutor",
-    "owner": "Woodsman tutor",
-    "currency": "Coins",
-    "items": [
-      {
-        "itemId": 9807,
-        "itemName": "Woodcutting cape",
-        "stock": -1,
-        "sellPrice": 99000
-      },
-      {
-        "itemId": 9808,
-        "itemName": "Woodcut. cape(t)",
         "stock": -1,
         "sellPrice": 99000
       }
